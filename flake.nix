@@ -9,17 +9,15 @@
       modules = [ ./hosts/bastion/configuration.nix ];
     };
 
-    deploy.nodes.bastion = { 
+    deploy.nodes.bastion = {
       hostname = "localhost";
       fastConnection = true;
       profiles.system = {
         user = "root";
         path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.bastion;
       };
-
     };
 
-  checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
   };
-
 }
