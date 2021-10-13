@@ -1,7 +1,4 @@
-# Common/default.nix
-
-# Inputs for this module, we don't use anything so can be empty.
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [

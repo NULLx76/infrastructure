@@ -8,7 +8,7 @@
   imports =
     [
       ../../common
-      ../../common/generic-vim.nix
+      ../../common/generic-vm.nix
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
