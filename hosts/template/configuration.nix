@@ -7,19 +7,13 @@
 {
   imports =
     [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
       # Import common config
-      ../../common/generic-vm.nix
+      ../../common/generic-lxc.nix
       ../../common
     ];
 
-  # Use the GRUB 2 boot loader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  boot.loader.grub.device = "/dev/sda";
 
-  networking.hostName = "bastion";
+  networking.hostName = "nixos-template";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -30,10 +24,5 @@
   system.stateVersion = "21.05"; # Did you read the comment?
 
   # Additional packages
-  environment.systemPackages = with pkgs; [
-    ripgrep
-    rsync
-    tmux
-    vault
-  ];
+  environment.systemPackages = with pkgs; [];
 }
