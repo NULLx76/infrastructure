@@ -10,9 +10,9 @@
       modules = [ ./hosts/bastion/configuration.nix ];
     };
 
-    nixosConfigurations.template = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.vault = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      modules = [ "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix" ./hosts/template/configuration.nix ];
+      modules = [ "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix" ./hosts/vault/configuration.nix ];
     };
 
     deploy.nodes.bastion = {
@@ -24,13 +24,12 @@
       };
     };
 
-    deploy.nodes.template = {
-      sshUser = "root";
-      hostname = "10.42.42.5";
+    deploy.nodes.vault = {
+      hostname = "10.42.42.6";
       fastConnection = true;
       profiles.system = {
         user = "root";
-        path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.template;
+        path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.vault;
       };
     };
 
