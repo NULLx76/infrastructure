@@ -44,7 +44,7 @@ resource "proxmox_lxc" "vault" {
   clone = "101"
 
   memory = 1024
-  
+
   rootfs {
     storage = "local-zfs"
     size = "8G"
@@ -64,7 +64,7 @@ resource "proxmox_vm_qemu" "k3s-node1" {
   vmid = 103
   clone = "bastion"
 
-  memory = 2048
+  memory = 8192
   cores = 4
 
   agent = 1
