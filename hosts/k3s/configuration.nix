@@ -7,13 +7,19 @@
 {
   imports =
     [
+      # Include the results of the hardware scan.
+      ./hardware-configuration.nix
       # Import common config
-      ../../common/generic-lxc.nix
+      ../../common/generic-vm.nix
       ../../common
     ];
 
+  # Use the GRUB 2 boot loader.
+  boot.loader.grub.enable = true;
+  boot.loader.grub.version = 2;
+  boot.loader.grub.device = "/dev/sda";
 
-  networking.hostName = "vault";
+  networking.hostName = "k3s-node1";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -24,21 +30,7 @@
   system.stateVersion = "21.05"; # Did you read the comment?
 
   # Additional packages
-  environment.systemPackages = with pkgs; [];
-
-  # Vault
-  networking.firewall.allowedTCPPorts = [ 8200 ];
-
-  services.vault = {
-    enable = true;
-    # bin version includes the UI
-    package = pkgs.vault-bin;
-    address = "0.0.0.0:8200";
-    storageBackend = "file";
-    storagePath = "/var/lib/vault";
-    extraConfig = ''
-      api_addr = "10.42.42.6:8200"
-      ui = true
-    '';
-  };
+  environment.systemPackages = with pkgs; [
+    vim
+  ];
 }
