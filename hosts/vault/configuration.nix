@@ -25,4 +25,19 @@
 
   # Additional packages
   environment.systemPackages = with pkgs; [];
+
+  # Vault
+  networking.firewall.allowedTCPPorts = [ 8200 ];
+
+  services.vault = {
+    enable = true;
+    # bin version includes the UI
+    package = pkgs.vault-bin;
+    address = "0.0.0.0:8200";
+    storageBackend = "file";
+    storagePath = "/var/lib/vault";
+    extraConfig = ''
+      ui = true
+    '';
+  };
 }
