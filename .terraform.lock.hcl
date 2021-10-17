@@ -1,9 +1,15 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
+provider "registry.example.com/telmate/proxmox" {
+  version = "9.9.9"
+  hashes = [
+    "h1:BnhIwXbxNF0NLvXes4/WiLGEldeU5UZWlLg3vrO/kog=",
+  ]
+}
+
 provider "registry.terraform.io/telmate/proxmox" {
-  version     = "2.8.0"
-  constraints = "2.8.0"
+  version = "2.8.0"
   hashes = [
     "h1:RmEhNI5/T73g8+gSqy20MSgszjTquC+srhIflQWlNRE=",
     "zh:210fe85f6bdc51196dbda2c12de5fd0ddd597704fc91f5a08346cebd7493ff42",

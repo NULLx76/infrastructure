@@ -1,8 +1,7 @@
 terraform {
   required_providers {
     proxmox = {
-      source = "telmate/proxmox"
-      version = "2.8.0"
+      source = "registry.example.com/telmate/proxmox"
     }
   }
 }
@@ -20,6 +19,10 @@ resource "proxmox_lxc" "nixos-template" {
   ostemplate = "local:vztmpl/nixos-unstable-default_156198829_amd64.tar.xz"
   ostype = "unmanaged"
   unprivileged = true
+  vmid = "101"
+  template = true
+
+  memory = 1024
 
   features {
     nesting = true
@@ -34,6 +37,29 @@ resource "proxmox_lxc" "nixos-template" {
     name = "eth0"
     bridge = "vmbr0"
     ip = "dhcp"
+    hwaddr = "22:D7:C1:FF:9D:5F"
   }
 }
 
+resource "proxmox_lxc" "vault" {
+  target_node = "nuc"
+  description = "Vault Secrets Management"
+  hostname = "vault"
+  unprivileged = true
+  vmid = "102"
+  clone = "101"
+
+  memory = 1024
+  
+  rootfs {
+    storage = "local-zfs"
+    size = "8G"
+  }
+
+  network {
+    name = "eth0"
+    bridge = "vmbr0"
+    ip = "dhcp"
+    hwaddr = "16:2B:87:55:0C:0C"
+  }
+}
