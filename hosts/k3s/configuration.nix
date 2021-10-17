@@ -1,9 +1,4 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
-
 {
   imports =
     [
@@ -35,24 +30,25 @@
     vim
   ];
 
-  # Disable the firewall
+  # Disable the firewall as we need all the ports
   networking.firewall.enable = false;
 
   # Force-enable Cgroupv2
   systemd.enableUnifiedCgroupHierarchy = lib.mkForce true;
 
-    # Ensure `mount` and `grep` are available 
+  # Ensure `mount` and `grep` are available 
   systemd.services.k3s.path = [ pkgs.gnugrep pkgs.utillinux ];
 
+  # Enable k3s as a master node
   services.k3s = {
-      enable = true;
-      role = "server";
+    enable = true;
+    role = "server";
 
-      extraFlags = builtins.toString [ 
-        "--data-dir=/var/lib/k3s" # Set data dir to var lib
-        "--cluster-init"          # Enable embedded etcd
-        "--disable=servicelb"     # disable servicelb
-        "--no-deploy=traefik"     # we want to configure traefik ourselves (or use nginx instead)
-      ];
+    extraFlags = builtins.toString [
+      "--data-dir=/var/lib/k3s" # Set data dir to var lib
+      "--cluster-init" # Enable embedded etcd
+      "--disable=servicelb" # disable servicelb
+      "--no-deploy=traefik" # we want to configure traefik ourselves (or use nginx instead)
+    ];
   };
 }

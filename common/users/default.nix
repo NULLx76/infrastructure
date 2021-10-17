@@ -13,6 +13,7 @@
     syntaxHighlighting.enable = true;
     interactiveShellInit = ''
       source "${pkgs.grml-zsh-config}/etc/zsh/zshrc"
+      export FZF_DEFAULT_COMMAND="${pkgs.ripgrep}/bin/rg --files --follow"
       source "${pkgs.fzf}/share/fzf/key-bindings.zsh"
       source "${pkgs.fzf}/share/fzf/completion.zsh"
       eval "$(${pkgs.zoxide}/bin/zoxide init zsh)"
@@ -20,7 +21,7 @@
     # otherwise it'll override the grml prompt
     promptInit = "";
   };
-  
+
   environment.pathsToLink = [ "/share/zsh" ];
 
   # Disable sudo prompt for `wheel` users.
@@ -59,6 +60,7 @@
     git
     htop
     rsync
+    ripgrep
     vim
     zoxide
   ];
