@@ -57,3 +57,30 @@ resource "proxmox_lxc" "vault" {
     hwaddr = "16:2B:87:55:0C:0C"
   }
 }
+
+resource "proxmox_vm_qemu" "k3s-node1" {
+  name = "k3s-node1"
+  target_node = "nuc"
+  vmid = 103
+  clone = "bastion"
+
+  memory = 2048
+  cores = 4
+
+  agent = 1
+  define_connection_info = false
+  boot = "order=scsi0;ide2;net0"
+
+  network {
+    model = "virtio"
+    macaddr = "2E:F8:55:23:D9:9B"
+    bridge = "vmbr0"
+  }
+
+  disk {
+    type = "scsi"
+    storage = "local-zfs"
+    size = "64G"
+    ssd = 1
+  }
+}
