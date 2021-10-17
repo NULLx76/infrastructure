@@ -1,13 +1,7 @@
-terraform {
-  required_providers {
-    proxmox = {
-      source = "registry.example.com/telmate/proxmox"
-    }
-  }
-}
-
 provider "proxmox" {
   pm_api_url = "https://10.42.42.42:8006/api2/json"
+  pm_user = data.vault_generic_secret.proxmox_auth.data["user"]
+  pm_password = data.vault_generic_secret.proxmox_auth.data["pass"]
   pm_tls_insecure = true
 }
 
@@ -45,7 +39,7 @@ resource "proxmox_lxc" "vault" {
   target_node = "nuc"
   description = "Vault Secrets Management"
   hostname = "vault"
-  unprivileged = true
+  unprivileged = false # needed for mlock
   vmid = "102"
   clone = "101"
 
