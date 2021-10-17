@@ -31,6 +31,28 @@
 
   # Additional packages
   environment.systemPackages = with pkgs; [
+    iptables
     vim
   ];
+
+  # Disable the firewall
+  networking.firewall.enable = false;
+
+  # Force-enable Cgroupv2
+  systemd.enableUnifiedCgroupHierarchy = lib.mkForce true;
+
+    # Ensure `mount` and `grep` are available 
+  systemd.services.k3s.path = [ pkgs.gnugrep pkgs.utillinux ];
+
+  services.k3s = {
+      enable = true;
+      role = "server";
+
+      extraFlags = builtins.toString [ 
+        "--data-dir=/var/lib/k3s" # Set data dir to var lib
+        "--cluster-init"          # Enable embedded etcd
+        "--disable=servicelb"     # disable servicelb
+        "--no-deploy=traefik"     # we want to configure traefik ourselves (or use nginx instead)
+      ];
+  };
 }
