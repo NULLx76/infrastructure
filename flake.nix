@@ -12,7 +12,7 @@
 
     nixosConfigurations.template = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      modules = [ ./hosts/template/configuration.nix ];
+      modules = [ "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix" ./hosts/template/configuration.nix ];
     };
 
     deploy.nodes.bastion = {

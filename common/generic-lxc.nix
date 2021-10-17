@@ -1,11 +1,6 @@
 { ... }: {
   # See also: https://blog.xirion.net/posts/nixos-proxmox-lxc/
 
-  # Import nixos lxc config
-  imports = [
-    <nixpkgs/nixos/modules/virtualisation/lxc-container.nix>
-  ];
-
   # Supress systemd services that don't work (correctly) on LXC
   systemd.suppressedSystemUnits = [
     "dev-mqueue.mount"
