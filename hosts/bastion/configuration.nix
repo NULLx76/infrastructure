@@ -31,6 +31,7 @@
 
   # Additional packages
   environment.systemPackages = with pkgs; [
+    vim
     ripgrep
     rsync
     tmux
