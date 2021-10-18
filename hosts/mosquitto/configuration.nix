@@ -24,4 +24,11 @@
 
   # Additional packages
   environment.systemPackages = with pkgs; [];
+
+  services.mosquitto = {
+    enable = true;
+    port = 1883;
+  };
+
+  networking.firewall.allowedTCPPorts = [ config.services.mosquitto.port ];
 }
