@@ -26,8 +26,15 @@
   environment.systemPackages = with pkgs; [];
 
   services.mosquitto = {
+    users = {
+      victor = {
+        acl = ["topic readwrite #"];
+      };
+    };
     enable = true;
     port = 1883;
+    host = "0.0.0.0";
+    allowAnonymous = true;
   };
 
   networking.firewall.allowedTCPPorts = [ config.services.mosquitto.port ];
