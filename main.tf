@@ -58,6 +58,28 @@ resource "proxmox_lxc" "vault" {
   }
 }
 
+resource "proxmox_lxc" "mosquitto" {
+  target_node = "nuc"
+  description = "mosquitto mqtt broker"
+  hostname = "mosquitto"
+  vmid = 104
+  clone = 101
+
+  memory = 1024
+
+  rootfs {
+    storage = "local-zfs"
+    size = "8G"
+  }
+
+  network {
+    name = "eth0"
+    bridge = "vmbr0"
+    ip = "dhcp"
+    hwaddr = "C6:F9:8B:3D:9E:37"
+  }
+}
+
 resource "proxmox_vm_qemu" "k3s-node1" {
   name = "k3s-node1"
   target_node = "nuc"
@@ -68,7 +90,6 @@ resource "proxmox_vm_qemu" "k3s-node1" {
   cores = 4
 
   agent = 1
-  define_connection_info = false
   boot = "order=scsi0;ide2;net0"
 
   network {
