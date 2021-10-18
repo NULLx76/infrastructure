@@ -42,4 +42,5 @@
   };
 
   security.acme.email = "victorheld12@gmail.com";
+  security.acme.acceptTerms = true;
 }
