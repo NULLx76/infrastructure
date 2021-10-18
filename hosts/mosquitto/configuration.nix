@@ -30,11 +30,33 @@
       victor = {
         acl = ["topic readwrite #"];
       };
+      zigbee2mqtt = {
+        acl = ["topic readwrite #"];
+      };
     };
     enable = true;
     port = 1883;
     host = "0.0.0.0";
     allowAnonymous = true;
+  };
+
+  services.zigbee2mqtt = {
+    enable = true;
+    dataDir = "/var/lib/zigbee2mqtt";
+    settings = {
+      homeassistant = false;
+      permit_join = true;
+
+      serial = {
+        port = "/dev/ttyUSB0";
+      };
+
+      mqtt = {
+        base_topic = "zigbee2mqtt";
+        server = "mqtt://localhost:${toString config.services.mosquitto.port}";
+        user = "zigbee2mqtt";
+      };
+    };
   };
 
   networking.firewall.allowedTCPPorts = [ config.services.mosquitto.port ];

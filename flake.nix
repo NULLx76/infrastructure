@@ -26,7 +26,7 @@
     };
 
     deploy.nodes.bastion = {
-      hostname = "localhost";
+      hostname = "10.42.42.4";
       fastConnection = true;
       profiles.system = {
         user = "root";
