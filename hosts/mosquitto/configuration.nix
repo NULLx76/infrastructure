@@ -26,18 +26,13 @@
   environment.systemPackages = with pkgs; [];
 
   services.mosquitto = {
-    users = {
-      victor = {
-        acl = ["topic readwrite #"];
-      };
-      zigbee2mqtt = {
-        acl = ["topic readwrite #"];
-      };
-    };
+    users = {};
     enable = true;
+
     port = 1883;
     host = "0.0.0.0";
     allowAnonymous = true;
+    aclExtraConf = "topic readwrite #";
   };
 
   services.zigbee2mqtt = {
