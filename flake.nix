@@ -25,6 +25,11 @@
       modules = [ "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix" ./hosts/mosquitto/configuration.nix ];
     };
 
+    nixosConfigurations.nginx = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [ "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix" ./hosts/nginx/configuration.nix ];
+    };
+
     deploy.nodes.bastion = {
       hostname = "10.42.42.4";
       fastConnection = true;
@@ -58,6 +63,15 @@
       profiles.system = {
         user = "root";
         path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.mosquitto;
+      };
+    };
+
+    deploy.nodes.nginx = {
+      hostname = "10.42.42.9";
+      fastConnection = true;
+      profiles.system = {
+        user = "root";
+        path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.nginx;
       };
     };
 

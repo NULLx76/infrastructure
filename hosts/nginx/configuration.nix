@@ -26,19 +26,18 @@
   # Additional packages
   environment.systemPackages = with pkgs; [];
 
-  # Vault
-  networking.firewall.allowedTCPPorts = [ 8200 ];
-
-  services.vault = {
+  services.nginx = {
     enable = true;
-    # bin version includes the UI
-    package = pkgs.vault-bin;
-    address = "0.0.0.0:8200";
-    storageBackend = "file";
-    storagePath = "/var/lib/vault";
-    extraConfig = ''
-      api_addr = "10.42.42.6:8200"
-      ui = true
-    '';
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+
+    virtualHosts."ha.0x76.dev" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://10.42.42.8:8123/";
+        proxyWebsockets = true;
+      };
+    };
   };
 }
