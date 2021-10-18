@@ -12,7 +12,8 @@
       ../../common
     ];
 
-  networking.hostName = "mosquitto";
+
+  networking.hostName = "vault";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -25,42 +26,19 @@
   # Additional packages
   environment.systemPackages = with pkgs; [];
 
-  services.mosquitto = {
-    users = {
-      victor = {
-        acl = ["topic readwrite #"];
-      };
-      zigbee2mqtt = {
-        acl = ["topic readwrite #"];
-      };
-    };
+  # Vault
+  networking.firewall.allowedTCPPorts = [ 8200 ];
+
+  services.vault = {
     enable = true;
-
-    port = 1883;
-    host = "0.0.0.0";
-    
-    allowAnonymous = true;
-    aclExtraConf = "topic readwrite #";
+    # bin version includes the UI
+    package = pkgs.vault-bin;
+    address = "0.0.0.0:8200";
+    storageBackend = "file";
+    storagePath = "/var/lib/vault";
+    extraConfig = ''
+      api_addr = "10.42.42.6:8200"
+      ui = true
+    '';
   };
-
-  services.zigbee2mqtt = {
-    enable = true;
-    dataDir = "/var/lib/zigbee2mqtt";
-    settings = {
-      homeassistant = true;
-      permit_join = true;
-
-      serial = {
-        port = "/dev/ttyUSB0";
-      };
-
-      mqtt = {
-        base_topic = "zigbee2mqtt";
-        server = "mqtt://localhost:${toString config.services.mosquitto.port}";
-        user = "zigbee2mqtt";
-      };
-    };
-  };
-
-  networking.firewall.allowedTCPPorts = [ config.services.mosquitto.port ];
 }
