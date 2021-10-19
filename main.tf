@@ -80,6 +80,28 @@ resource "proxmox_lxc" "mosquitto" {
   }
 }
 
+resource "proxmox_lxc" "nginx" {
+  target_node = "nuc"
+  description = "nginx reverse proxy"
+  hostname = "nginx"
+  vmid = 106
+  clone = 101
+
+  memory = 512
+
+  rootfs {
+    storage = "local-zfs"
+    size = "8G"
+  }
+
+  network {
+    name = "eth0"
+    bridge = "vmbr0"
+    ip = "dhcp"
+    hwaddr = "6A:C2:89:85:CF:A6"
+  }
+}
+
 resource "proxmox_vm_qemu" "k3s-node1" {
   name = "k3s-node1"
   target_node = "nuc"
