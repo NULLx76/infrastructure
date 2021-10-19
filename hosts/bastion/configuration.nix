@@ -31,10 +31,20 @@
 
   # Additional packages
   environment.systemPackages = with pkgs; [
-    vim
+    fluxcd
+    k9s
+    kubectl
+    kubectx
+    nodejs-14_x
     ripgrep
     rsync
     tmux
     vault
+    vim
   ];
+
+  programs.gnupg.agent = {
+    enable = true;
+    pinentryFlavor = "curses";
+  };
 }
