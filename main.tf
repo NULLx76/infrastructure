@@ -64,6 +64,7 @@ resource "proxmox_lxc" "mosquitto" {
   hostname = "mosquitto"
   vmid = 104
   clone = 101
+  unprivileged = true
 
   memory = 1024
 
@@ -86,6 +87,7 @@ resource "proxmox_lxc" "nginx" {
   hostname = "nginx"
   vmid = 106
   clone = 101
+  unprivileged = true
 
   memory = 512
 
@@ -107,6 +109,7 @@ resource "proxmox_vm_qemu" "k3s-node1" {
   target_node = "nuc"
   vmid = 103
   clone = "bastion"
+  tablet = false
 
   memory = 8192
   cores = 4

@@ -1,8 +1,8 @@
 terraform {
   required_providers {
     proxmox = {
-      # Locally installed from git repo for LXC cloning support
-      source = "registry.example.com/telmate/proxmox"
+      source = "telmate/proxmox"
+      version = "2.9.0"
     }
     vault = {
       source  = "hashicorp/vault"
