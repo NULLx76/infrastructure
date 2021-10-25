@@ -1,13 +1,11 @@
-{ config, pkgs, lib, ... }:
-{
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      # Import common config
-      ../../common/generic-vm.nix
-      ../../common
-    ];
+{ config, pkgs, lib, ... }: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    # Import common config
+    ../../common/generic-vm.nix
+    ../../common
+  ];
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
@@ -25,10 +23,7 @@
   system.stateVersion = "21.05"; # Did you read the comment?
 
   # Additional packages
-  environment.systemPackages = with pkgs; [
-    iptables
-    vim
-  ];
+  environment.systemPackages = with pkgs; [ iptables vim ];
 
   # Disable the firewall as we need all the ports
   networking.firewall.enable = false;

@@ -57,8 +57,7 @@ let
       '';
     };
   };
-in
-{
+in {
   options.services.unpackerr = {
     enable = mkEnableOption "unpackerr";
 
@@ -151,13 +150,25 @@ in
       '';
     };
 
-    sonarr = mkStarrOptions { name = "Sonarr"; url = "http://localhost:8989"; };
+    sonarr = mkStarrOptions {
+      name = "Sonarr";
+      url = "http://localhost:8989";
+    };
 
-    radarr = mkStarrOptions { name = "Radarr"; url = "http://localhost:7878"; };
+    radarr = mkStarrOptions {
+      name = "Radarr";
+      url = "http://localhost:7878";
+    };
 
-    lidarr = mkStarrOptions { name = "Lidarr"; url = "http://localhost:8686"; };
+    lidarr = mkStarrOptions {
+      name = "Lidarr";
+      url = "http://localhost:8686";
+    };
 
-    readarr = mkStarrOptions { name = "Readarr"; url = "http://localhost:8787"; };
+    readarr = mkStarrOptions {
+      name = "Readarr";
+      url = "http://localhost:8787";
+    };
 
     folder = {
       path = mkOption {
@@ -207,21 +218,17 @@ in
 
     extraConfig = mkOption {
       type = types.attrs;
-      default = {};
+      default = { };
       description = ''
         Extra environment variables
       '';
-      example = {
-        UN_WEBHOOK_0_URL = "http://example.com";
-      };
+      example = { UN_WEBHOOK_0_URL = "http://example.com"; };
     };
   };
 
   config = mkIf cfg.enable {
     # Create group if set to default
-    users.groups = mkIf (cfg.group == "unpackerr") {
-      unpackerr = { };
-    };
+    users.groups = mkIf (cfg.group == "unpackerr") { unpackerr = { }; };
 
     # Create user if set to default
     users.users = mkIf (cfg.user == "unpackerr") {

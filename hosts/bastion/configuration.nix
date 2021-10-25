@@ -5,14 +5,13 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      # Import common config
-      ../../common/generic-vm.nix
-      ../../common
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    # Import common config
+    ../../common/generic-vm.nix
+    ../../common
+  ];
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
@@ -36,13 +35,14 @@
     kubectl
     kubectx
     nodejs-14_x
+    nixfmt
     ripgrep
     rsync
     tmux
     vault
     vim
   ];
-
+  #
   programs.gnupg.agent = {
     enable = true;
     pinentryFlavor = "curses";

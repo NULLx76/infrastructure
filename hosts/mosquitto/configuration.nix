@@ -3,14 +3,13 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
-{
-  imports =
-    [
-      # Import common config
-      ../../common/generic-lxc.nix
-      ../../common
-    ];
+let mosquittoPort = 1883;
+in {
+  imports = [
+    # Import common config
+    ../../common/generic-lxc.nix
+    ../../common
+  ];
 
   networking.hostName = "mosquitto";
 
@@ -23,24 +22,22 @@
   system.stateVersion = "21.05"; # Did you read the comment?
 
   # Additional packages
-  environment.systemPackages = with pkgs; [];
+  environment.systemPackages = with pkgs; [ ];
 
   services.mosquitto = {
-    users = {
-      victor = {
-        acl = ["topic readwrite #"];
-      };
-      zigbee2mqtt = {
-        acl = ["topic readwrite #"];
-      };
-    };
+
     enable = true;
 
-    port = 1883;
-    host = "0.0.0.0";
-    
-    allowAnonymous = true;
-    aclExtraConf = "topic readwrite #";
+    listeners = [{
+      port = 1883;
+      settings.allow_anonymous = true;
+      acl = [ "topic readwrite #" ];
+      users = {
+        victor = { acl = [ "readwrite #" ]; };
+        zigbee2mqtt = { acl = [ "readwrite #" ]; };
+      };
+    }];
+
   };
 
   services.zigbee2mqtt = {
@@ -50,17 +47,17 @@
       homeassistant = true;
       permit_join = true;
 
-      serial = {
-        port = "/dev/ttyUSB0";
-      };
+      serial = { port = "/dev/ttyUSB0"; };
 
       mqtt = {
         base_topic = "zigbee2mqtt";
-        server = "mqtt://localhost:${toString config.services.mosquitto.port}";
+        server = "mqtt://localhost:${toString mosquittoPort}";
         user = "zigbee2mqtt";
       };
+
+      frontend = { port = 8080; };
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ config.services.mosquitto.port ];
+  networking.firewall.allowedTCPPorts = [ mosquittoPort config.services.zigbee2mqtt.settings.frontend.port ];
 }

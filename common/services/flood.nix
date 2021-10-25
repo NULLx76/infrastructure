@@ -1,8 +1,7 @@
 { config, pkgs, lib, ... }:
 with lib;
 let cfg = config.services.flood;
-in
-{
+in {
   options.services.flood = {
     enable = mkEnableOption "flood";
 
@@ -111,9 +110,7 @@ in
 
   config = mkIf cfg.enable {
     # Create group if set to default
-    users.groups = mkIf (cfg.group == "rtorrent") {
-      rtorrent = { };
-    };
+    users.groups = mkIf (cfg.group == "rtorrent") { rtorrent = { }; };
 
     # Create user if set to default
     users.users = mkIf (cfg.user == "flood") {
@@ -140,7 +137,12 @@ in
         Type = "simple";
         Restart = "on-failure";
         WorkingDirectory = cfg.dataDir;
-        ExecStart = "${cfg.package}/bin/flood --baseuri ${cfg.baseURI} --rundir ${cfg.dataDir} --host ${cfg.host} --port ${toString cfg.port} ${if cfg.ssl then "--ssl" else ""} --auth ${cfg.authMode}  --rtsocket ${cfg.rpcSocket} --allowedpath ${cfg.downloadDir}";
+        ExecStart =
+          "${cfg.package}/bin/flood --baseuri ${cfg.baseURI} --rundir ${cfg.dataDir} --host ${cfg.host} --port ${
+            toString cfg.port
+          } ${
+            if cfg.ssl then "--ssl" else ""
+          } --auth ${cfg.authMode}  --rtsocket ${cfg.rpcSocket} --allowedpath ${cfg.downloadDir}";
       };
     };
 

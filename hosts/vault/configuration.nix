@@ -5,13 +5,11 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      # Import common config
-      ../../common/generic-lxc.nix
-      ../../common
-    ];
-
+  imports = [
+    # Import common config
+    ../../common/generic-lxc.nix
+    ../../common
+  ];
 
   networking.hostName = "vault";
 
@@ -24,7 +22,7 @@
   system.stateVersion = "21.05"; # Did you read the comment?
 
   # Additional packages
-  environment.systemPackages = with pkgs; [];
+  environment.systemPackages = with pkgs; [ ];
 
   # Vault
   networking.firewall.allowedTCPPorts = [ 8200 ];

@@ -5,13 +5,11 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      # Import common config
-      ../../common/generic-lxc.nix
-      ../../common
-    ];
-
+  imports = [
+    # Import common config
+    ../../common/generic-lxc.nix
+    ../../common
+  ];
 
   networking.hostName = "nginx";
 
@@ -24,7 +22,7 @@
   system.stateVersion = "21.05"; # Did you read the comment?
 
   # Additional packages
-  environment.systemPackages = with pkgs; [];
+  environment.systemPackages = with pkgs; [ ];
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
@@ -38,6 +36,15 @@
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://10.42.42.8:8123/";
+        proxyWebsockets = true;
+      };
+    };
+
+    virtualHosts."zookeeper.0x76.dev" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://10.42.43.28:8085/";
         proxyWebsockets = true;
       };
     };

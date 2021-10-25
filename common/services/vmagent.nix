@@ -1,8 +1,7 @@
 { config, pkgs, lib, ... }:
 with lib;
 let cfg = config.services.vmagent;
-in
-{
+in {
   options.services.vmagent = {
     enable = mkEnableOption "vmagent";
 
@@ -74,9 +73,7 @@ in
 
   config = mkIf cfg.enable {
     # Create group if set to default
-    users.groups = mkIf (cfg.group == "vmagent") {
-      vmagent = { };
-    };
+    users.groups = mkIf (cfg.group == "vmagent") { vmagent = { }; };
 
     # Create user if set to default
     users.users = mkIf (cfg.user == "vmagent") {
@@ -93,8 +90,7 @@ in
     networking.firewall.allowedTCPPorts = mkIf (cfg.openFirewall) [ 8429 ];
 
     # The actual service
-    systemd.services.vmagent = let 
-      prometheusConfig = pkgs.writeText "prometheus.yml" cfg.prometheusConfig;
+    systemd.services.vmagent = let prometheusConfig = pkgs.writeText "prometheus.yml" cfg.prometheusConfig;
     in {
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
@@ -105,7 +101,8 @@ in
         Type = "simple";
         Restart = "on-failure";
         WorkingDirectory = cfg.dataDir;
-        ExecStart = "${cfg.package}/bin/vmagent -remoteWrite.url=${cfg.remoteWriteUrl} -promscrape.config=${prometheusConfig}";
+        ExecStart =
+          "${cfg.package}/bin/vmagent -remoteWrite.url=${cfg.remoteWriteUrl} -promscrape.config=${prometheusConfig}";
       };
     };
 

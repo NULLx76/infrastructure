@@ -55,13 +55,5 @@
   };
 
   # Setup packages available everywhere
-  environment.systemPackages = with pkgs; [
-    fzf
-    git
-    htop
-    rsync
-    ripgrep
-    vim
-    zoxide
-  ];
+  environment.systemPackages = with pkgs; [ fzf git htop rsync ripgrep vim zoxide ];
 }
