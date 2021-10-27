@@ -31,6 +31,7 @@
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
 
+
     virtualHosts."ha.0x76.dev" = {
       enableACME = true;
       forceSSL = true;
@@ -45,6 +46,25 @@
       forceSSL = true;
       locations."/" = {
         proxyPass = "http://10.42.43.28:8085/";
+        proxyWebsockets = true;
+      };
+    };
+
+    # TODO: Make a function for adding hostnames to k8s endpoint(s).
+    virtualHosts."wooloofan.club" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://10.42.42.150:8000/";
+        proxyWebsockets = true;
+      };
+    };
+
+    virtualHosts."whoami.wooloofan.club" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://10.42.42.150:8000/";
         proxyWebsockets = true;
       };
     };
