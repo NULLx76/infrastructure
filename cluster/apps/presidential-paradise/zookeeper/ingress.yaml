@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: zookeeper
+  namespace: presidential-paradise
+spec:
+  rules:
+  - host: "zookeeper.0x76.dev"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: zookeeper
+            port:
+              number: 8085
+
