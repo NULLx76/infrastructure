@@ -3,3 +3,5 @@ kind: Kustomization
 resources:
   - presidential-paradise.yaml
   - networking.yaml
+  - external-secrets.yaml
+
