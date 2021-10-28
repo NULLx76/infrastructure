@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: zookeeper
-        image: ghcr.io/nullx76/zookeeper:latest
+        image: ghcr.io/nullx76/zookeeper:manual
         ports:
           - containerPort: 8085
         env:
