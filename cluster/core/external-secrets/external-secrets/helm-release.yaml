@@ -19,4 +19,7 @@ spec:
   values:
     configInline:
       installCRDs: false
-
+  install:
+    crds: Skip
+  upgrade:
+    crds: Skip
