@@ -17,8 +17,7 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    configInline:
-      installCRDs: false
+    installCRDs: false
   install:
     crds: Skip
   upgrade:
