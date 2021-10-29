@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: zookeeper
-        image: docker.io/0x76/zookeeper:manual
+        image: docker.io/0x76/zookeeper:latest
         ports:
           - containerPort: 8085
         envFrom:
