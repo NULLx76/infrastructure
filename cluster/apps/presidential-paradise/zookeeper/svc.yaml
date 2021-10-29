@@ -8,6 +8,8 @@ spec:
   ports:
   - name: epmd
     port: 4369
+    targetPort: epmd
+    protocol: TCP
   selector:
     app: zookeeper
 ---
@@ -19,6 +21,7 @@ metadata:
 spec:
   ports:
   - name: http
+    targetPort: web
     port: 8085
   selector:
     app: zookeeper

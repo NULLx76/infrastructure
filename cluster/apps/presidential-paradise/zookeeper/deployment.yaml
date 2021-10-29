@@ -25,14 +25,17 @@ spec:
       - name: zookeeper
         image: docker.io/0x76/zookeeper:latest
         ports:
-          - containerPort: 8085
+          - name: web
+            containerPort: 8085
+          - name: epmd
+            containerPort: 4369
         envFrom:
           - secretRef:
               name: zookeeper
         env:
           - name: LANG
             value: C.UTF-8
-          - name: HOSTNAME
+          - name: RELEASE_NODE_IP
             valueFrom:
               fieldRef:
                 fieldPath: status.podIP
