@@ -26,6 +26,9 @@ spec:
         image: docker.io/0x76/zookeeper:manual
         ports:
           - containerPort: 8085
+        envFrom:
+          - secretRef:
+              name: zookeeper
         env:
           - name: LANG
             value: C.UTF-8
