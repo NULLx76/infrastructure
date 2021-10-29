@@ -37,7 +37,7 @@ spec:
               fieldRef:
                 fieldPath: status.podIP
           - name: SERVICE_NAME
-            value: zookeeper-private.default.svc.cluster.local
+            value: zookeeper-private.presidential-paradise.svc.cluster.local
         resources: {}
         securityContext:
           privileged: false
