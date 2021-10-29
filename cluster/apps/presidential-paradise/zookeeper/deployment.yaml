@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zookeeper
+  namespace: presidential-paradise
+  labels:
+    app: zookeeper
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: zookeeper
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 34%
+      maxUnavailable: 34%
+  template:
+    metadata:
+      name: zookeeper
+      labels:
+        app: zookeeper
+    spec:
+      containers:
+      - name: zookeeper
+        image: docker.io/0x76/zookeeper:manual
+        ports:
+          - containerPort: 8085
+        env:
+          - name: LANG
+            value: C.UTF-8
+          - name: HOSTNAME
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          - name: SERVICE_NAME
+            value: zookeeper-private.default.svc.cluster.local
+        resources: {}
+        securityContext:
+          privileged: false
+          procMount: Default
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      terminationGracePeriodSeconds: 30
