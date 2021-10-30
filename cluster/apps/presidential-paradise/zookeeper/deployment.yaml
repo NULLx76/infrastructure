@@ -35,7 +35,7 @@ spec:
         env:
           - name: LANG
             value: C.UTF-8
-          - name: RELEASE_NODE_IP
+          - name: HOSTNAME
             valueFrom:
               fieldRef:
                 fieldPath: status.podIP
