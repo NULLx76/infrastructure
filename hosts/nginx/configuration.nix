@@ -41,16 +41,16 @@
       };
     };
 
+    # TODO: Make a function for adding hostnames to k8s endpoint(s).
     virtualHosts."zookeeper.0x76.dev" = {
       enableACME = true;
       forceSSL = true;
       locations."/" = {
-        proxyPass = "http://10.42.43.28:8085/";
+        proxyPass = "http://10.42.42.150:8000/";
         proxyWebsockets = true;
       };
     };
 
-    # TODO: Make a function for adding hostnames to k8s endpoint(s).
     virtualHosts."wooloofan.club" = {
       enableACME = true;
       forceSSL = true;

@@ -44,6 +44,7 @@
       "--cluster-init" # Enable embedded etcd
       "--disable=servicelb" # disable servicelb
       "--no-deploy=traefik" # we want to configure traefik ourselves (or use nginx instead)
+      "--cluster-cidr=10.69.0.0/16" # the default of 10.42.0.0/16 clashes with my own network
     ];
   };
 }
