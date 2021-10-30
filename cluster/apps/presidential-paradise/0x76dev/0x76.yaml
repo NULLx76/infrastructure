@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: x76dev
-        image: registry.xirion.net/library/0x76dev
+        image: registry.xirion.net/library/0x76.dev
         ports:
         - containerPort: 8080
 ---
