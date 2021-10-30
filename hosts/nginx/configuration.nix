@@ -3,8 +3,16 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
-{
+let
+  k8s_proxy = {
+    enableACME = true;
+    forceSSL = true;
+    locations."/" = {
+      proxyPass = "http://10.42.42.150:8000/";
+      proxyWebsockets = true;
+    };
+  };
+in {
   imports = [
     # Import common config
     ../../common/generic-lxc.nix
@@ -31,7 +39,6 @@
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
 
-
     virtualHosts."ha.0x76.dev" = {
       enableACME = true;
       forceSSL = true;
@@ -41,33 +48,10 @@
       };
     };
 
-    # TODO: Make a function for adding hostnames to k8s endpoint(s).
-    virtualHosts."zookeeper.0x76.dev" = {
-      enableACME = true;
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://10.42.42.150:8000/";
-        proxyWebsockets = true;
-      };
-    };
-
-    virtualHosts."wooloofan.club" = {
-      enableACME = true;
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://10.42.42.150:8000/";
-        proxyWebsockets = true;
-      };
-    };
-
-    virtualHosts."whoami.wooloofan.club" = {
-      enableACME = true;
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://10.42.42.150:8000/";
-        proxyWebsockets = true;
-      };
-    };
+    # Kubernetes endpoints
+    virtualHosts."zookeeper.0x76.dev" = k8s_proxy;
+    virtualHosts."wooloofan.club" = k8s_proxy;
+    virtualHosts."whoami.wooloofan.club" = k8s_proxy;
   };
 
   security.acme.email = "victorheld12@gmail.com";
