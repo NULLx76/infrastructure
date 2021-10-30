@@ -16,10 +16,12 @@ spec:
         app: x76dev
     spec:
       containers:
-      - name: x76dev
-        image: registry.xirion.net/library/0x76.dev
-        ports:
-        - containerPort: 8080
+        - name: x76dev
+          image: registry.xirion.net/library/0x76.dev
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+        - name: xirion-registry-creds
 ---
 apiVersion: v1
 kind: Service
@@ -41,13 +43,13 @@ metadata:
 spec:
   ingressClassName: "traefik"
   rules:
-  - host: "0x76.dev"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: x76dev-service
-            port:
-              number: 8080
+    - host: "0x76.dev"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: x76dev-service
+                port:
+                  number: 8080
