@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 0x76.dev
+  namespace: presidential-paradise
+  labels:
+    app: 0x76.dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: 0x76.dev
+  template:
+    metadata:
+      labels:
+        app: 0x76.dev
+    spec:
+      containers:
+      - name: 0x76.dev
+        image: registry.xirion.net/library/0x76.dev
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: 0x76.dev-service
+  namespace: presidential-paradise
+spec:
+  selector:
+    app: 0x76.dev
+  ports:
+    - protocol: TCP
+      port: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: 0x76.dev-ingress
+  namespace: presidential-paradise
+spec:
+  ingressClassName: "traefik"
+  rules:
+  - host: "0x76.dev"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: 0x76.dev-service
+            port:
+              number: 8080
