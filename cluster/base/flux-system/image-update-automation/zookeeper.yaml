@@ -2,7 +2,7 @@ apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageRepository
 metadata:
   name: zookeeper
-  namespace: presidential-paradise
+  namespace: flux-system
 spec:
   image: registry.xirion.net/library/zookeeper
   interval: 1m0s
@@ -13,7 +13,7 @@ apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
 metadata:
   name: zookeeper
-  namespace: presidential-paradise
+  namespace: flux-system
 spec:
   imageRepositoryRef:
     name: zookeeper

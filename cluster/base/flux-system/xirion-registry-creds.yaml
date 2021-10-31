@@ -1,0 +1,19 @@
+apiVersion: external-secrets.io/v1alpha1
+kind: ExternalSecret
+metadata:
+  name: xirion-registry-creds
+  namespace: flux-system
+spec:
+  refreshInterval: "5m"
+  secretStoreRef:
+    name: vault
+    kind: ClusterSecretStore
+  target:
+    name: xirion-registry-creds
+    template:
+      type: kubernetes.io/dockerconfigjson
+  data:
+    - secretKey: .dockerconfigjson
+      remoteRef:
+        key: xirion-registry-creds
+        property: dockerconfigjson

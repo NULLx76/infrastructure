@@ -2,13 +2,12 @@ apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
 metadata:
   name: flux-system
-  namespace: presidential-paradise
+  namespace: flux-system
 spec:
   interval: 1m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
-    namespace: flux-system
   git:
     checkout:
       ref:
@@ -21,5 +20,5 @@ spec:
     push:
       branch: main
   update:
-    path: ./cluster/apps/presidential-paradise
+    path: ./cluster/
     strategy: Setters
