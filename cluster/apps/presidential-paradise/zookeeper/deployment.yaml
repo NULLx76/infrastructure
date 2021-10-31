@@ -21,6 +21,8 @@ spec:
       labels:
         app: zookeeper
     spec:
+      imagePullSecrets:
+        - name: xirion-registry-creds
       containers:
         - name: zookeeper
           image: registry.xirion.net/library/zookeeper:0.2.4 # {"$imagepolicy": "flux-system:zookeeper"}
