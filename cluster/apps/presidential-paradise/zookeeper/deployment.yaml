@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: zookeeper
-        image: docker.io/0x76/zookeeper:latest
+        image: registry.xirion.net/library/zookeeper:0.2.0  # {"$imagepolicy": "presidential-paradise:zookeeper"}
         ports:
           - name: web
             containerPort: 8085
