@@ -21,8 +21,12 @@
     # otherwise it'll override the grml prompt
     promptInit = "";
   };
-
+  
   environment.pathsToLink = [ "/share/zsh" ];
+
+  # Install Neovim and set it as alias for vi(m)
+  programs.neovim.enable = true;
+  programs.neovim.viAlias = true;
 
   # Disable sudo prompt for `wheel` users.
   security.sudo.wheelNeedsPassword = false;
@@ -55,5 +59,5 @@
   };
 
   # Setup packages available everywhere
-  environment.systemPackages = with pkgs; [ fzf git htop rsync ripgrep vim zoxide ];
+  environment.systemPackages = with pkgs; [ fzf git htop rsync ripgrep zoxide ];
 }

@@ -49,6 +49,7 @@ in {
     };
 
     # Kubernetes endpoints
+    virtualHosts."0x76.dev" = k8s_proxy;
     virtualHosts."zookeeper.0x76.dev" = k8s_proxy;
     virtualHosts."wooloofan.club" = k8s_proxy;
     virtualHosts."whoami.wooloofan.club" = k8s_proxy;
