@@ -2,7 +2,7 @@
   description = "Delft Deployment";
 
   inputs.deploy-rs.url = "github:serokell/deploy-rs";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
   outputs = { self, nixpkgs, deploy-rs }: {
     nixosConfigurations.bastion = nixpkgs.lib.nixosSystem {
@@ -28,6 +28,11 @@
     nixosConfigurations.nginx = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [ "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix" ./hosts/nginx/configuration.nix ];
+    };
+
+    nixosConfigurations.consul = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [ "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix" ./hosts/consul/configuration.nix ];
     };
 
     deploy.nodes.bastion = {
@@ -72,6 +77,15 @@
       profiles.system = {
         user = "root";
         path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.nginx;
+      };
+    };
+
+    deploy.nodes.consul = {
+      hostname = "10.42.42.14";
+      fastConnection = true;
+      profiles.system = {
+        user = "root";
+        path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.consul;
       };
     };
 
