@@ -25,7 +25,7 @@ spec:
         - name: xirion-registry-creds
       containers:
         - name: zookeeper
-          image: registry.xirion.net/library/zookeeper:0.3.0 # {"$imagepolicy": "flux-system:zookeeper"}
+          image: registry.xirion.net/library/zookeeper:0.3.1 # {"$imagepolicy": "flux-system:zookeeper"}
           ports:
             - name: web
               containerPort: 8085
