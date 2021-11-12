@@ -2,7 +2,7 @@
   description = "Delft Deployment";
 
   inputs.deploy-rs.url = "github:serokell/deploy-rs";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/master";
 
   outputs = { self, nixpkgs, deploy-rs }: {
     nixosConfigurations.bastion = nixpkgs.lib.nixosSystem {

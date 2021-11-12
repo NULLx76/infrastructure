@@ -48,6 +48,15 @@ in {
       };
     };
 
+    virtualHosts."zookeeper-dev.0x76.dev" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://10.42.43.28:8085/";
+        proxyWebsockets = true;
+      };
+    };
+
     # Kubernetes endpoints
     virtualHosts."0x76.dev" = k8s_proxy;
     virtualHosts."zookeeper.0x76.dev" = k8s_proxy;

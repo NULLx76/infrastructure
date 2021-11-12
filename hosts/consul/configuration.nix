@@ -11,7 +11,7 @@
     ../../common
   ];
 
-  networking.hostName = "vault";
+  networking.hostName = "consul";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -24,18 +24,5 @@
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
-  # Vault
-  networking.firewall.allowedTCPPorts = [ 8200 ];
-
-  services.vault = {
-    enable = true;
-    # bin version includes the UI
-    package = pkgs.vault-bin;
-    address = "0.0.0.0:8200";
-    storageBackend = "file";
-    storagePath = "/var/lib/vault";
-    extraConfig = ''
-      ui = true
-    '';
-  };
+  networking.firewall.allowedTCPPorts = [ ];
 }
