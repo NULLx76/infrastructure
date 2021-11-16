@@ -10,19 +10,19 @@
     vault-secrets.url = "github:serokell/vault-secrets";
   };
 
-  outputs = { self, nixpkgs, deploy-rs, vault-secrets, serokell-nix, ... }@inputs:
+  outputs =
+    { self, nixpkgs, deploy-rs, vault-secrets, serokell-nix, ... }@inputs:
     let
       system = "x86_64-linux";
-      mkLxcSystem = host:
+      mkSystem = { host, lxc ? true }:
         nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [
-            ./hosts/${host}/configuration.nix
-            "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
-          ];
-          specialArgs = { inputs = inputs; };
+          modules = [ ./hosts/${host}/configuration.nix ] ++ (if lxc then
+            [ "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix" ]
+          else
+            [ ]);
+          specialArgs.inputs = inputs;
         };
-
       mkDeploy = hostname: profile: {
         hostname = hostname;
         fastConnection = true;
@@ -32,21 +32,15 @@
         };
       };
     in {
-      nixosConfigurations.bastion = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [ ./hosts/bastion/configuration.nix ];
-      };
+      # VMs
+      nixosConfigurations.bastion = mkSystem { host = "bastion"; lxc = false; };
+      nixosConfigurations.k3s = mkSystem { host = "k3s"; lxc = false; };
 
-      nixosConfigurations.k3s = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [ ./hosts/k3s/configuration.nix ];
-      };
-
-      # LXC Containers
-      nixosConfigurations.vault = mkLxcSystem "vault";
-      nixosConfigurations.mosquitto = mkLxcSystem "mosquitto";
-      nixosConfigurations.nginx = mkLxcSystem "nginx";
-      nixosConfigurations.consul = mkLxcSystem "consul";
+      # LXCs
+      nixosConfigurations.vault = mkSystem { host = "vault"; };
+      nixosConfigurations.mosquitto = mkSystem { host = "mosquitto"; };
+      nixosConfigurations.nginx = mkSystem { host = "nginx"; };
+      nixosConfigurations.consul = mkSystem { host = "consul"; };
 
       # Deploys 
       deploy.nodes.bastion = mkDeploy "10.42.42.4" "bastion";
