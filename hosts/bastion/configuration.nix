@@ -2,9 +2,18 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-
-{
+{ pkgs, ... }:
+let
+  fix-vscode = pkgs.writeScriptBin "fix-vscode" ''
+    #!${pkgs.stdenv.shell}
+    if [[ -d "$HOME/.vscode-server/bin" ]]; then
+      for versiondir in "$HOME"/.vscode-server/bin/*; do
+        rm "$versiondir/node"
+        ln -s "${pkgs.nodejs-14_x}/bin/node" "$versiondir/node"
+      done
+    fi
+  '';
+in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -30,11 +39,11 @@
 
   # Additional packages
   environment.systemPackages = with pkgs; [
+    fix-vscode
     fluxcd
     k9s
     kubectl
     kubectx
-    nodejs-14_x
     nixfmt
     ripgrep
     rsync
@@ -42,7 +51,7 @@
     vault
     vim
   ];
-  #
+
   programs.gnupg.agent = {
     enable = true;
     pinentryFlavor = "curses";
