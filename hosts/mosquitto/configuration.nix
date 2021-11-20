@@ -45,7 +45,7 @@ in {
     dataDir = "/var/lib/zigbee2mqtt";
     settings = {
       homeassistant = true;
-      permit_join = true;
+      permit_join = false;
 
       serial = { port = "/dev/ttyUSB0"; };
 

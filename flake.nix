@@ -17,7 +17,7 @@
       mkSystem = { host, lxc ? true }:
         nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [ ./hosts/${host}/configuration.nix ] ++ (if lxc then
+          modules = [ ./hosts/${host}/configuration.nix ./common.nix ] ++ (if lxc then
             [ "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix" ]
           else
             [ ]);
@@ -44,7 +44,7 @@
 
       # Deploys 
       deploy.nodes.bastion = mkDeploy "10.42.42.4" "bastion";
-      deploy.nodes.k3s-node1 = mkDeploy "10.42.42.10" "k3s";
+      deploy.nodes.k3s = mkDeploy "10.42.42.10" "k3s";
       deploy.nodes.vault = mkDeploy "10.42.42.6" "vault";
       deploy.nodes.mosquitto = mkDeploy "10.42.42.7" "mosquitto";
       deploy.nodes.nginx = mkDeploy "10.42.42.9" "nginx";
@@ -55,6 +55,7 @@
         pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system}
           [ vault-secrets.overlay ];
       in pkgs.mkShell {
+        VAULT_ADDR = "http://10.42.42.6:8200/";
         buildInputs = [
           deploy-rs.packages.${system}.deploy-rs
           pkgs.vault
