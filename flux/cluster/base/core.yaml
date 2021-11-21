@@ -8,7 +8,7 @@ spec:
   interval: 10m0s
   dependsOn:
     - name: crds
-  path: ./cluster/core
+  path: ./flux/cluster/core
   prune: false
   sourceRef:
     kind: GitRepository
