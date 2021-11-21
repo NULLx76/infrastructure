@@ -1,0 +1,67 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: networking
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://helm.traefik.io/traefik
+      chart: traefik
+      version: 10.6.2
+      sourceRef:
+        kind: HelmRepository
+        name: traefik-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      name: traefik
+    deployment:
+      kind: Deployment
+      replicas: 2
+    service:
+      enabled: true
+      type: LoadBalancer
+      spec:
+        externalIPs:
+          - 10.42.42.150
+        externalTrafficPolicy: Local
+    logs:
+      general:
+        level: WARN
+    ingressClass:
+      enabled: true
+      isDefaultClass: true
+      fallbackApiVersion: v1
+    globalArguments:
+      - "--providers.kubernetesingress.ingressclass=traefik"
+      - "--entryPoints.websecure.forwardedHeaders.trustedIPs=10.42.42.0/23"
+    additionalArguments:
+      - "--providers.kubernetesingress.ingressendpoint.ip=10.42.42.150"
+    ports:
+      traefik:
+        port: 9000
+        expose: true
+      web:
+        port: 8000
+        exposedPort: 8000
+        expose: true
+      websecure:
+        port: 8443
+        exposedPort: 8443
+        expose: true
+    pilot:
+      enabled: false
+    experimental:
+      plugins:
+        enabled: false
+    affinity:  {}
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 500m
+      limits:
+        memory: 500Mi

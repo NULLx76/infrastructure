@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: zookeeper-private
+  namespace: presidential-paradise
+spec:
+  clusterIP: None
+  ports:
+  - name: epmd
+    port: 4369
+    targetPort: epmd
+    protocol: TCP
+  selector:
+    app: zookeeper
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zookeeper
+  namespace: presidential-paradise
+spec:
+  ports:
+  - name: http
+    targetPort: web
+    port: 8085
+  selector:
+    app: zookeeper
