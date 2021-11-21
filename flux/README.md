@@ -8,12 +8,6 @@ The main directory is `cluster`, it contains the following subdirectories in the
 * **core**: important core infrastructure applications, grouped by namespace, that should never be pruned
 * **apps**: common applications that are allowed to be pruned by flux
 
-## Bootstrap
-The cluster was bootstrapped using the following command:
-```
-flux bootstrap git --url=ssh://git@git.xirion.net:2222/olympus/flux.git --branch=main --path=cluster/base/ --ssh-key-algorithm=ed25519 --components-extra=image-reflector-controller,image-automation-controller
-```
-
 ## References
 Heavily inspired by: [onedr0p's cluster](https://github.com/onedr0p/home-cluster)
 
