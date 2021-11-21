@@ -20,16 +20,16 @@
     {
         hostname = "mosquitto";
         ip = "10.42.42.7";
-        mac = "16:2B:87:55:0C:0C";
+        mac = "C6:F9:8B:3D:9E:37";
     }
     {
         hostname = "nginx";
         ip = "10.42.42.9";
-        mac = "16:2B:87:55:0C:0C";
+        mac = "6A:C2:89:85:CF:A6";
     }
     {
         hostname = "consul";
         ip = "10.42.42.14";
-        mac = "16:2B:87:55:0C:0C";
+        mac = "D6:DE:07:41:73:81";
     }
 ]
