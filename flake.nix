@@ -17,7 +17,7 @@
       mkSystem = { host, lxc ? true }:
         nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [ ./hosts/${host}/configuration.nix ./common.nix ] ++ (if lxc then
+          modules = [ ./nixos/hosts/${host}/configuration.nix ./nixos/common.nix ] ++ (if lxc then
             [ "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix" ]
           else
             [ ]);
