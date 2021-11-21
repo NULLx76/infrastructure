@@ -7,7 +7,7 @@
 
   inputs = {
     deploy-rs.url = "github:serokell/deploy-rs";
-    nixpkgs.url = "github:NixOS/nixpkgs/master";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     serokell-nix.url = "github:serokell/serokell.nix";
     vault-secrets.url = "github:serokell/vault-secrets";
   };
@@ -16,8 +16,9 @@
     { self, nixpkgs, deploy-rs, vault-secrets, serokell-nix, ... }@inputs:
     let
       inherit (nixpkgs) lib;
-      inherit (builtins) filter;
+      inherit (builtins) filter mapAttrs;
       system = "x86_64-linux";
+      hosts = import ./hosts.nix;
 
       # Create a nixosConfiguration based on a foldername (nixname) and if the host is an LXC container or a VM.
       mkConfig = { hostname, profile ? hostname, lxc ? true, ... }: {
@@ -30,7 +31,7 @@
               ./nixos/common/generic-lxc.nix
             ] else
               [ ./nixos/common/generic-vm.nix ]);
-          specialArgs.inputs = inputs;
+          specialArgs = { inherit hosts inputs; };
         };
       };
 
@@ -41,16 +42,19 @@
           fastConnection = true;
           profiles.system = {
             user = "root";
-            path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.${profile};
+            path = deploy-rs.lib.${system}.activate.nixos
+              self.nixosConfigurations.${profile};
           };
         };
       };
 
       # Import all nixos host definitions that are actual nix machines
-      nixHosts = filter ({ nix ? true, ... }: nix) (import ./hosts.nix);
+      nixHosts = filter ({ nix ? true, ... }: nix) hosts;
     in {
       # Make the config and deploy sets
-      nixosConfigurations = lib.foldr (el: acc: acc // mkConfig el) { } nixHosts;
+      nixosConfigurations =
+        lib.foldr (el: acc: acc // mkConfig el) { } nixHosts;
+
       deploy.nodes = lib.foldr (el: acc: acc // mkDeploy el) { } nixHosts;
 
       # Use by running `nix develop`
@@ -76,6 +80,7 @@
         ];
       };
 
-      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+      checks = mapAttrs (system: deployLib: deployLib.deployChecks self.deploy)
+        deploy-rs.lib;
     };
 }
