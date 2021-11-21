@@ -13,7 +13,7 @@ resource "proxmox_lxc" "nixos-template" {
   ostemplate   = "local:vztmpl/nixos-unstable-default_156198829_amd64.tar.xz"
   ostype       = "unmanaged"
   unprivileged = true
-  vmid         = "101"
+  vmid         = 101
   template     = true
 
   memory = 1024
@@ -40,9 +40,8 @@ resource "proxmox_lxc" "vault" {
   description  = "Vault Secrets Management"
   hostname     = "vault"
   unprivileged = false # needed for mlock
-  vmid         = "102"
-  clone        = "101"
-
+  vmid = 102
+  clone = "101"
   memory = 1024
 
   rootfs {
