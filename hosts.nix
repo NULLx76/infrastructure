@@ -70,4 +70,10 @@
     ip = "10.42.42.16";
     mac = "B6:04:0B:CD:0F:9F";
   }
+  {
+    hostname = "minio";
+    profile = "dns";
+    ip = "10.42.42.17";
+    mac = "0A:06:5E:E7:9A:0C";
+  }
 ]

@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "hashicorp.terraform",
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        "jnoortheen.nix-ide",
+        "brettm12345.nixfmt-vscode",
+        "redhat.vscode-yaml"
+    ]
+}

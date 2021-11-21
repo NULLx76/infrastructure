@@ -18,8 +18,11 @@
   nix = {
     package = pkgs.nixUnstable;
     autoOptimiseStore = true;
-    binaryCaches =
-      [ "https://cachix.cachix.org" "https://nix-community.cachix.org" "https://nixpkgs-review-bot.cachix.org" ];
+    binaryCaches = [
+      "https://cachix.cachix.org"
+      "https://nix-community.cachix.org"
+      "https://nixpkgs-review-bot.cachix.org"
+    ];
     binaryCachePublicKeys = [
       "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
@@ -45,8 +48,9 @@
   services.openssh.enable = true;
 
   vault-secrets = {
-        vaultPrefix = "nixos/${config.networking.hostName}";
-        vaultAddress = "http://10.42.42.6:8200/";
-        approlePrefix = "olympus-${config.networking.hostName}";
-    };
+    vaultPrefix = "nixos/${config.networking.hostName}";
+    vaultAddress = "http://10.42.42.6:8200/";
+    approlePrefix = "olympus-${config.networking.hostName}";
+  };
+
 }

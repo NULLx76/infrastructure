@@ -25,7 +25,7 @@
         "${profile}" = lib.nixosSystem {
           inherit system;
           modules =
-            [ "${./.}/nixos/hosts/${profile}/configuration.nix" ./nixos/common ]
+            [ ./nixos/common ./nixos/hosts/${profile}/configuration.nix  ]
             ++ (if lxc then [
               "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
               ./nixos/common/generic-lxc.nix
@@ -50,21 +50,28 @@
 
       # Import all nixos host definitions that are actual nix machines
       nixHosts = filter ({ nix ? true, ... }: nix) hosts;
+
+      pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system}
+        [ vault-secrets.overlay ];
     in {
       # Make the config and deploy sets
-      nixosConfigurations =
-        lib.foldr (el: acc: acc // mkConfig el) { } nixHosts;
-
+      nixosConfigurations = lib.foldr (el: acc: acc // mkConfig el) { } nixHosts;
       deploy.nodes = lib.foldr (el: acc: acc // mkDeploy el) { } nixHosts;
 
+      apps.x86_64-linux.vault-push-approles = {
+        type = "app";
+        program = "${pkgs.vault-push-approles self}/bin/vault-push-approles";
+      };
+      apps.x86_64-linux.vault-push-approle-envs = {
+        type = "app";
+        program =
+          "${pkgs.vault-push-approle-envs self}/bin/vault-push-approle-envs";
+      };
+
       # Use by running `nix develop`
-      devShell.${system} = let
-        pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system}
-          [ vault-secrets.overlay ];
-      in pkgs.mkShell {
+      devShell.${system} = pkgs.mkShell {
         VAULT_ADDR = "http://10.42.42.6:8200/";
         # This only support bash so just execute zsh in bash as a workaround :/
-        shellHook = "${pkgs.zsh}/bin/zsh; exit";
         buildInputs = with pkgs; [
           deploy-rs.packages.${system}.deploy-rs
           fluxcd
@@ -75,8 +82,8 @@
           nixfmt
           nixUnstable
           vault
-          (vault-push-approle-envs self)
-          (vault-push-approles self)
+          (vault-push-approle-envs self { })
+          (vault-push-approles self { })
         ];
       };
 
