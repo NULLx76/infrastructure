@@ -3,11 +3,8 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
-{
-  imports = [
-  ];
-
+let port = 8200;
+in {
   networking.hostName = "vault";
 
   # This value determines the NixOS release from which the default
@@ -22,13 +19,13 @@
   environment.systemPackages = with pkgs; [ ];
 
   # Vault
-  networking.firewall.allowedTCPPorts = [ 8200 ];
+  networking.firewall.allowedTCPPorts = [ port ];
 
   services.vault = {
     enable = true;
     # bin version includes the UI
     package = pkgs.vault-bin;
-    address = "0.0.0.0:8200";
+    address = "0.0.0.0:${toString port}";
     storageBackend = "file";
     storagePath = "/var/lib/vault";
     extraConfig = ''

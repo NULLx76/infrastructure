@@ -1,20 +1,16 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 let
-  k8s_proxy = {
+  proxy = url: {
     enableACME = true;
     forceSSL = true;
     locations."/" = {
-      proxyPass = "http://10.42.42.150:8000/";
+      proxyPass = url;
       proxyWebsockets = true;
     };
   };
+  k8s_proxy = proxy "http://10.42.42.150:8000/";
 in {
-  imports = [
-  ];
+  imports = [ ];
 
   networking.hostName = "nginx";
 
@@ -36,23 +32,9 @@ in {
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
 
-    virtualHosts."ha.0x76.dev" = {
-      enableACME = true;
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://10.42.42.8:8123/";
-        proxyWebsockets = true;
-      };
-    };
-
-    virtualHosts."zookeeper-dev.0x76.dev" = {
-      enableACME = true;
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://10.42.43.28:8085/";
-        proxyWebsockets = true;
-      };
-    };
+    # Reverse Proxies
+    virtualHosts."ha.0x76.dev" = proxy "http://10.42.42.8:8123/";
+    virtualHosts."zookeeper-dev.0x76.dev" = proxy "http://10.42.43.28:8085/";
 
     # Kubernetes endpoints
     virtualHosts."0x76.dev" = k8s_proxy;

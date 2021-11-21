@@ -32,6 +32,7 @@
   };
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays = [ (import ../pkgs) ];
 
   # Limit the systemd journal to 100 MB of disk or the
   # last 7 days of logs, whichever happens first.

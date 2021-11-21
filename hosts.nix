@@ -10,7 +10,6 @@
     hostname = "nuc";
     ip = "10.42.42.42";
     mac = "1C:69:7A:62:30:88";
-    ip6 = "";
     nix = false;
   }
   {

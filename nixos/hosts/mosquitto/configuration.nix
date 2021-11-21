@@ -5,8 +5,7 @@
 { config, pkgs, ... }:
 let mosquittoPort = 1883;
 in {
-  imports = [
-  ];
+  imports = [ ];
 
   networking.hostName = "mosquitto";
 
@@ -56,5 +55,6 @@ in {
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ mosquittoPort config.services.zigbee2mqtt.settings.frontend.port ];
+  networking.firewall.allowedTCPPorts =
+    [ mosquittoPort config.services.zigbee2mqtt.settings.frontend.port ];
 }
