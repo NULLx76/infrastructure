@@ -18,14 +18,13 @@
       inherit (nixpkgs) lib;
       inherit (builtins) filter;
       system = "x86_64-linux";
-      merge = a: b: a // b;
 
       # Create a nixosConfiguration based on a foldername (nixname) and if the host is an LXC container or a VM.
-      mkConfig = nixname: lxc:
-        lib.nixosSystem {
+      mkConfig = { hostname, profile ? hostname, lxc ? true, ... }: {
+        "${profile}" = lib.nixosSystem {
           inherit system;
           modules =
-            [ "${./.}/nixos/hosts/${nixname}/configuration.nix" ./nixos/common ]
+            [ "${./.}/nixos/hosts/${profile}/configuration.nix" ./nixos/common ]
             ++ (if lxc then [
               "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
               ./nixos/common/generic-lxc.nix
@@ -33,36 +32,26 @@
               [ ./nixos/common/generic-vm.nix ]);
           specialArgs.inputs = inputs;
         };
+      };
 
-      # Create a deploy-rs config based on profile- and hostname.
-      mkDeploy = hostname: profile: {
-        inherit hostname;
-        fastConnection = true;
-        profiles.system = {
-          user = "root";
-          path = deploy-rs.lib.${system}.activate.nixos
-            self.nixosConfigurations.${profile};
+      # Same as above, but for the nodes part of deploy.
+      mkDeploy = { ip, hostname, profile ? hostname, ... }: {
+        "${hostname}" = {
+          hostname = ip;
+          fastConnection = true;
+          profiles.system = {
+            user = "root";
+            path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.${profile};
+          };
         };
       };
 
-      # Convert a host from hosts.nix to something nixosConfigurations understands
-      hostToConfig = { hostname, nixname ? hostname, lxc ? true, ... }:
-        merge {
-          "${nixname}" = mkConfig nixname lxc;
-        };
-
-      # Same as above, but for the nodes part of deploy.
-      hostToDeploy = { ip, hostname, nixname ? hostname, ... }:
-        merge {
-          "${nixname}" = mkDeploy ip nixname;
-        };
-
       # Import all nixos host definitions that are actual nix machines
-      nixHosts = filter ({ nix ? true, ... }: nix) (import ./nixos/hosts.nix);
+      nixHosts = filter ({ nix ? true, ... }: nix) (import ./hosts.nix);
     in {
       # Make the config and deploy sets
-      nixosConfigurations = lib.foldr hostToConfig { } nixHosts;
-      deploy.nodes = lib.foldr hostToDeploy { } nixHosts;
+      nixosConfigurations = lib.foldr (el: acc: acc // mkConfig el) { } nixHosts;
+      deploy.nodes = lib.foldr (el: acc: acc // mkDeploy el) { } nixHosts;
 
       # Use by running `nix develop`
       devShell.${system} = let
@@ -70,12 +59,15 @@
           [ vault-secrets.overlay ];
       in pkgs.mkShell {
         VAULT_ADDR = "http://10.42.42.6:8200/";
+        # This only support bash so just execute zsh in bash as a workaround :/
+        shellHook = "${pkgs.zsh}/bin/zsh; exit";
         buildInputs = with pkgs; [
           deploy-rs.packages.${system}.deploy-rs
           fluxcd
           k9s
           kubectl
           kubectx
+          terraform
           nixfmt
           nixUnstable
           vault
@@ -84,7 +76,6 @@
         ];
       };
 
-      checks = builtins.mapAttrs
-        (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
 }

@@ -7,7 +7,7 @@
     }
     {
         hostname = "k3s-node1";
-        nixname = "k3s";
+        profile = "k3s";
         ip = "10.42.42.10";
         mac = "2E:F8:55:23:D9:9B";
         lxc = false;
