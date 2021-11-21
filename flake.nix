@@ -1,7 +1,9 @@
 {
   description = "Delft Deployment";
 
-  # Based on: https://github.com/serokell/pegasus-infra/blob/master/flake.nix
+  # Based on: 
+  # * https://github.com/serokell/pegasus-infra/blob/master/flake.nix
+  # * https://git.voidcorp.nl/j00lz/nixos-configs/src/branch/main/flake.nix
 
   inputs = {
     deploy-rs.url = "github:serokell/deploy-rs";
@@ -13,11 +15,17 @@
   outputs =
     { self, nixpkgs, deploy-rs, vault-secrets, serokell-nix, ... }@inputs:
     let
+      inherit (nixpkgs) lib;
+      inherit (builtins) filter;
       system = "x86_64-linux";
-      mkSystem = { host, lxc ? true }:
-        nixpkgs.lib.nixosSystem {
+      merge = a: b: a // b;
+
+      # Create a nixosConfiguration based on a foldername (nixname) and if the host is an LXC container or a VM.
+      mkConfig = nixname: lxc:
+        lib.nixosSystem {
           inherit system;
-          modules = [ ./nixos/hosts/${host}/configuration.nix ./nixos/common ]
+          modules =
+            [ "${./.}/nixos/hosts/${nixname}/configuration.nix" ./nixos/common ]
             ++ (if lxc then [
               "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
               ./nixos/common/generic-lxc.nix
@@ -25,38 +33,36 @@
               [ ./nixos/common/generic-vm.nix ]);
           specialArgs.inputs = inputs;
         };
+
+      # Create a deploy-rs config based on profile- and hostname.
       mkDeploy = hostname: profile: {
-        hostname = hostname;
+        inherit hostname;
         fastConnection = true;
         profiles.system = {
           user = "root";
-          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.${profile};
+          path = deploy-rs.lib.${system}.activate.nixos
+            self.nixosConfigurations.${profile};
         };
       };
+
+      # Convert a host from hosts.nix to something nixosConfigurations understands
+      hostToConfig = { hostname, nixname ? hostname, lxc ? true, ... }:
+        merge {
+          "${nixname}" = mkConfig nixname lxc;
+        };
+
+      # Same as above, but for the nodes part of deploy.
+      hostToDeploy = { ip, hostname, nixname ? hostname, ... }:
+        merge {
+          "${nixname}" = mkDeploy ip nixname;
+        };
+
+      # Import all nixos host definitions that are actual nix machines
+      nixHosts = filter ({ nix ? true, ... }: nix) (import ./nixos/hosts.nix);
     in {
-      # VMs
-      nixosConfigurations.bastion = mkSystem {
-        host = "bastion";
-        lxc = false;
-      };
-      nixosConfigurations.k3s = mkSystem {
-        host = "k3s";
-        lxc = false;
-      };
-
-      # LXCs
-      nixosConfigurations.vault = mkSystem { host = "vault"; };
-      nixosConfigurations.mosquitto = mkSystem { host = "mosquitto"; };
-      nixosConfigurations.nginx = mkSystem { host = "nginx"; };
-      nixosConfigurations.consul = mkSystem { host = "consul"; };
-
-      # Deploys 
-      deploy.nodes.bastion = mkDeploy "10.42.42.4" "bastion";
-      deploy.nodes.k3s = mkDeploy "10.42.42.10" "k3s";
-      deploy.nodes.vault = mkDeploy "10.42.42.6" "vault";
-      deploy.nodes.mosquitto = mkDeploy "10.42.42.7" "mosquitto";
-      deploy.nodes.nginx = mkDeploy "10.42.42.9" "nginx";
-      deploy.nodes.consul = mkDeploy "10.42.42.14" "consul";
+      # Make the config and deploy sets
+      nixosConfigurations = lib.foldr hostToConfig { } nixHosts;
+      deploy.nodes = lib.foldr hostToDeploy { } nixHosts;
 
       # Use by running `nix develop`
       devShell.${system} = let
@@ -64,12 +70,17 @@
           [ vault-secrets.overlay ];
       in pkgs.mkShell {
         VAULT_ADDR = "http://10.42.42.6:8200/";
-        buildInputs = [
+        buildInputs = with pkgs; [
           deploy-rs.packages.${system}.deploy-rs
-          pkgs.vault
-          (pkgs.vault-push-approle-envs self)
-          (pkgs.vault-push-approles self)
-          pkgs.nixUnstable
+          fluxcd
+          k9s
+          kubectl
+          kubectx
+          nixfmt
+          nixUnstable
+          vault
+          (vault-push-approle-envs self)
+          (vault-push-approles self)
         ];
       };
 
