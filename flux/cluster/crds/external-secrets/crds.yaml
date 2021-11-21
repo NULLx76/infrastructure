@@ -9,7 +9,7 @@ spec:
   url: https://github.com/external-secrets/external-secrets.git
   ref:
     # renovate: registryUrl=https://charts.external-secrets.io chart=external-secrets
-    tag: v0.3.7
+    tag: v0.3.8
   ignore: |
     # exclude all
     /*
