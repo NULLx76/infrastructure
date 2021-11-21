@@ -17,10 +17,12 @@
       mkSystem = { host, lxc ? true }:
         nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [ ./nixos/hosts/${host}/configuration.nix ./nixos/common.nix ] ++ (if lxc then
-            [ "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix" ]
-          else
-            [ ]);
+          modules = [ ./nixos/hosts/${host}/configuration.nix ./nixos/common ]
+            ++ (if lxc then [
+              "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
+              ./nixos/common/generic-lxc.nix
+            ] else
+              [ ./nixos/common/generic-vm.nix ]);
           specialArgs.inputs = inputs;
         };
       mkDeploy = hostname: profile: {
@@ -33,8 +35,14 @@
       };
     in {
       # VMs
-      nixosConfigurations.bastion = mkSystem { host = "bastion"; lxc = false; };
-      nixosConfigurations.k3s = mkSystem { host = "k3s"; lxc = false; };
+      nixosConfigurations.bastion = mkSystem {
+        host = "bastion";
+        lxc = false;
+      };
+      nixosConfigurations.k3s = mkSystem {
+        host = "k3s";
+        lxc = false;
+      };
 
       # LXCs
       nixosConfigurations.vault = mkSystem { host = "vault"; };

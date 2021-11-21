@@ -5,10 +5,6 @@
   networking.useDHCP = false;
   networking.interfaces.ens18.useDHCP = lib.mkDefault true;
 
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  services.openssh.permitRootLogin = lib.mkDefault "yes";
-
   # Enable qemu guest agent
   services.qemuGuest.enable = true;
 }

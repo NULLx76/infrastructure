@@ -6,9 +6,6 @@
 
 {
   imports = [
-    # Import common config
-    ../../common/generic-lxc.nix
-    ../../common
   ];
 
   networking.hostName = "vault";

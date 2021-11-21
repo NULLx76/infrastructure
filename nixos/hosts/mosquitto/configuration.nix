@@ -6,9 +6,6 @@
 let mosquittoPort = 1883;
 in {
   imports = [
-    # Import common config
-    ../../common/generic-lxc.nix
-    ../../common
   ];
 
   networking.hostName = "mosquitto";
