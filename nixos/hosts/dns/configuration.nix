@@ -1,8 +1,12 @@
 { config, pkgs, hosts, ... }:
 let 
   localdomain = "olympus";
+  ipv6Hosts = builtins.filter (builtins.hasAttr ip6) hosts;
+
   localData = { hostname, ip, ... }: ''"${hostname}.${localdomain}. A ${ip}"'';
+  local6Data = { hostname, ip6, ... }: ''"${hostname}.${localdomain}. AAAA ${ip6}"'';
   ptrData = { hostname, ip, ... }: ''"${ip} ${hostname}.${localdomain}"'';
+  ptr6Data = { hostname, ip6, ... }: ''"${ip6} ${hostname}.${localdomain}"'';
 in {
   imports = [ ];
 
@@ -32,8 +36,8 @@ in {
         interface = [ "0.0.0.0" "::0" ];
 
         local-zone = ''"${localdomain}." transparent'';
-        local-data = map localData hosts;
-        local-data-ptr = map ptrData hosts;
+        local-data = (map localData hosts) ++ (map local6Data ipv6Hosts);
+        local-data-ptr = (map ptrData hosts);
 
         access-control = [
           "127.0.0.1/32 allow_snoop"

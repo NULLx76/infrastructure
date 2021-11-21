@@ -2,6 +2,7 @@
   {
     hostname = "edgerouter";
     ip = "10.42.42.1";
+    ip6 = "2001:41f0:9639:1:b6fb:e4ff:fe53:9c0";
     mac = "B4:FB:E4:53:9C:0A";
     nix = false;
   }
@@ -9,6 +10,7 @@
     hostname = "nuc";
     ip = "10.42.42.42";
     mac = "1C:69:7A:62:30:88";
+    ip6 = "";
     nix = false;
   }
   {
@@ -20,6 +22,7 @@
   {
     hostname = "home-assistant";
     ip = "10.42.42.8";
+    ip6 = "2001:41f0:9639:1:bfe7:3fd9:75de:cbee";
     mac = "74:40:be:48:85:a4";
     nix = false;
   }
