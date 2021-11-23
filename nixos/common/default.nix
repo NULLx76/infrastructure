@@ -48,8 +48,8 @@
   services.openssh.enable = true;
 
   vault-secrets = {
-    vaultPrefix = "nixos/${config.networking.hostName}";
-    vaultAddress = "http://10.42.42.6:8200/";
+    vaultPrefix = "nixos";
+    vaultAddress = "http://vault.olympus:8200/";
     approlePrefix = "olympus-${config.networking.hostName}";
   };
 

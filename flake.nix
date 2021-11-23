@@ -87,7 +87,6 @@
         ];
       };
 
-      checks = mapAttrs (system: deployLib: deployLib.deployChecks self.deploy)
-        deploy-rs.lib;
+      checks = mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
 }
