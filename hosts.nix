@@ -21,6 +21,7 @@
     hostname = "bastion";
     ip = "10.42.42.4";
     mac = "82:F0:7C:CB:BD:6D";
+    ip6 = "2001:41f0:9639:1:80f0:7cff:fecb:bd6d";
     lxc = false;
   }
   {
@@ -37,12 +38,13 @@
     hostname = "home-assistant";
     ip = "10.42.42.8";
     ip6 = "2001:41f0:9639:1:bfe7:3fd9:75de:cbee";
-    mac = "74:40:be:48:85:a4";
+    mac = "9E:60:78:ED:81:B4";
     nix = false;
   }
   {
     hostname = "nginx";
     ip = "10.42.42.9";
+    ip6 = "2001:41f0:9639:1:68c2:89ff:fe85:cfa6";
     mac = "6A:C2:89:85:CF:A6";
   }
   {
@@ -84,6 +86,13 @@
     hostname = "nuc";
     ip = "10.42.42.42";
     mac = "1C:69:7A:62:30:88";
+    nix = false;
+  }
+  {
+    hostname = "eevee";
+    ip = "10.42.42.69";
+    ip6 = "2001:41f0:9639:1:a83:e416:dc99:5ed3";
+    mac = "34:97:f6:93:9A:AA";
     nix = false;
   }
 ]

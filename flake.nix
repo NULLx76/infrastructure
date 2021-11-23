@@ -51,8 +51,10 @@
       # Import all nixos host definitions that are actual nix machines
       nixHosts = filter ({ nix ? true, ... }: nix) hosts;
 
-      pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system}
-        [ vault-secrets.overlay ];
+      pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system} [ vault-secrets.overlay ];
+
+      deployChecks = mapAttrs (_: lib: lib.deployChecks self.deploy) deploy-rs.lib;
+      checks = {};
     in {
       # Make the config and deploy sets
       nixosConfigurations = lib.foldr (el: acc: acc // mkConfig el) { } nixHosts;
@@ -70,7 +72,7 @@
 
       # Use by running `nix develop`
       devShell.${system} = pkgs.mkShell {
-        VAULT_ADDR = "http://10.42.42.6:8200/";
+        VAULT_ADDR = "http://vault.olympus:8200/";
         # This only support bash so just execute zsh in bash as a workaround :/
         buildInputs = with pkgs; [
           deploy-rs.packages.${system}.deploy-rs
@@ -87,6 +89,6 @@
         ];
       };
 
-      checks = mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+      checks = lib.recursiveUpdate deployChecks checks;
     };
 }

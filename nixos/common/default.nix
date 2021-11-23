@@ -45,12 +45,15 @@
   '';
 
   # Enable SSH daemon support.
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    passwordAuthentication = false;
+    permitRootLogin = "no";
+  };
 
   vault-secrets = {
     vaultPrefix = "nixos";
     vaultAddress = "http://vault.olympus:8200/";
     approlePrefix = "olympus-${config.networking.hostName}";
   };
-
 }
