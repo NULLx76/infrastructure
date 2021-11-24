@@ -117,7 +117,7 @@ resource "proxmox_lxc" "dns-1" {
     bridge = "vmbr0"
     ip     = "dhcp"
     ip6    = "auto"
-    hwaddr = "D6:DE:07:41:73:81"
+    hwaddr = "5E:F6:36:23:16:E3"
   }
 }
 
