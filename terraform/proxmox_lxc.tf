@@ -1,3 +1,64 @@
+# For full info see: https://blog.xirion.net/posts/nixos-proxmox-lxc/
+resource "proxmox_lxc" "nixos-template" {
+  target_node  = "nuc"
+  description  = "NixOS LXC Template"
+  hostname     = "nixos-template"
+  ostemplate   = "local:vztmpl/nixos-unstable-default_156198829_amd64.tar.xz"
+  ostype       = "unmanaged"
+  unprivileged = true
+  vmid         = 101
+  template     = true
+
+  memory = 1024
+
+  features {
+    nesting = true
+  }
+
+  rootfs {
+    storage = "local-zfs"
+    size    = "8G"
+  }
+
+  network {
+    name   = "eth0"
+    bridge = "vmbr0"
+    ip     = "dhcp"
+    ip6    = "auto"
+    hwaddr = "22:D7:C1:FF:9D:5F"
+  }
+}
+
+resource "proxmox_lxc" "nixos-template-2" {
+  target_node  = "nuc"
+  description  = "NixOS LXC Template"
+  hostname     = "nixos-template"
+  ostype       = "unmanaged"
+  unprivileged = true
+  vmid         = 108
+  template     = true
+  cores        = 1
+
+  memory = 512
+
+  rootfs {
+    storage = "local-zfs"
+    size    = "8G"
+  }
+
+  features {
+    nesting = true
+  }
+
+  network {
+    name   = "eth0"
+    bridge = "vmbr0"
+    ip     = "dhcp"
+    ip6    = "auto"
+    hwaddr = "FA:71:3F:31:34:41"
+  }
+}
+
 resource "proxmox_lxc" "vault" {
   target_node  = "nuc"
   description  = "Vault Secrets Management"
@@ -18,7 +79,7 @@ resource "proxmox_lxc" "vault" {
     bridge = "vmbr0"
     ip     = "dhcp"
     ip6    = "auto"
-    hwaddr = "16:2B:87:55:0C:0C"
+    hwaddr = var.hosts.vault.mac
   }
 }
 
@@ -43,7 +104,7 @@ resource "proxmox_lxc" "mosquitto" {
     bridge = "vmbr0"
     ip     = "dhcp"
     ip6    = "auto"
-    hwaddr = "C6:F9:8B:3D:9E:37"
+    hwaddr = var.hosts.mosquitto.mac
   }
 }
 
@@ -68,7 +129,7 @@ resource "proxmox_lxc" "nginx" {
     bridge = "vmbr0"
     ip     = "dhcp"
     ip6    = "auto"
-    hwaddr = "6A:C2:89:85:CF:A6"
+    hwaddr = var.hosts.nginx.mac
   }
 }
 
@@ -92,7 +153,7 @@ resource "proxmox_lxc" "consul" {
     bridge = "vmbr0"
     ip     = "dhcp"
     ip6    = "auto"
-    hwaddr = "D6:DE:07:41:73:81"
+    hwaddr = var.hosts.consul.mac
   }
 }
 
@@ -117,7 +178,7 @@ resource "proxmox_lxc" "dns-1" {
     bridge = "vmbr0"
     ip     = "dhcp"
     ip6    = "auto"
-    hwaddr = "5E:F6:36:23:16:E3"
+    hwaddr = var.hosts.dns-1.mac
   }
 }
 
@@ -142,7 +203,7 @@ resource "proxmox_lxc" "dns-2" {
     bridge = "vmbr0"
     ip     = "dhcp"
     ip6    = "auto"
-    hwaddr = "B6:04:0B:CD:0F:9F"
+    hwaddr =  var.hosts.dns-2.mac
   }
 }
 
@@ -166,7 +227,7 @@ resource "proxmox_lxc" "minio" {
     bridge = "vmbr0"
     ip     = "dhcp"
     ip6    = "auto"
-    hwaddr = "0A:06:5E:E7:9A:0C"
+    hwaddr =  var.hosts.minio.mac
   }
 }
 
@@ -188,6 +249,6 @@ resource "proxmox_lxc" "dhcp" {
   network {
     name   = "eth0"
     bridge = "vmbr0"
-    hwaddr = "3E:2D:E8:AA:E2:81"
+    hwaddr = var.hosts.dhcp.mac
   }
 }

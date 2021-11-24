@@ -48,16 +48,31 @@
         };
       };
 
+      # Generates hosts.auto.tfvars.json for Terraform
+      genTFVars = let
+        hostToVar = z@{ hostname, mac, ... }: {
+          "${hostname}" = { inherit mac; };
+        };
+        hostSet = lib.foldr (el: acc: acc // hostToVar el) { } hosts;
+        json = builtins.toJSON { hosts = hostSet; };
+      in pkgs.writeScriptBin "gen-tf-vars" ''
+        echo '${json}' | ${pkgs.jq}/bin/jq > terraform/hosts.auto.tfvars.json;
+        echo "Generated Terraform Variables";
+      '';
+
       # Import all nixos host definitions that are actual nix machines
       nixHosts = filter ({ nix ? true, ... }: nix) hosts;
 
-      pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system} [ vault-secrets.overlay ];
+      pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system}
+        [ vault-secrets.overlay ];
 
-      deployChecks = mapAttrs (_: lib: lib.deployChecks self.deploy) deploy-rs.lib;
+      deployChecks =
+        mapAttrs (_: lib: lib.deployChecks self.deploy) deploy-rs.lib;
       checks = { };
     in {
       # Make the config and deploy sets
-      nixosConfigurations = lib.foldr (el: acc: acc // mkConfig el) { } nixHosts;
+      nixosConfigurations =
+        lib.foldr (el: acc: acc // mkConfig el) { } nixHosts;
       deploy.nodes = lib.foldr (el: acc: acc // mkDeploy el) { } nixHosts;
 
       apps.x86_64-linux.vault-push-approles = {
@@ -68,6 +83,11 @@
         type = "app";
         program =
           "${pkgs.vault-push-approle-envs self}/bin/vault-push-approle-envs";
+      };
+
+      apps.x86_64-linux.tfvars =  {
+        type = "app";
+        program = "${genTFVars}/bin/gen-tf-vars";
       };
 
       # Use by running `nix develop`
@@ -86,6 +106,7 @@
           vault
           (vault-push-approles self { })
           (vault-push-approle-envs self { })
+          genTFVars
         ];
       };
 

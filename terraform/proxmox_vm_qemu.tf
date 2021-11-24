@@ -21,7 +21,7 @@ resource "proxmox_vm_qemu" "bastion" {
 
   network {
     model   = "virtio"
-    macaddr = "82:F0:7C:CB:BD:6D"
+    macaddr = var.hosts.bastion.mac
     bridge  = "vmbr0"
   }
 }
@@ -41,7 +41,7 @@ resource "proxmox_vm_qemu" "k3s-node1" {
 
   network {
     model   = "virtio"
-    macaddr = "2E:F8:55:23:D9:9B"
+    macaddr = var.hosts.k3s-node1.mac
     bridge  = "vmbr0"
   }
 
@@ -70,7 +70,7 @@ resource "proxmox_vm_qemu" "home-assistant" {
 
   network {
     model   = "virtio"
-    macaddr = "9E:60:78:ED:81:B4"
+    macaddr = var.hosts.home-assistant.mac
     bridge  = "vmbr0"
   }
 }
