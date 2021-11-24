@@ -25,7 +25,7 @@
         "${profile}" = lib.nixosSystem {
           inherit system;
           modules =
-            [ ./nixos/common ./nixos/hosts/${profile}/configuration.nix  ]
+            [ ./nixos/common "${./.}/nixos/hosts/${profile}/configuration.nix" ]
             ++ (if lxc then [
               "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
               ./nixos/common/generic-lxc.nix
@@ -54,7 +54,7 @@
       pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system} [ vault-secrets.overlay ];
 
       deployChecks = mapAttrs (_: lib: lib.deployChecks self.deploy) deploy-rs.lib;
-      checks = {};
+      checks = { };
     in {
       # Make the config and deploy sets
       nixosConfigurations = lib.foldr (el: acc: acc // mkConfig el) { } nixHosts;
@@ -84,8 +84,8 @@
           nixfmt
           nixUnstable
           vault
-          (vault-push-approle-envs self { })
           (vault-push-approles self { })
+          (vault-push-approle-envs self { })
         ];
       };
 

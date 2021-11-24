@@ -52,7 +52,7 @@
   };
 
   vault-secrets = {
-    vaultPrefix = "nixos";
+    vaultPrefix = "secrets/nixos";
     vaultAddress = "http://vault.olympus:8200/";
     approlePrefix = "olympus-${config.networking.hostName}";
   };

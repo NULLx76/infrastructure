@@ -20,8 +20,8 @@
   {
     hostname = "bastion";
     ip = "10.42.42.4";
-    mac = "82:F0:7C:CB:BD:6D";
     ip6 = "2001:41f0:9639:1:80f0:7cff:fecb:bd6d";
+    mac = "82:F0:7C:CB:BD:6D";
     lxc = false;
   }
   {
@@ -85,6 +85,7 @@
   {
     hostname = "nuc";
     ip = "10.42.42.42";
+    ip6 = "2001:41f0:9639:1::42";
     mac = "1C:69:7A:62:30:88";
     nix = false;
   }
