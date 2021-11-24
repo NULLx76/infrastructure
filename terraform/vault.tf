@@ -7,3 +7,7 @@ provider "vault" {
 data "vault_generic_secret" "proxmox_auth" {
     path = "secrets/terraform/proxmox_credentials"
 }
+
+data "vault_generic_secret" "minio_auth" {
+  path = "secrets/terraform/minio_credentials"
+}
