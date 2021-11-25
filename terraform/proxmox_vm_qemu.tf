@@ -32,6 +32,7 @@ resource "proxmox_vm_qemu" "k3s-node1" {
   vmid        = 103
   clone       = "bastion"
   tablet      = false
+  onboot      = true
 
   memory = 8192
   cores  = 4

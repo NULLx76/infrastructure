@@ -66,9 +66,10 @@ resource "proxmox_lxc" "vault" {
   unprivileged = false # needed for mlock
   vmid         = 102
   clone        = "101"
-  memory       = 1024
   onboot       = true
 
+  memory       = 1024
+  
   rootfs {
     storage = "local-zfs"
     size    = "8G"
@@ -110,7 +111,6 @@ resource "proxmox_lxc" "mosquitto" {
 
 resource "proxmox_lxc" "nginx" {
   target_node  = "nuc"
-  description  = "nginx reverse proxy"
   hostname     = "nginx"
   vmid         = 106
   clone        = 101
@@ -203,7 +203,7 @@ resource "proxmox_lxc" "dns-2" {
     bridge = "vmbr0"
     ip     = "dhcp"
     ip6    = "auto"
-    hwaddr =  var.hosts.dns-2.mac
+    hwaddr = var.hosts.dns-2.mac
   }
 }
 
@@ -227,7 +227,7 @@ resource "proxmox_lxc" "minio" {
     bridge = "vmbr0"
     ip     = "dhcp"
     ip6    = "auto"
-    hwaddr =  var.hosts.minio.mac
+    hwaddr = var.hosts.minio.mac
   }
 }
 
@@ -250,5 +250,28 @@ resource "proxmox_lxc" "dhcp" {
     name   = "eth0"
     bridge = "vmbr0"
     hwaddr = var.hosts.dhcp.mac
+  }
+}
+
+resource "proxmox_lxc" "victoriametrics" {
+  target_node  = "nuc"
+  hostname     = "victoriametrics"
+  vmid         = 113
+  clone        = 108
+  unprivileged = true
+  onboot       = true
+  cores        = 1
+
+  memory = 512
+
+  rootfs {
+    storage = "local-zfs"
+    size    = "25G"
+  }
+
+  network {
+    name   = "eth0"
+    bridge = "vmbr0"
+    hwaddr = var.hosts.victoriametrics.mac
   }
 }

@@ -83,6 +83,11 @@
     mac = "0A:06:5E:E7:9A:0C";
   }
   {
+    hostname = "victoriametrics";
+    ip = "10.42.42.18";
+    mac = "A9:E4:AA:7C:7E:EB";
+  }
+  {
     hostname = "nuc";
     ip = "10.42.42.42";
     ip6 = "2001:41f0:9639:1::42";
