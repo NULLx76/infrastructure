@@ -253,25 +253,25 @@ resource "proxmox_lxc" "dhcp" {
   }
 }
 
-resource "proxmox_lxc" "victoriametrics" {
-  target_node  = "nuc"
-  hostname     = "victoriametrics"
-  vmid         = 113
-  clone        = 108
-  unprivileged = true
-  onboot       = true
-  cores        = 1
+# resource "proxmox_lxc" "victoriametrics" {
+#   target_node  = "nuc"
+#   hostname     = "victoriametrics"
+#   vmid         = 113
+#   clone        = 108
+#   unprivileged = true
+#   onboot       = true
+#   cores        = 1
 
-  memory = 512
+#   memory = 512
 
-  rootfs {
-    storage = "local-zfs"
-    size    = "25G"
-  }
+#   rootfs {
+#     storage = "local-zfs"
+#     size    = "25G"
+#   }
 
-  network {
-    name   = "eth0"
-    bridge = "vmbr0"
-    hwaddr = var.hosts.victoriametrics.mac
-  }
-}
+#   network {
+#     name   = "eth0"
+#     bridge = "vmbr0"
+#     hwaddr = var.hosts.victoriametrics.mac
+#   }
+# }

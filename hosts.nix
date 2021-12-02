@@ -84,8 +84,8 @@
   }
   {
     hostname = "victoriametrics";
-    ip = "10.42.42.18";
-    mac = "A9:E4:AA:7C:7E:EB";
+    ip = "10.42.42.19";
+    mac = "9E:91:61:35:84:1F";
   }
   {
     hostname = "nuc";

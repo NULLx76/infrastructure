@@ -3,11 +3,13 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-let vs = config.vault-secrets.secrets;
+let
+  vmPort = 8428;
+  vs = config.vault-secrets.secrets;
 in {
   imports = [ ];
 
-  networking.hostName = "minio";
+  networking.hostName = "victoriametrics";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -20,12 +22,25 @@ in {
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
-  networking.firewall.allowedTCPPorts = [ 9000 9001 ];
+  networking.firewall.allowedTCPPorts = [ vmPort config.services.grafana.port ];
+  networking.firewall.allowedUDPPorts = [ vmPort ];
 
-  vault-secrets.secrets.minio = { };
-
-  services.minio = {
+  services.victoriametrics = {
     enable = true;
-    rootCredentialsFile = "${vs.minio}/environment";
+    listenAddress = ":${toString vmPort}";
+    # Data Retention period in months
+    retentionPeriod = 12;
+  };
+
+  vault-secrets.secrets.grafana = { 
+    user = "grafana";
+    group = "grafana";
+  };
+
+  services.grafana = {
+    enable = true;
+    addr = "0.0.0.0";
+    port = 2342;
+    security.adminPasswordFile = "${vs.grafana}/password";
   };
 }

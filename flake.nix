@@ -24,13 +24,14 @@
       mkConfig = { hostname, profile ? hostname, lxc ? true, ... }: {
         "${profile}" = lib.nixosSystem {
           inherit system;
-          modules =
-            [ ./nixos/common "${./.}/nixos/hosts/${profile}/configuration.nix" ]
-            ++ (if lxc then [
-              "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
-              ./nixos/common/generic-lxc.nix
-            ] else
-              [ ./nixos/common/generic-vm.nix ]);
+          modules = [
+            ./nixos/common
+            "${./.}/nixos/hosts/${profile}/configuration.nix"
+          ] ++ (if lxc then [
+            "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
+            ./nixos/common/generic-lxc.nix
+          ] else
+            [ ./nixos/common/generic-vm.nix ]);
           specialArgs = { inherit hosts inputs; };
         };
       };
@@ -75,19 +76,20 @@
         lib.foldr (el: acc: acc // mkConfig el) { } nixHosts;
       deploy.nodes = lib.foldr (el: acc: acc // mkDeploy el) { } nixHosts;
 
-      apps.x86_64-linux.vault-push-approles = {
-        type = "app";
-        program = "${pkgs.vault-push-approles self}/bin/vault-push-approles";
-      };
-      apps.x86_64-linux.vault-push-approle-envs = {
-        type = "app";
-        program =
-          "${pkgs.vault-push-approle-envs self}/bin/vault-push-approle-envs";
-      };
-
-      apps.x86_64-linux.tfvars =  {
-        type = "app";
-        program = "${genTFVars}/bin/gen-tf-vars";
+      apps.${system} = {
+        vault-push-approles = {
+          type = "app";
+          program = "${pkgs.vault-push-approles self}/bin/vault-push-approles";
+        };
+        vault-push-approle-envs = {
+          type = "app";
+          program =
+            "${pkgs.vault-push-approle-envs self}/bin/vault-push-approle-envs";
+        };
+        tfvars = {
+          type = "app";
+          program = "${genTFVars}/bin/gen-tf-vars";
+        };
       };
 
       # Use by running `nix develop`
