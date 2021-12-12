@@ -83,6 +83,11 @@
     mac = "0A:06:5E:E7:9A:0C";
   }
   {
+    hostname = "plausible";
+    ip = "10.42.42.18";
+    mac = "82:34:70:FA:44:6F";
+  }
+  {
     hostname = "victoriametrics";
     ip = "10.42.42.19";
     mac = "9E:91:61:35:84:1F";

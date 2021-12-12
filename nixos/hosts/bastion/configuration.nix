@@ -36,6 +36,7 @@ in {
 
   # Additional packages
   environment.systemPackages = with pkgs; [
+    binutils
     fix-vscode
     fluxcd
     k9s

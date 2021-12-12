@@ -8,10 +8,8 @@ let
       proxyWebsockets = true;
     };
   };
-  k8s_proxy = proxy "http://10.42.42.150:8000/";
+  k8s_proxy = proxy "http://10.42.42.10:8000/";
 in {
-  imports = [ ];
-
   networking.hostName = "nginx";
 
   # This value determines the NixOS release from which the default
@@ -34,7 +32,8 @@ in {
 
     # Reverse Proxies
     virtualHosts."ha.0x76.dev" = proxy "http://10.42.42.8:8123/";
-    virtualHosts."zookeeper-dev.0x76.dev" = proxy "http://10.42.43.28:8085/";
+    virtualHosts."zookeeper-dev.0x76.dev" = proxy "http://eevee.olympus:8085/";
+    virtualHosts."analytics.0x76.dev" = proxy "http://plausible.olympus:8000/";
 
     # Kubernetes endpoints
     virtualHosts."0x76.dev" = k8s_proxy;
@@ -45,5 +44,5 @@ in {
 
   security.acme.email = "victorheld12@gmail.com";
   security.acme.acceptTerms = true;
-  security.acme.preliminarySelfsigned = false;
+  security.acme.preliminarySelfsigned = true;
 }
