@@ -98,6 +98,12 @@
     mac = "1A:88:A0:B0:65:B4";
   }
   {
+    hostname = "zmeura";
+    ip = "10.42.42.24";
+    mac = "b8:27:eb:d5:e0:f5";
+    nix = false;
+  }
+  {
     hostname = "nuc";
     ip = "10.42.42.42";
     ip6 = "2001:41f0:9639:1::42";

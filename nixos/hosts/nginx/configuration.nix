@@ -8,7 +8,7 @@ let
       proxyWebsockets = true;
     };
   };
-  k8s_proxy = proxy "http://10.42.42.10:8000/";
+  k8s_proxy = proxy "http://10.42.42.150:8000/";
 in {
   networking.hostName = "nginx";
 
@@ -42,7 +42,7 @@ in {
     virtualHosts."whoami.wooloofan.club" = k8s_proxy;
   };
 
-  security.acme.email = "victorheld12@gmail.com";
+  security.acme.defaults.email = "victorheld12@gmail.com";
   security.acme.acceptTerms = true;
   security.acme.preliminarySelfsigned = true;
 }

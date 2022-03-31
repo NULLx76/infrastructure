@@ -26,7 +26,7 @@
 
   services.unifi = {
     enable = true;
-    openPorts = true;
     unifiPackage = pkgs.unifi;
+    openFirewall = true;
   };
 }
