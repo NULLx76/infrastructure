@@ -93,7 +93,7 @@
       };
 
       # Use by running `nix develop`
-      devShell.${system} = pkgs.mkShell {
+      devShells.${system}.default = pkgs.mkShell {
         VAULT_ADDR = "http://vault.olympus:8200/";
         # This only support bash so just execute zsh in bash as a workaround :/
         buildInputs = with pkgs; [

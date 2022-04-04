@@ -86,6 +86,7 @@
     hostname = "plausible";
     ip = "10.42.42.18";
     mac = "82:34:70:FA:44:6F";
+    nix = false;
   }
   {
     hostname = "victoriametrics";
