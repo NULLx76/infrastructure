@@ -99,6 +99,11 @@
     mac = "1A:88:A0:B0:65:B4";
   }
   {
+    hostname = "minecraft";
+    ip = "10.42.42.21";
+    mac = "EA:30:73:E4:B6:69";
+  }
+  {
     hostname = "zmeura";
     ip = "10.42.42.24";
     mac = "b8:27:eb:d5:e0:f5";
