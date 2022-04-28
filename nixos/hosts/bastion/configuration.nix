@@ -43,6 +43,7 @@ in {
     kubectl
     kubectx
     nixfmt
+    nix-prefetch-git
     ripgrep
     rsync
     tmux

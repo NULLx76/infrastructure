@@ -29,6 +29,7 @@ in {
 
   services.plausible = {
     enable = false;
+    releaseCookiePath = "${vs.plausible}/cookie";
     server = {
       baseUrl = "https://analytics.0x76.dev";
       secretKeybaseFile = "${vs.plausible}/secretkeybase";
