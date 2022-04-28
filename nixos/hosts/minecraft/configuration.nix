@@ -19,6 +19,8 @@
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
+  environment.noXlibs = lib.mkForce false;
+
   services.minecraft-server = {
     enable = true;
     declarative = true;
