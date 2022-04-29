@@ -31,9 +31,10 @@ in {
     recommendedTlsSettings = true;
 
     # Reverse Proxies
-    virtualHosts."ha.0x76.dev" = proxy "http://10.42.42.8:8123/";
+    virtualHosts."ha.0x76.dev" = proxy "http://home-assistant.olympus:8123/";
     virtualHosts."zookeeper-dev.0x76.dev" = proxy "http://eevee.olympus:8085/";
     virtualHosts."analytics.0x76.dev" = proxy "http://plausible.olympus:8000/";
+    virtualHosts."git.0x76.dev" = proxy "http://gitea.olympus:3000";
 
     # Kubernetes endpoints
     virtualHosts."0x76.dev" = k8s_proxy;

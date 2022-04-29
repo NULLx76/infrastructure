@@ -104,6 +104,11 @@
     mac = "EA:30:73:E4:B6:69";
   }
   {
+    hostname = "gitea";
+    ip = "10.42.42.22";
+    mac = "DE:5F:B0:83:6F:34";
+  }
+  {
     hostname = "zmeura";
     ip = "10.42.42.24";
     mac = "b8:27:eb:d5:e0:f5";

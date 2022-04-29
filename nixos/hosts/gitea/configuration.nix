@@ -6,7 +6,7 @@
 {
   imports = [ ];
 
-  networking.hostName = "minecraft";
+  networking.hostName = "gitea";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -21,21 +21,23 @@
 
   environment.noXlibs = lib.mkForce false;
 
-  services.minecraft-server = {
-    enable = true;
-    declarative = true;
-    eula = true;
-    openFirewall = true;
-    serverProperties = {
-      server-port = 25565;
-      motd = "blahaj minecraft server!";
-      white-list = true;
-    };
-    whitelist = {
-      "0x76" = "5513404a-81a2-4c84-b952-18661b1803e7";
-      red_shifts = "e0afdee5-e776-49a9-a0cd-c8753faf4255";
-    };
+  networking.firewall.allowedTCPPorts = [ config.services.gitea.httpPort ];
 
-    package = pkgs.papermc;
+  services.gitea = {
+    enable = true;
+    domain = "git.0x76.dev";
+    rootUrl = "https://git.0x76.dev";
+    lfs.enable = true;
+    dump.type = "tar.gz";
+    database.type = "postgres";
+    ssh.clonePort = 42;
+    disableRegistration = true;
+
+    settings = {
+      ui = {
+        DEFAULT_THEME = "arc-green";
+        USE_SERVICE_WORKER = true;
+      };
+    };
   };
 }

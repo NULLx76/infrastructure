@@ -7,7 +7,7 @@
 
   inputs = {
     deploy-rs.url = "github:serokell/deploy-rs";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NULLx76/nixpkgs/papermc-update-1.18.2-313";
     serokell-nix.url = "github:serokell/serokell.nix";
     vault-secrets.url = "github:serokell/vault-secrets";
   };

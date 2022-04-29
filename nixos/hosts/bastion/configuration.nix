@@ -9,7 +9,7 @@ let
     if [[ -d "$HOME/.vscode-server/bin" ]]; then
       for versiondir in "$HOME"/.vscode-server/bin/*; do
         rm "$versiondir/node"
-        ln -s "${pkgs.nodejs-14_x}/bin/node" "$versiondir/node"
+        ln -s "${pkgs.nodejs-16_x}/bin/node" "$versiondir/node"
       done
     fi
   '';
@@ -42,9 +42,11 @@ in {
     k9s
     kubectl
     kubectx
-    nixfmt
     nix-prefetch-git
+    nixpkgs-fmt
+    nixpkgs-review
     ripgrep
+    rnix-lsp
     rsync
     tmux
     vault

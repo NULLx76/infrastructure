@@ -196,16 +196,16 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1650701402,
-        "narHash": "sha256-XKfstdtqDg+O+gNBx1yGVKWIhLgfEDg/e2lvJSsp9vU=",
-        "owner": "NixOS",
+        "lastModified": 1651233872,
+        "narHash": "sha256-87MbbcxR/lvRVFp+peNqWBcrbrGFmRlbnzskeZkvuNY=",
+        "owner": "NULLx76",
         "repo": "nixpkgs",
-        "rev": "bc41b01dd7a9fdffd32d9b03806798797532a5fe",
+        "rev": "85f977180abcb7a89bc9cc7c8f325026f3fb4b9e",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
+        "owner": "NULLx76",
+        "ref": "papermc-update-1.18.2-313",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -285,11 +285,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1649618806,
-        "narHash": "sha256-yxgmHPk7EiAYfVytISvtQ5uuCWcnZRs3pFxXFbqUUD8=",
+        "lastModified": 1650983357,
+        "narHash": "sha256-gejH/rmDTcTvQeWrYzamFLvi0tXd2nDDBCA7/bHIhxE=",
         "owner": "serokell",
         "repo": "serokell.nix",
-        "rev": "8663c86146ada9b3169546bae6c5746e362ec86f",
+        "rev": "621f2698ec1c870c65a408a9470caa73adc3ca87",
         "type": "github"
       },
       "original": {
