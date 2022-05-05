@@ -10,6 +10,7 @@
     nixpkgs.url = "github:NULLx76/nixpkgs/papermc-update-1.18.2-313";
     serokell-nix.url = "github:serokell/serokell.nix";
     vault-secrets.url = "github:serokell/vault-secrets";
+    minecraft-servers.url = "github:jyooru/nix-minecraft-servers";
   };
 
   outputs =
@@ -27,6 +28,9 @@
           modules = [
             ./nixos/common
             "${./.}/nixos/hosts/${profile}/configuration.nix"
+            ({ pkgs, ... }: {
+              nixpkgs.overlays = [  ];
+            })
           ] ++ (if lxc then [
             "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
             ./nixos/common/generic-lxc.nix
