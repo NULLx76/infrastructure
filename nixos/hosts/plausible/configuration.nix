@@ -3,10 +3,11 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-let 
+let
   vs = config.vault-secrets.secrets;
   cfg = config.services.plausible;
-in {
+in
+{
   imports = [ ];
 
   networking.hostName = "plausible";

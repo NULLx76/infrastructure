@@ -3,7 +3,10 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-let vs = config.vault-secrets.secrets;
+let 
+  vs = config.vault-secrets.secrets;
+  listenPort = 9000;
+  consolePort = 9001;
 in {
   imports = [ ];
 
@@ -20,12 +23,14 @@ in {
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
-  networking.firewall.allowedTCPPorts = [ 9000 9001 ];
+  networking.firewall.allowedTCPPorts = [ listenPort consolePort ];
 
   vault-secrets.secrets.minio = { };
 
   services.minio = {
     enable = true;
     rootCredentialsFile = "${vs.minio}/environment";
+    listenAddress = ":${toString listenPort}";
+    consoleAddress = ":${toString consolePort}";
   };
 }

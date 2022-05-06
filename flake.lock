@@ -163,11 +163,11 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1651222568,
-        "narHash": "sha256-7qdugZJHKcGIv+KPPTpY7wZhw3pNJ3zR4lVOuf0LduI=",
+        "lastModified": 1651799536,
+        "narHash": "sha256-+y4oD+E3PseG5jRhlfpBCSLOs1TKKtCWL/AsFCPXQYU=",
         "owner": "jyooru",
         "repo": "nix-minecraft-servers",
-        "rev": "62fe6124dc65a84144f83cdbdbc2aa4c0a8cc29f",
+        "rev": "1d9335ce68b66262a25037c81e81f49363e5cb04",
         "type": "github"
       },
       "original": {
@@ -246,16 +246,16 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1651233872,
-        "narHash": "sha256-87MbbcxR/lvRVFp+peNqWBcrbrGFmRlbnzskeZkvuNY=",
-        "owner": "NULLx76",
+        "lastModified": 1651827164,
+        "narHash": "sha256-w1niZCq4rhXX+23xLvrA5KR9OqT/72e5Mx/pfz/bZYU=",
+        "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "85f977180abcb7a89bc9cc7c8f325026f3fb4b9e",
+        "rev": "98000933d72a97632caf0db0027ea3eb2e5e7f29",
         "type": "github"
       },
       "original": {
-        "owner": "NULLx76",
-        "ref": "papermc-update-1.18.2-313",
+        "owner": "nixos",
+        "ref": "nixos-unstable-small",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -336,11 +336,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1650983357,
-        "narHash": "sha256-gejH/rmDTcTvQeWrYzamFLvi0tXd2nDDBCA7/bHIhxE=",
+        "lastModified": 1651674183,
+        "narHash": "sha256-voNo/SzDmjXdk77gq2PRe7E+yJlw/zNuyHij8lNiZDE=",
         "owner": "serokell",
         "repo": "serokell.nix",
-        "rev": "621f2698ec1c870c65a408a9470caa73adc3ca87",
+        "rev": "826a2c4c8987766640885f4dc8af344e90abb149",
         "type": "github"
       },
       "original": {

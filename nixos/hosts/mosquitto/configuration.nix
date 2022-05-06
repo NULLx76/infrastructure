@@ -4,7 +4,8 @@
 
 { config, pkgs, ... }:
 let mosquittoPort = 1883;
-in {
+in
+{
   imports = [ ];
 
   networking.hostName = "mosquitto";
@@ -21,11 +22,9 @@ in {
   environment.systemPackages = with pkgs; [ ];
 
   services.mosquitto = {
-
     enable = true;
-
     listeners = [{
-      port = 1883;
+      port = mosquittoPort;
       settings.allow_anonymous = true;
       acl = [ "topic readwrite #" ];
       users = {

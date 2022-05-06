@@ -109,10 +109,20 @@
     mac = "DE:5F:B0:83:6F:34";
   }
   {
+    hostname = "headscale";
+    ip = "10.42.42.23";
+    mac = "76:31:39:8B:2D:43";
+  }
+  {
     hostname = "zmeura";
     ip = "10.42.42.24";
     mac = "b8:27:eb:d5:e0:f5";
     nix = false;
+  }
+  {
+    hostname = "wireguard";
+    ip = "10.42.42.25";
+    mac = "1E:ED:97:2C:C3:9D";
   }
   {
     hostname = "nuc";

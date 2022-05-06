@@ -7,7 +7,7 @@
 
   inputs = {
     deploy-rs.url = "github:serokell/deploy-rs";
-    nixpkgs.url = "github:NULLx76/nixpkgs/papermc-update-1.18.2-313";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
     serokell-nix.url = "github:serokell/serokell.nix";
     vault-secrets.url = "github:serokell/vault-secrets";
     minecraft-servers.url = "github:jyooru/nix-minecraft-servers";
@@ -28,9 +28,6 @@
           modules = [
             ./nixos/common
             "${./.}/nixos/hosts/${profile}/configuration.nix"
-            ({ pkgs, ... }: {
-              nixpkgs.overlays = [  ];
-            })
           ] ++ (if lxc then [
             "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
             ./nixos/common/generic-lxc.nix
