@@ -108,11 +108,11 @@
     ip = "10.42.42.22";
     mac = "DE:5F:B0:83:6F:34";
   }
-  {
-    hostname = "headscale";
-    ip = "10.42.42.23";
-    mac = "76:31:39:8B:2D:43";
-  }
+  # {
+  #   hostname = "TBD";
+  #   ip = "10.42.42.23";
+  #   mac = "AA:AA:AA:AA:AA:AA";
+  # }
   {
     hostname = "zmeura";
     ip = "10.42.42.24";
