@@ -77,10 +77,10 @@
       deploy.nodes = lib.foldr (el: acc: acc // mkDeploy el) { } nixHosts;
 
       apps.${system} = {
-        # deploy = {
-        #   type = "app";
-        #   program = "${deploy-rs.packages.${system}.deploy-rs}/bin/deploy";
-        # };
+        deploy = {
+          type = "app";
+          program = "${deploy-rs.packages.${system}.deploy-rs}/bin/deploy";
+        };
         vault-push-approles = {
           type = "app";
           program = "${pkgs.vault-push-approles self}/bin/vault-push-approles";
