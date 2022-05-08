@@ -31,6 +31,10 @@ in
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
 
+    package = pkgs.nginxMainline.override {
+      modules = with pkgs.nginxModules; [ brotli ];
+    };
+
     # Reverse Proxies
     virtualHosts."ha.0x76.dev" = proxy "http://home-assistant.olympus:8123/";
     virtualHosts."zookeeper-dev.0x76.dev" = proxy "http://eevee.olympus:8085/";
@@ -43,46 +47,6 @@ in
     virtualHosts."wooloofan.club" = k8s_proxy;
     virtualHosts."whoami.wooloofan.club" = k8s_proxy;
 
-    # Headscale
-    virtualHosts."vpn.0x76.dev" = {
-      enableACME = true;
-      forceSSL = true;
-
-      locations = {
-        "/headscale." = {
-          extraConfig = ''
-            grpc_pass grpc://headscale.olympus:50443;
-          '';
-          priority = 1;
-        };
-
-        # "/metrics" = {
-        #   proxyPass = "http://plausible.olympus:9090";
-        #   extraConfig = ''
-        #     allow 10.0.0.0/8;
-        #     allow 100.64.0.0/16;
-        #     deny all;
-        #   '';
-        #   priority = 2;
-        # };
-
-        "/" = {
-          proxyPass = "http://headscale.olympus:8080";
-          proxyWebsockets = true;
-          extraConfig = ''
-            keepalive_requests          100000;
-            keepalive_timeout           160s;
-            proxy_buffering             off;
-            proxy_connect_timeout       75;
-            proxy_ignore_client_abort   on;
-            proxy_read_timeout          900s;
-            proxy_send_timeout          600;
-            send_timeout                600;
-          '';
-          priority = 99;
-        };
-      };
-    };
   };
 
   security.acme.defaults.email = "victorheld12@gmail.com";

@@ -7,7 +7,7 @@
 
   inputs = {
     deploy-rs.url = "github:serokell/deploy-rs";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "github:nixos/nixpkgs/master";
     serokell-nix.url = "github:serokell/serokell.nix";
     vault-secrets.url = "github:serokell/vault-secrets";
     minecraft-servers.url = "github:jyooru/nix-minecraft-servers";
@@ -44,40 +44,43 @@
           fastConnection = true;
           profiles.system = {
             user = "root";
-            path = deploy-rs.lib.${system}.activate.nixos
-              self.nixosConfigurations.${profile};
+            path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.${profile};
           };
         };
       };
 
       # Generates hosts.auto.tfvars.json for Terraform
-      genTFVars = let
-        hostToVar = z@{ hostname, mac, ... }: {
-          "${hostname}" = { inherit mac; };
-        };
-        hostSet = lib.foldr (el: acc: acc // hostToVar el) { } hosts;
-        json = builtins.toJSON { hosts = hostSet; };
-      in pkgs.writeScriptBin "gen-tf-vars" ''
-        echo '${json}' | ${pkgs.jq}/bin/jq > terraform/hosts.auto.tfvars.json;
-        echo "Generated Terraform Variables";
-      '';
+      genTFVars =
+        let
+          hostToVar = z@{ hostname, mac, ... }: {
+            "${hostname}" = { inherit mac; };
+          };
+          hostSet = lib.foldr (el: acc: acc // hostToVar el) { } hosts;
+          json = builtins.toJSON { hosts = hostSet; };
+        in
+        pkgs.writeScriptBin "gen-tf-vars" ''
+          echo '${json}' | ${pkgs.jq}/bin/jq > terraform/hosts.auto.tfvars.json;
+          echo "Generated Terraform Variables";
+        '';
 
       # Import all nixos host definitions that are actual nix machines
       nixHosts = filter ({ nix ? true, ... }: nix) hosts;
 
-      pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system}
-        [ vault-secrets.overlay ];
+      pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system} [ vault-secrets.overlay ];
 
-      deployChecks =
-        mapAttrs (_: lib: lib.deployChecks self.deploy) deploy-rs.lib;
+      deployChecks = mapAttrs (_: lib: lib.deployChecks self.deploy) deploy-rs.lib;
       checks = { };
-    in {
+    in
+    {
       # Make the config and deploy sets
-      nixosConfigurations =
-        lib.foldr (el: acc: acc // mkConfig el) { } nixHosts;
+      nixosConfigurations = lib.foldr (el: acc: acc // mkConfig el) { } nixHosts;
       deploy.nodes = lib.foldr (el: acc: acc // mkDeploy el) { } nixHosts;
 
       apps.${system} = {
+        # deploy = {
+        #   type = "app";
+        #   program = "${deploy-rs.packages.${system}.deploy-rs}/bin/deploy";
+        # };
         vault-push-approles = {
           type = "app";
           program = "${pkgs.vault-push-approles self}/bin/vault-push-approles";
@@ -97,6 +100,7 @@
       devShells.${system}.default = pkgs.mkShell {
         VAULT_ADDR = "http://vault.olympus:8200/";
         # This only support bash so just execute zsh in bash as a workaround :/
+        shellHook = "zsh";
         buildInputs = with pkgs; [
           deploy-rs.packages.${system}.deploy-rs
           fluxcd
