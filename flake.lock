@@ -7,11 +7,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1648475189,
-        "narHash": "sha256-gAGAS6IagwoUr1B0ohE3iR6sZ8hP4LSqzYLC8Mq3WGU=",
+        "lastModified": 1652079807,
+        "narHash": "sha256-aCs1EwO9K2yJ1DcT4+4g7BMlJBWP7Xjs4k5i8ueR8PU=",
         "owner": "serokell",
         "repo": "deploy-rs",
-        "rev": "83e0c78291cd08cb827ba0d553ad9158ae5a95c3",
+        "rev": "690f698b18345d894784752b5fa93b9b8f3cc29f",
         "type": "github"
       },
       "original": {
@@ -198,11 +198,11 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1651978388,
-        "narHash": "sha256-RIMWD6myYtmeP2ryPPNIMNZ5D6NpUD9chvrD8yy/1J0=",
+        "lastModified": 1652168810,
+        "narHash": "sha256-84F11nA1dixXi2wKXYNQxJuDjirXZxoz9LnWzh72Jw4=",
         "owner": "jyooru",
         "repo": "nix-minecraft-servers",
-        "rev": "8900142d65675c721b3a6cdbb98e4ea8d8118a71",
+        "rev": "346324ed142697c44cbb0f3fcfadf6e84be9281e",
         "type": "github"
       },
       "original": {
@@ -281,11 +281,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1652007072,
-        "narHash": "sha256-GXP/3f1/qYx++Ys7cnyOQuvPhIjov56QC/hGwHyL280=",
+        "lastModified": 1652302275,
+        "narHash": "sha256-OFhH+klAOesP+nhEM5icPOxfwv6MD4RB4hikewIS3yE=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "52f31d531b68d92f901310ea3a48999ac182df73",
+        "rev": "2b6405afa8a67dc12eb0f6989e85b5d80c7d25e4",
         "type": "github"
       },
       "original": {

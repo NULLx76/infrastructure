@@ -29,8 +29,10 @@ in
   vault-secrets.secrets.plausible = { };
 
   services.plausible = {
-    enable = false;
-    releaseCookiePath = "${vs.plausible}/cookie";
+    enable = true;
+    releaseCookiePath = "${pkgs.runCommand "cookie" { } ''
+        ${pkgs.openssl}/bin/openssl rand -base64 64 >"$out"
+      ''}";
     server = {
       baseUrl = "https://analytics.0x76.dev";
       secretKeybaseFile = "${vs.plausible}/secretkeybase";
