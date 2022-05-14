@@ -198,11 +198,11 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1652168810,
-        "narHash": "sha256-84F11nA1dixXi2wKXYNQxJuDjirXZxoz9LnWzh72Jw4=",
+        "lastModified": 1652405436,
+        "narHash": "sha256-+B05vhYU64vIs2r0h+43qnI19eA20J48I3qv/bisIWY=",
         "owner": "jyooru",
         "repo": "nix-minecraft-servers",
-        "rev": "346324ed142697c44cbb0f3fcfadf6e84be9281e",
+        "rev": "9f8da33e00fbf9f0d9e28d8d87c792ff6980dc11",
         "type": "github"
       },
       "original": {
@@ -281,16 +281,16 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1652302275,
-        "narHash": "sha256-OFhH+klAOesP+nhEM5icPOxfwv6MD4RB4hikewIS3yE=",
-        "owner": "nixos",
+        "lastModified": 1652543897,
+        "narHash": "sha256-KOXHQQKEw20XuBqOk0m06T44m7PhgxyBdxdy5A8Zq/4=",
+        "owner": "NULLx76",
         "repo": "nixpkgs",
-        "rev": "2b6405afa8a67dc12eb0f6989e85b5d80c7d25e4",
+        "rev": "d14aae0cf608a325a717bb4d617d69bac934dfae",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "master",
+        "owner": "NULLx76",
+        "ref": "fix-hedgedoc",
         "repo": "nixpkgs",
         "type": "github"
       }

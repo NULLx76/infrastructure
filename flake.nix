@@ -7,7 +7,8 @@
 
   inputs = {
     deploy-rs.url = "github:serokell/deploy-rs";
-    nixpkgs.url = "github:nixos/nixpkgs/master";
+    # nixpkgs.url = "github:nixos/nixpkgs/master";
+    nixpkgs.url ="github:NULLx76/nixpkgs/fix-hedgedoc";
     serokell-nix.url = "github:serokell/serokell.nix";
     vault-secrets.url = "github:serokell/vault-secrets";
     minecraft-servers.url = "github:jyooru/nix-minecraft-servers";

@@ -107,11 +107,11 @@
     ip = "10.42.42.22";
     mac = "DE:5F:B0:83:6F:34";
   }
-  # {
-  #   hostname = "TBD";
-  #   ip = "10.42.42.23";
-  #   mac = "AA:AA:AA:AA:AA:AA";
-  # }
+  {
+    hostname = "hedgedoc";
+    ip = "10.42.42.23";
+    mac = "86:BC:0C:18:BC:9B";
+  }
   {
     hostname = "zmeura";
     ip = "10.42.42.24";
