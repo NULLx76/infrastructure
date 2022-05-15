@@ -30,6 +30,7 @@ in
     enable = true;
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
+    recommendedOptimisation = true;
 
     package = pkgs.nginxMainline.override {
       modules = with pkgs.nginxModules; [ brotli ];
@@ -40,6 +41,7 @@ in
     virtualHosts."zookeeper-dev.0x76.dev" = proxy "http://eevee.olympus:8085/";
     virtualHosts."md.0x76.dev" = proxy "http://hedgedoc.olympus:3000/";
     virtualHosts."git.0x76.dev" = proxy "http://gitea.olympus:3000";
+    virtualHosts."o.0x76.dev" = proxy "http://minio.olympus:9000";
 
     # Kubernetes endpoints
     virtualHosts."0x76.dev" = k8s_proxy;

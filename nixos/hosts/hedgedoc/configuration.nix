@@ -35,7 +35,6 @@ in
       enable = true;
       package = pkgs.postgresql_13;
       ensureDatabases = [ db_name ];
-      # authentication = "host ${db_name} ${db_user} 127.0.0.1/32 trust";
       ensureUsers = [
         {
           name = db_user;
@@ -59,6 +58,9 @@ in
         "hedgedoc"
       ];
       allowEmailRegister = false;
+      allowAnonymousEdits = true;
+      allowFreeURL = true;
+      requireFreeURLAuthentication = true;
       imageUploadType = "minio";
       db = {
         dialect = "postgres";
@@ -68,8 +70,9 @@ in
       };
       s3bucket = "hedgedoc";
       minio = {
-        secure = false;
-        endPoint = "minio.olympus";
+        secure = true;
+        endPoint = "o.0x76.dev";
+        port = 443;
         accessKey = "$MINIO_ACCESS_KEY";
         secretKey = "$MINIO_SECRET_KEY";
       };
