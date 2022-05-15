@@ -198,11 +198,11 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1652405436,
-        "narHash": "sha256-+B05vhYU64vIs2r0h+43qnI19eA20J48I3qv/bisIWY=",
+        "lastModified": 1652589151,
+        "narHash": "sha256-urnzpw+gz5SAl70jw1ChZm65oqnX5duE6AHgcv5+Chs=",
         "owner": "jyooru",
         "repo": "nix-minecraft-servers",
-        "rev": "9f8da33e00fbf9f0d9e28d8d87c792ff6980dc11",
+        "rev": "4fc33b94eed52c063d49d1179acd36c184b62bf4",
         "type": "github"
       },
       "original": {
@@ -265,11 +265,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1651927509,
-        "narHash": "sha256-fGVGUdEsriuAL1vkUh29FlOQmEkPRnSfRGImWYaVjos=",
+        "lastModified": 1652133925,
+        "narHash": "sha256-kfATGChLe9/fQVZkXN9G71JAVMlhePv1qDbaRKklkQs=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "2fdb6f2e08e7989b03a2a1aa8538d99e3eeea881",
+        "rev": "51d859cdab1ef58755bd342d45352fc607f5e59b",
         "type": "github"
       },
       "original": {
@@ -281,16 +281,16 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1652543897,
-        "narHash": "sha256-KOXHQQKEw20XuBqOk0m06T44m7PhgxyBdxdy5A8Zq/4=",
+        "lastModified": 1652608635,
+        "narHash": "sha256-B4BbT+Gl4MHBvtT/tzq6MaH1wjR59FGfLat02pTyWTM=",
         "owner": "NULLx76",
         "repo": "nixpkgs",
-        "rev": "d14aae0cf608a325a717bb4d617d69bac934dfae",
+        "rev": "e9b1375878a798850457c7c86af2795451b489b1",
         "type": "github"
       },
       "original": {
         "owner": "NULLx76",
-        "ref": "fix-hedgedoc",
+        "ref": "update-hedgedoc-module",
         "repo": "nixpkgs",
         "type": "github"
       }

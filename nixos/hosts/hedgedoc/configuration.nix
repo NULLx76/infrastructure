@@ -58,7 +58,7 @@ in
         "hedgedoc"
       ];
       allowEmailRegister = false;
-      allowAnonymousEdits = true;
+      allowAnonymousEdits = false;
       allowFreeURL = true;
       requireFreeURLAuthentication = true;
       imageUploadType = "minio";
@@ -75,6 +75,10 @@ in
         port = 443;
         accessKey = "$MINIO_ACCESS_KEY";
         secretKey = "$MINIO_SECRET_KEY";
+      };
+      github = {
+        clientID = "$GITHUB_CLIENTID";
+        clientSecret = "$GITHUB_CLIENTSECRET";
       };
     };
   };
