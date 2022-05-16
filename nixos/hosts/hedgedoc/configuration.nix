@@ -57,8 +57,9 @@ in
         config.services.hedgedoc.configuration.domain
         "hedgedoc"
       ];
+      allowAnonymous = false;
       allowEmailRegister = false;
-      allowAnonymousEdits = false;
+      allowAnonymousEdits = true;
       allowFreeURL = true;
       requireFreeURLAuthentication = true;
       imageUploadType = "minio";
@@ -76,10 +77,10 @@ in
         accessKey = "$MINIO_ACCESS_KEY";
         secretKey = "$MINIO_SECRET_KEY";
       };
-      github = {
-        clientID = "$GITHUB_CLIENTID";
-        clientSecret = "$GITHUB_CLIENTSECRET";
-      };
+      # github = {
+      #   clientID = "$GITHUB_CLIENTID";
+      #   clientSecret = "$GITHUB_CLIENTSECRET";
+      # };
     };
   };
 }

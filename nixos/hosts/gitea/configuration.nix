@@ -32,6 +32,8 @@
     database.type = "postgres";
     ssh.clonePort = 42;
     disableRegistration = true;
+    cookieSecure = true;
+    
 
     settings = {
       ui = {
