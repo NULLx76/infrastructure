@@ -4,4 +4,5 @@ resources:
   - presidential-paradise.yaml
   - networking.yaml
   - external-secrets.yaml
+  - authentik.yaml
 
