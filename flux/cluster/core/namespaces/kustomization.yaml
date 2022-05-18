@@ -5,4 +5,5 @@ resources:
   - networking.yaml
   - external-secrets.yaml
   - authentik.yaml
+  - gitops.yaml
 

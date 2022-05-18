@@ -1,7 +1,4 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - networking
-  - presidential-paradise
-  - authentik
-  - gitops
+  - external-secret.yaml
