@@ -53,10 +53,14 @@ metadata:
 data:
   config.json: |-
     {
+      "extends": ["github>whitesource/merge-confidence:beta"],
       "repositories": ["v/infrastructure"],
       "flux": {
         "fileMatch": ["flux/.+\\.yaml$"]
       },
+      "helm-values": {
+        "fileMatch": ["flux/.+\\.yaml$"]
+      }
       "kubernetes": {
         "fileMatch": ["flux/.+\\.yaml$"]
       }
