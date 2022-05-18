@@ -77,10 +77,20 @@ in
         accessKey = "$MINIO_ACCESS_KEY";
         secretKey = "$MINIO_SECRET_KEY";
       };
-      # github = {
-      #   clientID = "$GITHUB_CLIENTID";
-      #   clientSecret = "$GITHUB_CLIENTSECRET";
-      # };
+      email = true;
+      oauth2 = let url = "https://id.0x76.dev"; in
+        {
+          providerName = "authentik";
+          clientID = "$AUTHENTIK_CLIENTID";
+          clientSecret = "$AUTHENTIK_CLIENTSECRET";
+          scope = "openid email profile";
+          userProfileURL = "${url}/application/o/userinfo/";
+          tokenURL = "${url}/application/o/token/";
+          authorizationURL = "${url}/application/o/authorize/";
+          userProfileUsernameAttr = "preferred_username";
+          userProfileDisplayNameAttr = "name";
+          userProfileEmailAttr = "email";
+        };
     };
   };
 }
