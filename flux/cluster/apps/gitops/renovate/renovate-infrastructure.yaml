@@ -49,6 +49,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: renovate-config
+  namespace: gitops
 data:
   config.json: |-
     {
