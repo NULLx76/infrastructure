@@ -35,7 +35,7 @@ spec:
                 - name: RENOVATE_AUTODISCOVER
                   value: 'false'
                 - name: RENOVATE_GIT_AUTHOR
-                  value: 'Renovate Bot <bot@renovateapp.com>'
+                  value: 'Renovate Bot <renovate@xirion.net>'
                 - name: RENOVATE_CONFIG_FILE
                   value: '/opt/renovate/config.json'
                 - name: RENOVATE_BASE_DIR
