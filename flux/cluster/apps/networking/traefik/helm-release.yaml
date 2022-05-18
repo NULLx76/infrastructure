@@ -36,11 +36,12 @@ spec:
       enabled: true
       isDefaultClass: true
       fallbackApiVersion: v1
-    globalArguments:
-      - "--providers.kubernetesingress.ingressclass=traefik"
-      - "--entryPoints.websecure.forwardedHeaders.trustedIPs=10.42.42.0/23"
+    globalArguments: []
     additionalArguments:
+      - "--providers.kubernetesingress.ingressclass=traefik"
       - "--providers.kubernetesingress.ingressendpoint.ip=10.42.42.150"
+      - "--entryPoints.web.forwardedHeaders.insecure=true"
+      - "--entryPoints.websecure.forwardedHeaders.insecure=true"
     ports:
       traefik:
         port: 9000
