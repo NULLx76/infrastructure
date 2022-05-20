@@ -5,18 +5,18 @@ metadata:
   name: renovate-infrastructure
   namespace: gitops
 spec:
-  schedule: '@hourly'
+  schedule: "@hourly"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
         spec:
           volumes:
-              - name: config-volume
-                configMap:
-                  name: renovate-config
-              - name: work-volume
-                emptyDir: {}
+            - name: config-volume
+              configMap:
+                name: renovate-config
+            - name: work-volume
+              emptyDir: {}
           containers:
             - name: renovate
               image: renovate/renovate:32.64
@@ -29,17 +29,17 @@ spec:
                 - name: LOG_LEVEL
                   value: debug
                 - name: RENOVATE_ENDPOINT
-                  value: 'https://git.0x76.dev/api/v1/'
+                  value: "https://git.0x76.dev/api/v1/"
                 - name: RENOVATE_PLATFORM
                   value: gitea
                 - name: RENOVATE_AUTODISCOVER
-                  value: 'false'
+                  value: "false"
                 - name: RENOVATE_GIT_AUTHOR
-                  value: 'Renovate Bot <renovate@xirion.net>'
+                  value: "Renovate Bot <renovate@xirion.net>"
                 - name: RENOVATE_CONFIG_FILE
-                  value: '/opt/renovate/config.json'
+                  value: "/opt/renovate/config.json"
                 - name: RENOVATE_BASE_DIR
-                  value: '/tmp/renovate'
+                  value: "/tmp/renovate"
               envFrom:
                 - secretRef:
                     name: renovate
@@ -65,10 +65,12 @@ data:
         "fileMatch": ["flux/.+\\.yaml$"]
       },
       "packageRules": [
-        "automerge": true,
-        "automergeType": "branch",
-        "matchPackageNames": [
-          "renovate/renovate"
-        ]
+        {
+          "automerge": true,
+          "automergeType": "branch",
+          "matchPackageNames": [
+            "renovate/renovate"
+          ]
+        }
       ]
     }
