@@ -198,11 +198,11 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1652589151,
-        "narHash": "sha256-urnzpw+gz5SAl70jw1ChZm65oqnX5duE6AHgcv5+Chs=",
+        "lastModified": 1652836211,
+        "narHash": "sha256-+RKdIiGZgNCpZuT+Jb33iJ9vxLfS9JKXGVY0RHJQUZ0=",
         "owner": "jyooru",
         "repo": "nix-minecraft-servers",
-        "rev": "4fc33b94eed52c063d49d1179acd36c184b62bf4",
+        "rev": "9a523a917319a85d9dc8314e4972225ac2867a36",
         "type": "github"
       },
       "original": {
@@ -281,16 +281,16 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1652608635,
-        "narHash": "sha256-B4BbT+Gl4MHBvtT/tzq6MaH1wjR59FGfLat02pTyWTM=",
+        "lastModified": 1652966559,
+        "narHash": "sha256-YW0DT863C8G6nnbzdF988ux3GHe3MCznRU4yjGlEqco=",
         "owner": "NULLx76",
         "repo": "nixpkgs",
-        "rev": "e9b1375878a798850457c7c86af2795451b489b1",
+        "rev": "555ee90387157055779af7f4d2a19ff712609a1f",
         "type": "github"
       },
       "original": {
         "owner": "NULLx76",
-        "ref": "update-hedgedoc-module",
+        "ref": "0x76",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -388,11 +388,11 @@
         "nixpkgs": "nixpkgs_6"
       },
       "locked": {
-        "lastModified": 1651884062,
-        "narHash": "sha256-gr3BGy0yJL4Qx2NdbzEUAI3+Hi558AAVUAczaz6423w=",
+        "lastModified": 1652965520,
+        "narHash": "sha256-vQ3WK7OzxAFNhy6UncQBC9wMr1+Dxd6Awvj/ZNTZuz0=",
         "owner": "serokell",
         "repo": "serokell.nix",
-        "rev": "3d533eb5b37142d6a3a8dea5ea3c159ad6595eb7",
+        "rev": "5150ea7a11e638329e70319186eb6b3941aba964",
         "type": "github"
       },
       "original": {

@@ -63,5 +63,12 @@ data:
       },
       "kubernetes": {
         "fileMatch": ["flux/.+\\.yaml$"]
-      }
+      },
+      "packageRules": [
+        "automerge": true,
+        "automergeType": "branch",
+        "matchPackageNames": [
+          "renovate/renovate"
+        ]
+      ]
     }
