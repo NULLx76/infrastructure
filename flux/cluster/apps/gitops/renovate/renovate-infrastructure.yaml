@@ -37,7 +37,7 @@ spec:
                 - name: RENOVATE_GIT_AUTHOR
                   value: "Renovate Bot <renovate@xirion.net>"
                 - name: RENOVATE_CONFIG_FILE
-                  value: "/opt/renovate/config.json"
+                  value: "/opt/renovate/config.js"
                 - name: RENOVATE_BASE_DIR
                   value: "/tmp/renovate"
               envFrom:
@@ -51,9 +51,8 @@ metadata:
   name: renovate-config
   namespace: gitops
 data:
-  config.json: |-
-    {
-      "extends": ["github>whitesource/merge-confidence:beta"],
+  config.js: |-
+    module.exports = {
       "repositories": ["v/infrastructure"],
       "flux": {
         "fileMatch": ["flux/.+\\.yaml$"]
@@ -81,4 +80,4 @@ data:
           ]
         }
       ]
-    }
+    };
