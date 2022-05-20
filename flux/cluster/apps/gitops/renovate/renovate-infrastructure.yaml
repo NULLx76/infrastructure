@@ -64,6 +64,14 @@ data:
       "kubernetes": {
         "fileMatch": ["flux/.+\\.yaml$"]
       },
+      hostRules: [
+        {
+          hostType: 'docker',
+          matchHost: 'ghcr.io',
+          username: 'NULLx76',
+          password: process.env.GITHUB_COM_TOKEN
+        }
+      ],
       "packageRules": [
         {
           "automerge": true,
