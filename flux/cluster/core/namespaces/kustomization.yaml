@@ -7,4 +7,3 @@ resources:
   - authentik.yaml
   - gitops.yaml
   - monitoring.yaml
-
