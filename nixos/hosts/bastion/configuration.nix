@@ -37,6 +37,7 @@ in {
   # Additional packages
   environment.systemPackages = with pkgs; [
     binutils
+    checkov
     fix-vscode
     fluxcd
     k9s
