@@ -5,3 +5,4 @@ resources:
   - traefik-charts.yaml
   - external-secrets-charts.yaml
   - authentik-charts.yaml
+  - fairwinds-charts.yaml
