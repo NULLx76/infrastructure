@@ -6,4 +6,5 @@ resources:
   - external-secrets.yaml
   - authentik.yaml
   - gitops.yaml
+  - monitoring.yaml
 
