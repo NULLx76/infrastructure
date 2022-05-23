@@ -22,6 +22,9 @@ spec:
       targetPath: authentik.secret_key
       optional: false
   values:
+    image:
+      repository: ghcr.io/goauthentik/server
+      tag: 2022.5.1
     authentik:
       error_reporting:
         enabled: true
