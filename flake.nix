@@ -6,12 +6,20 @@
   # * https://git.voidcorp.nl/j00lz/nixos-configs/src/branch/main/flake.nix
 
   inputs = {
-    deploy-rs.url = "github:serokell/deploy-rs";
-    # nixpkgs.url = "github:nixos/nixpkgs/master";
     nixpkgs.url = "github:NULLx76/nixpkgs/0x76";
+    
+    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+    
     serokell-nix.url = "github:serokell/serokell.nix";
+    serokell-nix.inputs.nixpkgs.follows = "nixpkgs";
+    serokell-nix.inputs.deploy-rs.follows = "deploy-rs";
+    
     vault-secrets.url = "github:serokell/vault-secrets";
+    vault-secrets.inputs.nixpkgs.follows = "nixpkgs";
+
     minecraft-servers.url = "github:jyooru/nix-minecraft-servers";
+    minecraft-servers.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
