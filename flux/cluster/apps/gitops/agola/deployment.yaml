@@ -35,7 +35,8 @@ spec:
             - /mnt/agola/local/config.yml
             - "--components"
             - all-base,executor
-            - "--embedded-etcd"
+            - "--debug"
+            - "--detailed-errors"
           ports:
             - containerPort: 8000
             - containerPort: 4000
