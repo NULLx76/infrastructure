@@ -34,16 +34,16 @@ data:
       configstoreURL: "http://agola-internal:4002"
       db:
         type: postgres
-        connString: "postgres://agola_notif@database/agola_notif?sslmode=disable"
+        connString: "postgres://agola_notif@10.42.42.26/agola_notif?sslmode=disable"
     
     configstore:
       dataDir: /mnt/agola/local/configstore
       db:
         type: postgres
-        connString: "postgres://agola_config@database/agola_config?sslmode=disable"
+        connString: "postgres://agola_config@10.42.42.26/agola_config?sslmode=disable"
       objectStorage:
         type: s3
-        endpoint: "http://minio:9000"
+        endpoint: "https://o.0x76.dev"
         bucket: agola-configstore
         accessKey: $MINIO_ACCESS_KEY
         secretAccessKey: $MINIO_SECRET_ACCESS_KEY
@@ -55,10 +55,10 @@ data:
       dataDir: /mnt/agola/local/runservice
       db:
         type: postgres
-        connString: "postgres://agola_runservice@database/agola_runservice?sslmode=disable"
+        connString: "postgres://agola_runservice@10.42.42.26/agola_runservice?sslmode=disable"
       objectStorage:
         type: s3
-        endpoint: "http://minio:9000"
+        endpoint: "https://o.0x76.dev"
         bucket: agola-runservice
         accessKey: $MINIO_ACCESS_KEY
         secretAccessKey: $MINIO_SECRET_ACCESS_KEY
