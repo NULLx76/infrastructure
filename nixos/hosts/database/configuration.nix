@@ -4,7 +4,7 @@
 
 { config, pkgs, ... }:
 let
-  databases = [ "authentik" ];
+  databases = [ "authentik" "agola_notif" "agola_config" "agola_runservice"];
 
 in
 {
