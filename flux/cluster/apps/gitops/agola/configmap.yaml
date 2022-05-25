@@ -37,6 +37,7 @@ data:
         connString: "postgres://agola_notif@10.42.42.26/agola_notif?sslmode=disable"
     
     configstore:
+      debug: true
       dataDir: /mnt/agola/local/configstore
       db:
         type: postgres
@@ -51,7 +52,7 @@ data:
         listenAddress: ":4002"
     
     runservice:
-      debug: true
+      # debug: true
       dataDir: /mnt/agola/local/runservice
       db:
         type: postgres
