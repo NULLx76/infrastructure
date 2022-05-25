@@ -5,4 +5,5 @@ resources:
   - deployment.yaml
   - external-secret.yaml
   - ingress.yaml
+  - rbac.yaml
   - services.yaml
