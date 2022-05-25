@@ -51,7 +51,7 @@ data:
         listenAddress: ":4002"
     
     runservice:
-      #debug: true
+      debug: true
       dataDir: /mnt/agola/local/runservice
       db:
         type: postgres
