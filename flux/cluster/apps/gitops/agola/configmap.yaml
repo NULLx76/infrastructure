@@ -6,7 +6,6 @@ metadata:
 data:
   config.yml: |
     gateway:
-      debug: true
       # The api url that clients will call
       # Change this to the exposed "agola" service IP
       apiExposedURL: "https://agola.0x76.dev"

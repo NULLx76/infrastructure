@@ -35,6 +35,7 @@ spec:
             - /mnt/agola/local/config.yml
             - "--components"
             - all-base,executor
+            - "--debug"
           ports:
             - containerPort: 8000
             - containerPort: 4000
