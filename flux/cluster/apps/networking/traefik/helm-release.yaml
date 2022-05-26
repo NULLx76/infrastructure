@@ -60,6 +60,12 @@ spec:
       plugins:
         enabled: false
     affinity:  {}
+    providers:
+      kubernetesCRD:
+        enabled: true
+        namespaces:
+          - networking
+          - olympus
     resources:
       requests:
         memory: 100Mi
