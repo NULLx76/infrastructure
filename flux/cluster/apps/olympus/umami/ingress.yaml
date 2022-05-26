@@ -4,7 +4,7 @@ metadata:
   name: umami
   namespace: olympus
   annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: umami-replace-js@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: olympus-umami-replace-js@kubernetescrd
 spec:
   rules:
   - host: "analytics.0x76.dev"
