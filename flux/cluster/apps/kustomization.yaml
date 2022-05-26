@@ -6,3 +6,4 @@ resources:
   - authentik
   - gitops
   - monitoring
+  - olympus

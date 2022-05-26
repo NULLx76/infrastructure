@@ -4,7 +4,7 @@
 
 { config, pkgs, ... }:
 let
-  databases = [ "authentik" ];
+  databases = [ "authentik" "umami" ];
 
 in
 {
