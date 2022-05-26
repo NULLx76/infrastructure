@@ -1,0 +1,9 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: umami-replace-js
+  namespace: olympus
+spec:
+  replacePathRegex:
+    regex: ^/script\.js
+    replacement: /umami.js
