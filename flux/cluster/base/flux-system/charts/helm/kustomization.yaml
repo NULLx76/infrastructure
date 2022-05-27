@@ -6,3 +6,4 @@ resources:
   - external-secrets-charts.yaml
   - authentik-charts.yaml
   - fairwinds-charts.yaml
+  - drone-charts.yaml

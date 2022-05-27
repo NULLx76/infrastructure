@@ -8,3 +8,4 @@ resources:
   - gitops.yaml
   - monitoring.yaml
   - olympus.yaml
+  - drone-build.yaml
