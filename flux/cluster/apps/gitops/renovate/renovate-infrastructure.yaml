@@ -80,6 +80,15 @@ data:
           ]
         }
       ],
+      // ignore individual fluxcd images
+      "ignoreDeps": [
+        "ghcr.io/fluxcd/helm-controller",
+        "ghcr.io/fluxcd/image-automation-controller",
+        "ghcr.io/fluxcd/image-reflector-controller",
+        "ghcr.io/fluxcd/kustomize-controller",
+        "ghcr.io/fluxcd/notification-controller",
+        "ghcr.io/fluxcd/source-controller"  
+      ],
       "regexManagers": [
         {
           "description": "Process GitRepository CRD dependencies - Chart and Github Release are the same version",
