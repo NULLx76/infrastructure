@@ -10,6 +10,9 @@
     
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+
+    colmena.url = "github:zhaofengli/colmena";
+    colmena.inputs.nixpkgs.follows = "nixpkgs";
     
     serokell-nix.url = "github:serokell/serokell.nix";
     serokell-nix.inputs.nixpkgs.follows = "nixpkgs";
