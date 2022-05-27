@@ -19,10 +19,11 @@ spec:
       tag: 2.12.0
     ingress:
       enabled: true
-      host: drone.0x76.dev
-      paths:
-        - path: /
-          pathType: Prefix
+      hosts:
+        - host: drone.0x76.dev
+          paths:
+            - path: /
+              pathType: Prefix
     persistentVolume:
       enabled: false
     extraSecretNamesForEnvFrom:

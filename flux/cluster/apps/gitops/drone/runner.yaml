@@ -22,12 +22,6 @@ spec:
     image:
       repository: drone/drone-runner-kube
       tag: 1.0.0-rc.3
-    ingress:
-      enabled: true
-      host: drone.0x76.dev
-      paths:
-        - path: /
-          pathType: Prefix
     rbac:
       buildNamespaces:
       - drone-build
