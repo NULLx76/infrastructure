@@ -5,4 +5,4 @@ steps:
   - name: kubeval
     image: garethr/kubeval
     commands:
-      - kubeval --ignore-missing-schemas-d ./flux/
+      - kubeval --ignore-missing-schemas -d ./flux/
