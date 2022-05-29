@@ -3,6 +3,6 @@ type: kubernetes
 name: default
 steps:
   - name: kubeval
-    image: garethr/kubeval
+    image: registry.gitlab.com/pipeline-components/yamllint
     commands:
-      - kubeval --ignore-missing-schemas -d ./flux/
+      - yamllint -c .yamllint.taml .

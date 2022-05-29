@@ -59,7 +59,7 @@ spec:
     experimental:
       plugins:
         enabled: false
-    affinity:  {}
+    affinity: {}
     providers:
       kubernetesCRD:
         enabled: true

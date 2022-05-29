@@ -7,13 +7,13 @@ metadata:
     traefik.ingress.kubernetes.io/router.middlewares: olympus-umamijs@kubernetescrd
 spec:
   rules:
-  - host: "msg.0x76.dev"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service: 
-            name: umami
-            port: 
-              number: 80
+    - host: "msg.0x76.dev"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: umami
+                port:
+                  number: 80

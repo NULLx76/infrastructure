@@ -6,10 +6,10 @@ metadata:
 spec:
   clusterIP: None
   ports:
-  - name: epmd
-    port: 4369
-    targetPort: epmd
-    protocol: TCP
+    - name: epmd
+      port: 4369
+      targetPort: epmd
+      protocol: TCP
   selector:
     app: zookeeper
 ---
@@ -20,8 +20,8 @@ metadata:
   namespace: presidential-paradise
 spec:
   ports:
-  - name: http
-    targetPort: web
-    port: 8085
+    - name: http
+      targetPort: web
+      port: 8085
   selector:
     app: zookeeper
