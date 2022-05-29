@@ -2,7 +2,7 @@ kind: pipeline
 type: kubernetes
 name: default
 steps:
-  - name: kubeval
+  - name: yamllint
     image: registry.gitlab.com/pipeline-components/yamllint
     commands:
-      - yamllint -c .yamllint.taml .
+      - yamllint -c .yamllint.yaml .
