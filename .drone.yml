@@ -1,0 +1,8 @@
+kind: pipeline
+type: kubernetes
+name: default
+steps:
+  - name: kubeval
+    image: garethr/kubeval
+    commands:
+      - kubeval --ignore-missing-schemas-d ./flux/
