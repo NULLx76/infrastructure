@@ -91,20 +91,22 @@ data:
       ],
       "regexManagers": [
         {
-          "description": "Process GitRepository CRD dependencies - Chart and Github Release are the same version",
-          "fileMatch": ["flux/cluster/crds/.+\\.ya?ml$"],
+          "fileMatch": [
+            "flux/cluster/crds/traefik/.+\\.ya?ml$"
+          ],
           "matchStrings": [
-            "registryUrl=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n"
+            "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n"
           ],
           "datasourceTemplate": "helm"
         },
         {
-          "description": "Process Kustomization CRD dependencies - Image and Github Release are the same version",
-          "fileMatch": ["flux/cluster/crds/.+\\.ya?ml$"],
-          "matchStrings": [
-            "datasource=(?<datasource>\\S+) image=(?<depName>\\S+)\n.*?-\\s(.*?)\/(?<currentValue>[^/]+)\/[^/]+\n"
+          "fileMatch": [
+            "flux/cluster/crds/external-secrets/.+\\.ya?ml$"
           ],
-          "datasourceTemplate": "docker"
-        }
+          "matchStrings": [
+            "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: helm-chart-(?<currentValue>.*)\n"
+          ],
+          "datasourceTemplate": "helm"
+        },
       ]
     };
