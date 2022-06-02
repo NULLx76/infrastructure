@@ -206,11 +206,11 @@
         "utils": "utils_3"
       },
       "locked": {
-        "lastModified": 1653614444,
-        "narHash": "sha256-JDXshcep5PjUx+AM68FunQgpFtS+B8/U/ow0gROln+k=",
+        "lastModified": 1653700859,
+        "narHash": "sha256-R1zR4U6s0ZpRkI/bAkWWyMaUVTvUnF/R7LydzGvLuHM=",
         "owner": "jyooru",
         "repo": "nix-minecraft-servers",
-        "rev": "0147a798063462fb2c4644cdb7936d050d3b704f",
+        "rev": "27d4153324679e45a34f8c68dd740b50379cac69",
         "type": "github"
       },
       "original": {
@@ -257,16 +257,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1653602240,
-        "narHash": "sha256-Gt3J9eZQ12H6niBjmqd6cNCY4g/EDbcMTRGyCmAQurA=",
-        "owner": "NULLx76",
+        "lastModified": 1653850161,
+        "narHash": "sha256-r9jwqAX3wG0XMOs2RNNXK66pjz5b2+veXDSyp1m5QGU=",
+        "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c2f9aad978affdbfd20578bc84a4f0a170ff8a6f",
+        "rev": "757046a257a8569de866aaf39a7e615551c7cfab",
         "type": "github"
       },
       "original": {
-        "owner": "NULLx76",
-        "ref": "0x76",
+        "owner": "nixos",
+        "ref": "master",
         "repo": "nixpkgs",
         "type": "github"
       }
