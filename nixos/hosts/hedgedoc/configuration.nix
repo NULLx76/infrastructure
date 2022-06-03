@@ -26,7 +26,7 @@ in
 
   environment.noXlibs = lib.mkForce false;
 
-  networking.firewall.allowedTCPPorts = [ config.services.hedgedoc.settings.port ];
+  networking.firewall.allowedTCPPorts = [ config.services.hedgedoc.configuration.port ];
 
   vault-secrets.secrets.hedgedoc = { };
 
@@ -46,7 +46,7 @@ in
   services.hedgedoc = {
     enable = true;
     environmentFile = "${vs.hedgedoc}/environment";
-    settings = {
+    configuration = {
       host = "0.0.0.0";
       port = 3000;
       sessionSecret = "$SESSION_SECRET";
@@ -54,7 +54,7 @@ in
       protocolUseSSL = true;
       hsts.enable = true;
       allowOrigin = [
-        config.services.hedgedoc.settings.domain
+        config.services.hedgedoc.configuration.domain
         "hedgedoc"
       ];
       allowAnonymous = false;

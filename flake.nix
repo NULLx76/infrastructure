@@ -6,7 +6,7 @@
   # * https://git.voidcorp.nl/j00lz/nixos-configs/src/branch/main/flake.nix
 
   inputs = {
-    nixpkgs.url = "github:NULLx76/nixpkgs/0x76";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
