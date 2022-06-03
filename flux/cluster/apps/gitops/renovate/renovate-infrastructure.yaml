@@ -74,7 +74,7 @@ data:
       "packageRules": [
         {
           "automerge": true,
-          "automergeType": "pr",
+          "automergeType": "branch",
           "matchPackageNames": [
             "renovate/renovate"
           ]

@@ -10,11 +10,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1653210933,
-        "narHash": "sha256-n6Hk/zPHcjloi0E/miKGnXrWROha90uan2CFQV7oaqI=",
+        "lastModified": 1654213409,
+        "narHash": "sha256-9mgH75wnd78zHOzBeFEwWyHXltaNRNr7v7p8Lr6vA1U=",
         "owner": "zhaofengli",
         "repo": "colmena",
-        "rev": "429a0f5aa1d1bac06234e2f0c02d5b63a850d940",
+        "rev": "7c1e91a09f1e9eebbf46806a3b349559c36808a2",
         "type": "github"
       },
       "original": {
@@ -206,11 +206,11 @@
         "utils": "utils_3"
       },
       "locked": {
-        "lastModified": 1653700859,
-        "narHash": "sha256-R1zR4U6s0ZpRkI/bAkWWyMaUVTvUnF/R7LydzGvLuHM=",
+        "lastModified": 1654218788,
+        "narHash": "sha256-0xsD029/xPLWMMa5QKU2SjHikPcFISHYb//dxCoUvWw=",
         "owner": "jyooru",
         "repo": "nix-minecraft-servers",
-        "rev": "27d4153324679e45a34f8c68dd740b50379cac69",
+        "rev": "5a5704cf74ffb0d35139d3f625d1a628dd5206d4",
         "type": "github"
       },
       "original": {
@@ -257,16 +257,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1653850161,
-        "narHash": "sha256-r9jwqAX3wG0XMOs2RNNXK66pjz5b2+veXDSyp1m5QGU=",
-        "owner": "nixos",
+        "lastModified": 1654258420,
+        "narHash": "sha256-H6oJnoRzsQIwpNfMFnqGex+6dZ1YL6TGFQfRzyEO5R8=",
+        "owner": "NULLx76",
         "repo": "nixpkgs",
-        "rev": "757046a257a8569de866aaf39a7e615551c7cfab",
+        "rev": "5506d60e56272eee4a1b111cf05dfa585a91f68d",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "master",
+        "owner": "NULLx76",
+        "ref": "0x76",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -325,11 +325,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1653431509,
-        "narHash": "sha256-4PUKylYuWy0Wlaz8lmbuKq7ok3biV/P6GeLKyO1opEk=",
+        "lastModified": 1654167282,
+        "narHash": "sha256-A/9JJRBIPJVFypPhpgOUxBExy/8evpEg8G75BVdZrLg=",
         "owner": "serokell",
         "repo": "serokell.nix",
-        "rev": "b69317c1304a9c51d7a20ec36ab31f853887e96d",
+        "rev": "da787295c6af0a650ee2c811ab8ef136a596d4ce",
         "type": "github"
       },
       "original": {
