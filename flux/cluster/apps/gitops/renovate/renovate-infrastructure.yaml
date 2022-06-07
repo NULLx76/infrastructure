@@ -53,6 +53,7 @@ metadata:
 data:
   config.js: |-
     module.exports = {
+      "binarySource": "install",
       "repositories": ["v/infrastructure"],
       "flux": {
         "fileMatch": ["flux/.+\\.ya?ml$"]
