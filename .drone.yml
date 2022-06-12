@@ -9,4 +9,5 @@ steps:
   - name: nix flake check
     image: nixos/nix:master
     commands:
+      - nix --extra-experimental-features nix-command --extra-experimental-features flakes flake prefetch
       - nix --extra-experimental-features nix-command --extra-experimental-features flakes flake check --no-build
