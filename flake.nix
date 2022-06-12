@@ -86,7 +86,9 @@
       nixosConfigurations = lib.foldr (el: acc: acc // mkConfig el) { } nixHosts;
       deploy.nodes = lib.foldr (el: acc: acc // mkDeploy el) { } nixHosts;
 
-      apps.${system} = {
+
+      apps.${system} = rec {
+        default = deploy;
         deploy = {
           type = "app";
           program = "${deploy-rs.packages.${system}.deploy-rs}/bin/deploy";
