@@ -82,12 +82,9 @@
     ip = "10.42.42.17";
     mac = "0A:06:5E:E7:9A:0C";
   }
-  {
-    hostname = "plausible";
-    ip = "10.42.42.18";
-    mac = "82:34:70:FA:44:6F";
-    nix = false;
-  }
+  # {
+    # ip = "10.42.42.18";
+  # }
   {
     hostname = "victoriametrics";
     ip = "10.42.42.19";

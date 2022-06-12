@@ -7,17 +7,17 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    
+
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
 
     colmena.url = "github:zhaofengli/colmena";
     colmena.inputs.nixpkgs.follows = "nixpkgs";
-    
+
     serokell-nix.url = "github:serokell/serokell.nix";
     serokell-nix.inputs.nixpkgs.follows = "nixpkgs";
     serokell-nix.inputs.deploy-rs.follows = "deploy-rs";
-    
+
     vault-secrets.url = "github:serokell/vault-secrets";
     vault-secrets.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -80,8 +80,6 @@
 
       pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system} [ vault-secrets.overlay ];
 
-      deployChecks = mapAttrs (_: lib: lib.deployChecks self.deploy) deploy-rs.lib;
-      checks = { };
     in
     {
       # Make the config and deploy sets
@@ -112,7 +110,7 @@
       devShells.${system}.default = pkgs.mkShell {
         VAULT_ADDR = "http://vault.olympus:8200/";
         # This only support bash so just execute zsh in bash as a workaround :/
-        shellHook = "zsh";
+        shellHook = "zsh; exit $?";
         buildInputs = with pkgs; [
           deploy-rs.packages.${system}.deploy-rs
           fluxcd
@@ -129,6 +127,11 @@
         ];
       };
 
-      checks = lib.recursiveUpdate deployChecks checks;
+      # Filter out non-system checks: https://github.com/NixOS/nixpkgs/issues/175875#issuecomment-1152996862
+      checks = lib.filterAttrs
+        (a: _: a == system)
+        (builtins.mapAttrs
+          (system: deployLib: deployLib.deployChecks self.deploy)
+          deploy-rs.lib);
     };
 }

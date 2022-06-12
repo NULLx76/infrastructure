@@ -23,6 +23,8 @@
 
   networking.firewall.allowedTCPPorts = [ config.services.gitea.httpPort ];
 
+  services.openssh.startWhenNeeded = false;
+
   services.gitea = {
     enable = true;
     domain = "git.0x76.dev";
@@ -34,7 +36,6 @@
     disableRegistration = true;
     cookieSecure = true;
     
-
     settings = {
       ui = {
         DEFAULT_THEME = "arc-green";

@@ -5,9 +5,14 @@
   ];
 
   # Use the GRUB 2 boot loader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub = {
+    enable = true;
+    version = 2;
+    device = "/dev/sda";
+  };
+
+  boot.kernel.sysctl."fs.inotify.max_user_instances" = 2147483647; # INT_MAX, dynamically limited based on available memory
+  boot.kernel.sysctl."fs.inotify.max_user_watches" = 1048576;
 
   networking.hostName = "k3s-node1";
 

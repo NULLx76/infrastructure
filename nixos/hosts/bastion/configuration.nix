@@ -34,6 +34,10 @@ in {
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.05"; # Did you read the comment?
 
+  virtualisation.podman = {
+    enable = true;
+  };
+
   # Additional packages
   environment.systemPackages = with pkgs; [
     binutils
