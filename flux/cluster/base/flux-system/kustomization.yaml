@@ -4,5 +4,4 @@ resources:
   - gotk-components.yaml
   - gotk-sync.yaml
   - xirion-registry-creds.yaml
-  - image-update-automation
   - charts
