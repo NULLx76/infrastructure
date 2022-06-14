@@ -25,6 +25,11 @@
 
   services.openssh.startWhenNeeded = false;
 
+  services.fail2ban = {
+    enable = true;
+    maxretry = 3;
+  };
+
   services.gitea = {
     enable = true;
     domain = "git.0x76.dev";
