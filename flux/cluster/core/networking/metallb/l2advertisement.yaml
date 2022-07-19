@@ -5,4 +5,4 @@ metadata:
   namespace: networking
 spec:
   ipAddressPools:
-  - main-pool
+    - main-pool
