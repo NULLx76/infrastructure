@@ -127,6 +127,12 @@
     mac = "CE:6E:96:87:18:1B";
   }
   {
+    hostname = "bookwyrm";
+    ip = "10.42.42.27";
+    mac = "9E:8A:6C:39:27:DE";
+    nix = false;
+  }
+  {
     hostname = "nuc";
     ip = "10.42.42.42";
     ip6 = "2001:41f0:9639:1::42";
