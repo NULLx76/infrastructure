@@ -29,7 +29,7 @@ in
     user = "matrix-synapse";
     group = "matrix-synapse";
     services = [ "matrix-synapse" ];
-   };
+  };
 
   services.postgresql = {
     enable = true;
@@ -42,36 +42,44 @@ in
     '';
   };
 
-  services.matrix-synapse = {
-    enable = true;
-    withJemalloc = true;
+  services.matrix-synapse =
+    let
+      extraConfig = builtins.toFile "extraConfig.yaml" ''
+        registration_requires_token: true
+      '';
+    in
+    {
+      enable = true;
+      withJemalloc = true;
 
-    extraConfigFiles = [
-      "${vs.synapse}/macaroon_secret_key"
-      "${vs.synapse}/registration_shared_secret"
-      "${vs.synapse}/form_secret"
-      "${vs.synapse}/turn_shared_secret"
-    ];
+      extraConfigFiles = [
+        "${vs.synapse}/macaroon_secret_key"
+        "${vs.synapse}/registration_shared_secret"
+        "${vs.synapse}/form_secret"
+        "${vs.synapse}/turn_shared_secret"
+        extraConfig
+      ];
 
-    settings =
-      {
-        server_name = "meowy.tech";
-        public_baseurl = "https://chat.meowy.tech";
-        listeners = [
-          {
-            inherit port;
-            bind_addresses = [ "0.0.0.0" ];
-            type = "http";
-            tls = false;
-            x_forwarded = true;
-            resources = [
-              {
-                names = [ "client" "federation" ];
-                compress = true;
-              }
-            ];
-          }
-        ];
-      };
-  };
+      settings =
+        {
+          server_name = "meowy.tech";
+          enable_registration = true;
+          public_baseurl = "https://chat.meowy.tech";
+          listeners = [
+            {
+              inherit port;
+              bind_addresses = [ "0.0.0.0" ];
+              type = "http";
+              tls = false;
+              x_forwarded = true;
+              resources = [
+                {
+                  names = [ "client" "federation" ];
+                  compress = true;
+                }
+              ];
+            }
+          ];
+        };
+    };
 }

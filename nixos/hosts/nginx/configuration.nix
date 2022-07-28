@@ -10,8 +10,11 @@ let
   };
   k8s_proxy = proxy "http://10.42.42.150:8000/";
   clientConfig = {
-    "m.homeserver".base_url = "https://chat.meowy.tech";
-    "m.identity_server" = {};
+    "m.homeserver" = {
+      base_url = "https://chat.meowy.tech";
+      server_name = "meowy.tech";
+    };
+    "m.identity_server" = { };
   };
   serverConfig."m.server" = "chat.meowy.tech:443";
   mkWellKnown = data: ''
@@ -57,6 +60,10 @@ in
     virtualHosts."meowy.tech" = {
       enableACME = true;
       forceSSL = true;
+      locations."/".extraConfig = ''
+        add_header Content-Type 'text/html; charset=UTF-8';
+        return 200 meow;
+      '';
       locations."= /.well-known/matrix/client".extraConfig = mkWellKnown clientConfig;
       locations."= /.well-known/matrix/server".extraConfig = mkWellKnown serverConfig;
     };
@@ -64,10 +71,27 @@ in
       enableACME = true;
       forceSSL = true;
       locations."/".extraConfig = ''
-        return 404;
+        return 307 https://element.chat.meowy.tech;
       '';
       locations."/_matrix".proxyPass = "http://synapse.olympus:8008";
       locations."/_synapse/client".proxyPass = "http://synapse.olympus:8008";
+    };
+    virtualHosts."element.chat.meowy.tech" = {
+      enableACME = true;
+      forceSSL = true;
+
+      root = pkgs.element-web.override {
+        conf = {
+          default_server_config = clientConfig;
+          show_labs_settings = true;
+          brand = "chat.meowy.tech";
+        };
+      };
+    };
+    virtualHosts."admin.chat.meowy.tech" = {
+      enableACME = true;
+      forceSSL = true;
+      root = pkgs.synapse-admin;
     };
 
     # Kubernetes endpoints
