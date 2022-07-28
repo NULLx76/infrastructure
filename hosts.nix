@@ -133,6 +133,11 @@
     nix = false;
   }
   {
+    hostname = "synapse";
+    ip = "10.42.42.28";
+    mac = "9E:86:D3:46:EE:AE";
+  }
+  {
     hostname = "nuc";
     ip = "10.42.42.42";
     ip6 = "2001:41f0:9639:1::42";

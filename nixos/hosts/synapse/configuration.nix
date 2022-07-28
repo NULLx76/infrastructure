@@ -3,7 +3,10 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
+let
+  vs = config.vault-secrets.secrets;
+  port = 8008;
+in
 {
   imports = [ ];
 
@@ -20,5 +23,55 @@
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
-  networking.firewall.allowedTCPPorts = [ ];
+  networking.firewall.allowedTCPPorts = [ port ];
+
+  vault-secrets.secrets.synapse = {
+    user = "matrix-synapse";
+    group = "matrix-synapse";
+    services = [ "matrix-synapse" ];
+   };
+
+  services.postgresql = {
+    enable = true;
+    initialScript = pkgs.writeText "synapse-init.sql" ''
+      CREATE ROLE "matrix-synapse" WITH LOGIN PASSWORD 'synapse';
+      CREATE DATABASE "matrix-synapse" WITH OWNER "matrix-synapse"
+        TEMPLATE template0
+        LC_COLLATE = "C"
+        LC_CTYPE = "C";
+    '';
+  };
+
+  services.matrix-synapse = {
+    enable = true;
+    withJemalloc = true;
+
+    extraConfigFiles = [
+      "${vs.synapse}/macaroon_secret_key"
+      "${vs.synapse}/registration_shared_secret"
+      "${vs.synapse}/form_secret"
+      "${vs.synapse}/turn_shared_secret"
+    ];
+
+    settings =
+      {
+        server_name = "meowy.tech";
+        public_baseurl = "https://chat.meowy.tech";
+        listeners = [
+          {
+            inherit port;
+            bind_addresses = [ "0.0.0.0" ];
+            type = "http";
+            tls = false;
+            x_forwarded = true;
+            resources = [
+              {
+                names = [ "client" "federation" ];
+                compress = true;
+              }
+            ];
+          }
+        ];
+      };
+  };
 }

@@ -9,6 +9,16 @@ let
     };
   };
   k8s_proxy = proxy "http://10.42.42.150:8000/";
+  clientConfig = {
+    "m.homeserver".base_url = "https://chat.meowy.tech";
+    "m.identity_server" = {};
+  };
+  serverConfig."m.server" = "chat.meowy.tech:443";
+  mkWellKnown = data: ''
+    add_header Content-Type application/json;
+    add_header Access-Control-Allow-Origin *;
+    return 200 '${builtins.toJSON data}';
+  '';
 in
 {
   networking.hostName = "nginx";
@@ -42,6 +52,23 @@ in
     virtualHosts."md.0x76.dev" = proxy "http://hedgedoc.olympus:3000/";
     virtualHosts."git.0x76.dev" = proxy "http://gitea.olympus:3000";
     virtualHosts."o.0x76.dev" = proxy "http://minio.olympus:9000";
+
+    # Meow
+    virtualHosts."meowy.tech" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."= /.well-known/matrix/client".extraConfig = mkWellKnown clientConfig;
+      locations."= /.well-known/matrix/server".extraConfig = mkWellKnown serverConfig;
+    };
+    virtualHosts."chat.meowy.tech" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/".extraConfig = ''
+        return 404;
+      '';
+      locations."/_matrix".proxyPass = "http://synapse.olympus:8008";
+      locations."/_synapse/client".proxyPass = "http://synapse.olympus:8008";
+    };
 
     # Kubernetes endpoints
     virtualHosts."0x76.dev" = k8s_proxy;
