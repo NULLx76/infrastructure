@@ -1,7 +1,10 @@
 { config, pkgs, lib, ... }:
 with lib;
-let cfg = config.services.vmagent;
-in {
+let
+  cfg = config.services.vmagent;
+  settingsFormat = pkgs.formats.json { };
+in
+{
   options.services.vmagent = {
     enable = mkEnableOption "vmagent";
 
@@ -22,8 +25,8 @@ in {
     };
 
     package = mkOption {
-      default = pkgs.v.vmagent;
-      defaultText = "pkgs.v.vmagent";
+      default = pkgs.vmagent;
+      defaultText = "pkgs.vmagent";
       type = types.package;
       description = ''
         vmagent package to use. 
@@ -47,16 +50,17 @@ in {
     };
 
     prometheusConfig = mkOption {
-      default = "";
-      type = types.str;
-      example = ''
-        global:
-          scrape_interval: 5s
-        scrape_configs:
-          - job_name: 'apache'
-            static_configs:
-            - targets: ['apache-exporter:9117']
-      '';
+      type = lib.types.submodule {
+        freeformType = settingsFormat.type;
+      };
+      # example = ''
+      #   global:
+      #     scrape_interval: 5s
+      #   scrape_configs:
+      #     - job_name: 'apache'
+      #       static_configs:
+      #       - targets: ['apache-exporter:9117']
+      # '';
       description = ''
         Config for prometheus style metrics
       '';
@@ -90,21 +94,22 @@ in {
     networking.firewall.allowedTCPPorts = mkIf (cfg.openFirewall) [ 8429 ];
 
     # The actual service
-    systemd.services.vmagent = let prometheusConfig = pkgs.writeText "prometheus.yml" cfg.prometheusConfig;
-    in {
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
-      description = "vmagent system service";
-      serviceConfig = {
-        User = cfg.user;
-        Group = cfg.group;
-        Type = "simple";
-        Restart = "on-failure";
-        WorkingDirectory = cfg.dataDir;
-        ExecStart =
-          "${cfg.package}/bin/vmagent -remoteWrite.url=${cfg.remoteWriteUrl} -promscrape.config=${prometheusConfig}";
+    systemd.services.vmagent =
+      let prometheusConfig = settingsFormat.generate "prometheusConfig.yaml" cfg.prometheusConfig;
+      in {
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network.target" ];
+        description = "vmagent system service";
+        serviceConfig = {
+          User = cfg.user;
+          Group = cfg.group;
+          Type = "simple";
+          Restart = "on-failure";
+          WorkingDirectory = cfg.dataDir;
+          ExecStart =
+            "${cfg.package}/bin/vmagent -remoteWrite.url=${cfg.remoteWriteUrl} -promscrape.config=${prometheusConfig}";
+        };
       };
-    };
 
     systemd.tmpfiles.rules = [ "d '${cfg.dataDir}' 0755 ${cfg.user} ${cfg.group} -" ];
   };

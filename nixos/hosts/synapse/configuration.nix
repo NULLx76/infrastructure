@@ -6,6 +6,7 @@
 let
   vs = config.vault-secrets.secrets;
   port = 8008;
+  metricsPort = 9000;
 in
 {
   imports = [ ];
@@ -23,7 +24,7 @@ in
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
-  networking.firewall.allowedTCPPorts = [ port ];
+  networking.firewall.allowedTCPPorts = [ port metricsPort ];
 
   vault-secrets.secrets.synapse = {
     user = "matrix-synapse";
@@ -65,6 +66,7 @@ in
           server_name = "meowy.tech";
           enable_registration = true;
           public_baseurl = "https://chat.meowy.tech";
+          enable_metrics = true;
           listeners = [
             {
               inherit port;
@@ -76,6 +78,18 @@ in
                 {
                   names = [ "client" "federation" ];
                   compress = true;
+                }
+              ];
+            }
+            {
+              port = metricsPort;
+              bind_addresses = [ "0.0.0.0" ];
+              type = "metrics";
+              tls = false;
+              resources = [
+                {
+                  names = [ "metrics" ];
+                  compress = false;
                 }
               ];
             }

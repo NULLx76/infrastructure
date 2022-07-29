@@ -62,7 +62,7 @@ in
       forceSSL = true;
       locations."/".extraConfig = ''
         add_header Content-Type 'text/html; charset=UTF-8';
-        return 200 meow;
+        return 200 '<h1>meow</h1>';
       '';
       locations."= /.well-known/matrix/client".extraConfig = mkWellKnown clientConfig;
       locations."= /.well-known/matrix/server".extraConfig = mkWellKnown serverConfig;

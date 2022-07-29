@@ -6,7 +6,8 @@
 let
   vmPort = 8428;
   vs = config.vault-secrets.secrets;
-in {
+in
+{
   imports = [ ];
 
   networking.hostName = "victoriametrics";
@@ -32,7 +33,25 @@ in {
     retentionPeriod = 12;
   };
 
-  vault-secrets.secrets.grafana = { 
+  services.vmagent = {
+    enable = true;
+    openFirewall = true;
+    prometheusConfig = {
+      global.scrape_interval = "5s";
+      scrape_configs = [
+        {
+          job_name = "synapse";
+          metrics_path = "/_synapse/metrics";
+          static_configs = [{
+            targets = [ "synapse.olympus:9000" ];
+            labels.app = "synapse";
+          }];
+        }
+      ];
+    };
+  };
+
+  vault-secrets.secrets.grafana = {
     user = "grafana";
     group = "grafana";
   };
