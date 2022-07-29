@@ -37,7 +37,10 @@ in
     enable = true;
     openFirewall = true;
     prometheusConfig = {
-      global.scrape_interval = "5s";
+      global = { 
+        scrape_interval = "1m";
+        scrape_timeout = "30s";
+      };
       scrape_configs = [
         {
           job_name = "synapse";
@@ -60,6 +63,8 @@ in
     enable = true;
     addr = "0.0.0.0";
     port = 2342;
+    domain = "grafana.0x76.dev";
+    rootUrl = "https://grafana.0x76.dev";
     security.adminPasswordFile = "${vs.grafana}/password";
   };
 }

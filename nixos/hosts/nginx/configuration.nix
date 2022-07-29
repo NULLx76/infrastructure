@@ -55,6 +55,7 @@ in
     virtualHosts."md.0x76.dev" = proxy "http://hedgedoc.olympus:3000/";
     virtualHosts."git.0x76.dev" = proxy "http://gitea.olympus:3000";
     virtualHosts."o.0x76.dev" = proxy "http://minio.olympus:9000";
+    virtualHosts."grafana.0x76.dev" = proxy "http://victoriametrics.olympus:2342";
 
     # Meow
     virtualHosts."meowy.tech" = {
