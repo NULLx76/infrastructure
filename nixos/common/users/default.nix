@@ -48,7 +48,7 @@
     ];
 
     # Make me admin
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "systemd-journal" "wheel" ];
   };
 
   # Configure the root account

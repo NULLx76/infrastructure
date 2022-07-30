@@ -22,7 +22,7 @@
   };
 
   outputs =
-    { self, nixpkgs, vault-secrets, serokell-nix, minecraft-servers, ... }@inputs:
+    { self, nixpkgs, vault-secrets, serokell-nix, minecraft-servers, colmena, ... }@inputs:
     let
       inherit (nixpkgs) lib;
       inherit (builtins) filter mapAttrs;
@@ -32,8 +32,8 @@
       # Filter all nixos host definitions that are actual nix machines
       nixHosts = filter ({ nix ? true, ... }: nix) hosts;
 
+      # Resolve imports based on a foldername (nixname) and if the host is an LXC container or a VM.
       resolveImports = { hostname, profile ? hostname, lxc ? true, ... }: [
-        vault-secrets.nixosModules.vault-secrets
         ./nixos/common
         "${./.}/nixos/hosts/${profile}/configuration.nix"
       ] ++ (if lxc then [
@@ -42,16 +42,14 @@
       ]
       else [ ./nixos/common/generic-vm.nix ]);
 
-      # Create a nixosConfiguration based on a foldername (nixname) and if the host is an LXC container or a VM.
-      mkConfig = { hostname, profile ? hostname, lxc ? true, ... }@host: {
-        "${profile}" = lib.nixosSystem {
-          inherit system;
-          inherit specialArgs;
-          modules = resolveImports host; 
+      mkConfig = { hostname, ... }@host: {
+        "${hostname}" = lib.nixosSystem {
+          inherit system specialArgs;
+          modules = resolveImports host;
         };
       };
 
-      mkColmenaHost = { ip, hostname, profile ? hostname, lxc ? true, ... }@host: {
+      mkColmenaHost = { ip, hostname, ... }@host: {
         "${hostname}" = {
           imports = resolveImports host;
           deployment = {
@@ -61,7 +59,7 @@
         };
       };
 
-      legacyPackages = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system} [ vault-secrets.overlay ];
+      pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system} [ vault-secrets.overlay ];
     in
     {
       # Make the config and deploy sets
@@ -74,7 +72,6 @@
               inherit system;
               overlays = [
                 (import ./nixos/pkgs)
-                vault-secrets.overlay
                 minecraft-servers.overlays.default
               ];
             };
@@ -83,25 +80,12 @@
         }
         nixHosts;
 
-      apps.${system} = rec {
-        vault-push-approles = {
-          type = "app";
-          program = "${legacyPackages.vault-push-approles self}/bin/vault-push-approles";
-        };
-        vault-push-approle-envs = {
-          type = "app";
-          program =
-            "${legacyPackages.vault-push-approle-envs self}/bin/vault-push-approle-envs";
-        };
-      };
-
       # Use by running `nix develop`
-      devShells.${system}.default = legacyPackages.mkShell {
+      devShells.${system}.default = pkgs.mkShell {
         VAULT_ADDR = "http://vault.olympus:8200/";
         # This only support bash so just execute zsh in bash as a workaround :/
         shellHook = "zsh; exit $?";
-        buildInputs = with legacyPackages; [
-          colmena
+        buildInputs = with pkgs; [
           fluxcd
           k9s
           kubectl
@@ -110,6 +94,8 @@
           nixfmt
           nixUnstable
           vault
+          (vault-push-approle-envs self)
+          (vault-push-approle-approles self)
         ];
       };
     };

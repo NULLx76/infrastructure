@@ -45,7 +45,6 @@ in {
   # Additional packages
   environment.systemPackages = with pkgs; [
     binutils
-    colmena
     fix-vscode
     fluxcd
     k9s
