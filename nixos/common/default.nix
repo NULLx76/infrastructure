@@ -40,7 +40,7 @@
     };
     optimise = {
       automatic = true;
-      dates = "weekly";
+      dates = [ "weekly" ];
     };
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -63,6 +63,7 @@
     permitRootLogin = "no";
   };
 
+  # TODO: Location dependent
   vault-secrets = {
     vaultPrefix = "secrets/nixos";
     vaultAddress = "http://vault.olympus:8200/";

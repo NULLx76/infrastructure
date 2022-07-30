@@ -5,6 +5,7 @@ let
     hostName = hostname;
     ipAddress = ip;
   };
+  hosts' = hosts.olympus;
 in {
   imports = [ ];
 
@@ -47,6 +48,6 @@ in {
         range 10.42.43.1 10.42.43.254;
       }
     '';
-    machines = map hostToDhcp hosts;
+    machines = map hostToDhcp hosts';
   };
 }

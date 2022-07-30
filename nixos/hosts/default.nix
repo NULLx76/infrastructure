@@ -1,0 +1,4 @@
+{
+  olympus = import ./olympus;
+  hades = [];
+}

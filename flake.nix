@@ -25,17 +25,21 @@
     { self, nixpkgs, vault-secrets, serokell-nix, minecraft-servers, colmena, ... }@inputs:
     let
       inherit (nixpkgs) lib;
-      inherit (builtins) filter mapAttrs;
+      inherit (builtins) filter mapAttrs attrValues concatLists;
       system = "x86_64-linux";
-      hosts = import ./hosts.nix;
-      specialArgs = { inherit hosts inputs; };
+      # import and add location qualifier to all hosts
+      hosts = mapAttrs (location: lhosts: map ({ tags ? [ ], ... }@x: x // { tags = [ location ] ++ tags; inherit location; }) lhosts) (import ./nixos/hosts);
+      # flatten hosts to single list
+      flat_hosts = concatLists (attrValues hosts);
       # Filter all nixos host definitions that are actual nix machines
-      nixHosts = filter ({ nix ? true, ... }: nix) hosts;
+      nixHosts = filter ({ nix ? true, ... }: nix) flat_hosts;
+      # Define args each module gets access to (access to hosts is useful for DNS/DHCP)
+      specialArgs = { inherit hosts flat_hosts inputs; };
 
       # Resolve imports based on a foldername (nixname) and if the host is an LXC container or a VM.
-      resolveImports = { hostname, profile ? hostname, lxc ? true, ... }: [
+      resolveImports = { hostname, location, profile ? hostname, lxc ? true, ... }: [
         ./nixos/common
-        "${./.}/nixos/hosts/${profile}/configuration.nix"
+        "${./.}/nixos/hosts/${location}/${profile}/configuration.nix"
       ] ++ (if lxc then [
         "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
         ./nixos/common/generic-lxc.nix
@@ -49,10 +53,11 @@
         };
       };
 
-      mkColmenaHost = { ip, hostname, ... }@host: {
+      mkColmenaHost = { ip, hostname, tags, ... }@host: {
         "${hostname}" = {
           imports = resolveImports host;
           deployment = {
+            inherit tags;
             targetHost = ip;
             targetUser = null; # Defaults to $USER
           };

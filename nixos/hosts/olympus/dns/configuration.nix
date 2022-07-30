@@ -2,7 +2,9 @@
 let
   inherit (builtins) filter hasAttr;
   localdomain = "olympus";
-  ipv6Hosts = filter (hasAttr "ip6") hosts;
+  # TODO: use location attr in hosts
+  hosts' = hosts.${localdomain};
+  ipv6Hosts = filter (hasAttr "ip6") hosts';
 
   localData = { hostname, ip, ... }: ''"${hostname}.${localdomain}. A ${ip}"'';
   local6Data = { hostname, ip6, ... }: ''"${hostname}.${localdomain}. AAAA ${ip6}"'';
@@ -38,8 +40,8 @@ in {
         interface = [ "0.0.0.0" "::0" ];
 
         local-zone = ''"${localdomain}." transparent'';
-        local-data = (map localData hosts) ++ (map local6Data ipv6Hosts);
-        local-data-ptr = (map ptrData hosts) ++ (map ptr6Data ipv6Hosts);
+        local-data = (map localData hosts') ++ (map local6Data ipv6Hosts);
+        local-data-ptr = (map ptrData hosts') ++ (map ptr6Data ipv6Hosts);
 
         access-control = [
           "127.0.0.1/32 allow_snoop"

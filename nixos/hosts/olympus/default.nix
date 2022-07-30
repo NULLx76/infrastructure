@@ -46,6 +46,7 @@
     ip = "10.42.42.9";
     ip6 = "2001:41f0:9639:1:68c2:89ff:fe85:cfa6";
     mac = "6A:C2:89:85:CF:A6";
+    tags = [ "web" ];
   }
   {
     hostname = "k3s-node1";
