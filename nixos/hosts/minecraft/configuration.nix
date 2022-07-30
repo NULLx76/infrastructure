@@ -24,7 +24,7 @@
   networking.firewall.allowedTCPPorts = [ ];
 
   services.minecraft-server = {
-    enable = true;
+    enable = false;
     package = pkgs.minecraftServers.purpur_1_18;
     jvmOpts = "--add-modules=jdk.incubator.vector -Xmx2048M -Xms2048M";
 

@@ -26,7 +26,7 @@
   };
 
   outputs =
-    { self, nixpkgs, deploy-rs, vault-secrets, serokell-nix, ... }@inputs:
+    { self, nixpkgs, deploy-rs, vault-secrets, serokell-nix, minecraft-servers, ... }@inputs:
     let
       inherit (nixpkgs) lib;
       inherit (builtins) filter mapAttrs;
@@ -83,8 +83,37 @@
     in
     {
       # Make the config and deploy sets
-      nixosConfigurations = lib.foldr (el: acc: acc // mkConfig el) { } nixHosts;
-      deploy.nodes = lib.foldr (el: acc: acc // mkDeploy el) { } nixHosts;
+      # nixosConfigurations = lib.foldr (el: acc: acc // mkConfig el) { } nixHosts;
+      # deploy.nodes = lib.foldr (el: acc: acc // mkDeploy el) { } nixHosts;
+
+      colmena = {
+        meta = {
+          nixpkgs = import nixpkgs {
+            system = "x86_64-linux";
+            overlays = [
+              (import ./nixos/pkgs)
+              minecraft-servers.overlays.default
+            ];
+            specialArgs = {
+              inherit hosts;
+            };
+          };
+        };
+
+        minecraft = {
+          imports = [
+            vault-secrets.nixosModules.vault-secrets
+            ./nixos/common
+            "${./.}/nixos/hosts/minecraft/configuration.nix"
+            "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
+            ./nixos/common/generic-lxc.nix
+          ];
+          deployment = {
+            targetHost = "10.42.42.21";
+            targetUser = "victor";
+          };
+        };
+      };
 
 
       apps.${system} = rec {
@@ -114,6 +143,7 @@
         # This only support bash so just execute zsh in bash as a workaround :/
         shellHook = "zsh; exit $?";
         buildInputs = with pkgs; [
+          colmena
           deploy-rs.packages.${system}.deploy-rs
           fluxcd
           k9s

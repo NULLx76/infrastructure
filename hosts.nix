@@ -97,7 +97,6 @@
     hostname = "minecraft";
     ip = "10.42.42.21";
     mac = "EA:30:73:E4:B6:69";
-    nix = false;
   }
   {
     hostname = "gitea";
