@@ -14,8 +14,6 @@
   boot.kernel.sysctl."fs.inotify.max_user_instances" = 2147483647; # INT_MAX, dynamically limited based on available memory
   boot.kernel.sysctl."fs.inotify.max_user_watches" = 1048576;
 
-  networking.hostName = "k3s-node1";
-
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

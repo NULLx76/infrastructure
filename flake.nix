@@ -53,9 +53,13 @@
         };
       };
 
-      mkColmenaHost = { ip, hostname, tags, ... }@host: {
+      mkColmenaHost = { ip, hostname, tags, location, ... }@host: {
         "${hostname}" = {
           imports = resolveImports host;
+          networking = {
+            hostName = hostname;
+            domain = location;
+          };
           deployment = {
             inherit tags;
             targetHost = ip;

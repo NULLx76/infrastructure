@@ -10,7 +10,6 @@ in {
   imports = [ ];
 
   networking = {
-    hostName = "dhcp";
     defaultGateway = "10.42.42.1";
     nameservers = [ "10.42.42.15" "10.42.42.16" ];
     interfaces.eth0 = {
