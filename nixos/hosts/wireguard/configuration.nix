@@ -22,7 +22,9 @@ let vs = config.vault-secrets.secrets; in
 
   environment.noXlibs = lib.mkForce false;
 
-  networking.firewall.allowedUDPPorts = [ config.networking.wireguard.interfaces.wg0.listenPort ];
+  networking.firewall.allowedUDPPorts = [
+    config.networking.wireguard.interfaces.wg0.listenPort
+  ];
 
   vault-secrets.secrets.wireguard = {
     services = [ "wireguard-wg0" ];
@@ -32,6 +34,11 @@ let vs = config.vault-secrets.secrets; in
     enable = true;
     internalInterfaces = [ "wg0" ];
     externalInterface = "eth0";
+  };
+
+  services.prometheus.exporters.wireguard = {
+    enable = true;
+    openFirewall = true;
   };
 
   networking.wireguard.interfaces.wg0 = {

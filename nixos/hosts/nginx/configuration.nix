@@ -41,6 +41,7 @@ in
 
   services.nginx = {
     enable = true;
+    statusPage = true;
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
     recommendedOptimisation = true;
@@ -119,4 +120,11 @@ in
   security.acme.defaults.email = "victorheld12@gmail.com";
   security.acme.acceptTerms = true;
   security.acme.preliminarySelfsigned = true;
+
+  services.prometheus.exporters = {
+    nginx = {
+      enable = true;
+      openFirewall = true;
+    };
+  };
 }

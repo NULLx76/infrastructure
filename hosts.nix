@@ -60,11 +60,9 @@
     mac = "74:40:be:48:85:a4";
     nix = false;
   }
-  {
-    hostname = "consul";
-    ip = "10.42.42.14";
-    mac = "D6:DE:07:41:73:81";
-  }
+  # {
+  #   ip = "10.42.42.14";
+  # }
   {
     hostname = "dns-1";
     profile = "dns";
@@ -83,7 +81,7 @@
     mac = "0A:06:5E:E7:9A:0C";
   }
   # {
-    # ip = "10.42.42.18";
+  #   ip = "10.42.42.18";
   # }
   {
     hostname = "victoriametrics";

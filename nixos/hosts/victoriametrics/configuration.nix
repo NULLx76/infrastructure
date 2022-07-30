@@ -37,17 +37,33 @@ in
     enable = true;
     openFirewall = true;
     prometheusConfig = {
-      global = { 
+      global = {
         scrape_interval = "1m";
         scrape_timeout = "30s";
       };
       scrape_configs = [
+        {
+          job_name = "nginx";
+          static_configs = [
+            {
+              targets = [ "nginx.olympus:9113" ];
+              labels.app = "nginx";
+            }
+          ];
+        }
         {
           job_name = "synapse";
           metrics_path = "/_synapse/metrics";
           static_configs = [{
             targets = [ "synapse.olympus:9000" ];
             labels.app = "synapse";
+          }];
+        }
+        {
+          job_name = "wireguard";
+          static_configs = [{
+            targets = [ "wireguard.olympus:9586" ];
+            labels.app = "wireguard";
           }];
         }
       ];
