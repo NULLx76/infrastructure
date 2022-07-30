@@ -27,3 +27,4 @@ spec:
         - drone-build
     env:
       DRONE_NAMESPACE_DEFAULT: drone-build
+      DRONE_RPC_HOST: "drone:8080"
