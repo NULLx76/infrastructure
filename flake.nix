@@ -28,38 +28,32 @@
       inherit (builtins) filter mapAttrs;
       system = "x86_64-linux";
       hosts = import ./hosts.nix;
+      specialArgs = { inherit hosts inputs; };
+      # Filter all nixos host definitions that are actual nix machines
+      nixHosts = filter ({ nix ? true, ... }: nix) hosts;
 
-      # TODO: consolidate with mkColmenaHost
+      resolveImports = { hostname, profile ? hostname, lxc ? true, ... }: [
+        vault-secrets.nixosModules.vault-secrets
+        ./nixos/common
+        "${./.}/nixos/hosts/${profile}/configuration.nix"
+      ] ++ (if lxc then [
+        "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
+        ./nixos/common/generic-lxc.nix
+      ]
+      else [ ./nixos/common/generic-vm.nix ]);
+
       # Create a nixosConfiguration based on a foldername (nixname) and if the host is an LXC container or a VM.
-      mkConfig = { hostname, profile ? hostname, lxc ? true, ... }: {
+      mkConfig = { hostname, profile ? hostname, lxc ? true, ... }@host: {
         "${profile}" = lib.nixosSystem {
           inherit system;
-          modules = [
-            ./nixos/common
-            "${./.}/nixos/hosts/${profile}/configuration.nix"
-          ] ++ (if lxc then [
-            "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
-            ./nixos/common/generic-lxc.nix
-          ] else
-            [ ./nixos/common/generic-vm.nix ]);
-          specialArgs = { inherit hosts inputs; };
+          inherit specialArgs;
+          modules = resolveImports host; 
         };
       };
 
-      # Import all nixos host definitions that are actual nix machines
-      nixHosts = filter ({ nix ? true, ... }: nix) hosts;
-
-      mkColmenaHost = { ip, hostname, profile ? hostname, lxc ? true, ... }: {
+      mkColmenaHost = { ip, hostname, profile ? hostname, lxc ? true, ... }@host: {
         "${hostname}" = {
-          imports = [
-            vault-secrets.nixosModules.vault-secrets
-            ./nixos/common
-            "${./.}/nixos/hosts/${profile}/configuration.nix"
-          ] ++ (if lxc then [
-            "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
-            ./nixos/common/generic-lxc.nix
-          ] else [ ./nixos/common/generic-vm.nix ]);
-
+          imports = resolveImports host;
           deployment = {
             targetHost = ip;
             targetUser = null; # Defaults to $USER
@@ -67,8 +61,7 @@
         };
       };
 
-      pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system} [ vault-secrets.overlay ];
-
+      legacyPackages = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system} [ vault-secrets.overlay ];
     in
     {
       # Make the config and deploy sets
@@ -78,16 +71,14 @@
         {
           meta = {
             nixpkgs = import nixpkgs {
-              system = "x86_64-linux";
+              inherit system;
               overlays = [
                 (import ./nixos/pkgs)
                 vault-secrets.overlay
                 minecraft-servers.overlays.default
               ];
             };
-            specialArgs = {
-              inherit hosts;
-            };
+            inherit specialArgs;
           };
         }
         nixHosts;
@@ -95,21 +86,21 @@
       apps.${system} = rec {
         vault-push-approles = {
           type = "app";
-          program = "${pkgs.vault-push-approles self}/bin/vault-push-approles";
+          program = "${legacyPackages.vault-push-approles self}/bin/vault-push-approles";
         };
         vault-push-approle-envs = {
           type = "app";
           program =
-            "${pkgs.vault-push-approle-envs self}/bin/vault-push-approle-envs";
+            "${legacyPackages.vault-push-approle-envs self}/bin/vault-push-approle-envs";
         };
       };
 
       # Use by running `nix develop`
-      devShells.${system}.default = pkgs.mkShell {
+      devShells.${system}.default = legacyPackages.mkShell {
         VAULT_ADDR = "http://vault.olympus:8200/";
         # This only support bash so just execute zsh in bash as a workaround :/
         shellHook = "zsh; exit $?";
-        buildInputs = with pkgs; [
+        buildInputs = with legacyPackages; [
           colmena
           fluxcd
           k9s
