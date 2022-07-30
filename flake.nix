@@ -95,6 +95,7 @@
         # This only support bash so just execute zsh in bash as a workaround :/
         shellHook = "zsh; exit $?";
         buildInputs = with pkgs; [
+          colmena.packages.x86_64-linux.colmena
           fluxcd
           k9s
           kubectl
@@ -103,8 +104,8 @@
           nixfmt
           nixUnstable
           vault
-          (vault-push-approle-envs self)
-          (vault-push-approle-approles self)
+          # (vault-push-approle-envs self)
+          # (vault-push-approle-approles self)
         ];
       };
     };

@@ -1,15 +1,15 @@
-{ config, pkgs, hosts, ... }:
+{ config, pkgs, hosts, flat_hosts, ... }:
 let
-  inherit (builtins) filter hasAttr;
-  localdomain = "olympus";
-  # TODO: use location attr in hosts
-  hosts' = hosts.${localdomain};
+  inherit (builtins) filter hasAttr attrNames;
+  hosts' = flat_hosts;
+  domains = attrNames hosts;
+
   ipv6Hosts = filter (hasAttr "ip6") hosts';
 
-  localData = { hostname, ip, ... }: ''"${hostname}.${localdomain}. A ${ip}"'';
-  local6Data = { hostname, ip6, ... }: ''"${hostname}.${localdomain}. AAAA ${ip6}"'';
-  ptrData = { hostname, ip, ... }: ''"${ip} ${hostname}.${localdomain}"'';
-  ptr6Data = { hostname, ip6, ... }: ''"${ip6} ${hostname}.${localdomain}"'';
+  localData = { hostname, location, ip, ... }: ''"${hostname}.${location}. A ${ip}"'';
+  local6Data = { hostname, location, ip6, ... }: ''"${hostname}.${location}. AAAA ${ip6}"'';
+  ptrData = { hostname, location, ip, ... }: ''"${ip} ${hostname}.${location}"'';
+  ptr6Data = { hostname, location, ip6, ... }: ''"${ip6} ${hostname}.${location}"'';
 in {
   imports = [ ];
 
@@ -37,7 +37,7 @@ in {
         interface-automatic = "yes";
         interface = [ "0.0.0.0" "::0" ];
 
-        local-zone = ''"${localdomain}." transparent'';
+        local-zone = map (localdomain: ''"${localdomain}}." transparent'') domains;
         local-data = (map localData hosts') ++ (map local6Data ipv6Hosts);
         local-data-ptr = (map ptrData hosts') ++ (map ptr6Data ipv6Hosts);
 
@@ -46,6 +46,7 @@ in {
           "::1 allow_snoop"
           "10.42.0.0/16 allow"
           "127.0.0.0/8 allow"
+          "192.168.0.0/23 allow"
           "192.168.2.0/24 allow"
           "::1/128 allow"
         ];
