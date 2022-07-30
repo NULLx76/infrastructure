@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   imports = [
@@ -32,11 +32,7 @@
         "nixpkgs-review-bot.cachix.org-1:eppgiDjPk7Hkzzz7XlUesk3rcEHqNDozGOrcLc8IqwE="
         "colmena.cachix.org-1:7BzpDnjjH8ki2CT3f6GdOk7QAzPOl+1t3LvTLXqYcSg="
       ];
-    };
-    gc = {
-      dates = "weekly";
-      automatic = true;
-      randomizedDelaySec = "45min";
+    # Also use zsh for root;
     };
     optimise = {
       automatic = true;
@@ -63,8 +59,7 @@
     permitRootLogin = "no";
   };
 
-  # TODO: Location dependent
-  vault-secrets = {
+  vault-secrets = lib.mkIf (config.networking.domain == "olympus") {
     vaultPrefix = "secrets/nixos";
     vaultAddress = "http://vault.olympus:8200/";
     approlePrefix = "olympus-${config.networking.hostName}";

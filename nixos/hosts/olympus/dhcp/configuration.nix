@@ -5,7 +5,8 @@ let
     hostName = hostname;
     ipAddress = ip;
   };
-  hosts' = hosts.olympus;
+  localDomain = config.networking.domain;
+  hosts' = hosts.${localDomain};
 in {
   imports = [ ];
 
@@ -41,8 +42,8 @@ in {
       option broadcast-address 10.42.43.255;
       option routers 10.42.42.1;
       option domain-name-servers 10.42.42.15, 10.42.42.16;
-      option domain-name "olympus";
-      option domain-search "olympus";
+      option domain-name "${localDomain}";
+      option domain-search "${localDomain}";
       subnet 10.42.42.0 netmask 255.255.254.0 {
         range 10.42.43.1 10.42.43.254;
       }

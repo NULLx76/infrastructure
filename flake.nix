@@ -71,9 +71,10 @@
       pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system} [ vault-secrets.overlay ];
     in
     {
-      # Make the config and deploy sets
+      # Make the nixosConfigurations, mostly for vault-secrets
       nixosConfigurations = lib.foldr (el: acc: acc // mkConfig el) { } nixHosts;
 
+      # Make the coleman configuration
       colmena = lib.foldr (el: acc: acc // mkColmenaHost el)
         {
           meta = {
@@ -104,8 +105,8 @@
           nixfmt
           nixUnstable
           vault
-          # (vault-push-approle-envs self)
-          # (vault-push-approle-approles self)
+          (vault-push-approle-envs self)
+          (vault-push-approle-approles self)
         ];
       };
     };
