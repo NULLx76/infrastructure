@@ -28,6 +28,15 @@
     maxretry = 3;
   };
 
+  system.activationScripts.gitea-theme =
+    let
+      target_dir = "${config.services.gitea.stateDir}/custom/public/css/";
+    in
+    lib.stringAfter [ "var" ] ''
+      mkdir -p ${target_dir}
+      ln -s ${pkgs.v.gitea-agatheme} "${target_dir}/theme-agatheme.css"
+    '';
+
   services.gitea = {
     enable = true;
     domain = "git.0x76.dev";
@@ -38,11 +47,32 @@
     ssh.clonePort = 42;
     disableRegistration = true;
     cookieSecure = true;
-    
+
     settings = {
+      repository = {
+        "ENABLE_PUSH_CREATE_USER" = true;
+        "DEFAULT_PUSH_CREATE_PRIVATE" = false;
+      };
+      service = {
+        "DEFAULT_KEEP_EMAIL_PRIVATE" = true;
+      };
+      indexer = {
+        "REPO_INDEXER_ENABLED" = true;
+        "REPO_INDEXER_PATH" = "indexers/repos.bleve";
+        "UPDATE_BUFFER_LEN" = 20;
+        "MAX_FILE_SIZE" = 1048576;
+        "REPO_INDEXER_EXCLUDE" = "node_modules/**";
+      };
       ui = {
-        DEFAULT_THEME = "arc-green";
-        USE_SERVICE_WORKER = true;
+        "THEMES" = "gitea,arc-green,agatheme";
+        "DEFAULT_THEME" = "agatheme";
+        "USE_SERVICE_WORKER" = true;
+      };
+      server = {
+        "LANDING_PAGE" = "explore";
+      };
+      session = {
+        "PROVIDER" = "db";
       };
     };
   };

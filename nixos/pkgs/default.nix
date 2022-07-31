@@ -15,5 +15,7 @@ final: prev: {
       withDNSCrypt = true;
       withTFO = true;
     };
+
+    gitea-agatheme = prev.callPackage ./gitea-agatheme { };
   };
 }
