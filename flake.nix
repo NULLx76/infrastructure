@@ -6,7 +6,7 @@
   # * https://git.voidcorp.nl/j00lz/nixos-configs/src/branch/main/flake.nix
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
 
     colmena.url = "github:zhaofengli/colmena";
     colmena.inputs.nixpkgs.follows = "nixpkgs";
@@ -105,8 +105,8 @@
           nixfmt
           nixUnstable
           vault
-          (vault-push-approle-envs self)
-          (vault-push-approle-approles self)
+          # (vault-push-approle-envs self)
+          # (vault-push-approle-approles self)
         ];
       };
     };
