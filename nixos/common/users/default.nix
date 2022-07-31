@@ -48,13 +48,13 @@
     ];
 
     # Make me admin
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "systemd-journal" "wheel" ];
   };
 
   # Configure the root account
   users.extraUsers.root = {
     # Allow my SSH keys for logging in as root.
-    openssh.authorizedKeys.keys = config.users.users.victor.openssh.authorizedKeys.keys;
+    openssh.authorizedKeys.keys = config.users.extraUsers.victor.openssh.authorizedKeys.keys;
     # Also use zsh for root
     shell = pkgs.zsh;
   };
