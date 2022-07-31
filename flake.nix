@@ -46,15 +46,15 @@
       ]
       else [ ./nixos/common/generic-vm.nix ]);
 
-      mkConfig = { hostname, ... }@host: {
-        "${hostname}" = lib.nixosSystem {
+      mkConfig = { hostname, location, ... }@host: {
+        "${hostname}.${location}" = lib.nixosSystem {
           inherit system specialArgs;
           modules = resolveImports host;
         };
       };
 
       mkColmenaHost = { ip, hostname, tags, location, ... }@host: {
-        "${hostname}" = {
+        "${hostname}.${location}" = {
           imports = resolveImports host;
           networking = {
             hostName = hostname;
