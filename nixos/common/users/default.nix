@@ -41,7 +41,7 @@
 
     # My SSH keys.
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOFuxekX5WzX4GjbshtjaGyQcvMUgClugnK6T+OYIxw9 victor@null"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKME+A5zu36tMIsY+PBoboizgAzt6xReUNrKRBkxvl3i victor@null"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC8llUcEBHsLqotFZc++LNP2fjItuuzeUsu5ObXecYNj victor@eevee"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICBhJAp7NWlHgwDYd2z6VNROy5RkeZHRINFLsFvwT4b3 victor@bastion"
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIM3TqXaApX2JZsgfZd7PKVFMecDgqTHKibpSzgdXNpYAAAAABHNzaDo= solov2-le"
