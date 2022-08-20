@@ -28,7 +28,7 @@
       "inputs": {
         "flake-compat": "flake-compat_2",
         "nixpkgs": "nixpkgs_2",
-        "utils": "utils_3"
+        "utils": "utils_4"
       },
       "locked": {
         "lastModified": 1648475189,
@@ -179,6 +179,27 @@
         "type": "github"
       }
     },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": "utils_2"
+      },
+      "locked": {
+        "lastModified": 1660574517,
+        "narHash": "sha256-Lp5D2pAPrM3iAc1eeR0iGwz5rM+SYOWzVxI3p17nlrU=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "688e5c85b7537f308b82167c8eb4ecfb70a49861",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "lowdown-src": {
       "flake": false,
       "locked": {
@@ -216,7 +237,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "utils": "utils_2"
+        "utils": "utils_3"
       },
       "locked": {
         "lastModified": 1660631203,
@@ -356,6 +377,7 @@
     "root": {
       "inputs": {
         "colmena": "colmena",
+        "home-manager": "home-manager",
         "minecraft-servers": "minecraft-servers",
         "nixpkgs": "nixpkgs",
         "serokell-nix": "serokell-nix",
@@ -419,6 +441,21 @@
       }
     },
     "utils_2": {
+      "locked": {
+        "lastModified": 1653893745,
+        "narHash": "sha256-0jntwV3Z8//YwuOjzhV2sgJJPt+HY6KhU7VZUL0fKZQ=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "1ed9fb1935d260de5fe1c2f7ee0ebaae17ed2fa1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "utils_3": {
       "inputs": {
         "flake-utils": "flake-utils_2"
       },
@@ -436,7 +473,7 @@
         "type": "github"
       }
     },
-    "utils_3": {
+    "utils_4": {
       "locked": {
         "lastModified": 1648297722,
         "narHash": "sha256-W+qlPsiZd8F3XkzXOzAoR+mpFqzm3ekQkJNa+PIh1BQ=",

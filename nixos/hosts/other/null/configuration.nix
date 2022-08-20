@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
     export __NV_PRIME_RENDER_OFFLOAD=1
@@ -19,6 +19,12 @@ in
       ./hardware-configuration.nix
     ];
 
+  # home-manager
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.users.victor = import ./home.nix;
+
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -26,6 +32,9 @@ in
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.interfaces.wlp0s20f3.useDHCP = true;
+
+  fileSystems."/".options = [ "compress=zstd" ];
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.utf8";
@@ -49,17 +58,13 @@ in
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-  # Configure keymap in X11
   services.xserver = {
     layout = "us";
     xkbVariant = "altgr-intl";
     xkbOptions = "caps:swapescape";
-
-
     videoDrivers = [ "nvidia" ];
   };
 
-  # modesetting
   # hardware.nvidia.modesetting.enable = true;
   hardware.nvidia.prime = {
     offload.enable = true;
@@ -67,13 +72,9 @@ in
     nvidiaBusId = "PCI:1:0:0";
   };
 
-  specialisation = {
-    external-display.configuration = {
-      system.nixos.tags = [ "external-display" ];
-      hardware.nvidia.prime.offload.enable = lib.mkForce false;
-      hardware.nvidia.powerManagement.enable = lib.mkForce false;
-    };
-  };
+  hardware.opengl.extraPackages = with pkgs; [
+    vaapiVdpau
+  ];
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -100,6 +101,8 @@ in
     nvidia-offload
     vim
   ];
+
+  services.fstrim.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

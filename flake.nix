@@ -19,10 +19,15 @@
 
     minecraft-servers.url = "github:jyooru/nix-minecraft-servers";
     minecraft-servers.inputs.nixpkgs.follows = "nixpkgs";
+
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    { self, nixpkgs, vault-secrets, serokell-nix, minecraft-servers, colmena, ... }@inputs:
+    { self, nixpkgs, vault-secrets, serokell-nix, minecraft-servers, colmena, home-manager, ... }@inputs:
     let
       inherit (nixpkgs) lib;
       inherit (builtins) filter mapAttrs attrValues concatLists;
@@ -84,6 +89,7 @@
             imports = [
               ./nixos/common
               ./nixos/hosts/other/null/configuration.nix
+              home-manager.nixosModules.home-manager
             ];
 
             deployment = {
