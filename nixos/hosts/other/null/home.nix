@@ -4,8 +4,8 @@
   home.stateVersion = "22.05";
 
   home.packages = with pkgs; [
-    arc-theme
     discord
+    rnix-lsp
   ];
 
   programs.home-manager.enable = true;
@@ -15,6 +15,16 @@
   };
   programs.vscode = {
     enable = true;
-    package = pkgs.vscode.fhs; 
+    package = pkgs.vscode.fhs;
   };
+
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Arc-Darker";
+      package = pkgs.arc-theme;
+    };
+  };
+
+  services.syncthing.enable = true;
 }
