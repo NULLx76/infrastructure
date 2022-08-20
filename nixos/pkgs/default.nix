@@ -6,6 +6,8 @@ final: prev: {
     '';
   });
 
+  discord = prev.discord.override { withOpenASAR = true; };
+
   vmagent = prev.callPackage ./vmagent { };
 
   v = {

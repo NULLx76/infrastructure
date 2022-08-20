@@ -103,6 +103,12 @@ in
     vim
   ];
 
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
+
   services.fstrim.enable = true;
 
   # This value determines the NixOS release from which the default

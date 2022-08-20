@@ -44,7 +44,6 @@
     lfs.enable = true;
     dump.type = "tar.gz";
     database.type = "postgres";
-    ssh.clonePort = 42;
 
     settings = {
       repository = {
@@ -69,6 +68,7 @@
       };
       server = {
         "LANDING_PAGE" = "explore";
+        "SSH_PORT" = 42;
       };
       session = {
         "PROVIDER" = "db";
