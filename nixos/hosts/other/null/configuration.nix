@@ -97,6 +97,7 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    gnome.gnome-tweaks
     pciutils
     nvidia-offload
     vim
