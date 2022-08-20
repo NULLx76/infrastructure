@@ -33,10 +33,11 @@
 
   # Ensure `mount` and `grep` are available 
   systemd.services.k3s.path = [ pkgs.gnugrep pkgs.utillinux ];
+  systemd.services.k3s.serviceConfig.TimeoutStartSec = 3000;
 
   # Enable k3s as a master node
   services.k3s = {
-    enable = true;
+    enable = false;
     role = "server";
 
     extraFlags = builtins.toString [
