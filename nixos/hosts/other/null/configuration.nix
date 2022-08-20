@@ -57,6 +57,7 @@ in
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
+  services.udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
 
   services.xserver = {
     layout = "us";
@@ -101,6 +102,10 @@ in
     pciutils
     nvidia-offload
     vim
+    wireguard-tools
+
+    gnomeExtensions.appindicator
+    gnomeExtensions.wireguard-indicator
   ];
 
   programs.steam = {
@@ -110,6 +115,21 @@ in
   };
 
   services.fstrim.enable = true;
+
+  # Allow reverse path for wireguard
+  networking.firewall = {
+    # if packets are still dropped, they will show up in dmesg
+    logReversePathDrops = true;
+    # wireguard trips rpfilter up
+    extraCommands = ''
+      ip46tables -t raw -I nixos-fw-rpfilter -p udp -m udp --sport 51820 -j RETURN
+      ip46tables -t raw -I nixos-fw-rpfilter -p udp -m udp --dport 51820 -j RETURN
+    '';
+    extraStopCommands = ''
+      ip46tables -t raw -D nixos-fw-rpfilter -p udp -m udp --sport 51820 -j RETURN || true
+      ip46tables -t raw -D nixos-fw-rpfilter -p udp -m udp --dport 51820 -j RETURN || true
+    '';
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

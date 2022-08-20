@@ -55,6 +55,11 @@ let vs = config.vault-secrets.secrets; in
         publicKey = "ZWIaDGrASlTkEK75j10VeGCvrIGfpk4GPobmqcYX2D0=";
         allowedIPs = [ "10.100.0.3/32" ];
       }
+      {
+        # Laptop
+        publicKey = "L8myt2bcdja7M+i+9eatdQRW8relPUoZZ9lEKSLe+m8=";
+        allowedIPs = [ "10.100.0.4/32" ];
+      }
     ];
   };
 }

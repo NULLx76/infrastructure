@@ -6,6 +6,7 @@
   home.packages = with pkgs; [
     discord
     rnix-lsp
+    fusee-launcher
   ];
 
   programs.home-manager.enable = true;
