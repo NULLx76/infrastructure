@@ -77,6 +77,21 @@
       # Make the coleman configuration
       colmena = lib.foldr (el: acc: acc // mkColmenaHost el)
         {
+
+          null = { ... }: {
+            networking.hostName = "null";
+
+            imports = [
+              ./nixos/common
+              ./nixos/hosts/other/null/configuration.nix
+            ];
+
+            deployment = {
+              allowLocalDeployment = true;
+              targetHost = null;
+            };
+          };
+
           meta = {
             nixpkgs = import nixpkgs {
               inherit system;
