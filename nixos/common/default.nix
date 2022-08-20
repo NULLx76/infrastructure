@@ -12,7 +12,7 @@
   boot.cleanTmpDir = true;
 
   # Set your time zone.
-  time.timeZone = "Europe/Amsterdam";
+  time.timeZone = lib.mkDefault "Europe/Amsterdam";
 
   # Nix Settings
   nix = {
