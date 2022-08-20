@@ -82,13 +82,12 @@
       # Make the coleman configuration
       colmena = lib.foldr (el: acc: acc // mkColmenaHost el)
         {
-
           null = { ... }: {
             networking.hostName = "null";
 
             imports = [
               ./nixos/common
-              ./nixos/hosts/other/null/configuration.nix
+              ./nixos/hosts/thalassa/null/configuration.nix
               home-manager.nixosModules.home-manager
             ];
 
