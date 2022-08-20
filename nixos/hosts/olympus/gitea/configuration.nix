@@ -34,7 +34,7 @@
     in
     lib.stringAfter [ "var" ] ''
       mkdir -p ${target_dir}
-      ln -s ${pkgs.v.gitea-agatheme} "${target_dir}/theme-agatheme.css"
+      ln -sf ${pkgs.v.gitea-agatheme} "${target_dir}/theme-agatheme.css"
     '';
 
   services.gitea = {
@@ -45,8 +45,6 @@
     dump.type = "tar.gz";
     database.type = "postgres";
     ssh.clonePort = 42;
-    disableRegistration = true;
-    cookieSecure = true;
 
     settings = {
       repository = {
@@ -55,6 +53,7 @@
       };
       service = {
         "DEFAULT_KEEP_EMAIL_PRIVATE" = true;
+        "DISABLE_REGISTRATION" = true;
       };
       indexer = {
         "REPO_INDEXER_ENABLED" = true;
@@ -73,6 +72,7 @@
       };
       session = {
         "PROVIDER" = "db";
+        "COOKIE_SECURE" = true;
       };
     };
   };
