@@ -71,7 +71,13 @@
         VAULT_ADDR = "http://vault.olympus:8200/";
         # This only support bash so just execute zsh in bash as a workaround :/
         shellHook = "zsh; exit $?";
-        buildInputs = with pkgs; [
+        buildInputs = with pkgs; let
+          apply-local = pkgs.writeScriptBin "apply-local" ''
+            #!${pkgs.stdenv.shell}
+            "${colmena.packages.x86_64-linux.colmena}"/bin/colmena apply-local --sudo --node "$(cat /proc/sys/kernel/hostname).$(cat /proc/sys/kernel/domainname)"
+          '';
+        in
+        [
           colmena.packages.x86_64-linux.colmena
           fluxcd
           k9s
