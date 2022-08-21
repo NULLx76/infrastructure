@@ -24,11 +24,11 @@ in
   home-manager.useUserPackages = true;
   home-manager.users.victor = import ./home.nix;
 
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -76,6 +76,8 @@ in
   hardware.opengl.extraPackages = with pkgs; [
     vaapiVdpau
   ];
+
+  virtualisation.podman.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;

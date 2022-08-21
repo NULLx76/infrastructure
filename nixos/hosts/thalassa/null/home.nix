@@ -7,6 +7,14 @@
     discord
     rnix-lsp
     fusee-launcher
+    neofetch
+    fluxcd
+    k9s
+    kubectl
+    nixpkgs-review
+    ripgrep
+    rsync
+    tmux
   ];
 
   programs.home-manager.enable = true;
