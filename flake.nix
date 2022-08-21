@@ -31,73 +31,30 @@
     let
       inherit (nixpkgs) lib;
       inherit (builtins) filter mapAttrs attrValues concatLists;
+
+      util = import ./util.nix inputs;
+
       system = "x86_64-linux";
-      # import and add location qualifier to all hosts
-      hosts = mapAttrs (location: lhosts: map ({ tags ? [ ], ... }@x: x // { tags = [ location ] ++ tags; inherit location; }) lhosts) (import ./nixos/hosts);
+      # import and add realm to list of tags
+      hosts = mapAttrs util.add_realm_to_tags (import ./nixos/hosts);
       # flatten hosts to single list
-      flat_hosts = concatLists (attrValues hosts);
-      # Filter all nixos host definitions that are actual nix machines
-      nixHosts = filter ({ nix ? true, ... }: nix) flat_hosts;
+      flat_hosts = util.flatten_hosts hosts;
+      # Filter out all non-nixos hosts
+      nixHosts = util.filter_nix_hosts flat_hosts;
+
       # Define args each module gets access to (access to hosts is useful for DNS/DHCP)
       specialArgs = { inherit hosts flat_hosts inputs; };
-
-      # Resolve imports based on a foldername (nixname) and if the host is an LXC container or a VM.
-      resolveImports = { hostname, location, profile ? hostname, lxc ? true, ... }: [
-        ./nixos/common
-        "${./.}/nixos/hosts/${location}/${profile}/configuration.nix"
-      ] ++ (if lxc then [
-        "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
-        ./nixos/common/generic-lxc.nix
-      ]
-      else [ ./nixos/common/generic-vm.nix ]);
-
-      mkConfig = { hostname, location, ... }@host: {
-        "${hostname}.${location}" = lib.nixosSystem {
-          inherit system specialArgs;
-          modules = resolveImports host;
-        };
-      };
-
-      mkColmenaHost = { ip, hostname, tags, location, ... }@host: {
-        "${hostname}.${location}" = {
-          imports = resolveImports host;
-          networking = {
-            hostName = hostname;
-            domain = location;
-          };
-          deployment = {
-            inherit tags;
-            targetHost = ip;
-            targetUser = null; # Defaults to $USER
-          };
-        };
-      };
-
       pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system} [ vault-secrets.overlay ];
     in
     {
       # Make the nixosConfigurations, mostly for vault-secrets
-      nixosConfigurations = lib.foldr (el: acc: acc // mkConfig el) { } nixHosts;
+      nixosConfigurations = util.mkNixosConfigurations specialArgs hosts;
 
       # Make the coleman configuration
-      colmena = lib.foldr (el: acc: acc // mkColmenaHost el)
+      colmena = lib.foldr (el: acc: acc // util.mkColmenaHost el)
         {
-          null = { ... }: {
-            networking.hostName = "null";
-
-            imports = [
-              ./nixos/common
-              ./nixos/hosts/thalassa/null/configuration.nix
-              home-manager.nixosModules.home-manager
-            ];
-
-            deployment = {
-              allowLocalDeployment = true;
-              targetHost = null;
-            };
-          };
-
           meta = {
+            inherit specialArgs;
             nixpkgs = import nixpkgs {
               inherit system;
               overlays = [
@@ -105,7 +62,6 @@
                 minecraft-servers.overlays.default
               ];
             };
-            inherit specialArgs;
           };
         }
         nixHosts;

@@ -1,15 +1,14 @@
 { config, pkgs, hosts, flat_hosts, ... }:
 let
   inherit (builtins) filter hasAttr attrNames;
-  hosts' = flat_hosts;
   domains = attrNames hosts;
+  ipv4Host = filter (hasAttr "ip") flat_hosts;
+  ipv6Hosts = filter (hasAttr "ip6") flat_hosts;
 
-  ipv6Hosts = filter (hasAttr "ip6") hosts';
-
-  localData = { hostname, location, ip, ... }: ''"${hostname}.${location}. A ${ip}"'';
-  local6Data = { hostname, location, ip6, ... }: ''"${hostname}.${location}. AAAA ${ip6}"'';
-  ptrData = { hostname, location, ip, ... }: ''"${ip} ${hostname}.${location}"'';
-  ptr6Data = { hostname, location, ip6, ... }: ''"${ip6} ${hostname}.${location}"'';
+  localData = { hostname, realm, ip, ... }: ''"${hostname}.${realm}. A ${ip}"'';
+  local6Data = { hostname, realm, ip6, ... }: ''"${hostname}.${realm}. AAAA ${ip6}"'';
+  ptrData = { hostname, realm, ip, ... }: ''"${ip} ${hostname}.${realm}"'';
+  ptr6Data = { hostname, realm, ip6, ... }: ''"${ip6} ${hostname}.${realm}"'';
 in {
   imports = [ ];
 
@@ -38,8 +37,8 @@ in {
         interface = [ "0.0.0.0" "::0" ];
 
         local-zone = map (localdomain: ''"${localdomain}}." transparent'') domains;
-        local-data = (map localData hosts') ++ (map local6Data ipv6Hosts);
-        local-data-ptr = (map ptrData hosts') ++ (map ptr6Data ipv6Hosts);
+        local-data = (map localData ipv4Host) ++ (map local6Data ipv6Hosts);
+        local-data-ptr = (map ptrData ipv4Host) ++ (map ptr6Data ipv6Hosts);
 
         access-control = [
           "127.0.0.1/32 allow_snoop"

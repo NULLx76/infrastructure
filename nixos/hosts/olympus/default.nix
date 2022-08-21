@@ -22,7 +22,7 @@
     ip = "10.42.42.4";
     ip6 = "2001:41f0:9639:1:80f0:7cff:fecb:bd6d";
     mac = "82:F0:7C:CB:BD:6D";
-    lxc = false;
+    type = "vm";
   }
   {
     hostname = "vault";
@@ -53,7 +53,7 @@
     profile = "k3s";
     ip = "10.42.42.10";
     mac = "2E:F8:55:23:D9:9B";
-    lxc = false;
+    type = "vm";
   }
   {
     hostname = "WoolooTV";

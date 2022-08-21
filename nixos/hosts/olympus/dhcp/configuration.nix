@@ -6,7 +6,7 @@ let
     ipAddress = ip;
   };
   localDomain = config.networking.domain;
-  hosts' = hosts.${localDomain};
+  hosts' = builtins.filter (builtins.hasAttr "ip") hosts.${localDomain};
 in {
   imports = [ ];
 
