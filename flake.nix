@@ -45,6 +45,12 @@
       # Define args each module gets access to (access to hosts is useful for DNS/DHCP)
       specialArgs = { inherit hosts flat_hosts inputs; };
       pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system} [ vault-secrets.overlay ];
+
+      # Script to apply local colmena deployments
+      apply-local = pkgs.writeScriptBin "apply-local" ''
+        #!${pkgs.stdenv.shell}
+        "${colmena.packages.x86_64-linux.colmena}"/bin/colmena apply-local --sudo --node "$(cat /proc/sys/kernel/hostname).$(cat /proc/sys/kernel/domainname)"
+      '';
     in
     {
       # Make the nixosConfigurations, mostly for vault-secrets
@@ -66,18 +72,16 @@
         }
         nixHosts;
 
+      packages.x86_64-linux.default = colmena.packages.x86_64-linux.colmena;
+      packages.x86_64-linux.apply-local = apply-local;
+
       # Use by running `nix develop`
       devShells.${system}.default = pkgs.mkShell {
         VAULT_ADDR = "http://vault.olympus:8200/";
         # This only support bash so just execute zsh in bash as a workaround :/
         shellHook = "zsh; exit $?";
-        buildInputs = with pkgs; let
-          apply-local = pkgs.writeScriptBin "apply-local" ''
-            #!${pkgs.stdenv.shell}
-            "${colmena.packages.x86_64-linux.colmena}"/bin/colmena apply-local --sudo --node "$(cat /proc/sys/kernel/hostname).$(cat /proc/sys/kernel/domainname)"
-          '';
-        in
-        [
+        buildInputs = with pkgs; [
+          apply-local
           colmena.packages.x86_64-linux.colmena
           fluxcd
           k9s
