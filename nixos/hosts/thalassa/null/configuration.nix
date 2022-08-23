@@ -26,6 +26,7 @@ in
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 6;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -35,6 +36,16 @@ in
   networking.interfaces.wlp0s20f3.useDHCP = true;
 
   fileSystems."/".options = [ "compress=zstd" ];
+  # Filesystem dedup
+  services.beesd.filesystems = {
+    root = {
+      spec = "LABEL=nixos";
+      hashTableSizeMB = 256;
+      verbosity = "crit";
+      extraOptions = [ "--loadavg-target" "2.0" ];
+    };
+  };
+
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.utf8";
@@ -100,12 +111,13 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    gnome.gnome-tweaks
     pciutils
     nvidia-offload
     vim
     wireguard-tools
 
+    gnome.gnome-tweaks
+    gnome.dconf-editor
     gnomeExtensions.appindicator
     gnomeExtensions.wireguard-indicator
   ];
@@ -132,6 +144,11 @@ in
       ip46tables -t raw -D nixos-fw-rpfilter -p udp -m udp --dport 51820 -j RETURN || true
     '';
   };
+
+  nix.extraOptions = ''
+    keep-outputs = true
+    keep-derivations = true
+  '';
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

@@ -6,7 +6,7 @@
   # * https://git.voidcorp.nl/j00lz/nixos-configs/src/branch/main/flake.nix
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "github:NULLx76/nixpkgs/direnv-vscode-extension";
 
     colmena.url = "github:zhaofengli/colmena";
     colmena.inputs.nixpkgs.follows = "nixpkgs";
@@ -49,7 +49,12 @@
       # Script to apply local colmena deployments
       apply-local = pkgs.writeScriptBin "apply-local" ''
         #!${pkgs.stdenv.shell}
-        "${colmena.packages.x86_64-linux.colmena}"/bin/colmena apply-local --sudo --node "$(cat /proc/sys/kernel/hostname).$(cat /proc/sys/kernel/domainname)"
+        "${colmena.packages.x86_64-linux.colmena}"/bin/colmena apply-local --sudo
+      '';
+
+      dump-dconf = pkgs.writeScriptBin "dump-dconf" ''
+        #!${pkgs.stdenv.shell}
+        dconf dump / | dconf2nix > nixos/hosts/thalassa/null/dconf.nix
       '';
     in
     {
@@ -79,9 +84,10 @@
       devShells.${system}.default = pkgs.mkShell {
         VAULT_ADDR = "http://vault.olympus:8200/";
         # This only support bash so just execute zsh in bash as a workaround :/
-        shellHook = "zsh; exit $?";
+        # shellHook = "zsh; exit $?";
         buildInputs = with pkgs; [
           apply-local
+          dump-dconf
           colmena.packages.x86_64-linux.colmena
           fluxcd
           k9s

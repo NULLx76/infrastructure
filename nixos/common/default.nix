@@ -17,6 +17,7 @@
   # Nix Settings
   nix = {
     package = pkgs.nixUnstable;
+    registry.nixpkgs.flake = inputs.nixpkgs;
     settings = {
       auto-optimise-store = true;
       trusted-users = [ "root" "victor" ];

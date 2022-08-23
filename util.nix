@@ -31,8 +31,10 @@ rec {
     };
   };
 
-  mkColmenaHost = { ip ? null, hostname, tags, realm, type ? "lxc", ... }@host: {
-    "${hostname}.${realm}" = {
+  mkColmenaHost = { ip ? null, hostname, tags, realm, type ? "lxc", ... }@host: let 
+    name = if realm == "thalassa" then hostname else "${hostname}.${realm}";
+  in{
+    "${name}" = {
       imports = resolve_imports host;
       networking = {
         hostName = hostname;
