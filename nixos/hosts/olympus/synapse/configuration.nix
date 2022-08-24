@@ -65,6 +65,7 @@ in
           enable_registration = true;
           public_baseurl = "https://chat.meowy.tech";
           enable_metrics = true;
+          max_upload_size = "100m";
           listeners = [
             {
               inherit port;

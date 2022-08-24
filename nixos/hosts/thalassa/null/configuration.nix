@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 let
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
     export __NV_PRIME_RENDER_OFFLOAD=1
@@ -23,6 +23,31 @@ in
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.users.victor = import ./home.nix;
+  home-manager.sharedModules = [
+    inputs.hyprland.homeManagerModules.default
+  ];
+
+  fonts = {
+    fonts = with pkgs; [
+      material-design-icons
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      dejavu_fonts
+      (nerdfonts.override { fonts = [ "DejaVuSansMono" "Noto" "Ubuntu" "DroidSansMono" ]; })
+    ];
+
+    enableDefaultFonts = false;
+
+    fontconfig = {
+      defaultFonts = {
+        monospace = [ "DejaVuSansMono Nerd Font Mono" "Noto Color Emoji" ];
+        sansSerif = [ "DejaVu Sans" "DejaVuSansMono Nerd Font Mono" "Noto Color Emoji" ];
+        serif = [ "DejaVu Serif" "DejaVuSansMono Nerd Font Mono" "Noto Color Emoji" ];
+        emoji = [ "Noto Color Emoji" ];
+      };
+    };
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -63,12 +88,28 @@ in
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  services.udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
+  # services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.desktopManager.gnome.enable = true;
+  # services.udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
+
+  xdg = {
+    portal = {
+      enable = true;
+      wlr.enable = true;
+      extraPortals = with pkgs; [
+        # xdg-desktop-portal-gtk
+      ];
+    };
+  };
+
+  # Hyprland
+  programs.hyprland = {
+    enable = true;
+    package = null; # Managed by home manager
+  };
 
   services.xserver = {
     layout = "us";
@@ -115,11 +156,12 @@ in
     nvidia-offload
     vim
     wireguard-tools
+    slurp
 
-    gnome.gnome-tweaks
-    gnome.dconf-editor
-    gnomeExtensions.appindicator
-    gnomeExtensions.wireguard-indicator
+    #gnome.gnome-tweaks
+    #gnome.dconf-editor
+    #gnomeExtensions.appindicator
+    #gnomeExtensions.wireguard-indicator
   ];
 
   programs.steam = {

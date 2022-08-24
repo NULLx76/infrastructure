@@ -149,7 +149,7 @@ with lib.hm.gvariant;
 
     "org/gnome/desktop/wm/preferences" = {
       focus-mode = "sloppy";
-      num-workspaces = 9;
+      num-workspaces = 6;
     };
 
     "org/gnome/epiphany" = {
@@ -173,7 +173,17 @@ with lib.hm.gvariant;
     };
 
     "org/gnome/file-roller/listing" = {
+      list-mode = "as-folder";
+      name-column-width = 250;
       show-path = false;
+      sort-method = "name";
+      sort-type = "ascending";
+    };
+
+    "org/gnome/file-roller/ui" = {
+      sidebar-width = 200;
+      window-height = 480;
+      window-width = 600;
     };
 
     "org/gnome/mutter" = {

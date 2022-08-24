@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, ... }:
+{ nixpkgs, home-manager, hyprland, ... }:
 let
   inherit (nixpkgs) lib;
   inherit (builtins) filter mapAttrs attrValues concatLists;
@@ -12,6 +12,7 @@ let
     ];
     "local" = [
       home-manager.nixosModules.home-manager
+      hyprland.nixosModules.default
     ];
   };
   resolve_imports = { hostname, realm, profile ? hostname, type ? "lxc", ... }: [

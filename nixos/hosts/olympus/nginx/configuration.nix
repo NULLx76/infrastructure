@@ -43,6 +43,7 @@ in
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
     recommendedOptimisation = true;
+    clientMaxBodySize = "100m";
 
     package = pkgs.nginxMainline.override {
       modules = with pkgs.nginxModules; [ brotli ];

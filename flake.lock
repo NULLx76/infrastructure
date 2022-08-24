@@ -27,7 +27,7 @@
     "deploy-rs": {
       "inputs": {
         "flake-compat": "flake-compat_2",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "utils": "utils_4"
       },
       "locked": {
@@ -187,16 +187,35 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1660574517,
-        "narHash": "sha256-Lp5D2pAPrM3iAc1eeR0iGwz5rM+SYOWzVxI3p17nlrU=",
+        "lastModified": 1661323822,
+        "narHash": "sha256-1UGGcQ00uSo5cPTwL7C3S1zkcScbpF0WzspvnceWkbQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "688e5c85b7537f308b82167c8eb4ecfb70a49861",
+        "rev": "1d81e6295ca530603478114f4977402d51299ad8",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "hyprland": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "wlroots": "wlroots"
+      },
+      "locked": {
+        "lastModified": 1661332451,
+        "narHash": "sha256-Ikd8XUJ3rQLYz6z+OMrecpXD2CvrPHM3VIfadkpxGTI=",
+        "owner": "hyprwm",
+        "repo": "Hyprland",
+        "rev": "9366c187dce5ed5104f85898c8d3a8531f221e3e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "Hyprland",
         "type": "github"
       }
     },
@@ -240,11 +259,11 @@
         "utils": "utils_3"
       },
       "locked": {
-        "lastModified": 1661132611,
-        "narHash": "sha256-VnavdFBMTAbod1C9Wsfa0XJqrERCJXXZp4GNLsnewuA=",
+        "lastModified": 1661219530,
+        "narHash": "sha256-jLKEpwbkp3ryXho5RT5hjhLjBOZelGm6X5JWUUxuwsA=",
         "owner": "jyooru",
         "repo": "nix-minecraft-servers",
-        "rev": "fe603eb27a0b920b3f6116c03e5f9cfc64cf98e8",
+        "rev": "e624f6c056d95df8d6335d12bed0fe3c5af05159",
         "type": "github"
       },
       "original": {
@@ -256,7 +275,7 @@
     "nix": {
       "inputs": {
         "lowdown-src": "lowdown-src",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_4"
       },
       "locked": {
         "lastModified": 1633098935,
@@ -297,7 +316,7 @@
     "nix_2": {
       "inputs": {
         "lowdown-src": "lowdown-src_2",
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
         "lastModified": 1633098935,
@@ -314,6 +333,22 @@
     },
     "nixpkgs": {
       "locked": {
+        "lastModified": 1660908602,
+        "narHash": "sha256-SwZ85IPWvC4NxxFhWhRMTJpApSHbY1u4YK2UFWEBWvY=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "495b19d5b3e62b4ec7e846bdfb6ef3d9c3b83492",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
         "lastModified": 1661208473,
         "narHash": "sha256-EcoSSCrhc/qkoACcbB1Q2zi1jiFvb93kb4SS1AbviFw=",
         "owner": "NULLx76",
@@ -328,7 +363,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1648219316,
         "narHash": "sha256-Ctij+dOi0ZZIfX5eMhgwugfvB+WZSrvVNAyAuANOsnQ=",
@@ -344,7 +379,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1632864508,
         "narHash": "sha256-d127FIvGR41XbVRDPVvozUPQ/uRHbHwvfyKHwEt5xFM=",
@@ -359,7 +394,7 @@
         "type": "indirect"
       }
     },
-    "nixpkgs_4": {
+    "nixpkgs_5": {
       "locked": {
         "lastModified": 1632864508,
         "narHash": "sha256-d127FIvGR41XbVRDPVvozUPQ/uRHbHwvfyKHwEt5xFM=",
@@ -378,8 +413,9 @@
       "inputs": {
         "colmena": "colmena",
         "home-manager": "home-manager",
+        "hyprland": "hyprland",
         "minecraft-servers": "minecraft-servers",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "serokell-nix": "serokell-nix",
         "vault-secrets": "vault-secrets"
       }
@@ -509,6 +545,24 @@
         "owner": "serokell",
         "repo": "vault-secrets",
         "type": "github"
+      }
+    },
+    "wlroots": {
+      "flake": false,
+      "locked": {
+        "host": "gitlab.freedesktop.org",
+        "lastModified": 1660930713,
+        "narHash": "sha256-bY7q1NqG/sjCUAWPn/Ne9NCigLlPlH5Lk1WCMqv3rTU=",
+        "owner": "wlroots",
+        "repo": "wlroots",
+        "rev": "7c575922c05e4d5fd9a403c2aa631a54c7531d44",
+        "type": "gitlab"
+      },
+      "original": {
+        "host": "gitlab.freedesktop.org",
+        "owner": "wlroots",
+        "repo": "wlroots",
+        "type": "gitlab"
       }
     }
   },
