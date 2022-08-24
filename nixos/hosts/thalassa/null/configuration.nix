@@ -9,7 +9,25 @@ let
     export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
     export __GLX_VENDOR_LIBRARY_NAME=nvidia
     export __VK_LAYER_NV_optimus=NVIDIA_only
+    export LIBVA_DRIVER_NAME=nvidia
+    export GBM_BACKEND=nvidia-drm
+
     exec "$@"
+  '';
+  run-hyprland = pkgs.writeShellScriptBin "run-hyprland" ''
+    export _JAVA_AWT_WM_NONREPARENTING=1
+    export XCURSOR_SIZE=24
+
+    export CLUTTER_BACKEND=wayland
+    export XDG_SESSION_TYPE=wayland
+    export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+    export MOZ_ENABLE_WAYLAND=1
+    export WLR_NO_HARDWARE_CURSORS=1
+    export WLR_BACKEND=vulkan
+    export QT_QPA_PLATFORM=wayland
+    export GDK_BACKEND=wayland
+
+    exec Hyprland
   '';
 in
 {
@@ -26,6 +44,8 @@ in
   home-manager.sharedModules = [
     inputs.hyprland.homeManagerModules.default
   ];
+
+  programs.light.enable = true;
 
   fonts = {
     fonts = with pkgs; [
@@ -71,7 +91,6 @@ in
     };
   };
 
-
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.utf8";
 
@@ -87,20 +106,12 @@ in
     LC_TIME = "en_DK.utf8";
   };
 
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  # services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.desktopManager.gnome.enable = true;
-  # services.udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
-
   xdg = {
     portal = {
       enable = true;
       wlr.enable = true;
       extraPortals = with pkgs; [
-        # xdg-desktop-portal-gtk
+        xdg-desktop-portal-gtk
       ];
     };
   };
@@ -111,7 +122,14 @@ in
     package = null; # Managed by home manager
   };
 
+  environment.loginShellInit = ''
+    if [[ "$(tty)" == /dev/tty1 ]]; then
+      ${run-hyprland}/bin/run-hyprland
+    fi
+  '';
+
   services.xserver = {
+    # enable = true;
     layout = "us";
     xkbVariant = "altgr-intl";
     xkbOptions = "caps:swapescape";
@@ -119,15 +137,24 @@ in
   };
 
   # hardware.nvidia.modesetting.enable = true;
-  hardware.nvidia.prime = {
-    offload.enable = true;
-    intelBusId = "PCI:0:2:0";
-    nvidiaBusId = "PCI:1:0:0";
+  hardware.nvidia = {
+    # open = true;
+    prime = {
+      offload.enable = true;
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
   };
 
-  hardware.opengl.extraPackages = with pkgs; [
-    vaapiVdpau
-  ];
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      vaapiVdpau
+      intel-media-driver # LIBVA_DRIVER_NAME=iHD
+      vaapiIntel # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+      libvdpau-va-gl
+    ];
+  };
 
   virtualisation.podman.enable = true;
 
@@ -154,14 +181,11 @@ in
   environment.systemPackages = with pkgs; [
     pciutils
     nvidia-offload
+    run-hyprland
     vim
     wireguard-tools
     slurp
-
-    #gnome.gnome-tweaks
-    #gnome.dconf-editor
-    #gnomeExtensions.appindicator
-    #gnomeExtensions.wireguard-indicator
+    gdb
   ];
 
   programs.steam = {

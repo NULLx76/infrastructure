@@ -1,7 +1,6 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     eww-wayland
-    brightnessctl
     pamixer
     lua
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
