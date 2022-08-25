@@ -9,7 +9,10 @@
     wf-recorder # Screenrecorder
     wl-clipboard # Clipboard manager
     networkmanager_dmenu
+    brightnessctl
   ];
+
+  programs.mako.enable = true;
 
   home.file.".config/networkmanager-dmenu/config.ini".text = ''
     [dmenu]
@@ -39,9 +42,17 @@
     # gui_if_available = <True or False> (Default: True)
   '';
 
+  home.file.".config/hypr/hyprpaper.conf".text = ''
+    ipc = off
+    preload = ~/cloud/Pictures/Wallpapers-Laptop/wallpaper-nix.png
+    wallpaper = eDP-1,~/cloud/Pictures/Wallpapers-Laptop/wallpaper-nix.png
+    
+  '';
+
   wayland.windowManager.hyprland = {
     enable = true;
     extraConfig = ''
+      exec-once=${pkgs.hyprpaper}/bin/hyprpaper
       exec-once=eww daemon
       exec-once=eww open bar
       
@@ -123,8 +134,8 @@
       windowrule=rounding 3,title:^(\s*)$
       windowrule=animation popin,title:^(\s*)$
 
-      bind=,XF86MonBrightnessUp,exec,light -A 5
-      bind=,XF86MonBrightnessDown,exec,light -U 5
+      bind=,XF86MonBrightnessUp,exec,brightnessctl -q s +5%
+      bind=,XF86MonBrightnessDown,exec,brightnessctl -q s 5%-
       bind=,XF86MonRaiseVolume,exec,pamixer -i 5
       bind=,XF86MonLowerVolume,exec,pamixer -d 5
       bind=,XF86AudioMute,exec,pamixer -t

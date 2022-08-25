@@ -9,10 +9,6 @@
     ./hyprland
   ];
 
-  home.sessionVariables = {
-    MOZ_ENABLE_WAYLAND = 1;
-  };
-
   home.packages = with pkgs; [
     discord
     rnix-lsp
@@ -30,6 +26,7 @@
     texlive.combined.scheme-full
     retroarchFull
     python3
+    element-desktop-wayland
   ];
 
   programs.alacritty = {

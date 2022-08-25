@@ -45,8 +45,6 @@ in
     inputs.hyprland.homeManagerModules.default
   ];
 
-  programs.light.enable = true;
-
   fonts = {
     fonts = with pkgs; [
       material-design-icons

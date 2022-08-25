@@ -20,16 +20,16 @@
     minecraft-servers.url = "github:jyooru/nix-minecraft-servers";
     minecraft-servers.inputs.nixpkgs.follows = "nixpkgs";
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     hyprland.url = "github:hyprwm/Hyprland";
+    hyprpaper.url = "github:hyprwm/hyprpaper";
+    hyprpaper.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
-    { self, nixpkgs, vault-secrets, serokell-nix, minecraft-servers, colmena, home-manager, ... }@inputs:
+    { self, nixpkgs, vault-secrets, serokell-nix, minecraft-servers, colmena, home-manager, hyprpaper, ... }@inputs:
     let
       inherit (nixpkgs) lib;
       inherit (builtins) filter mapAttrs attrValues concatLists;
@@ -50,6 +50,7 @@
         (import ./nixos/pkgs)
         vault-secrets.overlay
         minecraft-servers.overlays.default
+        hyprpaper.overlays.default
       ];
 
       # Script to apply local colmena deployments
@@ -73,7 +74,7 @@
           meta = {
             inherit specialArgs;
             nixpkgs = pkgs;
-            };
+          };
         }
         nixHosts;
 

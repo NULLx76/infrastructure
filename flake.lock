@@ -219,6 +219,26 @@
         "type": "github"
       }
     },
+    "hyprpaper": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1661277513,
+        "narHash": "sha256-MnSImhrvAwpGXC85u8juDgTImcrztJ2DEo8nRBhTMfY=",
+        "owner": "hyprwm",
+        "repo": "hyprpaper",
+        "rev": "0faf74054136bb4ffe7c13fefb18ab41dbf62959",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "hyprpaper",
+        "type": "github"
+      }
+    },
     "lowdown-src": {
       "flake": false,
       "locked": {
@@ -349,11 +369,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1661414334,
-        "narHash": "sha256-9uL8a3v1L9FNCJIhhXZzNQJLS8dq1S0vd03cDrbc0Lw=",
+        "lastModified": 1661417153,
+        "narHash": "sha256-wASLYEuPIoInMow71HhPPtDGWllBL8pDlP7l3kg2XII=",
         "owner": "NULLx76",
         "repo": "nixpkgs",
-        "rev": "ed0a4bf92a7b00da1497d87846c068af92919f54",
+        "rev": "ef0026af97075a88449bfe5cdb762501ff57d233",
         "type": "github"
       },
       "original": {
@@ -414,6 +434,7 @@
         "colmena": "colmena",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
+        "hyprpaper": "hyprpaper",
         "minecraft-servers": "minecraft-servers",
         "nixpkgs": "nixpkgs_2",
         "serokell-nix": "serokell-nix",
