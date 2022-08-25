@@ -349,16 +349,16 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1661208473,
-        "narHash": "sha256-EcoSSCrhc/qkoACcbB1Q2zi1jiFvb93kb4SS1AbviFw=",
+        "lastModified": 1661414334,
+        "narHash": "sha256-9uL8a3v1L9FNCJIhhXZzNQJLS8dq1S0vd03cDrbc0Lw=",
         "owner": "NULLx76",
         "repo": "nixpkgs",
-        "rev": "a73f576bc51a194b6cf77580f84b60c610e0bbbe",
+        "rev": "ed0a4bf92a7b00da1497d87846c068af92919f54",
         "type": "github"
       },
       "original": {
         "owner": "NULLx76",
-        "ref": "direnv-vscode-extension",
+        "ref": "0x76",
         "repo": "nixpkgs",
         "type": "github"
       }

@@ -6,7 +6,7 @@
   # * https://git.voidcorp.nl/j00lz/nixos-configs/src/branch/main/flake.nix
 
   inputs = {
-    nixpkgs.url = "github:NULLx76/nixpkgs/direnv-vscode-extension";
+    nixpkgs.url = "github:NULLx76/nixpkgs/0x76";
 
     colmena.url = "github:zhaofengli/colmena";
     colmena.inputs.nixpkgs.follows = "nixpkgs";
@@ -46,7 +46,11 @@
 
       # Define args each module gets access to (access to hosts is useful for DNS/DHCP)
       specialArgs = { inherit hosts flat_hosts inputs; };
-      pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system} [ vault-secrets.overlay ];
+      pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system} [
+        (import ./nixos/pkgs)
+        vault-secrets.overlay
+        minecraft-servers.overlays.default
+      ];
 
       # Script to apply local colmena deployments
       apply-local = pkgs.writeScriptBin "apply-local" ''
@@ -68,14 +72,8 @@
         {
           meta = {
             inherit specialArgs;
-            nixpkgs = import nixpkgs {
-              inherit system;
-              overlays = [
-                (import ./nixos/pkgs)
-                minecraft-servers.overlays.default
-              ];
+            nixpkgs = pkgs;
             };
-          };
         }
         nixHosts;
 

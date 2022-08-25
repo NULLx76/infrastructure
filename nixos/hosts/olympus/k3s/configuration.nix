@@ -37,7 +37,7 @@
 
   # Enable k3s as a master node
   services.k3s = {
-    enable = false;
+    enable = true;
     role = "server";
 
     extraFlags = builtins.toString [
