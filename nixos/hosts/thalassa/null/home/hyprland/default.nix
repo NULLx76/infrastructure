@@ -1,52 +1,8 @@
 { pkgs, ... }: {
-  imports = [
-    ./eww
-  ];
-
-  home.packages = with pkgs; [
-    wofi # Wayland rofi
-    grim # Screenshot tool
-    wf-recorder # Screenrecorder
-    wl-clipboard # Clipboard manager
-    networkmanager_dmenu
-    brightnessctl
-  ];
-
-  programs.mako.enable = true;
-
-  home.file.".config/networkmanager-dmenu/config.ini".text = ''
-    [dmenu]
-    dmenu_command = rofi -dmenu -i
-    # # Note that dmenu_command can contain arguments as well like:
-    # # `dmenu_command = rofi -dmenu -i -theme nmdm`
-    # # `dmenu_command = rofi -dmenu -width 30 -i`
-    # # `dmenu_command = dmenu -i -l 25 -b -nb #909090 -nf #303030`
-    # (Default: False) use rofi highlighting instead of '=='
-    rofi_highlight = true
-    # compact = <True or False> # (Default: False). Remove extra spacing from display
-    # pinentry = <Pinentry command>  # (Default: None) e.g. `pinentry-gtk`
-    # wifi_chars = <string of 4 unicode characters representing 1-4 bars strength>
-    wifi_chars = ▂▄▆█
-    # list_saved = <True or False> # (Default: False) list saved connections
-
-    [dmenu_passphrase]
-    # # Uses the -password flag for Rofi, -x for bemenu. For dmenu, sets -nb and
-    # # -nf to the same color or uses -P if the dmenu password patch is applied
-    # # https://tools.suckless.org/dmenu/patches/password/
-    # obscure = True
-    # obscure_color = #222222
-
-    [editor]
-    # terminal = <name of terminal program>
-    terminal = alacritty
-    # gui_if_available = <True or False> (Default: True)
-  '';
-
   home.file.".config/hypr/hyprpaper.conf".text = ''
     ipc = off
     preload = ~/cloud/Pictures/Wallpapers-Laptop/wallpaper-nix.png
     wallpaper = eDP-1,~/cloud/Pictures/Wallpapers-Laptop/wallpaper-nix.png
-    
   '';
 
   wayland.windowManager.hyprland = {
@@ -77,6 +33,8 @@
 
       misc {
         no_vfr = false
+        disable_hyprland_logo = true
+        disable_splash_rendering = true
       }
 
       dwindle {
@@ -85,7 +43,7 @@
 
       bind=SUPER,RETURN,exec,alacritty
       bind=SUPER,f,exec,firefox-devedition
-      bind=SUPER,d,exec,rofi -show run
+      bind=SUPER,d,exec,wofi --show run,drun
 
       bind=,Print,exec,grim -g "$(slurp)" - | wl-copy -t image/png
       bind=SUPER,W,killactive,

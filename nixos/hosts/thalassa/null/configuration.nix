@@ -40,7 +40,7 @@ in
   # home-manager
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
-  home-manager.users.victor = import ./home.nix;
+  home-manager.users.victor = import ./home;
   home-manager.sharedModules = [
     inputs.hyprland.homeManagerModules.default
   ];
@@ -52,16 +52,16 @@ in
       noto-fonts-cjk
       noto-fonts-emoji
       dejavu_fonts
-      (nerdfonts.override { fonts = [ "DejaVuSansMono" "Noto" "Ubuntu" "DroidSansMono" ]; })
+      (nerdfonts.override { fonts = [ "DejaVuSansMono" "Ubuntu" "DroidSansMono" "NerdFontsSymbolsOnly" ]; })
     ];
 
     enableDefaultFonts = false;
 
     fontconfig = {
       defaultFonts = {
-        monospace = [ "DejaVuSansMono Nerd Font Mono" "Noto Color Emoji" ];
-        sansSerif = [ "DejaVu Sans" "DejaVuSansMono Nerd Font Mono" "Noto Color Emoji" ];
-        serif = [ "DejaVu Serif" "DejaVuSansMono Nerd Font Mono" "Noto Color Emoji" ];
+        monospace = [ "DejaVuSansMono Nerd Font" "Noto Color Emoji" ];
+        sansSerif = [ "DejaVu Sans" "DejaVuSansMono Nerd Font" "Noto Color Emoji" ];
+        serif = [ "DejaVu Serif" "DejaVuSansMono Nerd Font" "Noto Color Emoji" ];
         emoji = [ "Noto Color Emoji" ];
       };
     };
@@ -93,16 +93,22 @@ in
   i18n.defaultLocale = "en_GB.utf8";
 
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_DK.utf8";
-    LC_IDENTIFICATION = "en_DK.utf8";
-    LC_MEASUREMENT = "en_DK.utf8";
-    LC_MONETARY = "en_DK.utf8";
-    LC_NAME = "en_DK.utf8";
-    LC_NUMERIC = "en_DK.utf8";
-    LC_PAPER = "en_DK.utf8";
-    LC_TELEPHONE = "en_DK.utf8";
-    LC_TIME = "en_DK.utf8";
+    LC_ADDRESS = "nl_NL.UTF-8";
+    LC_IDENTIFICATION = "nl_NL.UTF-8";
+    LC_MEASUREMENT = "nl_NL.UTF-8";
+    LC_MONETARY = "nl_NL.UTF-8";
+    LC_NAME = "nl_NL.UTF-8";
+    LC_NUMERIC = "nl_NL.UTF-8";
+    LC_PAPER = "nl_NL.UTF-8";
+    LC_TELEPHONE = "nl_NL.UTF-8";
+    LC_TIME = "en_DK.UTF-8";
   };
+
+  i18n.supportedLocales = [
+    "en_GB.UTF-8/UTF-8"
+    "nl_NL.UTF-8/UTF-8"
+    "en_DK.UTF-8/UTF-8"
+  ];
 
   xdg = {
     portal = {

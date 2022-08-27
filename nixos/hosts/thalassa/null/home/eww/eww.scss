@@ -23,7 +23,6 @@ $light-gray: #9699b7;
     font-size: 1.4rem;
 }
 
-
 button {
     transition: background-color 200ms, color 200ms;
 }
@@ -124,6 +123,7 @@ button {
     color: $text;
     padding: 10px;
     font-size: 55px;
+    border-radius: 5px;
 
     transition: all 200ms cubic-bezier(.1, -0.00, .0, 1.49);
 
@@ -175,4 +175,78 @@ button {
             background-color: $surface1;
         }
     }
+}
+
+// battery menu
+.batterywindow {
+    background-color: $mantle;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: normal;
+    color: $text;
+
+    progressbar {
+        border-radius: 5px;
+    }
+
+    progressbar progress {
+        background-color: $green;
+    }
+
+    progressbar trough {
+        background-color: $base;
+    }
+
+    .batterymenu {
+        padding: 10px;
+    }
+
+}
+
+// Calendar
+.cal {
+    background-color: $mantle;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: normal;
+
+    .cal-in {
+        padding: 0px 10px 0px 10px;
+        color: $text;
+
+        .cal {
+            &.highlight {
+                padding: 20px;
+            }
+
+            padding: 5px 5px 5px 5px;
+            margin-left: 10px;
+        }
+    }
+}
+
+calender {
+    color: $text;
+}
+
+calendar:selected {
+    color: $mauve;
+}
+
+calendar.header {
+    color: $overlay0;
+    font-weight: bold;
+}
+
+calendar.button {
+    color: $base;
+}
+
+calendar.highlight {
+    color: $overlay0;
+    font-weight: bold;
+}
+
+calendar:indeterminate {
+    color: $text;
 }

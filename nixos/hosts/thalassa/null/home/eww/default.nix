@@ -10,11 +10,6 @@
   home.file.".config/eww/eww.scss".source = ./eww.scss;
 
   # scripts
-  home.file.".config/eww/scripts/battery.sh" = {
-    source = ./scripts/battery.sh;
-    executable = true;
-  };
-
   home.file.".config/eww/scripts/volume.sh" = {
     source = ./scripts/volume.sh;
     executable = true;

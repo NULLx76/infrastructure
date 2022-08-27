@@ -34,15 +34,42 @@
 )
 
 ;; ━━━ BATTERY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-(defvar battery "{}")
-(defpoll battery :interval "60s" "./scripts/battery.sh")
-
 (defwidget battery []
-  (label :text {battery.icon}
+  (eventbox :onclick "eww open batterywindow --toggle"
+  (label :text `${
+    EWW_BATTERY.BAT0.status == "Charging" ? "" :
+    EWW_BATTERY.BAT0.capacity < 10 ? "" :
+    EWW_BATTERY.BAT0.capacity < 20 ? "" :
+    EWW_BATTERY.BAT0.capacity < 30 ? "" :
+    EWW_BATTERY.BAT0.capacity < 40 ? "" :
+    EWW_BATTERY.BAT0.capacity < 50 ? "" :
+    EWW_BATTERY.BAT0.capacity < 60 ? "" :
+    EWW_BATTERY.BAT0.capacity < 70 ? "" :
+    EWW_BATTERY.BAT0.capacity < 80 ? "" :
+    EWW_BATTERY.BAT0.capacity < 90 ? "" : ""
+    }`
     :limit-width 10
-    :tooltip "${battery.status}: ${battery.percent}"
+    :tooltip "${EWW_BATTERY.BAT0.status}: ${EWW_BATTERY.BAT0.capacity}%"
     :class "battery"
+  ))
+)
+
+(defwidget batterymenu []
+  (box :orientation "v"
+    :class "batterymenu"
+    (label :text "${EWW_BATTERY.BAT0.status}: ${EWW_BATTERY.BAT0.capacity}%")
+    (progress :value "${EWW_BATTERY.BAT0.capacity}" :orientation "h") ; TODO: change class (and color) on low juice
   )
+)
+
+(defwindow batterywindow
+  :monitor 0
+  :geometry (geometry
+    :x "53px"
+    :y "30px"
+    :anchor "bottom left"
+  )
+  (batterymenu)
 )
 
 ;; ━━━ VOLUME ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -66,15 +93,35 @@
 (defwidget time []
   (eventbox :cursor "hand"  :hexpand false :vexpand false
     :tooltip "${dateVar}"
+    :onclick "eww open calendar --toggle &"
     (box :orientation "v" :hexpand false :vexpand false :space-evenly false :class "clock"
-      (button		:class "date"
-      :onclick ""	"${hour}")
+      (label :class "date" :text "${hour}")
       
-      (button		:class "date"
-      :onclick ""	"${minute}")
+      (label :class "date" :text "${minute}")
     )
   )
 )
+
+;; Calendar
+(defpoll calendar_day :interval "20h" "date '+%d'")
+(defpoll calendar_year :interval "20h" "date '+%Y'")
+(defwidget cal []
+  (box :class "cal" :orientation "v"
+    (box :class "cal-in"
+      (calendar :class "cal"
+        :day calendar_day
+      :year calendar_year))))
+
+(defwindow calendar
+  :monitor 0
+  :geometry (geometry :x "53px"
+    :y "5px"
+    :anchor "bottom left"
+    :width "270px"
+  :height "60px")
+  (cal))
+
+;; powermenu
 
 (defwidget powerbutton []
   (eventbox :cursor "hand"
