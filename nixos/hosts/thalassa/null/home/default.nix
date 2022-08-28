@@ -92,7 +92,7 @@ in
   gtk = {
     enable = true;
     theme = {
-      name = "Catppuccin-Purple-Dark";
+      name = "Catppuccin-Pink-Dark";
       package = pkgs.catppuccin-gtk;
     };
     iconTheme = {

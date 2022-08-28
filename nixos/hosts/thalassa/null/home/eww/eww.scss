@@ -1,21 +1,40 @@
-$base: #44465c;
-$blue: #3fc6de;
-$surface0: #44465c;
-$surface1: #44465c;
-$text: #d9e0ee;
-$overlay0: #6e738d;
-$red: #ec6a88;
-$peach: #efb993;
-$yellow: #efb993;
-$mauve: #b072d1;
-$green: #3fdaa4;
-$mantle: #292a37;
-$crust: #2e303e;
 $light-gray: #9699b7;
+
+$rosewater: #f2d5cf;
+$flamingo: #eebebe;
+$pink: #f4b8e4;
+$mauve: #ca9ee6;
+$red: #e78284;
+$maroon: #ea999c;
+$peach: #ef9f76;
+$yellow: #e5c890;
+$green: #a6d189;
+$teal: #81c8be;
+$sky: #99d1db;
+$sapphire: #85c1dc;
+$blue: #8caaee;
+$lavender: #babbf1;
+$text: #c6d0f5;
+$subtext1: #b5bfe2;
+$subtext0: #a5adce;
+$overlay2: #949cbb;
+$overlay1: #838ba7;
+$overlay0: #737994;
+$surface2: #626880;
+$surface1: #51576d;
+$surface0: #414559;
+$base: #303446;
+$mantle: #292c3c;
+$crust: #232634;
 
 * {
     all: unset; //Unsets everything so you can style everything from scratch
     font-family: "JetBrainsMono"
+}
+
+tooltip {
+    background-color: $base;
+    border-radius: 5px
 }
 
 .icon {
@@ -28,7 +47,7 @@ button {
 }
 
 .active {
-    color: $green;
+    color: $pink;
     font-size: 1.4rem;
 }
 
@@ -48,7 +67,7 @@ button {
 
 .wifi {
     font-size: 2rem;
-    color: $blue;
+    color: $mauve;
 }
 
 .clock {
@@ -63,6 +82,7 @@ button {
 
 .date {
     font-size: 1.5rem;
+    color: $text;
 }
 
 .reg-btn {
@@ -71,110 +91,15 @@ button {
     border-radius: 10px;
 }
 
-.powerbutton {
-    color: $red;
-}
-
-.powerbutton:hover {
-    background-color: $base;
-}
-
-.powerbutton:active {
-    background-color: $red;
-    color: $mantle;
-}
 
 .battery {
     font-size: 1.5rem;
-    color: $green;
+    color: $teal;
 }
 
 .volume {
     font-size: 1.5rem;
-    color: $blue;
-}
-
-// Credits AlphaTechnolog
-.powermenu-box {
-    padding: 0 2px;
-    margin: 7px 7px 7px 0px;
-    background: inherit;
-
-    .dispatcher {
-        border-radius: 15px;
-        background: $base;
-        color: $red;
-        font-size: 14px;
-        padding: 0 14px 0 10px;
-
-        &:hover {
-            background-color: $surface0;
-        }
-
-        &:active {
-            background-color: $surface1;
-        }
-    }
-}
-
-// powermenu
-.powermenu-container {
-    background: $crust;
-    color: $text;
-    padding: 10px;
-    font-size: 55px;
-    border-radius: 5px;
-
-    transition: all 200ms cubic-bezier(.1, -0.00, .0, 1.49);
-
-    .btn {
-        margin: 1rem;
-    }
-
-    // shutdown
-    .shutdown-btn-box .btn {
-        color: $red;
-        border-radius: 15px;
-        background-color: $mantle;
-
-        &:hover {
-            background-color: $base;
-        }
-
-        &:active {
-            background-color: $surface1;
-        }
-    }
-
-    // reboot
-    .reboot-btn-box .btn {
-        color: $mauve;
-        border-radius: 15px;
-        background-color: $mantle;
-
-        &:hover {
-            background-color: $base;
-        }
-
-        &:active {
-            background-color: $surface1;
-        }
-    }
-
-    // exit
-    .exit-btn-box .btn {
-        color: $yellow;
-        border-radius: 15px;
-        background-color: $mantle;
-
-        &:hover {
-            background-color: $base;
-        }
-
-        &:active {
-            background-color: $surface1;
-        }
-    }
+    color: $mauve;
 }
 
 // battery menu
