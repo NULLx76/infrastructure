@@ -10,6 +10,8 @@ final: prev: {
 
   vmagent = prev.callPackage ./vmagent { };
 
+  catppuccin.cursors = prev.callPackage ./catppuccin/cursors { };
+
   v = {
     unbound = prev.unbound.override {
       withSystemd = true;

@@ -9,6 +9,7 @@
     enable = true;
     extraConfig = ''
       exec-once=${pkgs.hyprpaper}/bin/hyprpaper
+      exec-once=hyprctl setcursor Catppuccin-Frappe-Pink-Cursors 32
       exec-once=eww daemon
       exec-once=eww open bar
       
@@ -18,6 +19,7 @@
 
       general {
         layout = dwindle
+        col.active_border = 0xfff4b8e4
       }
 
       input {
@@ -41,7 +43,7 @@
         pseudotile=true
       }
 
-      bind=SUPER,RETURN,exec,alacritty
+      bind=SUPER,RETURN,exec,foot
       bind=SUPER,f,exec,firefox-devedition
       bind=SUPER,d,exec,wofi --show run,drun
 
@@ -86,7 +88,6 @@
 
       # Firefox notifications
       windowrule=float,title:^(\s*)$
-      windowrule=nofocus,title:^(\s*)$
       windowrule=move 1569 0,title:^(\s*)$
       windowrule=opacity 0.8,title:^(\s*)$
       windowrule=rounding 3,title:^(\s*)$
