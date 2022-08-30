@@ -187,11 +187,11 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1661573386,
-        "narHash": "sha256-pBEg8iY00Af/SAtU2dlmOAv+2x7kScaGlFRDjNoVJO8=",
+        "lastModified": 1661824092,
+        "narHash": "sha256-nSWLWytlXbeLrx5A+r5Pso7CvVrX5EgmIIXW/EXvPHQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "d89bdff445eadff03fe414e9c30486bc8166b72b",
+        "rev": "5bd66dc6cd967033489c69d486402b75d338eeb6",
         "type": "github"
       },
       "original": {
@@ -206,11 +206,11 @@
         "wlroots": "wlroots"
       },
       "locked": {
-        "lastModified": 1661698908,
-        "narHash": "sha256-CkdZIP11mxahqOuADBkuKFP/dokMn6mj2ZyiicJ2utU=",
+        "lastModified": 1661888127,
+        "narHash": "sha256-7oRh2X4lyykcFlHSppIo7fB1fuc8HguxxfZOTexkFQA=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "c757fa54e10bd0f486c70e32ecca366247281824",
+        "rev": "1cf46fd6a26cb16104a39a4fe73ca7ccd6c1ba36",
         "type": "github"
       },
       "original": {
@@ -279,11 +279,11 @@
         "utils": "utils_3"
       },
       "locked": {
-        "lastModified": 1661652237,
-        "narHash": "sha256-HYZazJYnrSvgTN26lSI5JC8iTxTeGb+MrbSDb+k6b6I=",
+        "lastModified": 1661824817,
+        "narHash": "sha256-rKKTjwIVRD5YyD4/X0HMgQkPunAI1rb9vwP2l3M7NWY=",
         "owner": "jyooru",
         "repo": "nix-minecraft-servers",
-        "rev": "3982e2afdb23f980e07a473472bf333178a87a5c",
+        "rev": "835355ef3f51f9ba1a75a35315f997b189337d81",
         "type": "github"
       },
       "original": {
@@ -369,16 +369,16 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1661762682,
-        "narHash": "sha256-/i8xAhsX8MwiEucLIX+t7rNcsddFzbEOr/BROFSLeo4=",
+        "lastModified": 1661850929,
+        "narHash": "sha256-YQxPKEF1jpDIrNARAIdaU0pR1KgjBHuTwXDeAseTfnY=",
         "owner": "NULLx76",
         "repo": "nixpkgs",
-        "rev": "fab092ddd75ec258d0b46611ba1730f33d041b10",
+        "rev": "f9e6ebf0e94a0f82f6d913708a57b86dd4740cbd",
         "type": "github"
       },
       "original": {
         "owner": "NULLx76",
-        "ref": "vscode-catppuccin",
+        "ref": "0x76",
         "repo": "nixpkgs",
         "type": "github"
       }

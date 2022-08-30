@@ -11,33 +11,35 @@
   ];
 
   home.packages = with pkgs; [
+    brightnessctl
     discord
-    rnix-lsp
-    fusee-launcher
-    neofetch
+    calibre
+    element-desktop-wayland
     fluxcd
+    fusee-launcher
+    gimp
+    gnome.eog
+    gnome.file-roller
+    gnome.gnome-font-viewer
+    gnome.nautilus
+    grim # Screenshot tool
     k9s
     kubectl
+    libnotify
+    neofetch
     nixpkgs-review
+    python3
+    retroarchFull
     ripgrep
+    rnix-lsp
     rsync
-    rustup
     rust-analyzer
+    rustup
     steam-run
     texlive.combined.scheme-full
-    retroarchFull
-    python3
-    element-desktop-wayland
-
-    gnome.gnome-font-viewer
-
-    wofi # Wayland rofi
-    grim # Screenshot tool
     wf-recorder # Screenrecorder
     wl-clipboard # Clipboard manager
-    networkmanager_dmenu
-    brightnessctl
-    libnotify
+    wofi # Wayland rofi
   ];
 
   programs.foot = {
@@ -132,32 +134,4 @@
   };
 
   services.syncthing.enable = true;
-
-  home.file.".config/networkmanager-dmenu/config.ini".text = ''
-    [dmenu]
-    dmenu_command = wofi --dmenu -i
-    # # Note that dmenu_command can contain arguments as well like:
-    # # `dmenu_command = rofi -dmenu -i -theme nmdm`
-    # # `dmenu_command = rofi -dmenu -width 30 -i`
-    # # `dmenu_command = dmenu -i -l 25 -b -nb #909090 -nf #303030`
-    # (Default: False) use rofi highlighting instead of '=='
-    rofi_highlight = true
-    # compact = <True or False> # (Default: False). Remove extra spacing from display
-    # pinentry = <Pinentry command>  # (Default: None) e.g. `pinentry-gtk`
-    # wifi_chars = <string of 4 unicode characters representing 1-4 bars strength>
-    wifi_chars = ▂▄▆█
-    # list_saved = <True or False> # (Default: False) list saved connections
-
-    [dmenu_passphrase]
-    # # Uses the -password flag for Rofi, -x for bemenu. For dmenu, sets -nb and
-    # # -nf to the same color or uses -P if the dmenu password patch is applied
-    # # https://tools.suckless.org/dmenu/patches/password/
-    # obscure = True
-    # obscure_color = #222222
-
-    [editor]
-    # terminal = <name of terminal program>
-    terminal = alacritty
-    # gui_if_available = <True or False> (Default: True)
-  '';
 }

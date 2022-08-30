@@ -3,7 +3,7 @@
 # Inputs to this NixOS module, in this case we are
 # using `pkgs` so we can have some user specific packages and config
 # to configure the root ssh key.
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Setup ZSH to use grml config
@@ -25,11 +25,14 @@
   environment.pathsToLink = [ "/share/zsh" ];
 
   # Install Neovim and set it as alias for vi(m)
-  programs.neovim.enable = true;
-  programs.neovim.viAlias = true;
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    defaultEditor = true;
+  };
 
   # Disable sudo prompt for `wheel` users.
-  security.sudo.wheelNeedsPassword = false;
+  security.sudo.wheelNeedsPassword = lib.mkDefault false;
 
   # The block that specifies my user account.
   users.extraUsers.victor = {

@@ -45,6 +45,10 @@ in
     inputs.hyprland.homeManagerModules.default
   ];
 
+  security.pam.services.swaylock = { };
+
+  security.sudo.wheelNeedsPassword = true;
+
   fonts = {
     fonts = with pkgs; [
       material-design-icons
@@ -190,6 +194,8 @@ in
     wireguard-tools
     slurp
     gdb
+
+    swaylock-effects
   ];
 
   programs.steam = {
@@ -227,5 +233,4 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
-
 }

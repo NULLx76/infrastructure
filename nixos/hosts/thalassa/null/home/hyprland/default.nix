@@ -9,7 +9,7 @@
     enable = true;
     extraConfig = ''
       exec-once=${pkgs.hyprpaper}/bin/hyprpaper
-      exec-once=hyprctl setcursor Catppuccin-Frappe-Pink-Cursors 32
+      exec-once=hyprctlhyprpap setcursor Catppuccin-Frappe-Pink-Cursors 32
       exec-once=eww daemon
       exec-once=eww open bar
       
@@ -85,13 +85,6 @@
 
       bind=SUPER,g,togglegroup
       bind=SUPER,tab,changegroupactive
-
-      # Firefox notifications
-      windowrule=float,title:^(\s*)$
-      windowrule=move 1569 0,title:^(\s*)$
-      windowrule=opacity 0.8,title:^(\s*)$
-      windowrule=rounding 3,title:^(\s*)$
-      windowrule=animation popin,title:^(\s*)$
 
       bind=,XF86MonBrightnessUp,exec,brightnessctl -q s +5%
       bind=,XF86MonBrightnessDown,exec,brightnessctl -q s 5%-
