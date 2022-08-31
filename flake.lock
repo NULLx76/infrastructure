@@ -206,11 +206,11 @@
         "wlroots": "wlroots"
       },
       "locked": {
-        "lastModified": 1661888127,
-        "narHash": "sha256-7oRh2X4lyykcFlHSppIo7fB1fuc8HguxxfZOTexkFQA=",
+        "lastModified": 1661937972,
+        "narHash": "sha256-/qMWX2/jplrtMoh1/6saFjNzU84IVTDV0iEXZ1y0UM0=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "1cf46fd6a26cb16104a39a4fe73ca7ccd6c1ba36",
+        "rev": "0ad261aa9c408aa43b8ff846acf9dab97e29b927",
         "type": "github"
       },
       "original": {
@@ -453,11 +453,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1661430987,
-        "narHash": "sha256-kDCTfkOFP+cbS7DDf1WZNUuur/1PldfAygEZeDYiFNY=",
+        "lastModified": 1661942860,
+        "narHash": "sha256-HHEAjAh/yx7h6RWQ6sYgnwZ0LJ4eut3y32vO/pD7Gjw=",
         "owner": "serokell",
         "repo": "serokell.nix",
-        "rev": "70ccee98be9fac4bf7064ef4d66adbfe09e5d277",
+        "rev": "8c69cd4712106631f46eebd4815515b169aa37aa",
         "type": "github"
       },
       "original": {

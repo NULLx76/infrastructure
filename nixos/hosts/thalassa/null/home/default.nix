@@ -103,6 +103,7 @@
       jnoortheen.nix-ide
       matklad.rust-analyzer
       mkhl.direnv
+      tamasfe.even-better-toml
       valentjn.vscode-ltex
     ];
   };
