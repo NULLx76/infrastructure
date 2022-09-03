@@ -5,11 +5,17 @@
     wallpaper = eDP-1,~/cloud/Pictures/Wallpapers-Laptop/wallpaper-nix.png
   '';
 
+  home.file.".xsettingsd".text = ''
+    Gtk/CursorThemeName "Catppuccin-Frappe-Pink-Cursors"
+    Net/ThemeName "Catppuccin-Pink-Dark"
+  '';
+
   wayland.windowManager.hyprland = {
     enable = true;
     extraConfig = ''
       exec-once=${pkgs.hyprpaper}/bin/hyprpaper
       exec-once=hyprctlhyprpap setcursor Catppuccin-Frappe-Pink-Cursors 32
+      exec-once=${pkgs.xsettingsd}/bin/xsettingsd
       exec-once=eww daemon
       exec-once=eww open bar
       

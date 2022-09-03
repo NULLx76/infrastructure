@@ -40,6 +40,7 @@
     wf-recorder # Screenrecorder
     wl-clipboard # Clipboard manager
     wofi # Wayland rofi
+    
   ];
 
   programs.foot = {

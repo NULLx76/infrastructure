@@ -29,7 +29,7 @@
   };
 
   outputs =
-    { self, nixpkgs, vault-secrets, serokell-nix, minecraft-servers, colmena, home-manager, hyprpaper, ... }@inputs:
+    { self, nixpkgs, vault-secrets, serokell-nix, minecraft-servers, colmena, home-manager, hyprpaper, hyprland, ... }@inputs:
     let
       inherit (nixpkgs) lib;
       inherit (builtins) filter mapAttrs attrValues concatLists;
@@ -51,6 +51,7 @@
         vault-secrets.overlay
         minecraft-servers.overlays.default
         hyprpaper.overlays.default
+        hyprland.overlays.default
       ];
 
       # Script to apply local colmena deployments
