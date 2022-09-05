@@ -8,6 +8,7 @@
   imports = [
     ./hyprland
     ./eww
+    ./theme.nix
   ];
 
   home.packages = with pkgs; [
@@ -45,27 +46,7 @@
 
   programs.foot = {
     enable = true;
-    # Note, pink and blue are switched
-    settings.colors = {
-      foreground = "c6d0f5"; # Text
-      background = "303446"; # Base
-      regular0 = "51576d"; # Surface 1
-      regular1 = "e78284"; # red
-      regular2 = "a6d189"; # green
-      regular3 = "e5c890"; # yellow
-      regular4 = "f4b8e4"; # pink
-      regular5 = "8caaee"; # blue
-      regular6 = "81c8be"; # teal
-      regular7 = "b5bfe2"; # Subtext 1
-      bright0 = "626880"; # Surface 2
-      bright1 = "e78284"; # red
-      bright2 = "a6d189"; # green
-      bright3 = "e5c890"; # yellow
-      bright4 = "f4b8e4"; # pink
-      bright5 = "8caaee"; # blue
-      bright6 = "81c8be"; # teal
-      bright7 = "a5adce"; # Subtext 0
-    };
+ 
   };
 
   programs.git = {
@@ -77,10 +58,7 @@
 
   programs.mako = {
     enable = true;
-    backgroundColor = "#292c3c";
     borderRadius = 5;
-    borderColor = "#f4b8e4";
-    textColor = "#c6d0f5";
   };
 
   programs.tmux = {
