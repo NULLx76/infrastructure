@@ -1,8 +1,8 @@
 { pkgs, inputs, ... }: {
   home.file.".config/hypr/hyprpaper.conf".text = ''
     ipc = off
-    preload = ~/cloud/Pictures/Wallpapers-Laptop/wallpaper-nix.png
-    wallpaper = eDP-1,~/cloud/Pictures/Wallpapers-Laptop/wallpaper-nix.png
+    preload = ~/cloud/Pictures/Wallpapers-Laptop/wallpaper-nix-pink.png
+    wallpaper = eDP-1,~/cloud/Pictures/Wallpapers-Laptop/wallpaper-nix-pink.png
   '';
 
   home.file.".xsettingsd".text = ''
@@ -14,8 +14,8 @@
     enable = true;
     extraConfig = ''
       exec-once=${pkgs.hyprpaper}/bin/hyprpaper
-      exec-once=hyprctlhyprpap setcursor Catppuccin-Frappe-Pink-Cursors 32
-      exec-once=${pkgs.xsettingsd}/bin/xsettingsd
+      exec-once=hyprctl setcursor Catppuccin-Frappe-Pink-Cursors 32
+      exec-once=${pkgs.xsettingsd}/bin/xsettingsd &
       exec-once=eww daemon
       exec-once=eww open bar
       

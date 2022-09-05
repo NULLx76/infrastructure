@@ -106,6 +106,7 @@
       mkhl.direnv
       tamasfe.even-better-toml
       valentjn.vscode-ltex
+      vscodevim.vim
     ];
   };
 

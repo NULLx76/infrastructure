@@ -195,7 +195,7 @@ in
     slurp
     gdb
 
-    swaylock-effects
+    swaylock-effects # Has to be installed globally so that pam module works
   ];
 
   programs.steam = {
@@ -225,6 +225,15 @@ in
     keep-outputs = true
     keep-derivations = true
   '';
+
+  # Enables logging in with my Solokey
+  security.pam.u2f = {
+    enable = true;
+    debug = false;
+    cue = true;
+    control = "sufficient";
+    authFile = "/etc/u2f-mappings"; # use `pamu2fcfg` from `pkgs.pam_u2f` to generate this config
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

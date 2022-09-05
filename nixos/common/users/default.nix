@@ -28,7 +28,6 @@
   programs.neovim = {
     enable = true;
     viAlias = true;
-    defaultEditor = true;
   };
 
   # Disable sudo prompt for `wheel` users.
@@ -63,5 +62,15 @@
   };
 
   # Setup packages available everywhere
-  environment.systemPackages = with pkgs; [ fzf git htop ncdu rsync ripgrep zoxide ];
+  environment.systemPackages = with pkgs; [
+    fzf
+    git
+    helix
+    htop
+    ncdu
+    ripgrep
+    rsync
+    zoxide
+  ];
+
 }
