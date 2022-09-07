@@ -16,7 +16,7 @@ let
   '';
   run-hyprland = pkgs.writeShellScriptBin "run-hyprland" ''
     export _JAVA_AWT_WM_NONREPARENTING=1
-    export XCURSOR_SIZE=24
+    export XCURSOR_SIZE=32
 
     export CLUTTER_BACKEND=wayland
     export XDG_SESSION_TYPE=wayland
@@ -26,6 +26,7 @@ let
     export WLR_BACKEND=vulkan
     export QT_QPA_PLATFORM=wayland
     export GDK_BACKEND=wayland
+    export SDL_VIDEODRIVER=wayland
 
     exec Hyprland
   '';
@@ -131,22 +132,20 @@ in
   };
 
   environment.loginShellInit = ''
-    if [[ "$(tty)" == /dev/tty1 ]]; then
+    if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
       ${run-hyprland}/bin/run-hyprland
     fi
   '';
 
   services.xserver = {
-    # enable = true;
+    enable = false;
     layout = "us";
     xkbVariant = "altgr-intl";
     xkbOptions = "caps:swapescape";
     videoDrivers = [ "nvidia" ];
   };
 
-  # hardware.nvidia.modesetting.enable = true;
   hardware.nvidia = {
-    # open = true;
     prime = {
       offload.enable = true;
       intelBusId = "PCI:0:2:0";

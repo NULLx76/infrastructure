@@ -18,6 +18,7 @@
     element-desktop-wayland
     fluxcd
     fusee-launcher
+    gcc
     gimp
     gnome.eog
     gnome.file-roller
@@ -41,7 +42,6 @@
     wf-recorder # Screenrecorder
     wl-clipboard # Clipboard manager
     wofi # Wayland rofi
-    
   ];
 
   programs.foot = {

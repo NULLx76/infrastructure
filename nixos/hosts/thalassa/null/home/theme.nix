@@ -33,35 +33,6 @@ let
   };
 in
 {
-  home.file.".config/eww/colours.scss".text = ''
-    $rosewater: #${colour.rosewater};
-    $flamingo: #${colour.flamingo};
-    $pink: #${colour.pink};
-    $mauve: #${colour.mauve};
-    $red: #${colour.red};
-    $maroon: #${colour.maroon};
-    $peach: #${colour.peach};
-    $yellow: #${colour.yellow};
-    $green: #${colour.green};
-    $teal: #${colour.teal};
-    $sky: #${colour.sky};
-    $sapphire: #${colour.sapphire};
-    $blue: #${colour.blue};
-    $lavender: #${colour.lavender};
-    $text: #${colour.text};
-    $subtext1: #${colour.subtext1};
-    $subtext0: #${colour.subtext0};
-    $overlay2: #${colour.overlay2};
-    $overlay1: #${colour.overlay1};
-    $overlay0: #${colour.overlay0};
-    $surface2: #${colour.surface2};
-    $surface1: #${colour.surface1};
-    $surface0: #${colour.surface0};
-    $base: #${colour.base};
-    $mantle: #${colour.mantle};
-    $crust: #${colour.crust};
-  '';
-
   # Note, pink and blue are switched
   programs.foot.settings.colors = {
     foreground = colour.text; # Text
