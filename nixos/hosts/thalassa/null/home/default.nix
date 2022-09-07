@@ -1,4 +1,4 @@
-{ config, pkgs, lib, fetchFromGithub, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
   programs.home-manager.enable = true;
   home.username = "victor";
@@ -6,6 +6,7 @@
   home.stateVersion = "22.05";
 
   imports = [
+    inputs.hyprland.homeManagerModules.default
     ./hyprland
     ./eww
     ./theme.nix
@@ -42,11 +43,12 @@
     wf-recorder # Screenrecorder
     wl-clipboard # Clipboard manager
     wofi # Wayland rofi
+
+    inputs.riff.packages.x86_64-linux.riff
   ];
 
   programs.foot = {
     enable = true;
- 
   };
 
   programs.git = {
@@ -93,6 +95,10 @@
     nix-direnv = {
       enable = true;
     };
+  };
+
+  programs.zsh.sessionVariables = {
+    DIRENV_LOG_FORMAT = "";
   };
 
   programs.zsh.enable = true;

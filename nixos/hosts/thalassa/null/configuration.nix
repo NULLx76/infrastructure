@@ -42,9 +42,9 @@ in
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.users.victor = import ./home;
-  home-manager.sharedModules = [
-    inputs.hyprland.homeManagerModules.default
-  ];
+  home-manager.extraSpecialArgs = {
+    inherit inputs;
+  };
 
   security.pam.services.swaylock = { };
 

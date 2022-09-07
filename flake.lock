@@ -27,7 +27,7 @@
     "deploy-rs": {
       "inputs": {
         "flake-compat": "flake-compat_2",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_4",
         "utils": "utils_4"
       },
       "locked": {
@@ -41,6 +41,28 @@
       "original": {
         "id": "deploy-rs",
         "type": "indirect"
+      }
+    },
+    "fenix": {
+      "inputs": {
+        "nixpkgs": [
+          "riff",
+          "nixpkgs"
+        ],
+        "rust-analyzer-src": "rust-analyzer-src"
+      },
+      "locked": {
+        "lastModified": 1662186434,
+        "narHash": "sha256-N867s0Z20q9LNirVftWoKAmkEARmmHXZHyRTEmekf94=",
+        "owner": "nix-community",
+        "repo": "fenix",
+        "rev": "e228867146581fa5e4be25dafc0dd68fdd22f0ad",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "fenix",
+        "type": "github"
       }
     },
     "flake-compat": {
@@ -206,11 +228,11 @@
         "wlroots": "wlroots"
       },
       "locked": {
-        "lastModified": 1662487199,
-        "narHash": "sha256-U4M9TdcGU/YMMP4pCcTldxiecPb40X4hHvuyH6+oSiU=",
+        "lastModified": 1662548716,
+        "narHash": "sha256-HKkDvjqLn0652ovUk/8u7uFOF3CEq3F3D/EnewrlROY=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "789eedd115917bc0ae7e5ee7317af67295439fd8",
+        "rev": "6e195a6b8cb98e96d15c51003da4b17154c55ff3",
         "type": "github"
       },
       "original": {
@@ -279,11 +301,11 @@
         "utils": "utils_3"
       },
       "locked": {
-        "lastModified": 1662169888,
-        "narHash": "sha256-vXcEbRINemb+ype/JQohaU8TyzUbclOFwiv+soYn6wI=",
+        "lastModified": 1662515805,
+        "narHash": "sha256-788jXPFYYYWI8CxHD3IkbjtWMJwcplQWkbdhn5q0qtY=",
         "owner": "jyooru",
         "repo": "nix-minecraft-servers",
-        "rev": "7921fbc0656f8e8c5a95f1142aaf07bf6253aa55",
+        "rev": "2673c4de1c961c433862ccdc64c2c39ea9112736",
         "type": "github"
       },
       "original": {
@@ -292,10 +314,31 @@
         "type": "github"
       }
     },
+    "naersk": {
+      "inputs": {
+        "nixpkgs": [
+          "riff",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1662220400,
+        "narHash": "sha256-9o2OGQqu4xyLZP9K6kNe1pTHnyPz0Wr3raGYnr9AIgY=",
+        "owner": "nix-community",
+        "repo": "naersk",
+        "rev": "6944160c19cb591eb85bbf9b2f2768a935623ed3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "naersk",
+        "type": "github"
+      }
+    },
     "nix": {
       "inputs": {
         "lowdown-src": "lowdown-src",
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
         "lastModified": 1633098935,
@@ -336,7 +379,7 @@
     "nix_2": {
       "inputs": {
         "lowdown-src": "lowdown-src_2",
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": "nixpkgs_6"
       },
       "locked": {
         "lastModified": 1633098935,
@@ -385,6 +428,22 @@
     },
     "nixpkgs_3": {
       "locked": {
+        "lastModified": 1662099760,
+        "narHash": "sha256-MdZLCTJPeHi/9fg6R9fiunyDwP3XHJqDd51zWWz9px0=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "67e45078141102f45eff1589a831aeaa3182b41e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-22.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_4": {
+      "locked": {
         "lastModified": 1648219316,
         "narHash": "sha256-Ctij+dOi0ZZIfX5eMhgwugfvB+WZSrvVNAyAuANOsnQ=",
         "owner": "NixOS",
@@ -397,21 +456,6 @@
         "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
-      }
-    },
-    "nixpkgs_4": {
-      "locked": {
-        "lastModified": 1632864508,
-        "narHash": "sha256-d127FIvGR41XbVRDPVvozUPQ/uRHbHwvfyKHwEt5xFM=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "82891b5e2c2359d7e58d08849e4c89511ab94234",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-21.05-small",
-        "type": "indirect"
       }
     },
     "nixpkgs_5": {
@@ -429,6 +473,41 @@
         "type": "indirect"
       }
     },
+    "nixpkgs_6": {
+      "locked": {
+        "lastModified": 1632864508,
+        "narHash": "sha256-d127FIvGR41XbVRDPVvozUPQ/uRHbHwvfyKHwEt5xFM=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "82891b5e2c2359d7e58d08849e4c89511ab94234",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-21.05-small",
+        "type": "indirect"
+      }
+    },
+    "riff": {
+      "inputs": {
+        "fenix": "fenix",
+        "naersk": "naersk",
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1662511960,
+        "narHash": "sha256-YyDpkCmP4IslmGPLI5Npd9Y2PbW4J81o3McB7pnRxXU=",
+        "owner": "DeterminateSystems",
+        "repo": "riff",
+        "rev": "0dbdb5fca5a4c1bbe2a3a81938d9dad13cc4a9ae",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DeterminateSystems",
+        "repo": "riff",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "colmena": "colmena",
@@ -437,8 +516,26 @@
         "hyprpaper": "hyprpaper",
         "minecraft-servers": "minecraft-servers",
         "nixpkgs": "nixpkgs_2",
+        "riff": "riff",
         "serokell-nix": "serokell-nix",
         "vault-secrets": "vault-secrets"
+      }
+    },
+    "rust-analyzer-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1662066014,
+        "narHash": "sha256-DE4FsE2sxd9nFtG+8+lnv/IBbtf+6rAlKjIdfpWN488=",
+        "owner": "rust-lang",
+        "repo": "rust-analyzer",
+        "rev": "93c52e41ec0d297c7512adf5936d8c464c820618",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rust-lang",
+        "ref": "nightly",
+        "repo": "rust-analyzer",
+        "type": "github"
       }
     },
     "serokell-nix": {

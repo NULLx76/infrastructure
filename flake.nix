@@ -26,10 +26,12 @@
     hyprland.url = "github:hyprwm/Hyprland";
     hyprpaper.url = "github:hyprwm/hyprpaper";
     hyprpaper.inputs.nixpkgs.follows = "nixpkgs";
+
+    riff.url = "github:DeterminateSystems/riff";
   };
 
   outputs =
-    { self, nixpkgs, vault-secrets, serokell-nix, minecraft-servers, colmena, home-manager, hyprpaper, hyprland, ... }@inputs:
+    { self, nixpkgs, vault-secrets, serokell-nix, minecraft-servers, colmena, home-manager, hyprpaper, hyprland, riff, ... }@inputs:
     let
       inherit (nixpkgs) lib;
       inherit (builtins) filter mapAttrs attrValues concatLists;
