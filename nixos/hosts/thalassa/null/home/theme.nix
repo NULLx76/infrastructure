@@ -59,5 +59,6 @@ in
     backgroundColor = colour.hex.mantle;
     borderColor = colour.hex.pink;
     textColor = colour.hex.text;
+    borderRadius = 5;
   };
 }

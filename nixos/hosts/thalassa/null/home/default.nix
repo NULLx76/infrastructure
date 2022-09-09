@@ -43,12 +43,16 @@
     wf-recorder # Screenrecorder
     wl-clipboard # Clipboard manager
     wofi # Wayland rofi
-
     inputs.riff.packages.x86_64-linux.riff
   ];
 
   programs.foot = {
     enable = true;
+  };
+
+  programs.exa = {
+    enable = true;
+    enableAliases = true;
   };
 
   programs.git = {
@@ -60,7 +64,6 @@
 
   programs.mako = {
     enable = true;
-    borderRadius = 5;
   };
 
   programs.tmux = {
