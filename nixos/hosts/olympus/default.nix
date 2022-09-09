@@ -48,13 +48,13 @@
     mac = "6A:C2:89:85:CF:A6";
     tags = [ "web" ];
   }
-  {
-    hostname = "k3s-node1";
-    profile = "k3s";
-    ip = "10.42.42.10";
-    mac = "2E:F8:55:23:D9:9B";
-    type = "vm";
-  }
+  # {
+  #   hostname = "k3s-node1";
+  #   profile = "k3s";
+  #   ip = "10.42.42.10";
+  #   mac = "2E:F8:55:23:D9:9B";
+  #   type = "vm";
+  # }
   {
     hostname = "WoolooTV";
     ip = "10.42.42.13";
