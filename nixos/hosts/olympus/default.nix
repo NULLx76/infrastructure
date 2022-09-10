@@ -69,12 +69,14 @@
     profile = "dns";
     ip = "10.42.42.15";
     mac = "5E:F6:36:23:16:E3";
+    tags = [ "dns" ];
   }
   {
     hostname = "dns-2";
     profile = "dns";
     ip = "10.42.42.16";
     mac = "B6:04:0B:CD:0F:9F";
+    tags = [ "dns" ];
   }
   {
     hostname = "minio";
