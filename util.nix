@@ -28,27 +28,39 @@ rec {
   mkNixosSystem = specialArgs: { hostname, realm, system ? "x86_64-linux", ... }@host: {
     "${hostname}.${realm}" = lib.nixosSystem {
       inherit system specialArgs;
-      modules = resolve_imports host;
+      modules =
+        [
+          ({ config, pkgs, ... }: {
+            nixpkgs.overlays = [ (import ./nixos/pkgs) ];
+            networking = {
+              hostName = hostname;
+              domain = realm;
+            };
+          })
+        ] ++
+        (resolve_imports host);
     };
   };
 
-  mkColmenaHost = { ip ? null, hostname, tags, realm, type ? "lxc", ... }@host: let 
-    name = if realm == "thalassa" then hostname else "${hostname}.${realm}";
-  in{
-    "${name}" = {
-      imports = resolve_imports host;
-      networking = {
-        hostName = hostname;
-        domain = realm;
-      };
-      deployment = {
-        inherit tags;
-        targetHost = ip;
-        allowLocalDeployment = (type == "local");
-        targetUser = null; # Defaults to $USER
+  mkColmenaHost = { ip ? null, hostname, tags, realm, type ? "lxc", ... }@host:
+    let
+      name = if realm == "thalassa" then hostname else "${hostname}.${realm}";
+    in
+    {
+      "${name}" = {
+        imports = resolve_imports host;
+        networking = {
+          hostName = hostname;
+          domain = realm;
+        };
+        deployment = {
+          inherit tags;
+          targetHost = ip;
+          allowLocalDeployment = (type == "local");
+          targetUser = null; # Defaults to $USER
+        };
       };
     };
-  };
 
   mkNixosConfigurations = specialArgs: hosts: lib.foldr (el: acc: acc // mkNixosSystem specialArgs el) { } hosts;
 }

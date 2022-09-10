@@ -36,7 +36,7 @@
       inherit (nixpkgs) lib;
       inherit (builtins) filter mapAttrs attrValues concatLists;
 
-      util = import ./util.nix inputs;
+      util = import ./util.nix inputs; 
 
       system = "x86_64-linux";
       # import and add realm to list of tags
@@ -64,7 +64,7 @@
     in
     {
       # Make the nixosConfigurations, mostly for vault-secrets
-      nixosConfigurations = util.mkNixosConfigurations specialArgs hosts;
+      nixosConfigurations = util.mkNixosConfigurations specialArgs nixHosts;
 
       # Make the coleman configuration
       colmena = lib.foldr (el: acc: acc // util.mkColmenaHost el)

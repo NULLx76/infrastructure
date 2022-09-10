@@ -37,3 +37,21 @@ jobs:
       - name: "Build NixOS config ❄️"
         run: |
           nix run '.#' build
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.2
+
+      - name: "Install Nix ❄️"
+        uses: cachix/install-nix-action@v15
+
+      - name: "Install Cachix ❄️"
+        uses: cachix/cachix-action@v10
+        with:
+          name: 0x76-infra
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+
+      - name: "Build NixOS config ❄️"
+        run: |
+          nix flake check
+
