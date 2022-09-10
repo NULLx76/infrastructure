@@ -14,12 +14,7 @@
   )
 )
 
-;; Variables
-; (defvar time false)
-; (defvar cal false)
-
 ;; ━━━ WIFI ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-(defvar wifi "{}")
 (defpoll wifi :interval "30s" "./scripts/wifi.sh")
 
 (defwidget wifi []
@@ -71,7 +66,6 @@
 )
 
 ;; ━━━ VOLUME ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-(defvar volume "{}")
 (defpoll volume :interval "1s" "./scripts/volume.sh")
 (defwidget volume []
   (eventbox :onclick "pamixer -t"

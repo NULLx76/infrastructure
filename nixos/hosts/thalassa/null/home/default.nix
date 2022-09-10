@@ -15,7 +15,6 @@
   home.packages = with pkgs; [
     brightnessctl
     calibre
-    discord
     element-desktop-wayland
     fluxcd
     fusee-launcher
@@ -40,6 +39,7 @@
     rsync
     rust-analyzer
     rustup
+    solo2-cli
     steam-run
     texlive.combined.scheme-full
     wf-recorder # Screenrecorder

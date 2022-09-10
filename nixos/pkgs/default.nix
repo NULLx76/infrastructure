@@ -6,7 +6,7 @@ final: prev: {
     '';
   });
 
-  discord = prev.discord.override { withOpenASAR = true; };
+  discord-canary = prev.discord-canary.override { withOpenASAR = true; };
 
   catppuccin.cursors = prev.callPackage ./catppuccin/cursors { };
 
