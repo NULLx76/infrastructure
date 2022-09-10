@@ -10,7 +10,7 @@ final: prev: {
 
   catppuccin.cursors = prev.callPackage ./catppuccin/cursors { };
 
-
+  vmagent = prev.callPackage ./vmagent { };
 
   v = {
     glitch-soc = prev.callPackage ./glitch-soc { };
@@ -21,7 +21,6 @@ final: prev: {
       withDNSCrypt = true;
       withTFO = true;
     };
-    vmagent = prev.callPackage ./vmagent { };
     gitea-agatheme = prev.callPackage ./gitea-agatheme { };
   };
 }

@@ -6,7 +6,7 @@
   # * https://git.voidcorp.nl/j00lz/nixos-configs/src/branch/main/flake.nix
 
   inputs = {
-    nixpkgs.url = "github:NULLx76/nixpkgs/0x76";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
     colmena.url = "github:zhaofengli/colmena";
     colmena.inputs.nixpkgs.follows = "nixpkgs";

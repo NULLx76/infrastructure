@@ -188,7 +188,6 @@
     hostname = "prowlarr";
     ip = "192.168.0.140";
     mac = "3a:67:8e:98:0c:a2";
-    nix = false;
   }
   {
     hostname = "archlinux";
