@@ -60,6 +60,14 @@ let vs = config.vault-secrets.secrets; in
         publicKey = "L8myt2bcdja7M+i+9eatdQRW8relPUoZZ9lEKSLe+m8=";
         allowedIPs = [ "10.100.0.4/32" ];
       }
+      {
+        # Aerdenhout
+        # Useful setup video for opnsense: https://www.youtube.com/watch?v=RoXHe5dqCM0
+        # https://docs.opnsense.org/manual/how-tos/wireguard-s2s.html
+        publicKey = "KgqLhmUMX6kyTjRoa/GOCrZOvXNE5HWYuOr/T3v8/VI=";
+        allowedIPs = [ "10.100.0.5/32" "192.168.0.0/23" "10.10.10.0/24"];
+        endpoint = "80.60.83.220:51820";
+      }
     ];
   };
 }
