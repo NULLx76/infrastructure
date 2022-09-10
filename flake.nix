@@ -8,6 +8,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
+
     colmena.url = "github:zhaofengli/colmena";
     colmena.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -28,6 +29,9 @@
     hyprpaper.inputs.nixpkgs.follows = "nixpkgs";
 
     riff.url = "github:DeterminateSystems/riff";
+
+    webcord.url = "github:fufexan/webcord-flake";
+    webcord.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =

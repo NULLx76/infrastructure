@@ -14,8 +14,8 @@
 
   home.packages = with pkgs; [
     brightnessctl
-    discord
     calibre
+    discord
     element-desktop-wayland
     fluxcd
     fusee-launcher
@@ -26,6 +26,8 @@
     gnome.gnome-font-viewer
     gnome.nautilus
     grim # Screenshot tool
+    inputs.riff.packages.${pkgs.system}.riff
+    inputs.webcord.packages.${pkgs.system}.default
     k9s
     kubectl
     libnotify
@@ -43,7 +45,6 @@
     wf-recorder # Screenrecorder
     wl-clipboard # Clipboard manager
     wofi # Wayland rofi
-    inputs.riff.packages.x86_64-linux.riff
   ];
 
   programs.foot = {
