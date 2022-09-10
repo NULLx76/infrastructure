@@ -28,7 +28,7 @@ in {
 
   services.unbound = {
     enable = true;
-    package = pkgs.v.unbound;
+    package = pkgs.unbound;
     settings = {
       server = {
         use-syslog = "yes";

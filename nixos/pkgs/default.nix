@@ -8,18 +8,20 @@ final: prev: {
 
   discord = prev.discord.override { withOpenASAR = true; };
 
-  vmagent = prev.callPackage ./vmagent { };
-
   catppuccin.cursors = prev.callPackage ./catppuccin/cursors { };
 
-  v = {
-    unbound = prev.unbound.override {
-      withSystemd = true;
-      withDoH = true;
-      withDNSCrypt = true;
-      withTFO = true;
-    };
+  unbound = prev.unbound.override {
+    withSystemd = true;
+    withDoH = true;
+    withDNSCrypt = true;
+    withTFO = true;
+  };
 
+  v = {
+    glitch-soc = prev.callPackage ./glitch-soc { };
+
+
+    vmagent = prev.callPackage ./vmagent { };
     gitea-agatheme = prev.callPackage ./gitea-agatheme { };
   };
 }

@@ -1,12 +1,13 @@
 { config, pkgs, hosts, ... }:
 let
+  inherit (builtins) filter hasAttr;
   hostToDhcp = { hostname, mac, ip, ... }: {
     ethernetAddress = mac;
     hostName = hostname;
     ipAddress = ip;
   };
   localDomain = config.networking.domain;
-  hosts' = builtins.filter (builtins.hasAttr "ip") hosts.${localDomain};
+  hosts' = filter (h: hasAttr "ip" h && hasAttr "mac" h) hosts.${localDomain};
 in {
   imports = [ ];
 
