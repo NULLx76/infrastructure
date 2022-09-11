@@ -16,6 +16,7 @@
       exec-once=${pkgs.hyprpaper}/bin/hyprpaper
       exec-once=hyprctl setcursor Catppuccin-Frappe-Pink-Cursors 32
       exec-once=${pkgs.xsettingsd}/bin/xsettingsd &
+      exec-once=foot --server &
       exec-once=eww daemon
       exec-once=eww open bar
       
@@ -49,7 +50,7 @@
         pseudotile=true
       }
 
-      bind=SUPER,RETURN,exec,foot
+      bind=SUPER,RETURN,exec,footclient
       bind=SUPER,f,exec,firefox-devedition
       bind=SUPER,d,exec,wofi --show run,drun
 
