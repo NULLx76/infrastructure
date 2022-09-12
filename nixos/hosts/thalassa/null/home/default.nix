@@ -7,7 +7,7 @@
 
   imports = [
     inputs.hyprland.homeManagerModules.default
-    ./hyprland
+    ./hyprland.nix
     ./eww
     ./theme.nix
   ];
@@ -106,23 +106,6 @@
   };
 
   programs.zsh.enable = true;
-
-  gtk = {
-    enable = true;
-    theme = {
-      name = "Catppuccin-Pink-Dark";
-      package = pkgs.catppuccin-gtk;
-    };
-    iconTheme = {
-      name = "Arc";
-      package = pkgs.arc-icon-theme;
-    };
-    cursorTheme = {
-      name = "Catppuccin-Frappe-Pink-Cursors";
-      package = pkgs.catppuccin.cursors;
-      size = 32;
-    };
-  };
 
   services.syncthing.enable = true;
 }

@@ -5,11 +5,6 @@
     wallpaper = eDP-1,~/cloud/Pictures/Wallpapers-Laptop/wallpaper-nix-pink.png
   '';
 
-  home.file.".xsettingsd".text = ''
-    Gtk/CursorThemeName "Catppuccin-Frappe-Pink-Cursors"
-    Net/ThemeName "Catppuccin-Pink-Dark"
-  '';
-
   wayland.windowManager.hyprland = {
     enable = true;
     extraConfig = ''

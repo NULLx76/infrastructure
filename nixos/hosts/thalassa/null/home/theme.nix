@@ -1,6 +1,9 @@
-{ ... }:
+{ lib, ... }:
 let
-  # Catpuccin Frappe Pink
+  inherit (builtins) mapAttrs;
+
+  theme = "Catppuccin-Pink-Dark";
+  cursorTheme = "Catppuccin-Frappe-Pink-Cursors";
   colour = rec {
     rosewater = "f2d5cf";
     flamingo = "eebebe";
@@ -17,22 +20,44 @@ let
     blue = "8caaee";
     lavender = "babbf1";
     text = "c6d0f5";
-    subtext1 = "b5bfe2";
     subtext0 = "a5adce";
+    subtext1 = "b5bfe2";
     overlay2 = "949cbb";
-    overlay1 = "838ba7";
     overlay0 = "737994";
-    surface2 = "626880";
-    surface1 = "51576d";
+    overlay1 = "838ba7";
     surface0 = "414559";
+    surface1 = "51576d";
+    surface2 = "626880";
     base = "303446";
     mantle = "292c3c";
     crust = "232634";
 
-    hex = builtins.mapAttrs (name: value: "#${value}") colour;
+    hex = mapAttrs (name: value: "#${value}") colour;
   };
 in
 {
+  home.file.".xsettingsd".text = ''
+    Net/ThemeName "${theme}"
+    Gtk/CursorThemeName "${cursorTheme}"
+  '';
+
+  gtk = {
+    enable = true;
+    theme = {
+      name = theme;
+      package = pkgs.catppuccin-gtk;
+    };
+    iconTheme = {
+      name = "Arc";
+      package = pkgs.arc-icon-theme;
+    };
+    cursorTheme = {
+      name = cursorTheme;
+      package = pkgs.catppuccin.cursors;
+      size = 32;
+    };
+  };
+
   # Note, pink and blue are switched
   programs.foot.settings.colors = {
     foreground = colour.text; # Text
@@ -61,4 +86,33 @@ in
     textColor = colour.hex.text;
     borderRadius = 5;
   };
+
+  home.file.".config/eww/eww.scss".text = lib.mkBefore ''
+    $rosewater: ${colour.hex.rosewater};
+    $flamingo: ${colour.hex.flamingo};
+    $pink: ${colour.hex.pink};
+    $mauve: ${colour.hex.mauve};
+    $red: ${colour.hex.red};
+    $maroon: ${colour.hex.maroon};
+    $peach: ${colour.hex.peach};
+    $yellow: ${colour.hex.yellow};
+    $green: ${colour.hex.green};
+    $teal: ${colour.hex.teal};
+    $sky: ${colour.hex.sky};
+    $sapphire: ${colour.hex.sapphire};
+    $blue: ${colour.hex.blue};
+    $lavender: ${colour.hex.lavender};
+    $text: ${colour.hex.text};
+    $subtext0: ${colour.hex.subtext0};
+    $subtext1: ${colour.hex.subtext1};
+    $overlay0: ${colour.hex.overlay0};
+    $overlay1: ${colour.hex.overlay1};
+    $overlay2: ${colour.hex.overlay2};
+    $surface0: ${colour.hex.surface0};
+    $surface1: ${colour.hex.surface1};
+    $surface2: ${colour.hex.surface2};
+    $base: ${colour.hex.base};
+    $mantle: ${colour.hex.mantle};
+    $crust: ${colour.hex.crust};
+  '';
 }
