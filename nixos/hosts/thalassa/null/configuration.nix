@@ -235,6 +235,8 @@ in
     authFile = "/etc/u2f-mappings"; # use `pamu2fcfg` from `pkgs.pam_u2f` to generate this config
   };
 
+  services.udev.packages = [ pkgs.qmk-udev-rules ];
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

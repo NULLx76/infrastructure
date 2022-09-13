@@ -8,7 +8,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
-
     colmena.url = "github:zhaofengli/colmena";
     colmena.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -29,18 +28,29 @@
     hyprpaper.inputs.nixpkgs.follows = "nixpkgs";
 
     riff.url = "github:DeterminateSystems/riff";
+    riff.inputs.nixpkgs.follows = "nixpkgs";
 
     webcord.url = "github:fufexan/webcord-flake";
     webcord.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
-    { self, nixpkgs, vault-secrets, serokell-nix, minecraft-servers, colmena, home-manager, hyprpaper, hyprland, riff, ... }@inputs:
+    { self
+    , nixpkgs
+    , vault-secrets
+    , serokell-nix
+    , minecraft-servers
+    , colmena
+    , home-manager
+    , hyprpaper
+    , hyprland
+    , ...
+    } @ inputs:
     let
       inherit (nixpkgs) lib;
       inherit (builtins) filter mapAttrs attrValues concatLists;
 
-      util = import ./util.nix inputs; 
+      util = import ./util.nix inputs;
 
       system = "x86_64-linux";
       # import and add realm to list of tags
@@ -63,7 +73,7 @@
       # Script to apply local colmena deployments
       apply-local = pkgs.writeScriptBin "apply-local" ''
         #!${pkgs.stdenv.shell}
-        "${colmena.packages.x86_64-linux.colmena}"/bin/colmena apply-local --sudo $@
+        "${colmena.packages.${system}.colmena}"/bin/colmena apply-local --sudo $@
       '';
     in
     {
@@ -80,15 +90,15 @@
         }
         nixHosts;
 
-      packages.x86_64-linux.default = colmena.packages.x86_64-linux.colmena;
-      packages.x86_64-linux.apply-local = apply-local;
+      packages.${system}.default = colmena.packages.${system}.colmena;
+      packages.${system}.apply-local = apply-local;
 
       # Use by running `nix develop`
       devShells.${system}.default = pkgs.mkShell {
         VAULT_ADDR = "http://vault.olympus:8200/";
         buildInputs = with pkgs; [
           apply-local
-          colmena.packages.x86_64-linux.colmena
+          colmena.packages.${system}.colmena
           fluxcd
           k9s
           kubectl
