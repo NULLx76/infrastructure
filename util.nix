@@ -25,23 +25,6 @@ rec {
   flatten_hosts = hosts: concatLists (attrValues hosts);
   filter_nix_hosts = hosts: filter ({ nix ? true, ... }: nix) hosts;
 
-  mkNixosSystem = specialArgs: { hostname, realm, system ? "x86_64-linux", ... }@host: {
-    "${hostname}.${realm}" = lib.nixosSystem {
-      inherit system specialArgs;
-      modules =
-        [
-          ({ config, pkgs, ... }: {
-            nixpkgs.overlays = [ (import ./nixos/pkgs) ];
-            networking = {
-              hostName = hostname;
-              domain = realm;
-            };
-          })
-        ] ++
-        (resolve_imports host);
-    };
-  };
-
   mkColmenaHost = { ip ? null, hostname, tags, realm, type ? "lxc", ... }@host:
     let
       name = if realm == "thalassa" then hostname else "${hostname}.${realm}";
@@ -61,6 +44,4 @@ rec {
         };
       };
     };
-
-  mkNixosConfigurations = specialArgs: hosts: lib.foldr (el: acc: acc // mkNixosSystem specialArgs el) { } hosts;
 }

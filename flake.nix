@@ -1,5 +1,5 @@
 {
-  description = "Delft Deployment";
+  description = "0x76's infrastructure";
 
   # Based on: 
   # * https://github.com/serokell/pegasus-infra/blob/master/flake.nix
@@ -77,8 +77,13 @@
       '';
     in
     {
-      # Make the nixosConfigurations, mostly for vault-secrets
-      nixosConfigurations = util.mkNixosConfigurations specialArgs nixHosts;
+      # Make the nixosConfigurations for compat reasons
+      nixosConfigurations = (import (inputs.colmena + "/src/nix/hive/eval.nix") {
+        rawFlake = self;
+        colmenaOptions = import (inputs.colmena + "/src/nix/hive/options.nix");
+        colmenaModules = import (inputs.colmena + "/src/nix/hive/modules.nix");
+      }).nodes;
+
 
       # Make the coleman configuration
       colmena = lib.foldr (el: acc: acc // util.mkColmenaHost el)
