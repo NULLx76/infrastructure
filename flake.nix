@@ -90,8 +90,10 @@
         }
         nixHosts;
 
-      packages.${system}.default = colmena.packages.${system}.colmena;
-      packages.${system}.apply-local = apply-local;
+      packages.${system} = {
+        default = colmena.packages.${system}.colmena;
+        apply-local = apply-local;
+      };
 
       # Use by running `nix develop`
       devShells.${system}.default = pkgs.mkShell {
