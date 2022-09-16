@@ -77,6 +77,9 @@
   programs.firefox = {
     enable = true;
     package = pkgs.firefox-devedition-bin;
+    # profiles.dev-edition-default = {
+    #   isDefault = true;
+    # };
   };
 
   programs.vscode = {
@@ -101,11 +104,12 @@
     };
   };
 
-  programs.zsh.sessionVariables = {
-    DIRENV_LOG_FORMAT = "";
+  programs.zsh = {
+    enable = true;
+    sessionVariables = {
+      DIRENV_LOG_FORMAT = "";
+    };
   };
-
-  programs.zsh.enable = true;
 
   services.syncthing.enable = true;
 }

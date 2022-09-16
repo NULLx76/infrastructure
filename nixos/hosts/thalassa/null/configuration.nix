@@ -80,7 +80,11 @@ in
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Enable networking
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    wifi.backend = "iwd";
+    firewallBackend = "nftables";
+  };
   networking.interfaces.wlp0s20f3.useDHCP = true;
 
   fileSystems."/".options = [ "compress=zstd" ];
