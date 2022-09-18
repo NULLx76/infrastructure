@@ -28,6 +28,7 @@
         "https://colmena.cachix.org"
         "https://hyprland.cachix.org"
         "https://0x76-infra.cachix.org"
+        "https://webcord.cachix.org"
       ];
       trusted-public-keys = [
         "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
@@ -36,6 +37,7 @@
         "colmena.cachix.org-1:7BzpDnjjH8ki2CT3f6GdOk7QAzPOl+1t3LvTLXqYcSg="
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
         "0x76-infra.cachix.org-1:dC1qp+VEN3jj5pdK4URlXR9hf3atT+MnpKGu6PZjMc8="
+        "webcord.cachix.org-1:l555jqOZGHd2C9+vS8ccdh8FhqnGe8L78QrHNn+EFEs="
       ];
     # Also use zsh for root;
     };

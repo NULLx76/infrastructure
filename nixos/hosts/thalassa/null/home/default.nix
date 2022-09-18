@@ -87,13 +87,17 @@
     package = pkgs.vscode;
     extensions = with pkgs.vscode-extensions; [
       catppuccin.catppuccin-vsc
+      codezombiech.gitignore
+      editorconfig.editorconfig
       james-yu.latex-workshop
       jnoortheen.nix-ide
       matklad.rust-analyzer
       mkhl.direnv
+      ms-vscode.cpptools
       tamasfe.even-better-toml
       valentjn.vscode-ltex
       vscodevim.vim
+      xaver.clang-format
     ];
   };
 
