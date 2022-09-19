@@ -14,6 +14,7 @@
 
   home.packages = with pkgs; [
     brightnessctl
+    btop
     calibre
     element-desktop-wayland
     fluxcd
@@ -32,6 +33,7 @@
     libnotify
     neofetch
     nixpkgs-review
+    pulseview
     python3
     retroarchFull
     ripgrep
@@ -39,6 +41,7 @@
     rsync
     rust-analyzer
     rustup
+    saleae-logic-2
     solo2-cli
     steam-run
     texlive.combined.scheme-full
