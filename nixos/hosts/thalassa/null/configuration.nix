@@ -85,7 +85,6 @@ in
     wifi.backend = "iwd";
     firewallBackend = "nftables";
   };
-  # networking.interfaces.wlp0s20f3.useDHCP = true;
 
   fileSystems."/".options = [ "compress=zstd" ];
   # Filesystem dedup
@@ -123,9 +122,6 @@ in
     portal = {
       enable = true;
       wlr.enable = true;
-      extraPortals = with pkgs; [
-        # xdg-desktop-portal-gtk
-      ];
     };
   };
   services.dbus.enable = true;
