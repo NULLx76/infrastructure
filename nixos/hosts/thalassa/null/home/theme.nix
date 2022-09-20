@@ -60,6 +60,8 @@ in
 
   # Note, pink and blue are switched
   programs.foot.settings.colors = {
+    alpha = 0.8;
+
     foreground = colour.text; # Text
     background = colour.base; # Base
     regular0 = colour.surface1; # Surface 1
