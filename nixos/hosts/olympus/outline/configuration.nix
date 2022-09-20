@@ -3,7 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
+let vs = config.vault-secrets.secrets; in
 {
   imports = [ ];
 
@@ -18,5 +18,27 @@
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
-  networking.firewall.allowedTCPPorts = [ ];
+  networking.firewall.allowedTCPPorts = [
+    config.services.outline.port
+  ];
+
+  vault-secrets.secrets.outline = { };
+
+  services.outline = {
+    enable = false;
+    concurrency = 1;
+    port = 3000;
+    redisUrl = "local";
+    databaseUrl = "local";
+    publicUrl = "https://outline.0x76.dev";
+    utilsSecretFile = "${vs.outline}/utilsSecret";
+    secretKeyFile = "${vs.outline}/secretKey";
+    storage = {
+      accessKey = "outline";
+      secretKeyFile = "${vs.outline}/s3key";
+      uploadBucketUrl = "https://o.0x76.dev";
+      uploadBucketName = "outline";
+      region = "us-east-1"; # fake
+    };
+  };
 }
