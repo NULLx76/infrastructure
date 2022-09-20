@@ -16,6 +16,7 @@
     hostname = "dhcp";
     ip = "10.42.42.3";
     mac = "3E:2D:E8:AA:E2:81";
+    tags = [ "networking" ];
   }
   {
     hostname = "bastion";
@@ -61,22 +62,24 @@
     mac = "74:40:be:48:85:a4";
     nix = false;
   }
-  # {
-  #   ip = "10.42.42.14";
-  # }
+  {
+    hostname = "outline";
+    mac = "52:13:EB:FD:87:F0";
+    ip = "10.42.42.14";
+  }
   {
     hostname = "dns-1";
     profile = "dns";
     ip = "10.42.42.15";
     mac = "5E:F6:36:23:16:E3";
-    tags = [ "dns" ];
+    tags = [ "dns" "networking" ];
   }
   {
     hostname = "dns-2";
     profile = "dns";
     ip = "10.42.42.16";
     mac = "B6:04:0B:CD:0F:9F";
-    tags = [ "dns" ];
+    tags = [ "dns" "networking" ];
   }
   {
     hostname = "minio";

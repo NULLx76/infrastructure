@@ -32,6 +32,7 @@
     kubectl
     libnotify
     neofetch
+    networkmanagerapplet
     nixpkgs-review
     pulseview
     python3
