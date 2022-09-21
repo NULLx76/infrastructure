@@ -86,9 +86,11 @@
     ip = "10.42.42.17";
     mac = "0A:06:5E:E7:9A:0C";
   }
-  # {
-  #   ip = "10.42.42.18";
-  # }
+  {
+    hostname = "mailserver";
+    ip = "10.42.42.18";
+    mac = "AA:F2:3D:5E:B3:40";
+  }
   {
     hostname = "victoriametrics";
     ip = "10.42.42.19";

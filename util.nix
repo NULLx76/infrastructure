@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, hyprland, ... }:
+{ nixpkgs, home-manager, hyprland, mailserver, ... }:
 let
   inherit (nixpkgs) lib;
   inherit (builtins) filter mapAttrs attrValues concatLists;
@@ -16,6 +16,7 @@ let
     ];
   };
   resolve_imports = { hostname, realm, profile ? hostname, type ? "lxc", ... }: [
+    mailserver.nixosModules.mailserver
     ./nixos/common
     "${./.}/nixos/hosts/${realm}/${profile}/configuration.nix"
   ] ++ import_cases.${type};

@@ -49,7 +49,7 @@ in
       modules = with pkgs.nginxModules; [ brotli ];
     };
 
-    # Reverse Proxies
+    # 0x76.dev
     virtualHosts."ha.0x76.dev" = proxy "http://home-assistant.olympus:8123/";
     virtualHosts."zookeeper-dev.0x76.dev" = proxy "http://eevee.olympus:8085/";
     virtualHosts."md.0x76.dev" = proxy "http://hedgedoc.olympus:3000/";
@@ -57,6 +57,9 @@ in
     virtualHosts."o.0x76.dev" = proxy "http://minio.olympus:9000";
     virtualHosts."grafana.0x76.dev" = proxy "http://victoriametrics.olympus:2342";
     virtualHosts."outline.0x76.dev" = proxy "http://outline.olympus:3000";
+    # virtualHosts."mail.0x76.dev" = proxy "http://mailserver.olympus:80";
+    
+    # Redshifts
     virtualHosts."andreea.redshifts.xyz" = proxy "http://zmeura.olympus:8008";
 
     # Meow

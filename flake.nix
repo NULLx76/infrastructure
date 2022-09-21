@@ -31,6 +31,9 @@
     riff.inputs.nixpkgs.follows = "nixpkgs";
 
     webcord.url = "github:fufexan/webcord-flake";
+
+    mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
+    mailserver.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
