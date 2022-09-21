@@ -121,5 +121,19 @@
     };
   };
 
+  xdg.userDirs = let home = config.home.homeDirectory; in
+    {
+      enable = true;
+      createDirectories = true;
+      desktop = "${home}/.desktop";
+      documents = "${home}/cloud/Documents";
+      download = "${home}/dl";
+      music = "${home}/cloud/Music";
+      pictures = "${home}/cloud/Pictures";
+      publicShare = "${home}/.publicShare";
+      templates = "${home}/.templates";
+      videos = "${home}/cloud/Videos";
+    };
+
   services.syncthing.enable = true;
 }

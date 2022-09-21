@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - networking
   - presidential-paradise
-  - authentik
   - gitops
   - monitoring
   - olympus

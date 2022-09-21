@@ -4,7 +4,6 @@ resources:
   - presidential-paradise.yaml
   - networking.yaml
   - external-secrets.yaml
-  - authentik.yaml
   - gitops.yaml
   - monitoring.yaml
   - olympus.yaml
