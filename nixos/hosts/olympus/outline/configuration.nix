@@ -25,7 +25,7 @@ let vs = config.vault-secrets.secrets; in
   vault-secrets.secrets.outline = { };
 
   services.outline = {
-    enable = false;
+    enable = true;
     concurrency = 1;
     port = 3000;
     redisUrl = "local";

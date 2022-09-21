@@ -79,6 +79,9 @@ in
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # networking.wireless.iwd.enable = false;
+  services.gnome.gnome-keyring.enable = true;
+
   # Enable networking
   networking.networkmanager = {
     enable = true;
@@ -164,8 +167,13 @@ in
     ];
   };
 
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
   virtualisation.podman.enable = true;
 
+  hardware.saleae-logic.enable = true;
+  
   # Enable CUPS to print documents.
   services.printing.enable = true;
 

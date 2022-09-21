@@ -34,6 +34,8 @@
     neofetch
     networkmanagerapplet
     nixpkgs-review
+    plexamp
+    plex-media-player
     pulseview
     python3
     retroarchFull
