@@ -96,7 +96,7 @@ in
     #  forceSSL = true;
     #  root = pkgs.synapse-admin;
     #};
-    virtualHosts."books.meowy.tech" = proxy "http://bookwyrm:8001";
+    virtualHosts."books.meowy.tech" = proxy "http://bookwyrm.olympus:8001";
 
     # Kubernetes endpoints
     virtualHosts."0x76.dev" = k8s_proxy;
