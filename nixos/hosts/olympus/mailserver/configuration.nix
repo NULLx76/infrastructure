@@ -3,7 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
+let vs = config.vault-secrets.secrets; in
 {
   imports = [ ];
 
@@ -18,13 +18,46 @@
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
-  networking.firewall.allowedTCPPorts = [ ];
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+  networking.extraHosts = ''
+    10.42.42.6 vault.olympus
+  '';
+
+  vault-secrets.secrets.mailserver = {
+    services = [ "dovecot2" "postfix"];
+  };
 
   mailserver = {
-    enable = false;
+    enable = true;
     fqdn = "mail.0x76.dev";
     domains = [ "0x76.dev" ];
 
+    loginAccounts = {
+      "v@0x76.dev" = {
+        hashedPasswordFile = "${vs.mailserver}/v@0x76.dev";
+      };
+    };
+
     certificateScheme = 3;
   };
+
+  services.roundcube = {
+     enable = true;
+     # this is the url of the vhost, not necessarily the same as the fqdn of
+     # the mailserver
+     hostName = "webmail.0x76.dev";
+     extraConfig = ''
+       # starttls needed for authentication, so the fqdn required to match
+       # the certificate
+       $config['smtp_host'] = "tls://${config.mailserver.fqdn}";
+       $config['smtp_user'] = "%u";
+       $config['smtp_pass'] = "%p";
+     '';
+  };
+
+  services.nginx.enable = true;
+
+  security.acme.acceptTerms = true;
+  security.acme.defaults.email = "victor@xirion.net";
 }
