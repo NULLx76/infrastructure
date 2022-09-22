@@ -25,7 +25,7 @@ let vs = config.vault-secrets.secrets; in
   '';
 
   vault-secrets.secrets.mailserver = {
-    services = [ "dovecot2" "postfix"];
+    services = [ "dovecot2" "postfix" ];
   };
 
   mailserver = {
@@ -40,23 +40,45 @@ let vs = config.vault-secrets.secrets; in
     };
 
     certificateScheme = 3;
+
+
+    indexDir = "/var/lib/dovecot/indices";
+    fullTextSearch = {
+      enable = true;
+      # index new email as they arrive
+      autoIndex = true;
+      # this only applies to plain text attachments, binary attachments are never indexed
+      indexAttachments = true;
+      enforced = "body";
+      memoryLimit = 2000;
+      autoIndexExclude = [ "\\Junk" ];
+    };
   };
 
   services.roundcube = {
-     enable = true;
-     # this is the url of the vhost, not necessarily the same as the fqdn of
-     # the mailserver
-     hostName = "webmail.0x76.dev";
-     extraConfig = ''
-       # starttls needed for authentication, so the fqdn required to match
-       # the certificate
-       $config['smtp_host'] = "tls://${config.mailserver.fqdn}";
-       $config['smtp_user'] = "%u";
-       $config['smtp_pass'] = "%p";
-     '';
+    enable = true;
+    package = pkgs.roundcube.withPlugins (plugins: [ plugins.persistent_login ]);
+    plugins = [
+      "archive"
+      "enigma"
+      "markasjunk"
+      "persistent_login"
+    ];
+    # this is the url of the vhost, not necessarily the same as the fqdn of
+    # the mailserver
+    hostName = "webmail.0x76.dev";
+    extraConfig = ''
+      # starttls needed for authentication, so the fqdn required to match
+      # the certificate
+      $config['smtp_host'] = "tls://${config.mailserver.fqdn}";
+      $config['smtp_user'] = "%u";
+      $config['smtp_pass'] = "%p";
+    '';
   };
 
-  services.nginx.enable = true;
+  services.nginx = {
+    enable = true;
+  };
 
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "victor@xirion.net";
