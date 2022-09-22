@@ -20,6 +20,7 @@ let vs = config.vault-secrets.secrets; in
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
+  # needed as the mailserver configures its down DNS resolver
   networking.extraHosts = ''
     10.42.42.6 vault.olympus
   '';

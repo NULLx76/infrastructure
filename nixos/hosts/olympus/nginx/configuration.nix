@@ -94,11 +94,11 @@ in
         };
       };
     };
-    #virtualHosts."admin.chat.meowy.tech" = {
-    #  enableACME = true;
-    #  forceSSL = true;
-    #  root = pkgs.synapse-admin;
-    #};
+    virtualHosts."admin.chat.meowy.tech" = {
+     enableACME = true;
+     forceSSL = true;
+     root = pkgs.synapse-admin;
+    };
     virtualHosts."books.meowy.tech" = proxy "http://bookwyrm.olympus:8001";
 
     # Kubernetes endpoints
