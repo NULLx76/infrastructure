@@ -34,8 +34,8 @@
     neofetch
     networkmanagerapplet
     nixpkgs-review
-    plexamp
     plex-media-player
+    plexamp
     pulseview
     python3
     retroarchFull
@@ -48,6 +48,7 @@
     solo2-cli
     steam-run
     texlive.combined.scheme-full
+    thunderbird-wayland
     wf-recorder # Screenrecorder
     wl-clipboard # Clipboard manager
     wofi # Wayland rofi
