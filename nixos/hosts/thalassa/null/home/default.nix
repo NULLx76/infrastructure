@@ -69,9 +69,14 @@
     userName = "Victor";
     userEmail = "victor@xirion.net";
   };
-
+  
   programs.mako = {
     enable = true;
+    # makoctl mode -a do-not-disturb will hide all notifications, makoctl mode -r do-not-disturb will show them again.
+    extraConfig = ''
+      [mode=do-not-disturb]
+      invisible=1
+    '';
   };
 
   programs.tmux = {
