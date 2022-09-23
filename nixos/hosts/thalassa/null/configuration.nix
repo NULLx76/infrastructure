@@ -173,7 +173,7 @@ in
   virtualisation.podman.enable = true;
 
   hardware.saleae-logic.enable = true;
-  
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -242,6 +242,13 @@ in
     control = "sufficient";
     authFile = "/etc/u2f-mappings"; # use `pamu2fcfg` from `pkgs.pam_u2f` to generate this config
   };
+
+  programs.ssh.startAgent = true;
+
+  services.logind.extraConfig = ''
+    # don’t shutdown when power button is short-pressed
+    HandlePowerKey=suspend
+  '';
 
   services.udev.packages = [ pkgs.qmk-udev-rules ];
 

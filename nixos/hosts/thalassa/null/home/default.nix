@@ -105,6 +105,7 @@
       jnoortheen.nix-ide
       matklad.rust-analyzer
       mkhl.direnv
+      ms-vscode-remote.remote-ssh
       ms-vscode.cpptools
       tamasfe.even-better-toml
       valentjn.vscode-ltex
