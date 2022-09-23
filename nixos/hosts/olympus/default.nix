@@ -147,7 +147,7 @@
   {
     hostname = "keycloak";
     ip = "10.42.42.29";
-    mac = "";
+    mac = "A6:09:1D:A8:81:28";
   }
   {
     hostname = "nuc";

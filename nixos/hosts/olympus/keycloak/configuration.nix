@@ -2,8 +2,8 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-
+{ config, pkgs, lib, ... }:
+let vs = config.vault-secrets.secrets; in
 {
   imports = [ ];
 
@@ -18,5 +18,28 @@
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
-  networking.firewall.allowedTCPPorts = [ ];
+  networking.firewall.allowedTCPPorts = [
+    config.services.keycloak.settings.http-port
+  ];
+
+  environment.noXlibs = lib.mkForce false;
+
+  vault-secrets.secrets.keycloak = { };
+
+  # If loadCredential doesn't work:
+  # https://github.com/NixOS/nixpkgs/issues/157449#issuecomment-1208501368
+  services.keycloak = {
+    enable = true;
+    database = {
+      type = "postgresql";
+      host = "localhost";
+      createLocally = true;
+      passwordFile = "${vs.keycloak}/databasePassword"; 
+    };
+    settings = {
+      hostname = "id.0x76.dev";
+      proxy = "edge";
+      hostname-strict-backchannel = true;
+    };
+  };
 }

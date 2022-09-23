@@ -51,13 +51,13 @@ in
 
     # 0x76.dev
     virtualHosts."ha.0x76.dev" = proxy "http://home-assistant.olympus:8123/";
-    virtualHosts."zookeeper-dev.0x76.dev" = proxy "http://eevee.olympus:8085/";
+    # virtualHosts."zookeeper-dev.0x76.dev" = proxy "http://eevee.olympus:8085/";
     virtualHosts."md.0x76.dev" = proxy "http://hedgedoc.olympus:3000/";
     virtualHosts."git.0x76.dev" = proxy "http://gitea.olympus:3000";
     virtualHosts."o.0x76.dev" = proxy "http://minio.olympus:9000";
     virtualHosts."grafana.0x76.dev" = proxy "http://victoriametrics.olympus:2342";
     virtualHosts."outline.0x76.dev" = proxy "http://outline.olympus:3000";
-    # virtualHosts."mail.0x76.dev" = proxy "http://mailserver.olympus:80";
+    virtualHosts."id.0x76.dev" = proxy "http://keycloak.olympus:80";
     
     # Redshifts
     virtualHosts."andreea.redshifts.xyz" = proxy "http://zmeura.olympus:8008";
@@ -104,7 +104,6 @@ in
     # Kubernetes endpoints
     virtualHosts."0x76.dev" = k8s_proxy;
     virtualHosts."drone.0x76.dev" = k8s_proxy;
-    virtualHosts."id.0x76.dev" = k8s_proxy;
     virtualHosts."msg.0x76.dev" = k8s_proxy;
     virtualHosts."zookeeper.0x76.dev" = k8s_proxy;
     virtualHosts."wooloofan.club" = k8s_proxy;
