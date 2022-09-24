@@ -1,13 +1,10 @@
 final: prev: {
-  hedgedoc = prev.hedgedoc.overrideAttrs (old: {
-    # see https://github.com/NixOS/nixpkgs/issues/176127#issuecomment-1146782555
-    preBuild = ''
-      export HOME=$TMPDIR
-    '';
-  });
-
-  discord-canary = prev.discord-canary.override { withOpenASAR = true; };
-
+  # hedgedoc = prev.hedgedoc.overrideAttrs (old: {
+  #   # see https://github.com/NixOS/nixpkgs/issues/176127#issuecomment-1146782555
+  #   preBuild = ''
+  #     export HOME=$TMPDIR
+  #   '';
+  # });
   catppuccin.cursors = prev.callPackage ./catppuccin/cursors { };
 
   vmagent = prev.callPackage ./vmagent { };
@@ -21,6 +18,7 @@ final: prev: {
       withDNSCrypt = true;
       withTFO = true;
     };
+
     gitea-agatheme = prev.callPackage ./gitea-agatheme { };
   };
 }

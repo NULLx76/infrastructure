@@ -400,11 +400,11 @@
         "wlroots": "wlroots"
       },
       "locked": {
-        "lastModified": 1663877642,
-        "narHash": "sha256-Hqmme1q2z0cl9RCzfCD9M2ZeZgmxrPGO0RDeIia+yvE=",
+        "lastModified": 1664023338,
+        "narHash": "sha256-S2f84PqAS75UXK0Mdf9uBn89a4UVNthA3RnSKB+sP7k=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "e5d143b2386c3773f6fb5176752a1b381d3ee7a5",
+        "rev": "73dbacd16d16d8a58d9c12e2a3ebcf4538faf55b",
         "type": "github"
       },
       "original": {
@@ -511,11 +511,11 @@
         "utils": "utils_4"
       },
       "locked": {
-        "lastModified": 1663823263,
-        "narHash": "sha256-u2glihcKP6tr8tW5Glz0pXhxOwfuRdJQGslJsg4dIFQ=",
+        "lastModified": 1663984587,
+        "narHash": "sha256-BNq/NWT74mCg5eYo1NC9K+oJ1KqwQOL+fDesyO20a3E=",
         "owner": "jyooru",
         "repo": "nix-minecraft-servers",
-        "rev": "51b10b3388b367dfdf8dcd7f695bdfdfc5105256",
+        "rev": "03e15c3aa8220c59d8b8c7454a288fc163fdf646",
         "type": "github"
       },
       "original": {

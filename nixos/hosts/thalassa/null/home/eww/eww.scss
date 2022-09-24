@@ -10,11 +10,6 @@ tooltip {
     border-radius: 5px
 }
 
-.icon {
-    font-family: monospace;
-    font-size: 1.4rem;
-}
-
 button {
     transition: background-color 200ms, color 200ms;
 }
@@ -35,12 +30,6 @@ button {
 
 .bar {
     background-color: $mantle;
-    border-left: 4px dotted $red;
-}
-
-.wifi {
-    font-size: 2rem;
-    color: $mauve;
 }
 
 .clock {
@@ -52,28 +41,27 @@ button {
     margin: 0.5rem;
 }
 
-
 .date {
     font-size: 1.5rem;
     color: $text;
 }
 
-.reg-btn {
-    font-size: 2rem;
-    margin: 2px 8px;
-    border-radius: 10px;
-}
-
 
 .battery {
+    font-family: monospace;
     font-size: 1.5rem;
     color: $teal;
 }
 
-.volume {
+.volume,
+.dnd,
+.wifi {
+    font-family: monospace;
     font-size: 1.5rem;
     color: $mauve;
+    padding: 0 5px;
 }
+
 
 // battery menu
 .batterywindow {

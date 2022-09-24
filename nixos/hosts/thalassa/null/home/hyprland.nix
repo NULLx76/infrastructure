@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, config, ... }: {
   home.file.".config/hypr/hyprpaper.conf".text = ''
     ipc = off
     preload = ~/cloud/Pictures/Wallpapers-Laptop/wallpaper-nix-pink.png
@@ -9,7 +9,7 @@
     let
       startup-script = pkgs.writeScriptBin "startup" ''
         #!${pkgs.stdenv.shell}
-        hyprctl setcursor Catppuccin-Frappe-Pink-Cursors 32
+        hyprctl setcursor Catppuccin-Frappe-Pink-Cursors ${builtins.toString config.home.pointerCursor.size}
         ${pkgs.hyprpaper}/bin/hyprpaper &
         ${pkgs.xsettingsd}/bin/xsettingsd &
         foot --server &
@@ -22,6 +22,7 @@
     in
     {
       enable = true;
+      recommendedEnvironment = true;
       extraConfig = ''
         monitor=eDP-1,1920x1080@60,0x0,1
         monitor=eDP-1,addreserved,0,0,48,0

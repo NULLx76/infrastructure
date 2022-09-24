@@ -1,9 +1,9 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, config, ... }:
 let
   inherit (builtins) mapAttrs;
 
   theme = "Catppuccin-Pink-Dark";
-  cursorTheme = "Catppuccin-Frappe-Pink-Cursors";
+  cursorTheme = config.home.pointerCursor.name;
   colour = rec {
     rosewater = "f2d5cf";
     flamingo = "eebebe";
@@ -41,6 +41,12 @@ in
     Gtk/CursorThemeName "${cursorTheme}"
   '';
 
+  home.pointerCursor = {
+    name = "Catppuccin-Frappe-Pink-Cursors";
+    size = 32;
+    package = pkgs.catppuccin.cursors;
+  };
+
   gtk = {
     enable = true;
     theme = {
@@ -53,8 +59,8 @@ in
     };
     cursorTheme = {
       name = cursorTheme;
-      package = pkgs.catppuccin.cursors;
-      size = 32;
+      package = config.home.pointerCursor.package;
+      size = config.home.pointerCursor.size;
     };
   };
 

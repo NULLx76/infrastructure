@@ -22,7 +22,7 @@ let vs = config.vault-secrets.secrets; in
     config.services.outline.port
   ];
 
-  vault-secrets.secrets.outline = { 
+  vault-secrets.secrets.outline = {
     user = config.services.outline.user;
     group = config.services.outline.group;
   };
@@ -44,12 +44,12 @@ let vs = config.vault-secrets.secrets; in
       region = "us-east-1"; # fake
     };
     oidcAuthentication = {
-      userinfoUrl= "https://git.0x76.dev/login/oauth/userinfo";
-      tokenUrl = "https://git.0x76.dev/login/oauth/access_token";
-      displayName = "Gitea";
-      clientId = "db58b9f0-aed1-4a60-a9bb-56077a790f5b";
-      authUrl = "https://git.0x76.dev/login/oauth/authorize";
-      clientSecretFile = "${vs.outline}/giteaClientSecret";
+      displayName = "Keycloak";
+      userinfoUrl = "https://id.0x76.dev/realms/master/protocol/openid-connect/userinfo";
+      tokenUrl = "https://id.0x76.dev/realms/master/protocol/openid-connect/token";
+      clientId = "outline";
+      authUrl = "https://id.0x76.dev/realms/master/protocol/openid-connect/auth";
+      clientSecretFile = "${vs.outline}/keycloakClientSecret";
     };
   };
 }

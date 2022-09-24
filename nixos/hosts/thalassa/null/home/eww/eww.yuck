@@ -1,12 +1,24 @@
 (defwidget bar []
-  (centerbox :orientation "v" :hexpand false
-    (box :valign "start" :hexpand false :vexpand true :orientation "v" :space-evenly false
+  (centerbox
+    :orientation "v"
+    (box
+      :valign "start"
+      :hexpand false
+      :vexpand false
+      :orientation "v"
+      :space-evenly false
     )
     
-    (workspaces :halign "center" :vexpand true :hexpand false :orientation "v")
+    (workspaces
+      :halign "center"
+      :vexpand true
+      :hexpand false
+      :orientation "v"
+    )
     
     (box :valign "end" :hexpand false :vexpand true :orientation "v" :space-evenly false
       (wifi)
+      (do-not-disturb)
       (volume)
       (battery)
       (time)
@@ -14,23 +26,11 @@
   )
 )
 
-;; ━━━ WIFI ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-(defpoll wifi :interval "30s" "./scripts/wifi.sh")
-
-(defwidget wifi []
-  (box :vexpand false :hexpand false :orientation "v"
-    (label :text {wifi.icon}
-      :limit-width 10
-      :tooltip {wifi.status}
-      :class "wifi"
-    )
-  )
-)
-
 ;; ━━━ BATTERY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 (defwidget battery []
   (eventbox :onclick "eww open batterywindow --toggle"
-    (label :text `${
+    (label
+      :text `${
       EWW_BATTERY.BAT0.status == "Charging" ? "" :
       EWW_BATTERY.BAT0.capacity < 10 ? "" :
       EWW_BATTERY.BAT0.capacity < 20 ? "" :
@@ -42,7 +42,6 @@
       EWW_BATTERY.BAT0.capacity < 80 ? "" :
       EWW_BATTERY.BAT0.capacity < 90 ? "" : ""
       }`
-      :limit-width 10
       :class "battery"
     ))
 )
@@ -65,12 +64,47 @@
   (batterymenu)
 )
 
+; ━━━ do-not-disturb ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+(defvar dnd "")
+(defwidget do-not-disturb []
+  (eventbox
+    :orientation "h"
+    :halign "center"
+    :space-evenly false
+    :onclick "nohup ./scripts/do-not-disturb.sh &"
+    (label
+      :text {dnd}
+      :class "dnd"
+    )
+  )
+)
+
+;; ━━━ WIFI ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+(defpoll wifi :interval "30s" "./scripts/wifi.sh")
+
+(defwidget wifi []
+  (box
+    :orientation "h"
+    :halign "center"
+    :space-evenly false
+    (label
+      :text {wifi.icon}
+      :tooltip {wifi.status}
+      :class "wifi"
+    )
+  )
+)
+
 ;; ━━━ VOLUME ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 (defpoll volume :interval "1s" "./scripts/volume.sh")
 (defwidget volume []
-  (eventbox :onclick "pamixer -t"
-    (label :text {volume.icon}
-      :limit-width 10
+  (eventbox
+    :orientation "h"
+    :halign "center"
+    :space-evenly false
+    :onclick "pamixer -t"
+    (label
+      :text {volume.icon}
       :tooltip "${volume.percent}%"
       :class "volume"
     )
@@ -83,7 +117,10 @@
 (defpoll dateVar :interval "600s" "date '+%A %d.%m.%y'")
 
 (defwidget time []
-  (eventbox :cursor "hand"  :hexpand false :vexpand false
+  (eventbox
+    :cursor "hand"
+    :hexpand false
+    :vexpand false
     :tooltip "${dateVar}"
     :onclick "eww open calendar --toggle &"
     (box :orientation "v" :hexpand false :vexpand false :space-evenly false :class "clock"
