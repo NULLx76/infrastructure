@@ -2,8 +2,10 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-let port = 8200;
+{ config, pkgs, hosts, ... }:
+let 
+  port = 8200;
+  clusterPort = 8201;
 in {
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -17,17 +19,23 @@ in {
   environment.systemPackages = with pkgs; [ ];
 
   # Vault
-  networking.firewall.allowedTCPPorts = [ port ];
+  networking.firewall.allowedTCPPorts = [ port clusterPort ];
 
   services.vault = {
     enable = true;
     # bin version includes the UI
     package = pkgs.vault-bin;
     address = "0.0.0.0:${toString port}";
-    storageBackend = "file";
-    storagePath = "/var/lib/vault";
+    storageBackend = "raft";
+    storagePath = "/var/lib/vault-raft";
+    storageConfig = ''
+      node_id = "olympus-1"
+    '';
     extraConfig = ''
       ui = true
+      disable_mlock = true
+      api_addr = "http://10.42.42.6:${toString port}"
+      cluster_addr = "http://10.42.42.6:${toString clusterPort}"
     '';
   };
 }
