@@ -23,6 +23,7 @@ let vs = config.vault-secrets.secrets; in
   networking.firewall.allowedUDPPorts = [
     config.networking.wireguard.interfaces.wg0.listenPort
   ];
+  networking.firewall.checkReversePath = false;
 
   vault-secrets.secrets.wireguard = {
     services = [ "wireguard-wg0" ];
@@ -30,8 +31,13 @@ let vs = config.vault-secrets.secrets; in
 
   networking.nat = {
     enable = true;
-    internalInterfaces = [ "wg0" ];
+    internalInterfaces = [ "wg0" "eth0" ];
     externalInterface = "eth0";
+  };
+
+  boot.kernel.sysctl = {
+    "net.ipv4.ip_forward" = 1;
+    "net.ipv6.conf.all.forwarding" = 1;
   };
 
   services.prometheus.exporters.wireguard = {
@@ -65,7 +71,7 @@ let vs = config.vault-secrets.secrets; in
         # Useful setup video for opnsense: https://www.youtube.com/watch?v=RoXHe5dqCM0
         # https://docs.opnsense.org/manual/how-tos/wireguard-s2s.html
         publicKey = "KgqLhmUMX6kyTjRoa/GOCrZOvXNE5HWYuOr/T3v8/VI=";
-        allowedIPs = [ "10.100.0.5/32" "192.168.0.0/23" "10.10.10.0/24"];
+        allowedIPs = [ "10.100.0.5/32" "192.168.0.0/23" "10.10.10.0/24" ];
         endpoint = "80.60.83.220:51820";
       }
     ];

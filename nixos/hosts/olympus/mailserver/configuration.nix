@@ -33,15 +33,16 @@ let vs = config.vault-secrets.secrets; in
     enable = true;
     fqdn = "mail.0x76.dev";
     domains = [ "0x76.dev" ];
+    certificateScheme = 3;
 
     loginAccounts = {
       "v@0x76.dev" = {
         hashedPasswordFile = "${vs.mailserver}/v@0x76.dev";
       };
+      "keycloak@0x76.dev" = {
+        hashedPasswordFile = "${vs.mailserver}/keycloak@0x76.dev";
+      };
     };
-
-    certificateScheme = 3;
-
 
     indexDir = "/var/lib/dovecot/indices";
     fullTextSearch = {
@@ -55,6 +56,9 @@ let vs = config.vault-secrets.secrets; in
       autoIndexExclude = [ "\\Junk" ];
     };
   };
+
+  services.postfix.relayHost = "smtp.ziggozakelijk.nl";
+  services.postfix.relayPort = 587;
 
   services.roundcube = {
     enable = true;
@@ -82,5 +86,5 @@ let vs = config.vault-secrets.secrets; in
   };
 
   security.acme.acceptTerms = true;
-  security.acme.defaults.email = "victor@xirion.net";
+  security.acme.defaults.email = "v@0x76.dev";
 }
