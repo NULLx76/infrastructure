@@ -51,5 +51,14 @@ let vs = config.vault-secrets.secrets; in
       authUrl = "https://id.0x76.dev/realms/master/protocol/openid-connect/auth";
       clientSecretFile = "${vs.outline}/keycloakClientSecret";
     };
+    smtp = rec {
+      username = "outline@0x76.dev";
+      fromEmail = username;
+      replyEmail = username;
+      secure = true;
+      port = 465;
+      host = "mail.0x76.dev";
+      passwordFile = "${vs.outline}/mailPassword";
+    };
   };
 }

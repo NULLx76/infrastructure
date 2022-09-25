@@ -41,58 +41,56 @@ in
     '';
   };
 
-  services.matrix-synapse =
-    let
-      extraConfig = builtins.toFile "extraConfig.yaml" ''
-        registration_requires_token: true
-      '';
-    in
-    {
-      enable = true;
-      withJemalloc = true;
+  services.matrix-synapse = {
+    enable = true;
+    withJemalloc = true;
 
-      extraConfigFiles = [
-        "${vs.synapse}/macaroon_secret_key"
-        "${vs.synapse}/registration_shared_secret"
-        "${vs.synapse}/form_secret"
-        "${vs.synapse}/turn_shared_secret"
-        extraConfig
-      ];
+    extraConfigFiles = [
+      "${vs.synapse}/macaroon_secret_key"
+      "${vs.synapse}/registration_shared_secret"
+      "${vs.synapse}/form_secret"
+      "${vs.synapse}/turn_shared_secret"
+      "${vs.synapse}/email_password" # Also contains the rest of the email config
+    ];
 
-      settings =
-        {
-          server_name = "meowy.tech";
-          enable_registration = true;
-          public_baseurl = "https://chat.meowy.tech";
-          enable_metrics = true;
-          # max_upload_size = "100m";
-          listeners = [
-            {
-              inherit port;
-              bind_addresses = [ "0.0.0.0" ];
-              type = "http";
-              tls = false;
-              x_forwarded = true;
-              resources = [
-                {
-                  names = [ "client" "federation" ];
-                  compress = true;
-                }
-              ];
-            }
-            {
-              port = metricsPort;
-              bind_addresses = [ "0.0.0.0" ];
-              type = "metrics";
-              tls = false;
-              resources = [
-                {
-                  names = [ "metrics" ];
-                  compress = false;
-                }
-              ];
-            }
-          ];
+    settings =
+      {
+        server_name = "meowy.tech";
+        enable_registration = true;
+        public_baseurl = "https://chat.meowy.tech";
+        enable_metrics = true;
+        max_upload_size = "100M";
+        registration_requires_token = true;
+        media_retention = {
+          remote_media_lifetime = "90d";
         };
-    };
+        listeners = [
+          {
+            inherit port;
+            bind_addresses = [ "0.0.0.0" ];
+            type = "http";
+            tls = false;
+            x_forwarded = true;
+            resources = [
+              {
+                names = [ "client" "federation" ];
+                compress = true;
+              }
+            ];
+          }
+          {
+            port = metricsPort;
+            bind_addresses = [ "0.0.0.0" ];
+            type = "metrics";
+            tls = false;
+            resources = [
+              {
+                names = [ "metrics" ];
+                compress = false;
+              }
+            ];
+          }
+        ];
+      };
+  };
 }

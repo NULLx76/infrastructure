@@ -32,18 +32,29 @@ let vs = config.vault-secrets.secrets; in
   mailserver = {
     enable = true;
     fqdn = "mail.0x76.dev";
-    domains = [ "0x76.dev" ];
+    domains = [ "0x76.dev" "meowy.tech" ];
     certificateScheme = 3;
 
     loginAccounts = {
       "v@0x76.dev" = {
         hashedPasswordFile = "${vs.mailserver}/v@0x76.dev";
+        aliases = [ "v@meowy.tech" "postmaster@0x76.dev" "postmaster@meowy.tech" ];
       };
       "keycloak@0x76.dev" = {
         hashedPasswordFile = "${vs.mailserver}/keycloak@0x76.dev";
+        sendOnly = true;
       };
       "gitea@0x76.dev" = {
         hashedPasswordFile = "${vs.mailserver}/gitea@0x76.dev";
+        sendOnly = true;
+      };
+      "matrix@meowy.tech" = {
+        hashedPasswordFile = "${vs.mailserver}/matrix@meowy.tech";
+        sendOnly = true;
+      };
+      "outline@0x76.dev" = {
+        hashedPasswordFile = "${vs.mailserver}/outline@0x76.dev";
+        sendOnly = true;
       };
     };
 
@@ -68,8 +79,8 @@ let vs = config.vault-secrets.secrets; in
     package = pkgs.roundcube.withPlugins (plugins: [ plugins.persistent_login ]);
     plugins = [
       "archive"
-      "enigma"
-      "markasjunk"
+      # "enigma"
+      # "markasjunk"
       "persistent_login"
     ];
     # this is the url of the vhost, not necessarily the same as the fqdn of
