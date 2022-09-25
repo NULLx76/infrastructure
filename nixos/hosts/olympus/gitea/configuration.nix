@@ -3,6 +3,9 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { lib, config, pkgs, ... }:
+let
+  vs = config.vault-secrets.secrets;
+in
 {
   imports = [ ];
 
@@ -28,6 +31,11 @@
     maxretry = 3;
   };
 
+  vault-secrets.secrets.gitea = {
+    user = "gitea";
+    group = "gitea";
+  };
+
   system.activationScripts.gitea-theme =
     let
       target_dir = "${config.services.gitea.stateDir}/custom/public/css/";
@@ -44,6 +52,7 @@
     lfs.enable = true;
     dump.type = "tar.gz";
     database.type = "postgres";
+    mailerPasswordFile = "${vs.gitea}/mailPassword";
 
     settings = {
       repository = {
@@ -73,6 +82,19 @@
       session = {
         "PROVIDER" = "db";
         "COOKIE_SECURE" = true;
+      };
+      mailer = {
+        "ENABLED" = true;
+        "IS_TLS_ENABLED" = true;
+        "HOST" = "mail.0x76.dev:465";
+        "FROM" = "gitea@0x76.dev";
+        "MAILER_TYPE" = "smtp";
+        "USER" = "gitea@0x76.dev";
+
+        # Below is prep for 1.18
+        "PROTOCOL" = "smtps";
+        "SMTP_ADDR" = "mail.0x76.dev";
+        "SMTP_PORT" = 465;
       };
     };
   };

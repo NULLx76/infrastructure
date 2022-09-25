@@ -42,6 +42,9 @@ let vs = config.vault-secrets.secrets; in
       "keycloak@0x76.dev" = {
         hashedPasswordFile = "${vs.mailserver}/keycloak@0x76.dev";
       };
+      "gitea@0x76.dev" = {
+        hashedPasswordFile = "${vs.mailserver}/gitea@0x76.dev";
+      };
     };
 
     indexDir = "/var/lib/dovecot/indices";
