@@ -32,6 +32,9 @@
 
     webcord.url = "github:fufexan/webcord-flake";
 
+    comma.url = "github:nix-community/comma";
+    comma.inputs.nixpkgs.follows = "nixpkgs";
+
     mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     mailserver.inputs.nixpkgs.follows = "nixpkgs";
   };

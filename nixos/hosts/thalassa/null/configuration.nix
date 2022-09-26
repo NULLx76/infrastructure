@@ -83,10 +83,27 @@ in
   services.gnome.gnome-keyring.enable = true;
 
   # Enable networking
-  networking.networkmanager = {
+  networking.networkmanager.enable = false;
+  networking.wireless = {
     enable = true;
-    # wifi.backend = "iwd";
-    firewallBackend = "nftables";
+    environmentFile = "/var/lib/secrets/wireless.env";
+    userControlled.enable = true;
+    networks = {
+      eduroam = {
+        auth = ''
+          proto=RSN
+          key_mgmt=WPA-EAP
+          eap=PEAP
+          identity="vroest@tudelft.nl"
+          password=hash:@EDUROAM_PASSWORD_HASH@
+          domain_suffix_match="radius.tudelft.nl"
+          anonymous_identity="anonymous@tudelft.nl"
+          phase1="peaplabel=0"
+          phase2="auth=MSCHAPV2"
+          ca_cert="/etc/ssl/certs/ca-bundle.crt"
+        '';
+      };
+    };
   };
 
   fileSystems."/".options = [ "compress=zstd" ];

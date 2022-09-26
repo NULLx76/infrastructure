@@ -1,9 +1,4 @@
-# common/users/default.nix
-
-# Inputs to this NixOS module, in this case we are
-# using `pkgs` so we can have some user specific packages and config
-# to configure the root ssh key.
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   # Setup ZSH to use grml config

@@ -26,6 +26,7 @@
     gnome.gnome-font-viewer
     gnome.nautilus
     grim # Screenshot tool
+    inputs.comma.packages.${pkgs.system}.default
     inputs.riff.packages.${pkgs.system}.riff
     inputs.webcord.packages.${pkgs.system}.default
     k9s
@@ -57,6 +58,8 @@
   programs.foot = {
     enable = true;
   };
+  
+  programs.nix-index.enable = true;
 
   programs.exa = {
     enable = true;

@@ -16,6 +16,7 @@
 
   # Nix Settings
   nix = {
+    nixPath = [ "nixpkgs=${nixpkgs}" ];
     package = pkgs.nixUnstable;
     registry.nixpkgs.flake = inputs.nixpkgs;
     settings = {
