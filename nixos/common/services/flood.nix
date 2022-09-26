@@ -142,7 +142,7 @@ in {
             toString cfg.port
           } ${
             if cfg.ssl then "--ssl" else ""
-          } --auth ${cfg.authMode}  --rtsocket ${cfg.rpcSocket} --allowedpath ${cfg.downloadDir}";
+          } --auth ${cfg.authMode} --rtsocket ${cfg.rpcSocket} --allowedpath ${cfg.downloadDir}";
       };
     };
 

@@ -68,6 +68,9 @@
         bind=SUPER,S,togglefloating,
         bind=SUPER,P,pseudo,
 
+        bindm=SUPER,mouse:272,movewindow
+        bindm=SUPER,mouse:273,resizewindow
+
         bind=SUPER,left,movefocus,l
         bind=SUPER,right,movefocus,r
         bind=SUPER,up,movefocus,u
@@ -114,6 +117,8 @@
 
         bind=SUPER,g,togglegroup
         bind=SUPER,tab,changegroupactive
+        bind=SUPER,m,fullscreen,1
+        bind=SUPERSHIFT,m,fullscreen,0
 
         bind=,XF86MonBrightnessUp,exec,brightnessctl -q s +5%
         bind=,XF86MonBrightnessDown,exec,brightnessctl -q s 5%-

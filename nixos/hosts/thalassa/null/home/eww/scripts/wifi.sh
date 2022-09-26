@@ -1,13 +1,8 @@
 #!/bin/sh
 
-if nmcli g | rg -q "\bconnected\b"; then
+if wpa_cli status | rg -q "wpa_state=COMPLETED"; then
     icon="直"
-    ssid=$(nmcli -t -f name connection show --active | sed -z 's/\n/,/g;s/,$/\n/')
-    if echo $ssid | rg -q "Wired"; then
-        status="Connected via cable" 
-    else
-        status="Connected to ${ssid}"
-    fi
+    status="Connected"
 else
     icon="睊"
     status="offline"

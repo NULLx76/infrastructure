@@ -75,7 +75,6 @@
   
   programs.mako = {
     enable = true;
-    # makoctl mode -a do-not-disturb will hide all notifications, makoctl mode -r do-not-disturb will show them again.
     extraConfig = ''
       [mode=do-not-disturb]
       invisible=1
@@ -92,9 +91,6 @@
   programs.firefox = {
     enable = true;
     package = pkgs.firefox-devedition-bin;
-    # profiles.dev-edition-default = {
-    #   isDefault = true;
-    # };
   };
 
   programs.vscode = {
@@ -104,6 +100,7 @@
       catppuccin.catppuccin-vsc
       codezombiech.gitignore
       editorconfig.editorconfig
+      foxundermoon.shell-format
       james-yu.latex-workshop
       jnoortheen.nix-ide
       matklad.rust-analyzer

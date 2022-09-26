@@ -53,14 +53,6 @@ in
       type = lib.types.submodule {
         freeformType = settingsFormat.type;
       };
-      # example = ''
-      #   global:
-      #     scrape_interval: 5s
-      #   scrape_configs:
-      #     - job_name: 'apache'
-      #       static_configs:
-      #       - targets: ['apache-exporter:9117']
-      # '';
       description = ''
         Config for prometheus style metrics
       '';
