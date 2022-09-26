@@ -27,19 +27,43 @@
       };
     };
 
-    # Allow reverse path for wireguard
-    # firewall = {
-    #   # if packets are still dropped, they will show up in dmesg
-    #   logReversePathDrops = true;
-    #   # wireguard trips rpfilter up
-    #   extraCommands = ''
-    #     ip46tables -t raw -I nixos-fw-rpfilter -p udp -m udp --sport 51820 -j RETURN
-    #     ip46tables -t raw -I nixos-fw-rpfilter -p udp -m udp --dport 51820 -j RETURN
-    #   '';
-    #   extraStopCommands = ''
-    #     ip46tables -t raw -D nixos-fw-rpfilter -p udp -m udp --sport 51820 -j RETURN || true
-    #     ip46tables -t raw -D nixos-fw-rpfilter -p udp -m udp --dport 51820 -j RETURN || true
-    #   '';
-    # };
+    # TODO: Set up DNS on my laptop to prevent slow networking when servers are down
+    nameservers = [
+      "10.42.42.15"
+      "10.42.42.16"
+      "192.168.0.1"
+      "1.1.1.1"
+    ];
+
+    firewall.allowedUDPPorts = [ 51820 ];
+
+    # Maybe switch to wg-quick
+    wireguard.interfaces.wg0 = {
+      ips = [ "10.100.0.4/24" ];
+      listenPort = 51820;
+      privateKeyFile = "/var/lib/secrets/wg_key";
+
+      peers = [
+        {
+          # Delft
+          publicKey = "kDIO3BJSYlDwRXc2zt9tR1LqKJzIPrulaRmdiYkg+m0=";
+          allowedIPs = [ "10.100.0.1" "10.42.42.0/23" ];
+          endpoint = "0x76.dev:51820";
+          persistentKeepalive = 25;
+        }
+        {
+          # Aerdenhout
+          publicKey = "KgqLhmUMX6kyTjRoa/GOCrZOvXNE5HWYuOr/T3v8/VI=";
+          allowedIPs = [
+            "10.100.0.5"
+            "192.168.0.0/24" # to avoid being less specific than a LAN
+            "192.168.1.0/24"
+            "10.10.10.0/24"
+          ];
+          endpoint = "xirion.net:51820";
+          persistentKeepalive = 25;
+        }
+      ];
+    };
   };
 }
