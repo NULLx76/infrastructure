@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, nixpkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   imports = [
@@ -16,7 +16,7 @@
 
   # Nix Settings
   nix = {
-    nixPath = [ "nixpkgs=${nixpkgs}" ];
+    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
     package = pkgs.nixUnstable;
     registry.nixpkgs.flake = inputs.nixpkgs;
     settings = {
@@ -40,7 +40,6 @@
         "0x76-infra.cachix.org-1:dC1qp+VEN3jj5pdK4URlXR9hf3atT+MnpKGu6PZjMc8="
         "webcord.cachix.org-1:l555jqOZGHd2C9+vS8ccdh8FhqnGe8L78QrHNn+EFEs="
       ];
-    # Also use zsh for root;
     };
     optimise = {
       automatic = true;
