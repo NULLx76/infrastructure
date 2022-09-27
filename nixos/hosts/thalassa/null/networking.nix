@@ -1,7 +1,12 @@
-{ ... }@a:
+{ ... }:
 {
+  services.v.dns = {
+    enable = true;
+    openFirewall = false;
+    mode = "laptop";
+  };
   networking = {
-    networkmanager.enable = false;
+    useDHCP = true;
     wireless = {
       enable = true;
       environmentFile = "/var/lib/secrets/wireless.env";
@@ -29,10 +34,7 @@
 
     # TODO: Set up DNS on my laptop to prevent slow networking when servers are down
     nameservers = [
-      "10.42.42.15"
-      "10.42.42.16"
-      "192.168.0.1"
-      "1.1.1.1"
+      "127.0.0.1"
     ];
 
     firewall.allowedUDPPorts = [ 51820 ];
@@ -48,7 +50,7 @@
           # Delft
           publicKey = "kDIO3BJSYlDwRXc2zt9tR1LqKJzIPrulaRmdiYkg+m0=";
           allowedIPs = [ "10.100.0.1" "10.42.42.0/23" ];
-          endpoint = "0x76.dev:51820";
+          endpoint = "195.85.167.34:51820";
           persistentKeepalive = 25;
         }
         {
@@ -60,7 +62,7 @@
             "192.168.1.0/24"
             "10.10.10.0/24"
           ];
-          endpoint = "xirion.net:51820";
+          endpoint = "80.60.83.220:51820";
           persistentKeepalive = 25;
         }
       ];

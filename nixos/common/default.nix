@@ -5,7 +5,7 @@
     inputs.vault-secrets.nixosModules.vault-secrets
     # User account definitions
     ./users
-    ./services
+    ./modules
   ];
 
   # Clean /tmp on boot.
