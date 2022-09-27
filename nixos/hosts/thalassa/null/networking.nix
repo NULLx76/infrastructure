@@ -32,7 +32,6 @@
       };
     };
 
-    # TODO: Set up DNS on my laptop to prevent slow networking when servers are down
     nameservers = [
       "127.0.0.1"
     ];
