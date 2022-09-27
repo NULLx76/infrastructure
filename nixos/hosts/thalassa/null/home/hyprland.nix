@@ -28,9 +28,9 @@
         monitor=eDP-1,addreserved,0,0,48,0
         monitor=,preferred,auto,1
 
-        windowrulev2 = workspace 1,class:^(Electron)$,title:^(.*)(WebCord)(.*)$
-        windowrulev2 = workspace 1,title:^(Element)(.*)$
-        windowrulev2 = workspace 2,class:^(firefox-aurora)$
+        windowrulev2 = workspace 1 silent,class:^(Electron)$,title:^(.*)(WebCord)(.*)$
+        windowrulev2 = workspace 1 silent,title:^(Element)(.*)$
+        windowrulev2 = workspace 2 silent,class:^(firefox-aurora)$
 
         general {
           layout = dwindle

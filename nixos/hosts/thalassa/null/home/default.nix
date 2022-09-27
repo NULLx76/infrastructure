@@ -33,7 +33,6 @@
     kubectl
     libnotify
     neofetch
-    networkmanagerapplet
     nixpkgs-review
     plex-media-player
     plexamp
@@ -55,10 +54,39 @@
     wofi # Wayland rofi
   ];
 
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications =
+      let
+        browser = [ "firefox.desktop" ];
+      in
+      {
+        "image/*" = "org.gnome.eog.desktop";
+        "text/html" = browser;
+        "x-scheme-handler/http" = browser;
+        "x-scheme-handler/https" = browser;
+        "x-scheme-handler/ftp" = browser;
+        "x-scheme-handler/about" = browser;
+        "x-scheme-handler/unknown" = browser;
+        "application/x-extension-htm" = browser;
+        "application/x-extension-html" = browser;
+        "application/x-extension-shtml" = browser;
+        "application/xhtml+xml" = browser;
+        "application/x-extension-xhtml" = browser;
+        "application/x-extension-xht" = browser;
+
+        "application/json" = browser;
+        "application/pdf" = browser;
+
+        "x-scheme-handler/vscode" = "code-url-handler.desktop";
+        "x-scheme-handler/discord" = "webcord.desktop";
+      };
+  };
+
   programs.foot = {
     enable = true;
   };
-  
+
   programs.nix-index.enable = true;
 
   programs.exa = {
@@ -72,7 +100,7 @@
     userName = "Victor";
     userEmail = "victor@xirion.net";
   };
-  
+
   programs.mako = {
     enable = true;
     extraConfig = ''

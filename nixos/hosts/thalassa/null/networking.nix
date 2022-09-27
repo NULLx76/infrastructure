@@ -33,7 +33,8 @@
     };
 
     nameservers = [
-      "127.0.0.1"
+      "127.0.0.1" # Use locally deployed unbound
+      "::1"
     ];
 
     firewall.allowedUDPPorts = [ 51820 ];
