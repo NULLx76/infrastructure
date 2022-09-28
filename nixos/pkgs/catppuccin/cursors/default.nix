@@ -1,6 +1,6 @@
-{ stdenv, lib, fetchFromGitHub, xorg, inkscape }:
+{ stdenvNoCC, lib, fetchFromGitHub, xorg, inkscape }:
 
-stdenv.mkDerivation rec {
+stdenvNoCC.mkDerivation {
   pname = "catppuccin-cursors";
   version = "0.2.0";
 

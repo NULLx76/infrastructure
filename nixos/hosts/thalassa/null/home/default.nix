@@ -1,5 +1,10 @@
-{ config, pkgs, lib, inputs, ... }:
-{
+{ config, pkgs, lib, inputs, texlive, ... }:
+let
+  tex = (pkgs.texlive.combine {
+    inherit (pkgs.texlive) scheme-full;
+    dnd-5e-latex-template = { pkgs = [ pkgs.v.dnd-5e-latex-template ]; };
+  });
+in {
   programs.home-manager.enable = true;
   home.username = "victor";
   home.homeDirectory = "/home/victor";
@@ -40,13 +45,13 @@
     python3
     retroarchFull
     ripgrep
-    rnix-lsp
     rsync
     rustup
     saleae-logic-2
     solo2-cli
     steam-run
-    texlive.combined.scheme-full
+    tex
+    # texlive.combined.scheme-full
     thunderbird-wayland
     wf-recorder # Screenrecorder
     wl-clipboard # Clipboard manager
@@ -55,36 +60,31 @@
 
   xdg.mimeApps = {
     enable = true;
-    defaultApplications =
-      let
-        browser = [ "firefox.desktop" ];
-      in
-      {
-        "image/*" = "org.gnome.eog.desktop";
-        "text/html" = browser;
-        "x-scheme-handler/http" = browser;
-        "x-scheme-handler/https" = browser;
-        "x-scheme-handler/ftp" = browser;
-        "x-scheme-handler/about" = browser;
-        "x-scheme-handler/unknown" = browser;
-        "application/x-extension-htm" = browser;
-        "application/x-extension-html" = browser;
-        "application/x-extension-shtml" = browser;
-        "application/xhtml+xml" = browser;
-        "application/x-extension-xhtml" = browser;
-        "application/x-extension-xht" = browser;
+    defaultApplications = let browser = [ "firefox.desktop" ];
+    in {
+      "image/*" = "org.gnome.eog.desktop";
+      "text/html" = browser;
+      "x-scheme-handler/http" = browser;
+      "x-scheme-handler/https" = browser;
+      "x-scheme-handler/ftp" = browser;
+      "x-scheme-handler/about" = browser;
+      "x-scheme-handler/unknown" = browser;
+      "application/x-extension-htm" = browser;
+      "application/x-extension-html" = browser;
+      "application/x-extension-shtml" = browser;
+      "application/xhtml+xml" = browser;
+      "application/x-extension-xhtml" = browser;
+      "application/x-extension-xht" = browser;
 
-        "application/json" = browser;
-        "application/pdf" = browser;
+      "application/json" = browser;
+      "application/pdf" = browser;
 
-        "x-scheme-handler/vscode" = "code-url-handler.desktop";
-        "x-scheme-handler/discord" = "webcord.desktop";
-      };
+      "x-scheme-handler/vscode" = "code-url-handler.desktop";
+      "x-scheme-handler/discord" = "webcord.desktop";
+    };
   };
 
-  programs.foot = {
-    enable = true;
-  };
+  programs.foot = { enable = true; };
 
   programs.nix-index.enable = true;
 
@@ -119,25 +119,26 @@
     enable = true;
     package = pkgs.firefox-devedition-bin;
   };
-  
+
   programs.vscode = {
     enable = true;
     package = pkgs.vscode;
     userSettings = {
       "ltex.language" = "en-GB";
       "workbench.colorTheme" = "Catppuccin Frappé";
-      "editor.fontFamily" = "'DejaVuSansMono Nerd Font', 'monospace', monospace";
+      "editor.fontFamily" =
+        "'DejaVuSansMono Nerd Font', 'monospace', monospace";
       "keyboard.dispatch" = "keyCode";
       "rust-analyzer.server.path" = "${pkgs.rust-analyzer}/bin/rust-analyzer";
       "terminal.integrated.defaultProfile.linux" = "zsh";
       "nix.enableLanguageServer" = true; # Enable LSP.
-      "nix.serverPath" = "${pkgs.nil}/bin/nil"; # The path to the LSP server executable.
-      "[nix]" = {
-        "editor.defaultFormatter" = "jnoortheen.nix-ide";
-      };
+      "nix.serverPath" =
+        "${pkgs.nil}/bin/nil"; # The path to the LSP server executable.
+      "[nix]" = { "editor.defaultFormatter" = "brettm12345.nixfmt-vscode"; };
     };
     extensions = with pkgs.vscode-extensions; [
       catppuccin.catppuccin-vsc
+      brettm12345.nixfmt-vscode
       codezombiech.gitignore
       editorconfig.editorconfig
       foxundermoon.shell-format
@@ -156,31 +157,27 @@
 
   programs.direnv = {
     enable = true;
-    nix-direnv = {
-      enable = true;
-    };
+    nix-direnv = { enable = true; };
   };
 
   programs.zsh = {
     enable = true;
-    sessionVariables = {
-      DIRENV_LOG_FORMAT = "";
-    };
+    sessionVariables = { DIRENV_LOG_FORMAT = ""; };
   };
 
-  xdg.userDirs = let home = config.home.homeDirectory; in
-    {
-      enable = true;
-      createDirectories = true;
-      desktop = "${home}/.desktop";
-      documents = "${home}/cloud/Documents";
-      download = "${home}/dl";
-      music = "${home}/cloud/Music";
-      pictures = "${home}/cloud/Pictures";
-      publicShare = "${home}/.publicShare";
-      templates = "${home}/.templates";
-      videos = "${home}/cloud/Videos";
-    };
+  xdg.userDirs = let home = config.home.homeDirectory;
+  in {
+    enable = true;
+    createDirectories = true;
+    desktop = "${home}/.desktop";
+    documents = "${home}/cloud/Documents";
+    download = "${home}/dl";
+    music = "${home}/cloud/Music";
+    pictures = "${home}/cloud/Pictures";
+    publicShare = "${home}/.publicShare";
+    templates = "${home}/.templates";
+    videos = "${home}/cloud/Videos";
+  };
 
   services.syncthing.enable = true;
 }

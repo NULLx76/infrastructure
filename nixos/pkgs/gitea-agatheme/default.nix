@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl }: stdenv.mkDerivation rec {
+{ lib, stdenvNoCC, fetchurl }: stdenvNoCC.mkDerivation {
   pname = "gitea-agatheme";
   version = "1.1";
 

@@ -1,10 +1,4 @@
 final: prev: {
-  # hedgedoc = prev.hedgedoc.overrideAttrs (old: {
-  #   # see https://github.com/NixOS/nixpkgs/issues/176127#issuecomment-1146782555
-  #   preBuild = ''
-  #     export HOME=$TMPDIR
-  #   '';
-  # });
   catppuccin.cursors = prev.callPackage ./catppuccin/cursors { };
 
   vmagent = prev.callPackage ./vmagent { };
@@ -18,6 +12,8 @@ final: prev: {
       withDNSCrypt = true;
       withTFO = true;
     };
+
+    dnd-5e-latex-template = prev.callPackage ./dnd-5e-latex-template { };
 
     gitea-agatheme = prev.callPackage ./gitea-agatheme { };
   };

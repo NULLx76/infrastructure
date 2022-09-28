@@ -75,11 +75,14 @@ in
 
   # Bootloader.
   # boot.initrd.systemd.enable = true; # Experimental
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 6;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot = {
+    kernelPackages = pkgs.linuxPackages_latest; 
+    loader.systemd-boot.editor = false;
+    loader.systemd-boot.enable = true;
+    loader.systemd-boot.configurationLimit = 6;
+    loader.efi.canTouchEfiVariables = true;
+    loader.efi.efiSysMountPoint = "/boot/efi";
+  };
 
   services.gnome.gnome-keyring.enable = true;
  
@@ -115,11 +118,9 @@ in
     "en_DK.UTF-8/UTF-8"
   ];
 
-  xdg = {
-    portal = {
+  xdg.portal = {
       enable = true;
       wlr.enable = true;
-    };
   };
   services.dbus.enable = true;
 
@@ -143,12 +144,10 @@ in
     videoDrivers = [ "nvidia" ];
   };
 
-  hardware.nvidia = {
-    prime = {
-      offload.enable = true;
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
-    };
+  hardware.nvidia.prime = {
+    offload.enable = true;
+    intelBusId = "PCI:0:2:0";
+    nvidiaBusId = "PCI:1:0:0";
   };
 
   hardware.opengl = {
@@ -224,12 +223,17 @@ in
 
   programs.ssh.startAgent = true;
 
+  # don't shutdown when power button is short-pressed
   services.logind.extraConfig = ''
-    # don’t shutdown when power button is short-pressed
     HandlePowerKey=suspend
   '';
 
-  services.udev.packages = [ pkgs.qmk-udev-rules ];
+  services.udev.packages = with pkgs; [ 
+    android-udev-rules
+    logitech-udev-rules
+    qmk-udev-rules 
+    wooting-udev-rules
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
