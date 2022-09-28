@@ -29,6 +29,7 @@
     hostname = "vault";
     ip = "10.42.42.6";
     mac = "16:2B:87:55:0C:0C";
+    profile = "vault-0";
   }
   {
     hostname = "mosquitto";
@@ -148,6 +149,12 @@
     hostname = "keycloak";
     ip = "10.42.42.29";
     mac = "A6:09:1D:A8:81:28";
+  }
+  {
+    hostname = "vault-1";
+    ip = "10.42.42.30";
+    mac = "26:69:0E:7C:B3:79";
+    profile = "vault-1";
   }
   {
     hostname = "nuc";

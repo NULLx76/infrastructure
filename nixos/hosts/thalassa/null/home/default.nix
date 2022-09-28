@@ -2,7 +2,12 @@
 let
   tex = (pkgs.texlive.combine {
     inherit (pkgs.texlive) scheme-full;
-    dnd-5e-latex-template = { pkgs = [ pkgs.v.dnd-5e-latex-template ]; };
+    dnd-5e-latex-template = {
+      pkgs = [
+        pkgs.v.dnd-5e-latex-template
+        pkgs.v.dnd-5e-latex-character-sheet-template
+      ];
+    };
   });
 in {
   programs.home-manager.enable = true;
