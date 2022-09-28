@@ -42,7 +42,6 @@
     ripgrep
     rnix-lsp
     rsync
-    rust-analyzer
     rustup
     saleae-logic-2
     solo2-cli
@@ -120,10 +119,23 @@
     enable = true;
     package = pkgs.firefox-devedition-bin;
   };
-
+  
   programs.vscode = {
     enable = true;
     package = pkgs.vscode;
+    userSettings = {
+      "ltex.language" = "en-GB";
+      "workbench.colorTheme" = "Catppuccin Frappé";
+      "editor.fontFamily" = "'DejaVuSansMono Nerd Font', 'monospace', monospace";
+      "keyboard.dispatch" = "keyCode";
+      "rust-analyzer.server.path" = "${pkgs.rust-analyzer}/bin/rust-analyzer";
+      "terminal.integrated.defaultProfile.linux" = "zsh";
+      "nix.enableLanguageServer" = true; # Enable LSP.
+      "nix.serverPath" = "${pkgs.nil}/bin/nil"; # The path to the LSP server executable.
+      "[nix]" = {
+        "editor.defaultFormatter" = "jnoortheen.nix-ide";
+      };
+    };
     extensions = with pkgs.vscode-extensions; [
       catppuccin.catppuccin-vsc
       codezombiech.gitignore

@@ -7,6 +7,7 @@
   };
   networking = {
     useDHCP = true;
+    dhcpcd.wait = "background";
     wireless = {
       enable = true;
       environmentFile = "/var/lib/secrets/wireless.env";
