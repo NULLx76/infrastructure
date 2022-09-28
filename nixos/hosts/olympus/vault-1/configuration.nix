@@ -22,7 +22,7 @@ in {
   networking.firewall.allowedTCPPorts = [ port clusterPort ];
 
   services.vault = {
-    enable = false;
+    enable = true;
     # bin version includes the UI
     package = pkgs.vault-bin;
     address = "0.0.0.0:${toString port}";
