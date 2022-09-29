@@ -14,6 +14,14 @@
   # Set your time zone.
   time.timeZone = lib.mkDefault "Europe/Amsterdam";
 
+  # Systemd OOMd
+  # Fedora enables these options by default. See the 10-oomd-* files here:
+  # https://src.fedoraproject.org/rpms/systemd/tree/acb90c49c42276b06375a66c73673ac3510255
+  systemd.oomd = {
+    enableRootSlice = true;
+    enableUserServices = true;
+  };
+
   # Nix Settings
   nix = {
     nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
