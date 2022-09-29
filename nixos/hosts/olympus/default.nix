@@ -30,6 +30,7 @@
     ip = "10.42.42.6";
     mac = "16:2B:87:55:0C:0C";
     profile = "vault-0";
+    tags = [ "vault" ];
   }
   {
     hostname = "mosquitto";
@@ -155,6 +156,7 @@
     ip = "10.42.42.30";
     mac = "26:69:0E:7C:B3:79";
     profile = "vault-1";
+    tags = [ "vault" ];
   }
   {
     hostname = "nuc";

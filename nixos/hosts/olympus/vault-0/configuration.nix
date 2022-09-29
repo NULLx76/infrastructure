@@ -3,9 +3,10 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, hosts, ... }:
-let 
+let
   port = 8200;
   clusterPort = 8201;
+  ip = config.deployment.targetHost;
 in {
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -15,31 +16,10 @@ in {
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.05"; # Did you read the comment?
 
-  # Additional packages
-  environment.systemPackages = with pkgs; [ ];
-
   # Vault
-  networking.firewall.allowedTCPPorts = [ port clusterPort ];
-
-  services.vault = {
+  services.v.vault = {
     enable = true;
-    # bin version includes the UI
-    package = pkgs.vault-bin;
-    address = "0.0.0.0:${toString port}";
-    storageBackend = "raft";
-    storagePath = "/var/lib/vault-raft";
-    storageConfig = ''
-      node_id = "olympus-1"
-
-      retry_join {
-        leader_api_addr = "http://10.42.42.30:${toString port}"
-      }
-    '';
-    extraConfig = ''
-      ui = true
-      disable_mlock = true
-      api_addr = "http://10.42.42.6:${toString port}"
-      cluster_addr = "http://10.42.42.6:${toString clusterPort}"
-    '';
+    openFirewall = true;
+    node_id = "olympus-1";
   };
 }

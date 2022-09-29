@@ -30,22 +30,18 @@ let
 
     exec Hyprland
   '';
-in
-{
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./networking.nix
-    ];
+in {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./networking.nix
+  ];
 
   # home-manager
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.users.victor = import ./home;
-  home-manager.extraSpecialArgs = {
-    inherit inputs;
-  };
+  home-manager.extraSpecialArgs = { inherit inputs; };
 
   security.pam.services.swaylock = { };
 
@@ -58,7 +54,10 @@ in
       noto-fonts-cjk
       noto-fonts-emoji
       dejavu_fonts
-      (nerdfonts.override { fonts = [ "DejaVuSansMono" "Ubuntu" "DroidSansMono" "NerdFontsSymbolsOnly" ]; })
+      (nerdfonts.override {
+        fonts =
+          [ "DejaVuSansMono" "Ubuntu" "DroidSansMono" "NerdFontsSymbolsOnly" ];
+      })
     ];
 
     enableDefaultFonts = false;
@@ -66,8 +65,10 @@ in
     fontconfig = {
       defaultFonts = {
         monospace = [ "DejaVuSansMono Nerd Font" "Noto Color Emoji" ];
-        sansSerif = [ "DejaVu Sans" "DejaVuSansMono Nerd Font" "Noto Color Emoji" ];
-        serif = [ "DejaVu Serif" "DejaVuSansMono Nerd Font" "Noto Color Emoji" ];
+        sansSerif =
+          [ "DejaVu Sans" "DejaVuSansMono Nerd Font" "Noto Color Emoji" ];
+        serif =
+          [ "DejaVu Serif" "DejaVuSansMono Nerd Font" "Noto Color Emoji" ];
         emoji = [ "Noto Color Emoji" ];
       };
     };
@@ -76,7 +77,7 @@ in
   # Bootloader.
   # boot.initrd.systemd.enable = true; # Experimental
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest; 
+    kernelPackages = pkgs.linuxPackages_latest;
     loader.systemd-boot.editor = false;
     loader.systemd-boot.enable = true;
     loader.systemd-boot.configurationLimit = 6;
@@ -85,7 +86,7 @@ in
   };
 
   services.gnome.gnome-keyring.enable = true;
- 
+
   fileSystems."/".options = [ "compress=zstd" ];
   # Filesystem dedup
   services.beesd.filesystems = {
@@ -112,16 +113,15 @@ in
     LC_TIME = "en_DK.UTF-8";
   };
 
-  i18n.supportedLocales = [
-    "en_GB.UTF-8/UTF-8"
-    "nl_NL.UTF-8/UTF-8"
-    "en_DK.UTF-8/UTF-8"
-  ];
+  i18n.supportedLocales =
+    [ "en_GB.UTF-8/UTF-8" "nl_NL.UTF-8/UTF-8" "en_DK.UTF-8/UTF-8" ];
 
   xdg.portal = {
-      enable = true;
-      wlr.enable = true;
+    enable = true;
+    wlr.enable = true;
   };
+
+  services.udisks2.enable = true;
   services.dbus.enable = true;
 
   # Hyprland
@@ -218,7 +218,8 @@ in
     debug = false;
     cue = true;
     control = "sufficient";
-    authFile = "/etc/u2f-mappings"; # use `pamu2fcfg` from `pkgs.pam_u2f` to generate this config
+    authFile =
+      "/etc/u2f-mappings"; # use `pamu2fcfg` from `pkgs.pam_u2f` to generate this config
   };
 
   programs.ssh.startAgent = true;
@@ -228,10 +229,10 @@ in
     HandlePowerKey=suspend
   '';
 
-  services.udev.packages = with pkgs; [ 
+  services.udev.packages = with pkgs; [
     android-udev-rules
     logitech-udev-rules
-    qmk-udev-rules 
+    qmk-udev-rules
     wooting-udev-rules
   ];
 

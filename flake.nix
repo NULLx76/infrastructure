@@ -53,7 +53,7 @@
     } @ inputs:
     let
       inherit (nixpkgs) lib;
-      inherit (builtins) filter mapAttrs attrValues concatLists;
+      inherit (builtins) mapAttrs;
 
       util = import ./util.nix inputs;
 
