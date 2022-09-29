@@ -30,6 +30,11 @@
     nix = false;
   }
   {
+    hostname = "vault-0";
+    ip = "192.168.0.103";
+    mac = "7A:14:15:ED:D1:E6";
+  }
+  {
     hostname = "MariaDB";
     ip = "192.168.0.109";
     mac = "00:0c:29:23:4f:12";

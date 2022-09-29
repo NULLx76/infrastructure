@@ -29,17 +29,21 @@ in {
     storageBackend = "raft";
     storagePath = "/var/lib/vault-raft";
     storageConfig = ''
-      node_id = "olympus-1"
+      node_id = "hades-1"
 
       retry_join {
         leader_api_addr = "http://10.42.42.30:${toString port}"
+      }
+
+      retry_join {
+        leader_api_addr = "http://10.42.42.6:${toString port}"
       }
     '';
     extraConfig = ''
       ui = true
       disable_mlock = true
-      api_addr = "http://10.42.42.6:${toString port}"
-      cluster_addr = "http://10.42.42.6:${toString clusterPort}"
+      api_addr = "http://192.168.0.103:${toString port}"
+      cluster_addr = "http://192.168.0.103:${toString clusterPort}"
     '';
   };
 }

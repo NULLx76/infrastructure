@@ -14,7 +14,6 @@ final: prev: {
     };
 
     dnd-5e-latex-template = prev.callPackage ./dnd-5e-latex-template { };
-    dnd-5e-latex-character-sheet-template = prev.callPackage ./dnd-5e-latex-character-sheet-template { };
 
     gitea-agatheme = prev.callPackage ./gitea-agatheme { };
   };
