@@ -21,7 +21,6 @@
     hostname = "unifi";
     ip = "192.168.0.101";
     mac = "5a:00:b7:6c:d1:e2";
-    nix = false;
   }
   {
     hostname = "plex";
