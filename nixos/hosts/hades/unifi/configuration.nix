@@ -8,7 +8,7 @@
     jrePackage = pkgs.jre8_headless;
     unifiPackage = pkgs.unifi;
     mongodbPackage = pkgs.mongodb;
-    openPorts = true;
+    openFirewall = true;
   };
 
   # Required for Java
