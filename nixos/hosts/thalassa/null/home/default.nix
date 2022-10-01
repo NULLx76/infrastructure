@@ -98,6 +98,7 @@ in {
     package = pkgs.gitAndTools.gitFull;
     userName = "Victor";
     userEmail = "victor@xirion.net";
+    lfs.enable = true;
   };
 
   programs.mako = {

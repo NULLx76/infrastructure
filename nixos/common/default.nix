@@ -1,9 +1,6 @@
-{ config, lib, pkgs, inputs, ... }:
-
-{
+{ config, lib, pkgs, inputs, ... }: {
   imports = [
     inputs.vault-secrets.nixosModules.vault-secrets
-    # User account definitions
     ./users
     ./modules
   ];
@@ -67,16 +64,20 @@
     MaxFileSec=7day
   '';
 
-  # Enable SSH daemon support.
+  # Enable SSH
   services.openssh = {
     enable = true;
     passwordAuthentication = false;
     permitRootLogin = "no";
   };
 
-  vault-secrets = lib.mkIf (config.networking.domain == "olympus") {
-    vaultPrefix = "olympus_secrets/nixos";
-    vaultAddress = "http://vault.olympus:8200/";
-    approlePrefix = "olympus-${config.networking.hostName}";
+  # Configure vault-secrets based on domain
+  vault-secrets = let
+    inherit (config.networking) domain hostName;
+    server = if domain == "olympus" then "vault" else "vault-0";
+  in lib.mkIf (domain == "olympus" || domain == "hades") {
+    vaultPrefix = "${domain}_secrets/nixos";
+    vaultAddress = "http://${server}.${domain}:8200/";
+    approlePrefix = "${domain}-${hostName}";
   };
 }

@@ -121,7 +121,6 @@
     hostname = "database";
     ip = "192.168.0.126";
     mac = "82:e8:71:7f:37:b4";
-    nix = false;
   }
   {
     hostname = "dn42";
