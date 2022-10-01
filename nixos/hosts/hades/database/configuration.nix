@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 let vs = config.vault-secrets.secrets;
 in {
+
+  system.stateVersion = "21.05";
   networking.interfaces.eth0.useDHCP = true;
 
   networking.firewall.allowedTCPPorts = [ config.services.postgresql.port ];
@@ -8,6 +10,7 @@ in {
   vault-secrets.secrets.database = {
     user = "postgres";
     group = "postgres";
+    services = [ "postgresql" ];
   };
 
   services.postgresql = {
