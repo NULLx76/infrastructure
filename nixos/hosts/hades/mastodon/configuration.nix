@@ -1,6 +1,9 @@
 { config, pkgs, lib, ... }:
-let vs = config.vault-secrets.secrets;
-in {
+let
+  vs = config.vault-secrets.secrets;
+  cfg = config.services.mastodon;
+in
+{
   system.stateVersion = "21.05";
   # Use DHCP with static leases
   networking.interfaces.eth0.useDHCP = true;
@@ -16,6 +19,8 @@ in {
 
   vault-secrets.secrets.mastodon = {
     services = [ "mastodon-init-dirs" "mastodon" ];
+    user = cfg.user;
+    group = cfg.group;
   };
 
   # Append the init-dirs script to add AWS/Minio secrets
@@ -87,6 +92,7 @@ in {
     };
   };
 
-  networking.firewall = let cfg = config.services.mastodon;
-  in { allowedTCPPorts = [ cfg.streamingPort cfg.webPort ]; };
+  networking.firewall =
+    let cfg = config.services.mastodon;
+    in { allowedTCPPorts = [ cfg.streamingPort cfg.webPort ]; };
 }
