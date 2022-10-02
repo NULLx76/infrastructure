@@ -180,7 +180,6 @@
     hostname = "mastodon";
     ip = "192.168.0.138";
     mac = "52:60:8a:06:86:9c";
-    nix = false;
   }
   {
     hostname = "lidarr";

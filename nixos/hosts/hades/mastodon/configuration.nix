@@ -14,7 +14,17 @@ in {
     package = pkgs.elasticsearch7;
   };
 
-  vault-secrets.secrets.mastodon = { };
+  vault-secrets.secrets.mastodon = {
+    services = [ "mastodon-init-dirs" "mastodon" ];
+  };
+
+  # Append the init-dirs script to add AWS/Minio secrets
+  systemd.services.mastodon-init-dirs.script = ''
+    cat >> /var/lib/mastodon/.secrets_env <<EOF
+    AWS_ACCESS_KEY_ID="$(cat ${vs.mastodon}/awsAccessKeyId)"
+    AWS_SECRET_ACCESS_KEY="$(cat ${vs.mastodon}/awsSecretAccessKey)"
+    EOF
+  '';
 
   services.mastodon = {
     enable = true;
@@ -72,8 +82,6 @@ in {
       S3_ENABLED = "true";
       S3_BUCKET = "mastodon";
       S3_PROTOCOL = "https";
-      AWS_ACCESS_KEY_ID = secrets.awsAccessKey;
-      AWS_SECRET_ACCESS_KEY = secrets.awsSecretKey;
       S3_HOSTNAME = "o.xirion.net";
       S3_ENDPOINT = "https://o.xirion.net/";
     };

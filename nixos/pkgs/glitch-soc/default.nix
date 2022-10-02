@@ -52,6 +52,7 @@ stdenv.mkDerivation rec {
 
     buildPhase = ''
       export HOME=$PWD
+      export NODE_OPTIONS=--openssl-legacy-provider
       fixup_yarn_lock ~/yarn.lock
       yarn config --offline set yarn-offline-mirror ${yarnOfflineCache}
       yarn install --offline --frozen-lockfile --ignore-engines --ignore-scripts --no-progress
