@@ -50,7 +50,6 @@
     hostname = "rtorrent";
     ip = "192.168.0.111";
     mac = "7a:5f:9b:62:49:91";
-    nix = false;
   }
   {
     hostname = "minio";
