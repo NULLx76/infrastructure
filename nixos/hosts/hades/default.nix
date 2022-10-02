@@ -56,7 +56,6 @@
     hostname = "minio";
     ip = "192.168.0.112";
     mac = "ae:c6:94:bb:c5:d9";
-    nix = false;
   }
   {
     hostname = "cshub2";
