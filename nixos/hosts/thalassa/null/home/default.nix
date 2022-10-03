@@ -21,6 +21,7 @@ in {
     brightnessctl
     btop
     calibre
+    cinny-desktop
     element-desktop-wayland
     fluxcd
     fusee-launcher
