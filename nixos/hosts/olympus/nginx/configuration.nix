@@ -58,7 +58,7 @@ in
     virtualHosts."grafana.0x76.dev" = proxy "http://victoriametrics.olympus:2342";
     virtualHosts."outline.0x76.dev" = proxy "http://outline.olympus:3000";
     virtualHosts."id.0x76.dev" = proxy "http://keycloak.olympus:80";
-    
+
     # Redshifts
     virtualHosts."andreea.redshifts.xyz" = proxy "http://zmeura.olympus:8008";
 
@@ -94,10 +94,22 @@ in
         };
       };
     };
+    virtualHosts."cinny.chat.meowy.tech" = {
+      enableACME = true;
+      forceSSL = true;
+
+      root = pkgs.cinny.override {
+        conf = {
+          defaultHomeserver = 0;
+          allowCustomHomeservers = false;
+          homeserverList = [ "chat.meowy.tech" ];
+        };
+      };
+    };
     virtualHosts."admin.chat.meowy.tech" = {
-     enableACME = true;
-     forceSSL = true;
-     root = pkgs.synapse-admin;
+      enableACME = true;
+      forceSSL = true;
+      root = pkgs.synapse-admin;
     };
     virtualHosts."books.meowy.tech" = proxy "http://bookwyrm.olympus:8001";
 
