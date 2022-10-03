@@ -50,13 +50,11 @@
     hostname = "rtorrent";
     ip = "192.168.0.111";
     mac = "7a:5f:9b:62:49:91";
-    nix = false;
   }
   {
     hostname = "minio";
     ip = "192.168.0.112";
     mac = "ae:c6:94:bb:c5:d9";
-    nix = false;
   }
   {
     hostname = "cshub2";
@@ -132,7 +130,6 @@
     hostname = "docker-registry-proxy";
     ip = "192.168.0.128";
     mac = "0e:11:65:62:66:9f";
-    nix = false;
   }
   {
     hostname = "hassio";
@@ -144,7 +141,6 @@
     hostname = "docker-registry";
     ip = "192.168.0.130";
     mac = "5e:0e:a6:cf:64:70";
-    nix = false;
   }
   {
     hostname = "minecraft";

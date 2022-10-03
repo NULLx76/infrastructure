@@ -111,6 +111,7 @@
         buildInputs = with pkgs; [
           apply-local
           colmena.packages.${system}.colmena
+          cachix
           fluxcd
           k9s
           kubectl
