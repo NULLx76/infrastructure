@@ -30,6 +30,9 @@
         "Pikachu 5G" = {
           psk = "@PIKACHU_PASSWORD@";
         };
+        "sha256('yeet')" = {
+          psk = "@SHA256_PASSWORD@";
+        };
       };
     };
 
