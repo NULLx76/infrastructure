@@ -53,6 +53,7 @@ in {
     steam-run
     tex
     thunderbird-wayland
+    v.deemix-gui
     wf-recorder # Screenrecorder
     wl-clipboard # Clipboard manager
     wofi # Wayland rofi

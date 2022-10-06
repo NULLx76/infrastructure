@@ -1,46 +1,45 @@
-{ pkgs, stdenv, electron_14, mkYarnPackage, fetchFromGitLab, lib }:
-let electron = electron_14;
-in mkYarnPackage rec {
-  pname = "deemix-gui";
-  version = "0.1.0";
+{ lib, stdenv, fetchurl, appimageTools, makeWrapper, electron, xorg, pipewire }:
 
-  src = fetchFromGitLab {
-    owner = "RemixDev";
-    repo = "deemix-gui";
-    rev = "06305de9cf65639620eeaee408f1c64cb8610387";
-    sha256 = "sha256-498ivYIFUWDamtI38PUEag9ydWpXfhtzgI3rTOcmTJQ=";
+stdenv.mkDerivation rec {
+  pname = "deemix-gui";
+  version = "2022-08-20";
+
+  src = fetchurl {
+    url = "https://download.deemix.app/gui/linux-x64-latest.AppImage";
+    sha256 = "sha256-poEvEIYd5FXRweAGIK5AzPjBWY3p8ertiBPbEV0sv+c=";
+    name = "${pname}-${version}.AppImage";
   };
 
-  packageJSON = ./package.json;
-  yarnLock = ./yarn.lock;
+  appimageContents = appimageTools.extractType2 {
+    name = "${pname}-${version}";
+    inherit src;
+  };
 
-  buildInputs = [ electron ];
+  dontUnpack = true;
+  dontConfigure = true;
+  dontBuild = true;
+
+  nativeBuildInputs = [ makeWrapper ];
 
   installPhase = ''
-    ls -al
     runHook preInstall
-    mkdir -p $out/{bin,libexec/${pname}}
-    mv node_modules $out/libexec/${pname}/node_modules
-    mv deps $out/libexec/${pname}/deps
+
+    mkdir -p $out/bin $out/share/${pname} $out/share/applications
+
+    cp -a ${appimageContents}/{locales,resources} $out/share/${pname}
+    cp -a ${appimageContents}/usr/share/icons $out/share
+
     runHook postInstall
   '';
 
-  distPhase = ''
-    true
+  postFixup = ''
+    makeWrapper ${electron}/bin/electron $out/bin/${pname} \
+      --add-flags $out/share/${pname}/resources/app.asar \
+      --prefix LD_LIBRARY_PATH : "${
+        lib.makeLibraryPath [ stdenv.cc.cc xorg.libXtst pipewire ]
+      }" \
+      --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}"
   '';
 
-  # distPhase = ''
-  #   cd $out
-  #   unlink "$out/libexec/${pname}/deps/${pname}/node_modules"
-  #   ln -s "$out/libexec/${pname}/node_modules" "$out/libexec/${pname}/deps/${pname}/desktop/node_modules"
-  #   ls -al
-  #   ls -al libexec
-  #   mkdir -p bin
-  #   cd bin
-  #   echo '#!/bin/sh' > ${pname}
-  #   echo "cd $out/libexec/${pname}/deps/${pname}" >> ${pname}
-  #   echo "${electron}/bin/electron $out/libexec/${pname}/deps/${pname}/desktop" >> ${pname}
-  #   chmod 0755 $out/bin/${pname}
-  #   true
-  # '';
+  meta = with lib; { platforms = [ "x86_64-linux" ]; };
 }
