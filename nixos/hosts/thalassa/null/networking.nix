@@ -33,6 +33,9 @@
         "sha256('yeet')" = {
           psk = "@SHA256_PASSWORD@";
         };
+        "wired" = {
+          psk = "@WIRED_PASSWORD@";
+        };
       };
     };
 

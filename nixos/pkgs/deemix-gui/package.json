@@ -1,0 +1,84 @@
+{
+    "name": "deemix-gui",
+    "version": "0.0.0",
+    "main": "index.js",
+    "repository": "https://gitlab.com/RemixDev/deemix-gui.git",
+    "author": "RemixDev <RemixDev64@gmail.com>",
+    "license": "GPL-3.0-only",
+    "scripts": {
+      "install-all": "yarn install && yarn --cwd server install --production && yarn --cwd webui install --production",
+      "install-all-dev": "yarn install && yarn --cwd server install && yarn --cwd webui install",
+      "dev": "yarn --cwd webui dev",
+      "start": "electron . --dev",
+      "predist": "yarn build-server && yarn build-webui",
+      "dist": "yarn set-version && electron-builder && yarn reset-version",
+      "dist:dir": "yarn set-version && yarn predist && electron-builder --dir && yarn reset-version",
+      "dist-server": "yarn set-version && yarn predist && ./node_modules/.bin/pkg --out-dir dist ./server/package.json && yarn reset-version",
+      "start-server": "yarn --cwd server start",
+      "build-server": "yarn --cwd server build",
+      "build-webui": "yarn --cwd webui build",
+      "set-version": "node scripts/set-version.js",
+      "reset-version": "node scripts/reset-version.js"
+    },
+    "devDependencies": {
+      "electron": "^14.2.0",
+      "electron-builder": "^22.14.0",
+      "pkg": "^5.5.0"
+    },
+    "dependencies": {
+      "electron-context-menu": "^3.1.0",
+      "electron-window-state-manager": "^0.3.2",
+      "yargs": "^17.3.0"
+    },
+    "build": {
+      "appId": "app.deemix.gui",
+      "productName": "deemix-gui",
+      "files": [
+        "index.js",
+        "preload.js",
+        "server/dist/**/*",
+        "webui/public/**/*",
+        "build/**/*",
+        "package.json"
+      ],
+      "mac": {
+        "target": "dmg",
+        "artifactName": "deemix-gui.${ext}",
+        "category": "public.app-category.music"
+      },
+      "win": {
+        "target": [
+          {
+            "target": "nsis",
+            "arch": "x64"
+          },
+          {
+            "target": "portable",
+            "arch": "x64"
+          }
+        ]
+      },
+      "linux": {
+        "target": [
+          "appimage",
+          "deb"
+        ],
+        "artifactName": "deemix-gui.${ext}",
+        "category": "AudioVideo,Audio",
+        "icon": "build/icon.icns"
+      },
+      "nsis": {
+        "artifactName": "${productName}_setup.${ext}",
+        "oneClick": false,
+        "license": "LICENSE.txt",
+        "allowToChangeInstallationDirectory": true,
+        "uninstallDisplayName": "${productName}",
+        "deleteAppDataOnUninstall": true
+      },
+      "portable": {
+        "artifactName": "${productName}.${ext}",
+        "requestExecutionLevel": "user"
+      }
+    }
+  }
+  

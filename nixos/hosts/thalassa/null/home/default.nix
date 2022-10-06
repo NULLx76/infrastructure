@@ -18,6 +18,7 @@ in {
   ];
 
   home.packages = with pkgs; [
+    appimage-run
     brightnessctl
     btop
     calibre
@@ -42,7 +43,6 @@ in {
     nixpkgs-review
     plex-media-player
     plexamp
-    pulseview
     python3
     retroarchFull
     ripgrep
@@ -52,7 +52,6 @@ in {
     solo2-cli
     steam-run
     tex
-    # texlive.combined.scheme-full
     thunderbird-wayland
     wf-recorder # Screenrecorder
     wl-clipboard # Clipboard manager
@@ -137,24 +136,28 @@ in {
       "nix.serverPath" =
         "${pkgs.nil}/bin/nil"; # The path to the LSP server executable.
       "[nix]" = { "editor.defaultFormatter" = "brettm12345.nixfmt-vscode"; };
+      # "platformio-ide.useBuiltinPIOCore" = false;
+      # "platformio-ide.useBuiltinPython" = false;
     };
-    extensions = with pkgs.vscode-extensions; [
-      catppuccin.catppuccin-vsc
-      brettm12345.nixfmt-vscode
-      codezombiech.gitignore
-      editorconfig.editorconfig
-      foxundermoon.shell-format
-      james-yu.latex-workshop
-      jnoortheen.nix-ide
-      matklad.rust-analyzer
-      mkhl.direnv
-      ms-vscode-remote.remote-ssh
-      ms-vscode.cpptools
-      tamasfe.even-better-toml
-      valentjn.vscode-ltex
-      vscodevim.vim
-      xaver.clang-format
-    ];
+    extensions = with pkgs.vscode-extensions;
+      with pkgs.v.vscode-extensions; [
+        brettm12345.nixfmt-vscode
+        catppuccin.catppuccin-vsc
+        codezombiech.gitignore
+        editorconfig.editorconfig
+        foxundermoon.shell-format
+        james-yu.latex-workshop
+        jnoortheen.nix-ide
+        matklad.rust-analyzer
+        mkhl.direnv
+        ms-vscode-remote.remote-ssh
+        ms-vscode.cpptools
+        platformio.platformio-ide
+        tamasfe.even-better-toml
+        valentjn.vscode-ltex
+        vscodevim.vim
+        xaver.clang-format
+      ];
   };
 
   programs.direnv = {
