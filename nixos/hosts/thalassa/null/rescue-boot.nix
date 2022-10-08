@@ -1,5 +1,6 @@
 { pkgs, ... }:
 let
+  # TODO: slim down size
   netboot = import (pkgs.path + "/nixos/lib/eval-config.nix") {
     inherit (pkgs) system;
     modules = [
