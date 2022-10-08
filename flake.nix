@@ -96,7 +96,7 @@
       }).nodes;
 
 
-      # Make the coleman configuration
+      # Make the colmena configuration
       colmena = lib.foldr (el: acc: acc // util.mkColmenaHost el)
         {
           meta = {
