@@ -10,10 +10,10 @@ let
       import_cases = {
         "lxc" = [
           "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
-          ./nixos/common/generic-lxc.nix
+          ./common/generic-lxc.nix
         ];
         "vm" = [
-          ./nixos/common/generic-vm.nix
+          ./common/generic-vm.nix
         ];
         "local" = [
           home-manager.nixosModules.home-manager
@@ -23,8 +23,8 @@ let
     in
     { hostname, realm, profile ? hostname, type ? "lxc", ... }: [
       mailserver.nixosModules.mailserver
-      ./nixos/common
-      "${./.}/nixos/hosts/${realm}/${profile}/configuration.nix"
+      ./common
+      "${./.}/hosts/${realm}/${profile}/configuration.nix"
     ] ++ import_cases.${type};
 in
 {

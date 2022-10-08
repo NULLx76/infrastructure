@@ -47,6 +47,7 @@
     helix
     htop
     ncdu
+    psmisc
     ripgrep
     rsync
     zoxide

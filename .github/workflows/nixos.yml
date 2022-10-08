@@ -19,7 +19,7 @@ jobs:
           name: 0x76-infra
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
-      - name: "Check NixOS Flake ❄️"
+      - name: "Build NixOS ISO ❄️"
         run: |
           nix build '.#iso'
       - uses: actions/upload-artifact@v3
