@@ -19,8 +19,20 @@
       options = [ "subvol=@" ];
     };
 
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-uuid/d4f56e5b-2509-4e63-8324-65a35c71e90c";
+      fsType = "btrfs";
+      options = [ "subvol=@/nix" ];
+    };
+
+  fileSystems."/home" =
+    { device = "/dev/disk/by-uuid/d4f56e5b-2509-4e63-8324-65a35c71e90c";
+      fsType = "btrfs";
+      options = [ "subvol=@home" ];
+    };
+
   fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-uuid/445C-AF67";
+    { device = "/dev/disk/by-uuid/D478-6F66";
       fsType = "vfat";
     };
 

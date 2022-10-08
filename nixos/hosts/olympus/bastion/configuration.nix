@@ -36,9 +36,7 @@ in {
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
 
-  virtualisation.podman = {
-    enable = true;
-  };
+  virtualisation.podman.enable = true; 
 
   # Additional packages
   environment.systemPackages = with pkgs; [
@@ -52,7 +50,6 @@ in {
     nixpkgs-fmt
     nixpkgs-review
     ripgrep
-    rnix-lsp
     rsync
     tmux
     vault

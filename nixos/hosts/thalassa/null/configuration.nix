@@ -34,6 +34,7 @@ in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./rescue-boot.nix
     ./networking.nix
   ];
 
@@ -80,7 +81,7 @@ in {
     kernelPackages = pkgs.linuxPackages_latest;
     loader.systemd-boot.editor = false;
     loader.systemd-boot.enable = true;
-    loader.systemd-boot.configurationLimit = 6;
+    # loader.systemd-boot.configurationLimit = 6;
     loader.efi.canTouchEfiVariables = true;
     loader.efi.efiSysMountPoint = "/boot/efi";
   };
@@ -89,6 +90,7 @@ in {
 
   fileSystems."/".options = [ "compress=zstd" ];
   fileSystems."/home".options = [ "compress=zstd" ];
+  fileSystems."/nix".options = [ "compress=zstd" "noatime" ];
 
   # Filesystem dedup
   services.beesd.filesystems = {
