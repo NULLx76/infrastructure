@@ -88,6 +88,8 @@ in {
   services.gnome.gnome-keyring.enable = true;
 
   fileSystems."/".options = [ "compress=zstd" ];
+  fileSystems."/home".options = [ "compress=zstd" ];
+
   # Filesystem dedup
   services.beesd.filesystems = {
     root = {

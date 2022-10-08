@@ -37,6 +37,11 @@
 
     mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     mailserver.inputs.nixpkgs.follows = "nixpkgs";
+
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -49,13 +54,14 @@
     , home-manager
     , hyprpaper
     , hyprland
+    , nixos-generators
     , ...
     } @ inputs:
     let
       inherit (nixpkgs) lib;
       inherit (builtins) mapAttrs;
 
-      util = import ./util.nix inputs;
+      util = import ./nixos/util.nix inputs;
 
       system = "x86_64-linux";
       # import and add realm to list of tags
@@ -103,6 +109,14 @@
       packages.${system} = {
         default = colmena.packages.${system}.colmena;
         apply-local = apply-local;
+
+        iso = nixos-generators.nixosGenerate {
+          inherit system pkgs;
+          format = "iso";
+          modules = [
+            (import ./nixos/iso.nix)
+          ];
+        };
       };
 
       # Use by running `nix develop`
