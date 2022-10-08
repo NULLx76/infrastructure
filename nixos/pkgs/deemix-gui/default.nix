@@ -1,4 +1,4 @@
-{ lib, stdenv, fetchurl, appimageTools, makeWrapper, electron, xorg, pipewire }:
+{ lib, stdenv, fetchurl, appimageTools, makeWrapper, electron }:
 
 stdenv.mkDerivation rec {
   pname = "deemix-gui";
@@ -33,13 +33,8 @@ stdenv.mkDerivation rec {
   '';
 
   postFixup = ''
-    makeWrapper ${electron}/bin/electron $out/bin/${pname} \
-      --add-flags $out/share/${pname}/resources/app.asar \
-      --prefix LD_LIBRARY_PATH : "${
-        lib.makeLibraryPath [ stdenv.cc.cc xorg.libXtst pipewire ]
-      }" \
-      --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}"
+    makeWrapper ${electron}/bin/electron $out/bin/${pname} --add-flags $out/share/${pname}/resources/app.asar 
   '';
 
-  meta = with lib; { platforms = [ "x86_64-linux" ]; };
+  meta = { platforms = [ "x86_64-linux" ]; };
 }
