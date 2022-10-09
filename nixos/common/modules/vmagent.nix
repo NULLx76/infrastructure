@@ -3,8 +3,7 @@ with lib;
 let
   cfg = config.services.vmagent;
   settingsFormat = pkgs.formats.json { };
-in
-{
+in {
   options.services.vmagent = {
     enable = mkEnableOption "vmagent";
 
@@ -50,9 +49,7 @@ in
     };
 
     prometheusConfig = mkOption {
-      type = lib.types.submodule {
-        freeformType = settingsFormat.type;
-      };
+      type = lib.types.submodule { freeformType = settingsFormat.type; };
       description = ''
         Config for prometheus style metrics
       '';
@@ -76,7 +73,7 @@ in
       vmagent = {
         group = cfg.group;
         shell = pkgs.bashInteractive;
-        description = "vmagent Daemon user";
+        description = "vmagent daemon user";
         home = cfg.dataDir;
         isSystemUser = true;
       };
@@ -86,23 +83,25 @@ in
     networking.firewall.allowedTCPPorts = mkIf (cfg.openFirewall) [ 8429 ];
 
     # The actual service
-    systemd.services.vmagent =
-      let prometheusConfig = settingsFormat.generate "prometheusConfig.yaml" cfg.prometheusConfig;
-      in {
-        wantedBy = [ "multi-user.target" ];
-        after = [ "network.target" ];
-        description = "vmagent system service";
-        serviceConfig = {
-          User = cfg.user;
-          Group = cfg.group;
-          Type = "simple";
-          Restart = "on-failure";
-          WorkingDirectory = cfg.dataDir;
-          ExecStart =
-            "${cfg.package}/bin/vmagent -remoteWrite.url=${cfg.remoteWriteUrl} -promscrape.config=${prometheusConfig}";
-        };
+    systemd.services.vmagent = let
+      prometheusConfig =
+        settingsFormat.generate "prometheusConfig.yaml" cfg.prometheusConfig;
+    in {
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
+      description = "vmagent system service";
+      serviceConfig = {
+        User = cfg.user;
+        Group = cfg.group;
+        Type = "simple";
+        Restart = "on-failure";
+        WorkingDirectory = cfg.dataDir;
+        ExecStart =
+          "${cfg.package}/bin/vmagent -remoteWrite.url=${cfg.remoteWriteUrl} -promscrape.config=${prometheusConfig}";
       };
+    };
 
-    systemd.tmpfiles.rules = [ "d '${cfg.dataDir}' 0755 ${cfg.user} ${cfg.group} -" ];
+    systemd.tmpfiles.rules =
+      [ "d '${cfg.dataDir}' 0755 ${cfg.user} ${cfg.group} -" ];
   };
 }

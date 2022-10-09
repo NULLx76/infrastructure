@@ -1,4 +1,4 @@
-{ stdenvNoCC, lib, fetchFromGitHub, xorg, inkscape }:
+{ stdenvNoCC, lib, fetchFromGitHub, xcursorgen, inkscape, makeFontsConf }:
 
 stdenvNoCC.mkDerivation {
   pname = "catppuccin-cursors";
@@ -11,13 +11,16 @@ stdenvNoCC.mkDerivation {
     sha256 = "sha256-0wb84q1VtD1myIRxrfQMn9n6w1gFzMA1rHkPqXuXLP0=";
   };
 
-  nativeBuildInputs = [
-    xorg.xcursorgen
-    inkscape
-  ];
+  nativeBuildInputs = [ xcursorgen inkscape ];
+
+  FONTCONFIG_FILE = makeFontsConf { fontDirectories = [ ]; };
+
+  buildPhase = ''
+    HOME="$NIX_BUILD_ROOT" PREFIX="/" DESTDIR=$out make build
+  '';
 
   installPhase = ''
-    PREFIX="/" DESTDIR=$out make install
+    HOME="$NIX_BUILD_ROOT" PREFIX="/" DESTDIR=$out make install
   '';
 
   meta = with lib; {
@@ -25,5 +28,6 @@ stdenvNoCC.mkDerivation {
     homepage = "https://github.com/catppuccin/cursors";
     license = licenses.gpl2;
     platforms = platforms.linux;
+    maintainers = with maintainers; [ nullx76 ];
   };
 }
