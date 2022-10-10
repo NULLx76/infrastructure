@@ -159,6 +159,11 @@
     tags = [ "vault" ];
   }
   {
+    hostname = "vaultwarden";
+    ip = "10.42.42.31";
+    mac = "FA:71:3F:31:34:41";
+  }
+  {
     hostname = "nuc";
     ip = "10.42.42.42";
     ip6 = "2001:41f0:9639:1::42";

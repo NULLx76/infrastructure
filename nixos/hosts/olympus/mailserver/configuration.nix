@@ -53,6 +53,10 @@ let vs = config.vault-secrets.secrets; in
         hashedPasswordFile = "${vs.mailserver}/outline@0x76.dev";
         sendOnly = true;
       };
+      "vaultwarden@0x76.dev" = {
+        hashedPasswordFile = "${vs.mailserver}/vaultwarden@0x76.dev";
+        sendOnly = true;
+      };
     };
 
     indexDir = "/var/lib/dovecot/indices";

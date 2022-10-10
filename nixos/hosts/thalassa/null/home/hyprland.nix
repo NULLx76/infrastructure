@@ -62,7 +62,7 @@
         bind=SUPER,f,exec,firefox-devedition
         bind=SUPER,d,exec,wofi --show run,drun
 
-        bind=,Print,exec,grim -g "$(slurp)" - | wl-copy -t image/png
+        bind=,Print,exec,grim -g "$(slurp)" -t png - | wl-copy -t image/png
         bind=SUPER,W,killactive,
         bind=SUPERSHIFT,Q,exit,
         bind=SUPER,S,togglefloating,
