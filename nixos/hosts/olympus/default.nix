@@ -161,7 +161,7 @@
   {
     hostname = "vaultwarden";
     ip = "10.42.42.31";
-    mac = "FA:71:3F:31:34:41";
+    mac = "96:61:03:16:63:98";
   }
   {
     hostname = "nuc";

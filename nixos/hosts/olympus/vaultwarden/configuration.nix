@@ -18,7 +18,7 @@ in {
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
-  networking.firewall.allowedTCPPorts = [ ];
+  networking.firewall.allowedTCPPorts = [ config.services.vaultwarden.config.ROCKET_PORT ];
 
   vault-secrets.secrets.vaultwarden = {
     user = "vaultwarden";
@@ -32,7 +32,7 @@ in {
     config = {
       DOMAIN = "https://pass.0x76.dev";
       SIGNUPS_ALLOWED = false;
-      ROCKET_ADDRESS = "127.0.0.1";
+      ROCKET_ADDRESS = "0.0.0.0";
       ROCKET_PORT = 8222;
 
       SMTP_HOST = "mail.0x76.dev";
