@@ -33,10 +33,16 @@ let vs = config.vault-secrets.secrets; in
     certificateScheme = 3;
 
     loginAccounts = {
+      # People
       "v@0x76.dev" = {
         hashedPasswordFile = "${vs.mailserver}/v@0x76.dev";
         aliases = [ "v@meowy.tech" "postmaster@0x76.dev" "postmaster@meowy.tech" ];
       };
+      "laura@meowy.tech" = {
+        hashedPasswordFile = "${vs.mailserver}/laura@meowy.tech";
+        aliases = [ "lau@meowy.tech" ];
+      };
+      # Services
       "keycloak@0x76.dev" = {
         hashedPasswordFile = "${vs.mailserver}/keycloak@0x76.dev";
         sendOnly = true;
