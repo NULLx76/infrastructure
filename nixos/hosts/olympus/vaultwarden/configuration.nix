@@ -3,7 +3,9 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-let vs = config.vault-secrets.secrets;
+let
+  vs = config.vault-secrets.secrets;
+  cfg = config.services.vaultwarden.config;
 in {
   imports = [ ];
 
@@ -18,7 +20,7 @@ in {
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
-  networking.firewall.allowedTCPPorts = [ config.services.vaultwarden.config.ROCKET_PORT ];
+  networking.firewall.allowedTCPPorts = [ cfg.ROCKET_PORT cfg.WEBSOCKET_PORT ];
 
   vault-secrets.secrets.vaultwarden = {
     user = "vaultwarden";
@@ -34,6 +36,10 @@ in {
       SIGNUPS_ALLOWED = false;
       ROCKET_ADDRESS = "0.0.0.0";
       ROCKET_PORT = 8222;
+
+      WEBSOCKET_ENABLED = true;
+      WEBSOCKET_ADDRESS = "0.0.0.0";
+      WEBSOCKET_PORT = 3012;
 
       SMTP_HOST = "mail.0x76.dev";
       SMTP_FROM = "vaultwarden@0x76.dev";

@@ -22,8 +22,7 @@ let
     add_header Access-Control-Allow-Origin *;
     return 200 '${builtins.toJSON data}';
   '';
-in
-{
+in {
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -31,9 +30,6 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.05"; # Did you read the comment?
-
-  # Additional packages
-  environment.systemPackages = with pkgs; [ ];
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
@@ -51,14 +47,28 @@ in
 
     # 0x76.dev
     virtualHosts."ha.0x76.dev" = proxy "http://home-assistant.olympus:8123/";
-    # virtualHosts."zookeeper-dev.0x76.dev" = proxy "http://eevee.olympus:8085/";
     virtualHosts."md.0x76.dev" = proxy "http://hedgedoc.olympus:3000/";
     virtualHosts."git.0x76.dev" = proxy "http://gitea.olympus:3000";
     virtualHosts."o.0x76.dev" = proxy "http://minio.olympus:9000";
     virtualHosts."grafana.0x76.dev" = proxy "http://victoriametrics.olympus:2342";
     virtualHosts."outline.0x76.dev" = proxy "http://outline.olympus:3000";
     virtualHosts."id.0x76.dev" = proxy "http://keycloak.olympus:80";
-    virtualHosts."pass.0x76.dev" = proxy "http://vaultwarden.olympus:8222";
+    virtualHosts."pass.0x76.dev" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://vaultwarden.olympus:8222";
+        proxyWebsockets = true;
+      };
+      locations."/notifications/hub/negotiate" = {
+        proxyPass = "http://vaultwarden.olympus:8222";
+        proxyWebsockets = true;
+      };
+      locations."/notifications/hub" = {
+        proxyPass = "http://vaultwarden.olympus:3012";
+        proxyWebsockets = true;
+      };
+    };
 
     # Redshifts
     virtualHosts."andreea.redshifts.xyz" = proxy "http://zmeura.olympus:8008";
@@ -71,8 +81,10 @@ in
         add_header Content-Type 'text/html; charset=UTF-8';
         return 200 '<h1>meow</h1>';
       '';
-      locations."= /.well-known/matrix/client".extraConfig = mkWellKnown clientConfig;
-      locations."= /.well-known/matrix/server".extraConfig = mkWellKnown serverConfig;
+      locations."= /.well-known/matrix/client".extraConfig =
+        mkWellKnown clientConfig;
+      locations."= /.well-known/matrix/server".extraConfig =
+        mkWellKnown serverConfig;
     };
     virtualHosts."chat.meowy.tech" = {
       enableACME = true;
