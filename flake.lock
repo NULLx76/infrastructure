@@ -420,11 +420,11 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1665271265,
-        "narHash": "sha256-4Nn0T5YoR3bBLFnPy6Tkc8zzmzMTBjSGZq05c5hKhEI=",
+        "lastModified": 1665476539,
+        "narHash": "sha256-NDs0qfTSfG+vEvB3HN2GOOZgMBPAYBpFeIC4hrN5wjk=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "e1f1160284198a68ea8c7fffbbb1436f99e46ef9",
+        "rev": "b37a909508edb8d7fdcd04ac90761b2cfa2a5f28",
         "type": "github"
       },
       "original": {
@@ -439,11 +439,11 @@
         "wlroots": "wlroots"
       },
       "locked": {
-        "lastModified": 1665347456,
-        "narHash": "sha256-FdjdpWgsvM75/wtmgRjY/91VBGFX1YRQ9AtT4sffzP8=",
+        "lastModified": 1665437770,
+        "narHash": "sha256-0up6k+ATaxv1X60nQuslcIirUQqkbl1m5pCFnH3TJtE=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "cb687c208c116ea870f827d8b2ee963655599f1f",
+        "rev": "ae91f6610ff00495c777fa3d996056061ea5c6b9",
         "type": "github"
       },
       "original": {
@@ -550,11 +550,11 @@
         "utils": "utils_4"
       },
       "locked": {
-        "lastModified": 1665367069,
-        "narHash": "sha256-tlVT20lHZR0mXNoxY+hDgc/3h/J3PCx8kUDO6CD+oJs=",
+        "lastModified": 1665453036,
+        "narHash": "sha256-4KcfIZvUefiPJbA4Ixx8pSe0Y4Ay6vI+SKCMVDxAoEs=",
         "owner": "jyooru",
         "repo": "nix-minecraft-servers",
-        "rev": "2615d292a38bc8a791b26494dfc7b655ca2c4838",
+        "rev": "f2116ba4c3225ce6435f818f83115a3a8bc05619",
         "type": "github"
       },
       "original": {
@@ -737,11 +737,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1665405393,
-        "narHash": "sha256-aSmFxF0XxIUcmx7WZZU/oyBcCm3qNroRLYQL26DFyGU=",
+        "lastModified": 1665477785,
+        "narHash": "sha256-WVWRk8I+0ZpFaKvXKFcwQFYuwlsRhyfy4e6qETYDYvA=",
         "owner": "NULLx76",
         "repo": "nixpkgs",
-        "rev": "b1da428acecbe0e91c4d211f06037a34e0ad2e1d",
+        "rev": "e158cfcc737983fbe85fbf6a7ef54e88e820a1d6",
         "type": "github"
       },
       "original": {
@@ -865,11 +865,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1665162504,
-        "narHash": "sha256-YDeDDSiwwuN4tuI+0GAcMKzimKSt7sJOtBZITzJGfuY=",
+        "lastModified": 1665425469,
+        "narHash": "sha256-P42lqx/FvAbP17ljoa+6PdB6KzQtuFjn7fGOGoxzkU0=",
         "owner": "DeterminateSystems",
         "repo": "riff",
-        "rev": "c2ceedca74e2f388aec6edaa6259a1b94fe07fc3",
+        "rev": "30f6a9e440f06d7c1a38d1f515a154e3325dc725",
         "type": "github"
       },
       "original": {
