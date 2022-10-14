@@ -24,7 +24,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     hyprland.url = "github:hyprwm/Hyprland";
-    hyprpaper.url = "github:NULLx76/hyprpaper";
+    hyprpaper.url = "github:hyprwm/hyprpaper";
     hyprpaper.inputs.nixpkgs.follows = "nixpkgs";
 
     riff.url = "github:DeterminateSystems/riff";
