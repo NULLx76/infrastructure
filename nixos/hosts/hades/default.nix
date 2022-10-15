@@ -77,7 +77,6 @@
     hostname = "unpackerr";
     ip = "192.168.0.116";
     mac = "06:8a:8e:3e:43:45";
-    nix = false;
   }
   {
     hostname = "thelounge";
