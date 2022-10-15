@@ -1,7 +1,6 @@
 { nixpkgs, home-manager, hyprland, mailserver, ... }:
 let
-  inherit (nixpkgs) lib;
-  inherit (builtins) filter mapAttrs attrValues concatLists;
+  inherit (builtins) filter attrValues concatLists;
 
   # Helper function to resolve what should be imported depending on the type of config (lxc, vm, bare metal)
   resolve_imports =

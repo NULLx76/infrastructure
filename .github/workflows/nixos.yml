@@ -51,11 +51,23 @@ jobs:
       - name: "Build NixOS ISO ❄️"
         run: |
           nix build '.#iso'
-      - uses: actions/upload-artifact@v3
+  build-lxc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.2
+
+      - name: "Install Nix ❄️"
+        uses: cachix/install-nix-action@v15
+
+      - name: "Install Cachix ❄️"
+        uses: cachix/cachix-action@v10
         with:
-          name: nixos-iso
-          retention-days: 3
-          path: result/iso/*.iso
+          name: 0x76-infra
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+
+      - name: "Build NixOS Proxmox LXC ❄️"
+        run: |
+          nix build '.#proxmox-lxc'
   build-olympus:
     runs-on: ubuntu-latest
     steps:

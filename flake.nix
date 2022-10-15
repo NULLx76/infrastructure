@@ -44,19 +44,9 @@
     };
   };
 
-  outputs =
-    { self
-    , nixpkgs
-    , vault-secrets
-    , serokell-nix
-    , minecraft-servers
-    , colmena
-    , home-manager
-    , hyprpaper
-    , hyprland
-    , nixos-generators
-    , ...
-    } @ inputs:
+  outputs = { self, nixpkgs, vault-secrets, serokell-nix, minecraft-servers
+    , colmena, home-manager, hyprpaper, hyprland, nixos-generators, ...
+    }@inputs:
     let
       inherit (nixpkgs) lib;
       inherit (builtins) mapAttrs;
@@ -84,37 +74,46 @@
       # Script to apply local colmena deployments
       apply-local = pkgs.writeScriptBin "apply-local" ''
         #!${pkgs.stdenv.shell}
-        "${colmena.packages.${system}.colmena}"/bin/colmena apply-local --sudo $@
+        "${
+          colmena.packages.${system}.colmena
+        }"/bin/colmena apply-local --sudo $@
       '';
-    in
-    {
+    in {
       # Make the nixosConfigurations for compat reasons
-      nixosConfigurations = (import (inputs.colmena + "/src/nix/hive/eval.nix") {
-        rawFlake = self;
-        colmenaOptions = import (inputs.colmena + "/src/nix/hive/options.nix");
-        colmenaModules = import (inputs.colmena + "/src/nix/hive/modules.nix");
-      }).nodes;
-
+      nixosConfigurations =
+        (import (inputs.colmena + "/src/nix/hive/eval.nix") {
+          rawFlake = self;
+          colmenaOptions =
+            import (inputs.colmena + "/src/nix/hive/options.nix");
+          colmenaModules =
+            import (inputs.colmena + "/src/nix/hive/modules.nix");
+        }).nodes;
 
       # Make the colmena configuration
-      colmena = lib.foldr (el: acc: acc // util.mkColmenaHost el)
-        {
-          meta = {
-            inherit specialArgs;
-            nixpkgs = pkgs;
-          };
-        }
-        nixHosts;
+      colmena = lib.foldr (el: acc: acc // util.mkColmenaHost el) {
+        meta = {
+          inherit specialArgs;
+          nixpkgs = pkgs;
+        };
+      } nixHosts;
 
       packages.${system} = {
+        inherit apply-local;
+  
         default = colmena.packages.${system}.colmena;
-        apply-local = apply-local;
 
         iso = nixos-generators.nixosGenerate {
           inherit system pkgs;
           format = "iso";
+          modules = [ (import ./nixos/iso.nix) ];
+        };
+
+        proxmox-lxc = nixos-generators.nixosGenerate {
+          inherit system pkgs;
+          format = "proxmox-lxc";
           modules = [
-            (import ./nixos/iso.nix)
+            "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
+            (import ./nixos/lxc-template.nix)
           ];
         };
       };
@@ -134,8 +133,8 @@
           nixfmt
           nixUnstable
           vault
-          (vault-push-approle-envs self {})
-          (vault-push-approles self {})
+          (vault-push-approle-envs self { })
+          (vault-push-approles self { })
         ];
       };
     };
