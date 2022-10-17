@@ -24,20 +24,19 @@ let vs = config.vault-secrets.secrets; in
     services = [ "wg-quick-wg0" ];
   };
 
-  # # basically to override wireguard and route olympus IPs via the router
-  # networking.interfaces.eth0.ipv4.routes = [{
-  #   address = "10.42.42.0";
-  #   prefixLength = 23;
-  #   via = "192.168.0.1";
-  # }];
-
   # Mullvad VPN
-  networking.wg-quick.interfaces = {
+  networking.wg-quick.interfaces = let 
+    postUpScript = pkgs.writeScriptBin "post_up" ''
+      #!${pkgs.stdenv.shell}
+      ${pkgs.iproute2}/bin/ip route add 10.42.42.0/23 via 192.168.0.1
+      ${pkgs.iproute2}/bin/ip route add 10.100.0.0/24 via 192.168.0.1
+    '';
+  in{
     wg0 = {
       address = [ "10.66.153.191/32" "fc00:bbbb:bbbb:bb01::3:99be/128" ];
       dns = [ "193.138.218.74" ];
       privateKeyFile = "${vs.rtorrent}/wireguardKey";
-      postUp = "${pkgs.iproute2}/bin/ip route add 10.42.42.0/23 via 192.168.0.1";
+      postUp = "${postUpScript}/bin/post_up";
 
       peers = [
         {
