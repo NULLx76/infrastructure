@@ -36,7 +36,7 @@ let vs = config.vault-secrets.secrets; in
       address = [ "10.66.153.191/32" "fc00:bbbb:bbbb:bb01::3:99be/128" ];
       dns = [ "193.138.218.74" ];
       privateKeyFile = "${vs.rtorrent}/wireguardKey";
-      postUp = "${postUpScript}/bin/post_up";
+      postUp = "${postUpScript}/bin/post_up || true";
 
       peers = [
         {
