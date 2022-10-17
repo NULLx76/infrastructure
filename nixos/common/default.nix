@@ -52,6 +52,12 @@
       automatic = true;
       dates = [ "weekly" ];
     };
+    gc = {
+      automatic = true;
+      dates = [ "weekly" ];
+      randomizedDelaySec = "3h";
+      options = "--delete-older-than 7d";
+    };
     extraOptions = ''
       experimental-features = nix-command flakes
     '';

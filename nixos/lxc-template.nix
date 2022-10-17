@@ -9,6 +9,8 @@
     permitRootLogin = "yes";
   };
 
+  networking.hostName = "template";
+
   time.timeZone = lib.mkDefault "Europe/Amsterdam";
 
   networking.interfaces.eth0.useDHCP = true;
