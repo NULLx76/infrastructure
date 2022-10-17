@@ -112,7 +112,6 @@
           inherit system pkgs;
           format = "proxmox-lxc";
           modules = [
-            "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
             (import ./nixos/lxc-template.nix)
           ];
         };

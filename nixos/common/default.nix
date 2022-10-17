@@ -54,7 +54,7 @@
     };
     gc = {
       automatic = true;
-      dates = [ "weekly" ];
+      dates = "weekly";
       randomizedDelaySec = "3h";
       options = "--delete-older-than 7d";
     };
