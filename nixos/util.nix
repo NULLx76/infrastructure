@@ -15,12 +15,12 @@ let
           ./common/generic-vm.nix
         ];
         "local" = [
-          home-manager.nixosModules.home-manager
           hyprland.nixosModules.default
         ];
       };
     in
     { hostname, realm, profile ? hostname, type ? "lxc", ... }: [
+      home-manager.nixosModules.home-manager
       mailserver.nixosModules.mailserver
       ./common
       "${./.}/hosts/${realm}/${profile}/configuration.nix"

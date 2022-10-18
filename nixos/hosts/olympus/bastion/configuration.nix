@@ -60,4 +60,8 @@ in {
     enable = true;
     pinentryFlavor = "curses";
   };
+
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.users.victor = import ./home.nix;
 }
