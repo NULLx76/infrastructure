@@ -2,8 +2,6 @@
 final: prev: {
   catppuccin.cursors = prev.callPackage ./catppuccin/cursors { };
 
-  vmagent = prev.callPackage ./vmagent { };
-
   v = {
     glitch-soc = prev.callPackage ./glitch-soc { };
 
@@ -21,7 +19,8 @@ final: prev: {
     gitea-agatheme = prev.callPackage ./gitea-agatheme { };
 
     vscode-extensions = {
-      platformio.platformio-ide = prev.callPackage ./vscode-extensions/platformio.nix { };
+      platformio.platformio-ide =
+        prev.callPackage ./vscode-extensions/platformio.nix { };
     };
   };
 }

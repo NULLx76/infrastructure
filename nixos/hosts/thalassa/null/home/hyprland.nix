@@ -31,6 +31,7 @@
         windowrulev2 = workspace 1 silent,class:^(Electron)$,title:^(.*)(WebCord)(.*)$
         windowrulev2 = workspace 1 silent,title:^(Element)(.*)$
         windowrulev2 = workspace 2 silent,class:^(firefox-aurora)$
+        windowrulev2 = float,class:^(firefox-aurora)$,title:^(Picture-in-Picture)$
 
         general {
           layout = dwindle
@@ -66,7 +67,7 @@
         bind=SUPER,W,killactive,
         bind=SUPERSHIFT,Q,exit,
         bind=SUPER,S,togglefloating,
-        bind=SUPER,P,pseudo,
+        bind=SUPER,P,pin,
 
         bindm=SUPER,mouse:272,movewindow
         bindm=SUPER,mouse:273,resizewindow
