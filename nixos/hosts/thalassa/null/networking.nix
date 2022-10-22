@@ -36,6 +36,9 @@
         "wired" = {
           psk = "@WIRED_PASSWORD@";
         };
+        "meowy hotspot" = {
+          psk = "@HOTSPOT_PASSWORD@";
+        };
       };
     };
 

@@ -16,6 +16,12 @@ stdenvNoCC.mkDerivation {
   FONTCONFIG_FILE = makeFontsConf { fontDirectories = [ ]; };
 
   buildPhase = ''
+    mv src src_orig
+    mkdir src
+    mv src_orig/Catppuccin-Frappe-Pink-Cursors ./src/
+    mv src_orig/cursorList ./src/
+    mv src_orig/config ./src/
+    mv src_orig/_svgo.yml ./src/
     HOME="$NIX_BUILD_ROOT" PREFIX="/" DESTDIR=$out make build
   '';
 

@@ -57,6 +57,7 @@ in {
     wf-recorder # Screenrecorder
     wl-clipboard # Clipboard manager
     wofi # Wayland rofi
+    wpa_gui
   ];
 
   xdg.mimeApps = {
@@ -154,6 +155,7 @@ in {
         ms-vscode-remote.remote-ssh
         ms-vscode.cpptools
         platformio.platformio-ide
+        redhat.vscode-yaml
         tamasfe.even-better-toml
         valentjn.vscode-ltex
         vscodevim.vim
