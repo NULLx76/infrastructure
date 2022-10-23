@@ -5,6 +5,9 @@
     openFirewall = false;
     mode = "laptop";
   };
+
+  services.mullvad-vpn.enable = true;
+
   networking = {
     useDHCP = true;
     dhcpcd.wait = "background";

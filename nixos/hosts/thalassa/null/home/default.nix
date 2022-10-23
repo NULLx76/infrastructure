@@ -41,6 +41,7 @@ in {
     libnotify
     neofetch
     nixpkgs-review
+    mullvad-vpn
     plex-media-player
     plexamp
     python3
@@ -57,7 +58,7 @@ in {
     wf-recorder # Screenrecorder
     wl-clipboard # Clipboard manager
     wofi # Wayland rofi
-    wpa_gui
+    wpa_supplicant_gui
   ];
 
   xdg.mimeApps = {
@@ -143,6 +144,7 @@ in {
     };
     extensions = with pkgs.vscode-extensions;
       with pkgs.v.vscode-extensions; [
+        astro-build.astro-vscode
         brettm12345.nixfmt-vscode
         catppuccin.catppuccin-vsc
         codezombiech.gitignore

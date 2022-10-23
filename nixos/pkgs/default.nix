@@ -21,9 +21,6 @@ final: prev: {
     vscode-extensions = {
       platformio.platformio-ide =
         prev.callPackage ./vscode-extensions/platformio.nix { };
-
-      # ms-vscode.live-server =
-      #   prev.callPackage ./vscode-extensions/live-server.nix;
     };
   };
 }
