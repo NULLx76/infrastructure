@@ -144,7 +144,7 @@ in {
     };
     extensions = with pkgs.vscode-extensions;
       with pkgs.v.vscode-extensions; [
-        astro-build.astro-vscode
+        # astro-build.astro-vscode
         brettm12345.nixfmt-vscode
         catppuccin.catppuccin-vsc
         codezombiech.gitignore
