@@ -420,11 +420,11 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1666558342,
-        "narHash": "sha256-qiH0Zgig28yaSyebehrrYiX1y53Y/xFcQW+EFMRSVI0=",
+        "lastModified": 1666649150,
+        "narHash": "sha256-kINnLxC0KFalUk4tVO/H5hUU7FVAOYYcUSWrsBpnl+I=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "186d9399f9eb64fb06ea4385732c1cf1624ae2b6",
+        "rev": "7dc4e4ebd71280842b4d30975439980baaac9db8",
         "type": "github"
       },
       "original": {
@@ -439,11 +439,11 @@
         "wlroots": "wlroots"
       },
       "locked": {
-        "lastModified": 1666473034,
-        "narHash": "sha256-UfnSWkp4gWf2AA6hyru9Gv1Rb5Ixvsx1RkZ2iVhgC3w=",
+        "lastModified": 1666720398,
+        "narHash": "sha256-/r/BvG3ZOM1KUL6MdVIw5gh9b1vZbKgFDLg0Otv8Bo0=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "10303259f7c6f3e64e74e9ca8a31d4223071d5f0",
+        "rev": "f9a7b6bf26eec22448c90f1967d6d85835dcae70",
         "type": "github"
       },
       "original": {
@@ -550,11 +550,11 @@
         "utils": "utils_4"
       },
       "locked": {
-        "lastModified": 1666489879,
-        "narHash": "sha256-8F7YIR/zoYGRj+7CskPJE9DgoqMfBKixLAZ4TnJPqRU=",
+        "lastModified": 1666748742,
+        "narHash": "sha256-iXbopYzGsVJBufHT5SSoxpoY4AjvpqQKVrLvR72kmwc=",
         "owner": "jyooru",
         "repo": "nix-minecraft-servers",
-        "rev": "c5a5fc2b24c27add833eed1708ab106a6026fa27",
+        "rev": "3a42ffbe4d9a8a82e754a15c14c8fd52f59258bf",
         "type": "github"
       },
       "original": {
@@ -737,11 +737,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1666558397,
-        "narHash": "sha256-YEBilpg0HAK8DxxY44a2BKfdxdjTB3qvAFzbi/6zAlE=",
+        "lastModified": 1666779351,
+        "narHash": "sha256-hzS56ZwhiJ7duVJ+lGZX0LL051AGH7089bRt9/ilYeI=",
         "owner": "NULLx76",
         "repo": "nixpkgs",
-        "rev": "95da315931c323adb23401f5903f59979c744a38",
+        "rev": "ab0d8de28ef2fe38ce27ff1f71574c839facc657",
         "type": "github"
       },
       "original": {
@@ -941,11 +941,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1666151986,
-        "narHash": "sha256-mW9UpFa6TmYgt0VuOwxRZkesrXkl7Z+RW5M/T7PyCBc=",
+        "lastModified": 1666673869,
+        "narHash": "sha256-qa0G9Wlwx++VnXvpPw1n8Im1M69Q/7gTvgoNTn7D1FU=",
         "owner": "serokell",
         "repo": "serokell.nix",
-        "rev": "7441de5b6518d20a47d962837e119f74bbe7a93f",
+        "rev": "0f74efb4e2a52b1def4b037df9ea0fbbb8d72a07",
         "type": "github"
       },
       "original": {
