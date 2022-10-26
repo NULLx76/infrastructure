@@ -79,6 +79,6 @@ in
     port = 2342;
     domain = "grafana.0x76.dev";
     rootUrl = "https://grafana.0x76.dev";
-    security.adminPasswordFile = "${vs.grafana}/password";
+    settings.security.admin_password = "$__file{${vs.grafana}/password}";
   };
 }
