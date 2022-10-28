@@ -44,7 +44,7 @@ in
   home.pointerCursor = {
     name = "Catppuccin-Frappe-Pink-Cursors";
     size = 32;
-    package = pkgs.catppuccin.cursors;
+    package = pkgs.catppuccin-cursors.frappePink;
   };
 
   gtk = {

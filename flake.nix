@@ -131,6 +131,7 @@
           vault
           (vault-push-approle-envs self { })
           (vault-push-approles self { })
+          rnix-lsp
         ];
       };
     };

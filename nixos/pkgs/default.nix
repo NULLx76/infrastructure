@@ -1,7 +1,5 @@
 # nix-build -E 'with import <nixpkgs> {}; callPackage ./platformio.nix {}'
 final: prev: {
-  catppuccin.cursors = prev.callPackage ./catppuccin/cursors { };
-
   v = {
     glitch-soc = prev.callPackage ./glitch-soc { };
 
