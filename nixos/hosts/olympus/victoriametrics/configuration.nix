@@ -21,7 +21,7 @@ in
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
-  networking.firewall.allowedTCPPorts = [ vmPort config.services.grafana.port ];
+  networking.firewall.allowedTCPPorts = [ vmPort config.services.grafana.settings.server.http_port ];
   networking.firewall.allowedUDPPorts = [ vmPort ];
 
   services.victoriametrics = {
@@ -75,10 +75,14 @@ in
 
   services.grafana = {
     enable = true;
-    addr = "0.0.0.0";
-    port = 2342;
-    domain = "grafana.0x76.dev";
-    rootUrl = "https://grafana.0x76.dev";
-    settings.security.admin_password = "$__file{${vs.grafana}/password}";
+    settings = {
+      server = {
+        domain = "grafana.0x76.dev";
+        root_url = "https://grafana.0x76.dev";
+        http_addr = "0.0.0.0";
+        http_port = 2342;
+      };
+      security.admin_password = "$__file{${vs.grafana}/password}";
+    };
   };
 }

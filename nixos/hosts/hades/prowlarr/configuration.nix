@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   networking.interfaces.eth0.useDHCP = true;
-  system.stateVersion = "21.05";
+  system.stateVersion = "22.11";
 
   services.prowlarr = {
     enable = true;

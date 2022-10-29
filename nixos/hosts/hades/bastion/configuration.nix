@@ -20,7 +20,7 @@
 
   environment.noXlibs = lib.mkForce false;
 
-  system.stateVersion = "21.05";
+  system.stateVersion = "22.11";
 
   programs.gnupg.agent = {
     enable = true;
