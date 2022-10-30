@@ -11,9 +11,6 @@
     colmena.url = "github:zhaofengli/colmena";
     colmena.inputs.nixpkgs.follows = "nixpkgs";
 
-    serokell-nix.url = "github:serokell/serokell.nix";
-    serokell-nix.inputs.nixpkgs.follows = "nixpkgs";
-
     vault-secrets.url = "github:serokell/vault-secrets";
     vault-secrets.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -44,9 +41,8 @@
     };
   };
 
-  outputs = { self, nixpkgs, vault-secrets, serokell-nix, minecraft-servers
-    , colmena, home-manager, hyprpaper, hyprland, nixos-generators, ...
-    }@inputs:
+  outputs = { self, nixpkgs, vault-secrets, minecraft-servers, colmena
+    , home-manager, hyprpaper, hyprland, nixos-generators, ... }@inputs:
     let
       inherit (nixpkgs) lib;
       inherit (builtins) mapAttrs;
@@ -63,13 +59,16 @@
 
       # Define args each module gets access to (access to hosts is useful for DNS/DHCP)
       specialArgs = { inherit hosts flat_hosts inputs; };
-      pkgs = serokell-nix.lib.pkgsWith nixpkgs.legacyPackages.${system} [
-        (import ./nixos/pkgs)
-        vault-secrets.overlay
-        minecraft-servers.overlays.default
-        hyprpaper.overlays.default
-        hyprland.overlays.default
-      ];
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [
+          (import ./nixos/pkgs)
+          vault-secrets.overlay
+          minecraft-servers.overlays.default
+          hyprpaper.overlays.default
+          hyprland.overlays.default
+        ];
+      };
 
       # Script to apply local colmena deployments
       apply-local = pkgs.writeScriptBin "apply-local" ''
@@ -99,7 +98,7 @@
 
       packages.${system} = {
         inherit apply-local;
-  
+
         default = colmena.packages.${system}.colmena;
 
         iso = nixos-generators.nixosGenerate {
@@ -111,9 +110,7 @@
         proxmox-lxc = nixos-generators.nixosGenerate {
           inherit system pkgs;
           format = "proxmox-lxc";
-          modules = [
-            (import ./nixos/lxc-template.nix)
-          ];
+          modules = [ (import ./nixos/lxc-template.nix) ];
         };
       };
 
