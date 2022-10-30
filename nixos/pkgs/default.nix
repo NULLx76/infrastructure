@@ -1,4 +1,4 @@
-# nix-build -E 'with import <nixpkgs> {}; callPackage ./platformio.nix {}'
+# nix-build -E 'with import <nixpkgs> {}; callPackage ./default.nix {}'
 final: prev: {
   v = {
     glitch-soc = prev.callPackage ./glitch-soc { };

@@ -4,7 +4,7 @@ let
 
   theme = "Catppuccin-Pink-Dark";
   cursorTheme = config.home.pointerCursor.name;
-  colour = rec {
+  colour = {
     rosewater = "f2d5cf";
     flamingo = "eebebe";
     pink = "f4b8e4";
@@ -34,8 +34,7 @@ let
 
     hex = mapAttrs (name: value: "#${value}") colour;
   };
-in
-{
+in {
   home.file.".xsettingsd".text = ''
     Net/ThemeName "${theme}"
     Gtk/CursorThemeName "${cursorTheme}"
