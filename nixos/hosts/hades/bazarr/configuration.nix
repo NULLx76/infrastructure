@@ -7,4 +7,9 @@
     device = "storage:/mnt/storage";
     fsType = "nfs";
   };
+
+  services.bazarr = {
+    enable = true;
+    openFirewall = true;
+  };
 }

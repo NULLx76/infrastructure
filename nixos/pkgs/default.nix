@@ -16,6 +16,7 @@ final: prev: {
 
     gitea-agatheme = prev.callPackage ./gitea-agatheme { };
 
+    # nix-shell -p "(vscode-with-extensions.override {vscodeExtensions = with vscode-extensions; [ jnoortheen.nix-ide ]; })" -I nixpkgs=.
     vscode-extensions = {
       platformio.platformio-ide =
         prev.callPackage ./vscode-extensions/platformio.nix { };
