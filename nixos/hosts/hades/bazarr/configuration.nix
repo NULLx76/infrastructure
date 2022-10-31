@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
-  system.stateVersion = "21.05";
+  system.stateVersion = "22.11";
   networking.interfaces.eth0.useDHCP = true;
 
   fileSystems."/mnt/storage" = {

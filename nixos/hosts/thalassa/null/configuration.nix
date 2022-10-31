@@ -30,7 +30,8 @@ let
 
     exec Hyprland
   '';
-in {
+in
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -93,14 +94,14 @@ in {
   fileSystems."/nix".options = [ "compress=zstd" "noatime" ];
 
   # Filesystem dedup
-  #services.beesd.filesystems = {
+  # services.beesd.filesystems = {
   #  root = {
   #    spec = "LABEL=nixos";
   #    hashTableSizeMB = 256;
   #    verbosity = "crit";
   #    extraOptions = [ "--loadavg-target" "2.0" ];
   #  };
-  #};
+  # };
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.utf8";

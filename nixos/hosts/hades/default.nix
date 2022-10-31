@@ -91,6 +91,11 @@
     nix = false;
   }
   {
+    hostname = "bazarr";
+    ip = "192.168.0.119";
+    mac = "DE:7C:32:7E:DD:A1";
+  }
+  {
     hostname = "radarr2";
     ip = "192.168.0.120";
     mac = "5e:d3:75:93:56:ee";
@@ -101,6 +106,7 @@
     ip = "192.168.0.121";
     mac = "4e:e7:64:b7:88:b8";
     profile = "jackett";
+    nix = false; # superseded by prowlarr 
   }
   {
     hostname = "nginx";

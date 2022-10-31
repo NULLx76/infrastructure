@@ -1,19 +1,27 @@
 { config, pkgs, lib, ... }: {
-  # Can't import common completely due to infinite recursion
-  imports = [ ./common/users ./common/generic-lxc.nix ];
+  imports = [ ./common/common.nix ./common/generic-lxc.nix ];
 
+  proxmoxLXC = {
+    manageNetwork = true;
+    manageHostName = true;
+    privileged = false;
+  };
+  
   # Enable SSH
   services.openssh = {
     enable = true;
     passwordAuthentication = false;
     permitRootLogin = "yes";
+    openFirewall = true;
   };
 
   networking.hostName = "template";
 
   time.timeZone = lib.mkDefault "Europe/Amsterdam";
 
-  networking.interfaces.eth0.useDHCP = true;
+  networking.useDHCP = true;
 
   system.stateVersion = "22.11";
+
+  users.users.root.initialPassword = "toor";
 }
