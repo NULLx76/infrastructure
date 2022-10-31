@@ -1,7 +1,7 @@
 { inputs, lib, config, ... }: {
   # This file deals with everything requiring `inputs`, the rest being delagated to `common.nix`
   # this is because we can't import inputs from all contexts as that can lead to infinite recursion.
-  import = [
+  imports = [
     ./common.nix
     inputs.vault-secrets.nixosModules.vault-secrets
   ];
