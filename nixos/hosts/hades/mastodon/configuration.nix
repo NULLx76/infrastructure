@@ -82,6 +82,8 @@ in
       # TODO: Don't?
       RAILS_SERVE_STATIC_FILES = "true";
 
+      AUTHORIZED_FETCH = "true";
+
       # https://github.com/cybrespace/cybrespace-meta/blob/master/s3.md;
       # https://shivering-isles.com/Mastodon-and-Amazon-S3
       S3_ENABLED = "true";
