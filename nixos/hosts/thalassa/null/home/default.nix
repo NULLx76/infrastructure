@@ -39,9 +39,10 @@ in {
     k9s
     kubectl
     libnotify
+    mullvad-vpn
     neofetch
     nixpkgs-review
-    mullvad-vpn
+    ouch
     plex-media-player
     plexamp
     python3
@@ -102,6 +103,10 @@ in {
     userName = "Victor";
     userEmail = "victor@xirion.net";
     lfs.enable = true;
+    delta.enable = true;
+    extraConfig = {
+      push.autoSetupRemote = true;
+    };
   };
 
   programs.mako = {

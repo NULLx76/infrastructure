@@ -110,7 +110,7 @@
         proxmox-lxc = nixos-generators.nixosGenerate {
           inherit system pkgs;
           format = "proxmox-lxc";
-          modules = [ (import ./nixos/lxc-template.nix) ];
+          modules = [ (import ./nixos/proxmox-lxc.nix) ];
         };
       };
 

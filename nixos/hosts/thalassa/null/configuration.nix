@@ -85,6 +85,10 @@ in
     # loader.systemd-boot.configurationLimit = 6;
     loader.efi.canTouchEfiVariables = true;
     loader.efi.efiSysMountPoint = "/boot/efi";
+
+    kernel.sysctl = {
+      "fs.inotify.max_user_watches" = 524288;
+    };
   };
 
   services.gnome.gnome-keyring.enable = true;

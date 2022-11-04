@@ -9,7 +9,7 @@
   home.file.".config/eww/eww.yuck".source = ./eww.yuck;
   home.file.".config/eww/eww.scss".text = builtins.readFile ./eww.scss;
 
-  # scripts 
+  # scripts
   # TODO: just link all scripts in ./scripts to .config/eww/scripts
   home.file.".config/eww/scripts/volume.sh" = {
     source = ./scripts/volume.sh;

@@ -35,6 +35,11 @@
     tags = [ "vault" ];
   }
   {
+    hostname = "pmm";
+    ip = "192.168.0.104";
+    mac = "7A:A3:59:1D:69:07";
+  }
+  {
     hostname = "MariaDB";
     ip = "192.168.0.109";
     mac = "00:0c:29:23:4f:12";

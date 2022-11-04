@@ -1,0 +1,32 @@
+templates:
+  Actor:
+    actor: tmdb
+    tmdb_person: <<person>>
+    tmdb_actor_details: <<person>>
+    sort_title: +_<<collection_name>>
+    sync_mode: sync
+    collection_order: release
+    collection_mode: hide
+  Set:
+    optional:
+      - collection
+      - movie
+      - list
+    tmdb_collection_details: <<collection>>
+    tmdb_movie: <<movie>>
+    tmdb_list: <<list>>
+    sync_mode: sync
+    collection_order: release
+    url_poster: <<poster>>
+    sort_title: <<collection_name>>
+collections:
+  Marvel Cinematic Universe:
+    template:
+      name: Set
+      list: 8194961
+      poster: https://theposterdb.com/api/assets/162417
+  Star Wars:
+    template:
+      name: Set
+      collection: 10
+      poster: https://theposterdb.com/api/assets/164120
