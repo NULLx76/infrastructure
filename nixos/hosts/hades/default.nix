@@ -40,6 +40,11 @@
     mac = "7A:A3:59:1D:69:07";
   }
   {
+    hostname = "overseerr";
+    ip = "192.168.0.105";
+    mac = "8E:21:7F:88:3A:83";
+  }
+  {
     hostname = "MariaDB";
     ip = "192.168.0.109";
     mac = "00:0c:29:23:4f:12";

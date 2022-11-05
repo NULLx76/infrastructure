@@ -5,6 +5,7 @@ templates:
     collection_order: alpha
     collection_mode: hide
     sync_mode: sync
+    sort_title: zz_<<collection_name>>
 
 collections:
   Cars:

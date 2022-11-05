@@ -97,6 +97,8 @@ in {
     enableAliases = true;
   };
 
+  programs.bat.enable = true;
+
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;

@@ -3,7 +3,7 @@ templates:
     optional:
       - company
     tmdb_company: <<company>>
-    sort_title: +1_<<collection_name>>
+    sort_title: <<collection_name>>
     sync_mode: sync
     smart_label: release.desc
   Set:
@@ -31,13 +31,9 @@ collections:
       poster: https://theposterdb.com/api/assets/164120
   Studio Ghibli:
     template: { name: Studio, company: 10342 }
+    url_poster: https://theposterdb.com/api/assets/393
     summary: Studio Ghibli Inc. is a Japanese animation film studio headquartered in Koganei, Tokyo. The studio is best known for its animated feature films, and has also produced several short films, television commercials, and one television film. The studio’s mascot and most recognizable symbol is the character, Totoro, a giant cat-like spirit from the 1988 classic, My Neighbor Totoro.
   Pixar:
     template: { name: Studio, company: 3 }
+    url_poster: https://theposterdb.com/api/assets/18894
     summary: Pixar Animation Studios, commonly known as Pixar, is an American computer animation studio based in Emeryville, California, a subsidiary of Disney Studios Content owned by The Walt Disney Company. Pixar began in 1979 as part of the Lucasfilm computer division, known as the Graphics Group, before its spin-off as a corporation on February 3, 1986, with funding from Apple co-founder Steve Jobs, who became its majority shareholder. Disney purchased Pixar in 2006 at a valuation of $7.4 billion by converting each share of Pixar stock to 2.3 shares of Disney stock, a transaction that resulted in Jobs becoming Disney's largest single shareholder at the time. Pixar is best known for its feature films technologically powered by RenderMan, the company's own implementation of the industry-standard RenderMan Interface Specification image-rendering application programming interface. Luxo Jr., a desk lamp from the studio's 1986 short film of the same name, is the studio's mascot.
-  DC Extended Universe:
-    template: { name: Studio }
-    imdb_list: https://www.imdb.com/list/ls077827588/
-    url_poster: https://images.theposterdb.com/prod/public/images/posters/optimized/collections/460717/dj5QiI3bseKx31j5JLM0PclTXC1KSuRPflLC4DP0.webp
-    summary: The DC Extended Universe (DCEU) is a media franchise and shared universe centered on superheros from DC Comics.
-    collection_order: release
