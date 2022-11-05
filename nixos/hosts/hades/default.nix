@@ -45,6 +45,11 @@
     mac = "8E:21:7F:88:3A:83";
   }
   {
+    hostname = "tautulli";
+    ip = "192.168.0.106";
+    mac = "BE:30:DB:F8:C6:55";
+  }
+  {
     hostname = "MariaDB";
     ip = "192.168.0.109";
     mac = "00:0c:29:23:4f:12";
