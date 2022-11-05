@@ -28,6 +28,7 @@ in
     cat >> /var/lib/mastodon/.secrets_env <<EOF
     AWS_ACCESS_KEY_ID="$(cat ${vs.mastodon}/awsAccessKeyId)"
     AWS_SECRET_ACCESS_KEY="$(cat ${vs.mastodon}/awsSecretAccessKey)"
+    DEEPL_API_KEY="$(cat ${vs.mastodon}/deeplAPIKey)"
     EOF
   '';
 
@@ -91,6 +92,8 @@ in
       S3_PROTOCOL = "https";
       S3_HOSTNAME = "o.xirion.net";
       S3_ENDPOINT = "https://o.xirion.net/";
+
+      DEEPL_PLAN = "free";
     };
   };
 
