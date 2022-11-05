@@ -11,26 +11,26 @@ templates:
     url_background: <<background>>
 
 collections:
-  Marvel Television:
+  Marvel Cinematic Universe:
+    tvdb_list: https://thetvdb.com/lists/marvel-cinematic-universe
     template:
-      name: set,
-      list: "8205726"
+      name: set
       poster: https://theposterdb.com/api/assets/239453
       background: https://i.imgur.com/ckx6reE.jpg
     summary: Marvel Television
 
   Star Wars:
+    tvdb_list: https://thetvdb.com/lists/star-wars
     template:
       name: set
-      list: "8205730"
       poster: https://theposterdb.com/api/assets/164120
       background: https://i.imgur.com/OvxROTE.jpg
     summary: Star Wars
 
   Star Trek:
+    tvdb_list: https://thetvdb.com/lists/star-trek
     template:
       name: set
-      list: "8215091"
       poster: https://theposterdb.com/api/assets/222279
       background: https://i.imgur.com/Yp0NCZa.jpg
     summary: Star Trek
