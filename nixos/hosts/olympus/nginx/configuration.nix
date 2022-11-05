@@ -53,6 +53,7 @@ in {
     virtualHosts."grafana.0x76.dev" = proxy "http://victoriametrics.olympus:2342";
     virtualHosts."outline.0x76.dev" = proxy "http://outline.olympus:3000";
     virtualHosts."id.0x76.dev" = proxy "http://keycloak.olympus:80";
+    virtualHosts."ntfy.0x76.dev" = proxy "http://ntfy.olympus:80";
     virtualHosts."pass.0x76.dev" = {
       enableACME = true;
       forceSSL = true;
