@@ -23,6 +23,9 @@
     enable = true;
     recommendedEnvironment = true;
     extraConfig = ''
+      exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+      exec-once=systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
       monitor=eDP-1,1920x1080@60,0x0,1
       monitor=eDP-1,addreserved,0,0,48,0
       monitor=,preferred,auto,1

@@ -71,11 +71,15 @@
       };
 
       # Script to apply local colmena deployments
-      apply-local = pkgs.writeScriptBin "apply-local" ''
-        #!${pkgs.stdenv.shell}
+      apply-local = pkgs.writeShellScriptBin "apply-local" ''
         "${
           colmena.packages.${system}.colmena
         }"/bin/colmena apply-local --sudo $@
+      '';
+
+      fast-repl = pkgs.writeShellScriptBin "fast-repl" ''
+        source /etc/set-environment
+        nix repl --file "${./.}/repl.nix" $@
       '';
     in {
       # Make the nixosConfigurations for compat reasons
@@ -131,6 +135,7 @@
           vault
           (vault-push-approle-envs self { })
           (vault-push-approles self { })
+          fast-repl
         ];
       };
     };

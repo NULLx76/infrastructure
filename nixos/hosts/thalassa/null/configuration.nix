@@ -30,8 +30,7 @@ let
 
     exec Hyprland
   '';
-in
-{
+in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -86,9 +85,7 @@ in
     loader.efi.canTouchEfiVariables = true;
     loader.efi.efiSysMountPoint = "/boot/efi";
 
-    kernel.sysctl = {
-      "fs.inotify.max_user_watches" = 524288;
-    };
+    kernel.sysctl = { "fs.inotify.max_user_watches" = 524288; };
   };
 
   services.gnome.gnome-keyring.enable = true;
