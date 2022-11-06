@@ -288,6 +288,21 @@
     },
     "flake-utils_3": {
       "locked": {
+        "lastModified": 1659877975,
+        "narHash": "sha256-zllb8aq3YO3h8B/U0/J1WBgAL8EX5yWf5pMj3G0NAmc=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "c0e246b9b83f637f4681389ecabcb2681b4f3af0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_4": {
+      "locked": {
         "lastModified": 1631561581,
         "narHash": "sha256-3VQMV5zvxaVLvqqUrNz3iJelLw30mIVSfZmAaauM3dA=",
         "owner": "numtide",
@@ -667,6 +682,44 @@
         "type": "github"
       }
     },
+    "nixvim": {
+      "inputs": {
+        "flake-utils": "flake-utils_3",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nmdSrc": "nmdSrc"
+      },
+      "locked": {
+        "lastModified": 1667212379,
+        "narHash": "sha256-6U4821gGS73xkE/t490+NRMrrJO+Glb/DArnsJlw/qI=",
+        "owner": "pta2002",
+        "repo": "nixvim",
+        "rev": "f7be7364620a357aded1f46d66a9b86035d8f771",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pta2002",
+        "repo": "nixvim",
+        "type": "github"
+      }
+    },
+    "nmdSrc": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1654807200,
+        "narHash": "sha256-RNLq09vfj21TyYuUCeD6BNTNC6Ew8bLhQULZytN4Xx8=",
+        "owner": "rycee",
+        "repo": "nmd",
+        "rev": "91dee681dd1c478d6040a00835d73c0f4a4c5c29",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "rycee",
+        "repo": "nmd",
+        "type": "gitlab"
+      }
+    },
     "poetry2nix": {
       "flake": false,
       "locked": {
@@ -744,6 +797,7 @@
         "minecraft-servers": "minecraft-servers",
         "nixos-generators": "nixos-generators",
         "nixpkgs": "nixpkgs_2",
+        "nixvim": "nixvim",
         "riff": "riff",
         "vault-secrets": "vault-secrets",
         "webcord": "webcord"
@@ -865,7 +919,7 @@
     "vault-secrets": {
       "inputs": {
         "flake-compat": "flake-compat_3",
-        "flake-utils": "flake-utils_3",
+        "flake-utils": "flake-utils_4",
         "nix": "nix",
         "nixpkgs": [
           "nixpkgs"

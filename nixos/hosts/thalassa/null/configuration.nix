@@ -197,7 +197,6 @@ in {
     pciutils
     nvidia-offload
     run-hyprland
-    vim
     wireguard-tools
     slurp
     gdb

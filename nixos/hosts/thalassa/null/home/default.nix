@@ -11,8 +11,8 @@ in {
   home.stateVersion = "22.05";
 
   imports = [
-    inputs.hyprland.homeManagerModules.default
     ./hyprland.nix
+    ./neovim.nix
     ./eww
     ./theme.nix
   ];

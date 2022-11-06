@@ -35,6 +35,9 @@
     mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     mailserver.inputs.nixpkgs.follows = "nixpkgs";
 
+    nixvim.url = "github:pta2002/nixvim";
+    nixvim.inputs.nixpkgs.follows = "nixpkgs";
+
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
