@@ -42,6 +42,9 @@
         "meowy hotspot" = {
           psk = "@HOTSPOT_PASSWORD@";
         };
+        "WiFi Roest" = {
+          psk = "@WIFI_ROEST_PASSWORD@";
+        };
       };
     };
 
