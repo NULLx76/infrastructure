@@ -5,6 +5,6 @@ in buildVscodeMarketplaceExtension {
     name = "platformio-ide";
     publisher = "platformio";
     version = "2.5.4";
-    sha256 = "sha256-KbXlegQSLjMCVotR1mU/CDiaQMKLLSX+nnbRJgdFTz8=";
+    sha256 = "sha256-/vBdZ6Mu1KlF+glqp5CNt9WeK1ECqfaivCnK8TisChg=";
   };
 }
