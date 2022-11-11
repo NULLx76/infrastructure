@@ -1,8 +1,0 @@
-kind: pipeline
-type: kubernetes
-name: default
-steps:
-  - name: yamllint
-    image: registry.gitlab.com/pipeline-components/yamllint
-    commands:
-      - yamllint -c .yamllint.yaml .
