@@ -30,29 +30,40 @@ in {
     dockerSocket.enable = true;
   };
 
+  systemd.services.create-woodpecker-pod = with config.virtualisation.oci-containers; {
+    serviceConfig.Type = "oneshot";
+    wantedBy = [ "${backend}-woodpecker-server.service"  "${backend}-woodpecker-agent.service"];
+    script = ''
+      ${pkgs.podman}/bin/podman pod exists woodpecker || \
+        ${pkgs.podman}/bin/podman pod create -n woodpecker -p 8000:8000
+    '';
+  };
+
   virtualisation.oci-containers = {
     backend = "podman";
     containers = {
       woodpecker-server = {
         image = "woodpeckerci/woodpecker-server:latest";
-        ports = [ "8000:8000" ];
         volumes = [ "woodpecker-server-data:/var/lib/woodpecker/" ];
         environmentFiles = [ "${vs.woodpecker}/environment" ];
+        extraOptions = [ "--pod=woodpecker" ];
         environment = {
           WOODPECKER_OPEN = "true";
           WOODPECKER_HOST = "https://ci.0x76.dev";
           WOODPECKER_GITEA = "true";
           WOODPECKER_GITEA_URL = "https://git.0x76.dev";
           WOODPECKER_ADMIN = "v";
+          WOODPECKER_AUTHENTICATE_PUBLIC_REPOS = "true";
         };
       };
       woodpecker-agent = {
         image = "woodpeckerci/woodpecker-agent:latest";
         dependsOn = [ "woodpecker-server" ];
+        extraOptions = [ "--pod=woodpecker" ];
         cmd = [ "agent" ];
         volumes = [ "/var/run/docker.sock:/var/run/docker.sock" ];
         environmentFiles = [ "${vs.woodpecker}/environment" ];
-        environment = { WOODPECKER_SERVER = "woodpecker-server:9000"; };
+        environment = { WOODPECKER_SERVER = "localhost:9000"; };
       };
     };
   };
