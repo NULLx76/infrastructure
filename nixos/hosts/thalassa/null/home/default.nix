@@ -10,12 +10,7 @@ in {
   home.homeDirectory = "/home/victor";
   home.stateVersion = "22.05";
 
-  imports = [
-    ./hyprland.nix
-    ./neovim.nix
-    ./eww
-    ./theme.nix
-  ];
+  imports = [ ./hyprland.nix ./neovim.nix ./eww ./theme.nix ];
 
   home.packages = with pkgs; [
     appimage-run
@@ -43,6 +38,7 @@ in {
     mullvad-vpn
     neofetch
     nixpkgs-review
+    nixfmt
     ouch
     plex-media-player
     plexamp
@@ -109,6 +105,7 @@ in {
     delta.enable = true;
     extraConfig = {
       push.autoSetupRemote = true;
+      init.defaultBranch = "main";
     };
   };
 
