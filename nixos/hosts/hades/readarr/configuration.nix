@@ -1,8 +1,8 @@
-# Edit this configuration file to define what should be installed on 
+# Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [ ];
@@ -20,11 +20,25 @@
 
   networking.firewall.allowedTCPPorts = [ ];
 
-  users.users.nwerc = {
-    isNormalUser = true;
-    openssh.authorizedKeys.keys = [];
+  fileSystems."/mnt/storage" = {
+    device = "storage:/mnt/storage";
+    fsType = "nfs";
   };
 
-  # Allow password authentication
-  services.openssh.passwordAuthentication = lib.mkForce true;
+  virtualisation.oci-containers = {
+    backend = "podman";
+    containers = {
+      readarr = {
+        image = "cr.hotio.dev/hotio/readarr:testing";
+        ports = [
+          "8787:8787"
+        ];
+        volumes = [
+          "/var/lib/readarr:/config"
+          "/mnt/storage:/mnt/storage"
+        ];
+      };
+    };
+  };
 }
+ 

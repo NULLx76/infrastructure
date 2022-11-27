@@ -209,6 +209,11 @@
     mac = "3a:67:8e:98:0c:a2";
   }
   {
+    hostname = "readarr";
+    ip = "192.168.0.141";
+    mac = "E6:A2:37:4A:7C:87";
+  }
+  {
     hostname = "archlinux";
     ip = "192.168.0.200";
     mac = "00:0c:29:e4:0d:17";
