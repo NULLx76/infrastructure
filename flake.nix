@@ -114,6 +114,12 @@
           modules = [ (import ./nixos/iso.nix) ];
         };
 
+        iso-graphical = nixos-generators.nixosGenerate {
+          inherit system pkgs;
+          format = "iso";
+          modules = [ (import ./nixos/iso-graphical.nix) ];
+        };
+
         proxmox-lxc = nixos-generators.nixosGenerate {
           inherit system pkgs;
           format = "proxmox-lxc";
