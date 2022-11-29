@@ -2,15 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
-
-{
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      inputs.nixos-hardware.nixosModules.lenovo-thinkpad-z
-    ];
+{ config, pkgs, inputs, ... }: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-z
+  ];
 
   # Bootloader.
   boot = {
@@ -19,9 +16,7 @@
       efi.canTouchEfiVariables = true;
       efi.efiSysMountPoint = "/boot/efi";
     };
-    kernel = {
-      sysctl = { "fs.inotify.max_user_watches" = 524288; };
-    };
+    kernel = { sysctl = { "fs.inotify.max_user_watches" = 524288; }; };
   };
 
   fileSystems."/".options = [ "compress=zstd" ];
@@ -88,6 +83,8 @@
     #media-session.enable = true;
   };
 
+  environment.systemPackages = with pkgs; [ gnome3.gnome-tweaks ];
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.victor = {
     isNormalUser = true;
@@ -129,4 +126,5 @@
     # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
     system.stateVersion = "23.05"; # Did you read the comment?
 
-  }
+  };
+}

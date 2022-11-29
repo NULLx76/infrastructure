@@ -4,13 +4,25 @@ let
     inherit (pkgs.texlive) scheme-full;
     dnd-5e-latex-template = { pkgs = [ pkgs.v.dnd-5e-latex-template ]; };
   });
-in
-{
+in {
   programs.home-manager.enable = true;
 
   home.username = "victor";
   home.homeDirectory = "/home/victor";
   home.stateVersion = "23.05";
+
+  # # make sure applications show up in Gnome
+  # home.activation = {
+  #   linkDesktopApplications = {
+  #     after = [ "writeBoundary" "createXdgUserDirectories" ];
+  #     before = [ ];
+  #     data = ''
+  #       rm -rf ${config.xdg.dataHome}/"applications/home-manager"
+  #       mkdir -p ${config.xdg.dataHome}/"applications/home-manager"
+  #       cp -Lr /etc/profiles/per-user/${config.home.username}/share/applications/* ${config.xdg.dataHome}/"applications/home-manager/"
+  #     '';
+  #   };
+  # };
 
   home.packages = with pkgs; [
     btop
@@ -59,9 +71,7 @@ in
     clock24 = true;
   };
 
-  programs.firefox = {
-    enable = true;
-  };
+  programs.firefox = { enable = true; };
 
   programs.vscode = {
     enable = true;
