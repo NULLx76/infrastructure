@@ -44,7 +44,6 @@
     };
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, vault-secrets, minecraft-servers, colmena
