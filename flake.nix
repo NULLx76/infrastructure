@@ -42,10 +42,13 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, vault-secrets, minecraft-servers, colmena
-    , home-manager, hyprpaper, hyprland, nixos-generators, ... }@inputs:
+    , home-manager, hyprpaper, hyprland, nixos-generators, nixos-hardware, ... }@inputs:
     let
       inherit (nixpkgs) lib;
       inherit (builtins) mapAttrs;
