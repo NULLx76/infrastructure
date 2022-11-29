@@ -6,15 +6,25 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-z
     ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+      efi.efiSysMountPoint = "/boot/efi";
+    };
+    kernel = {
+      sysctl = { "fs.inotify.max_user_watches" = 524288; };
+    };
+  };
+
+  fileSystems."/".options = [ "compress=zstd" ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
@@ -45,12 +55,17 @@
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
+
   programs.dconf.enable = true;
+  services.udisks2.enable = true;
+  services.dbus.enable = true;
+  services.fstrim.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
     layout = "us";
     xkbVariant = "altgr-intl";
+    xkbOptions = "caps:swapescape";
   };
 
   # Enable CUPS to print documents.
@@ -86,17 +101,32 @@
     extraSpecialArgs = { inherit inputs; };
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  virtualisation.podman.enable = true;
 
-  # networking.firewall.enable = false;
+  fonts = {
+    fonts = with pkgs; [
+      material-design-icons
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+      dejavu_fonts
+      (nerdfonts.override {
+        fonts =
+          [ "DejaVuSansMono" "Ubuntu" "DroidSansMono" "NerdFontsSymbolsOnly" ];
+      })
+    ];
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
+    # Allow unfree packages
+    nixpkgs.config.allowUnfree = true;
 
-}
+    # networking.firewall.enable = false;
+
+    # This value determines the NixOS release from which the default
+    # settings for stateful data, like file locations and database versions
+    # on your system were taken. It‘s perfectly fine and recommended to leave
+    # this value at the release version of the first install of this system.
+    # Before changing this value read the documentation for this option
+    # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+    system.stateVersion = "23.05"; # Did you read the comment?
+
+  }
