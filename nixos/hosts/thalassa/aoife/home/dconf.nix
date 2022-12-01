@@ -24,8 +24,8 @@ with lib.hm.gvariant;
     };
 
     "org/gnome/mutter/keybindings" = {
-      "toggle-tiled-left" = [ "<Super>bracketleft" ];
-      "toggle-tiled-right" = [ "<Super>bracketright" ];
+      toggle-tiled-left = [ "<Super>bracketleft" ];
+      toggle-tiled-right = [ "<Super>bracketright" ];
     };
 
     "org/gnome/desktop/wm/keybindings" = {

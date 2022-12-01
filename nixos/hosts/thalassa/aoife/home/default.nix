@@ -13,12 +13,13 @@ in {
 
   imports = [
     ./dconf.nix
+    ./theme.nix
   ];
 
   home.packages = with pkgs; [
     btop
     calibre
-    element-desktop-wayland
+    element-desktop
     fusee-launcher
     gcc
     gimp
@@ -74,7 +75,6 @@ in {
         "latex.clean.subfolder.enabled" = true;
         "latex.outDir" = "%TMPDIR%/%RELATIVE_DOC%";
       };
-      # "workbench.colorTheme" = "Catppuccin Frappé";
       "editor.fontFamily" =
         "'DejaVuSansMono Nerd Font', 'monospace', monospace";
       "keyboard.dispatch" = "keyCode";
@@ -88,7 +88,6 @@ in {
     extensions = with pkgs.vscode-extensions;
       with pkgs.v.vscode-extensions; [
         brettm12345.nixfmt-vscode
-        # catppuccin.catppuccin-vsc
         codezombiech.gitignore
         editorconfig.editorconfig
         foxundermoon.shell-format

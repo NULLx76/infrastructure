@@ -50,6 +50,7 @@
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
+  services.udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
 
   programs.dconf.enable = true;
   services.udisks2.enable = true;
@@ -83,7 +84,10 @@
     #media-session.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [ gnome3.gnome-tweaks ];
+  environment.systemPackages = with pkgs; [ 
+    gnome3.gnome-tweaks 
+    wireguard-tools
+  ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.victor = {
