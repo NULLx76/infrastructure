@@ -28,11 +28,11 @@ let
 in
 {
   # Add to whatever realm a host belong to its list of tags
-  add_realm_to_tags = realm: hosts: map ({ tags ? [ ], ... }@host: host // { tags = [ realm ] ++ tags; inherit realm; }) hosts;
+  add_realm_to_tags = realm: map ({ tags ? [ ], ... }@host: host // { tags = [ realm ] ++ tags; inherit realm; });
   # Flatten all hosts to a single list
   flatten_hosts = hosts: concatLists (attrValues hosts);
   # Filter out all hosts which aren't nixos
-  filter_nix_hosts = hosts: filter ({ nix ? true, ... }: nix) hosts;
+  filter_nix_hosts = filter ({ nix ? true, ... }: nix);
 
   # Helper function to build a colmena host definition
   mkColmenaHost = { ip ? null, hostname, tags, realm, type ? "lxc", ... }@host:
@@ -50,7 +50,7 @@ in
         deployment = {
           inherit tags;
           targetHost = ip;
-          allowLocalDeployment = (type == "local");
+          allowLocalDeployment = type == "local";
           targetUser = null; # Defaults to $USER
         };
       };

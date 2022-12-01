@@ -244,7 +244,7 @@ in
     # Create user if set to default
     users.users = mkIf (cfg.user == "unpackerr") {
       unpackerr = {
-        group = cfg.group;
+        inherit (cfg) group;
         shell = pkgs.bashInteractive;
         createHome = false;
         description = "unpackerr Daemon user";

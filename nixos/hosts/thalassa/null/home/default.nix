@@ -1,11 +1,10 @@
 { config, pkgs, lib, inputs, texlive, ... }:
 let
-  tex = (pkgs.texlive.combine {
+  tex = pkgs.texlive.combine {
     inherit (pkgs.texlive) scheme-full;
     dnd-5e-latex-template = { pkgs = [ pkgs.v.dnd-5e-latex-template ]; };
-  });
-in
-{
+  };
+in {
   programs.home-manager.enable = true;
   home.username = "victor";
   home.homeDirectory = "/home/victor";
@@ -62,29 +61,28 @@ in
 
   xdg.mimeApps = {
     enable = true;
-    defaultApplications =
-      let browser = [ "firefox.desktop" ];
-      in {
-        "image/*" = "org.gnome.eog.desktop";
-        "text/html" = browser;
-        "x-scheme-handler/http" = browser;
-        "x-scheme-handler/https" = browser;
-        "x-scheme-handler/ftp" = browser;
-        "x-scheme-handler/about" = browser;
-        "x-scheme-handler/unknown" = browser;
-        "application/x-extension-htm" = browser;
-        "application/x-extension-html" = browser;
-        "application/x-extension-shtml" = browser;
-        "application/xhtml+xml" = browser;
-        "application/x-extension-xhtml" = browser;
-        "application/x-extension-xht" = browser;
+    defaultApplications = let browser = [ "firefox.desktop" ];
+    in {
+      "image/*" = "org.gnome.eog.desktop";
+      "text/html" = browser;
+      "x-scheme-handler/http" = browser;
+      "x-scheme-handler/https" = browser;
+      "x-scheme-handler/ftp" = browser;
+      "x-scheme-handler/about" = browser;
+      "x-scheme-handler/unknown" = browser;
+      "application/x-extension-htm" = browser;
+      "application/x-extension-html" = browser;
+      "application/x-extension-shtml" = browser;
+      "application/xhtml+xml" = browser;
+      "application/x-extension-xhtml" = browser;
+      "application/x-extension-xht" = browser;
 
-        "application/json" = browser;
-        "application/pdf" = browser;
+      "application/json" = browser;
+      "application/pdf" = browser;
 
-        "x-scheme-handler/vscode" = "code-url-handler.desktop";
-        "x-scheme-handler/discord" = "webcord.desktop";
-      };
+      "x-scheme-handler/vscode" = "code-url-handler.desktop";
+      "x-scheme-handler/discord" = "webcord.desktop";
+    };
   };
 
   programs.foot = { enable = true; };
@@ -185,20 +183,19 @@ in
     sessionVariables = { DIRENV_LOG_FORMAT = ""; };
   };
 
-  xdg.userDirs =
-    let home = config.home.homeDirectory;
-    in {
-      enable = true;
-      createDirectories = true;
-      desktop = "${home}/.desktop";
-      documents = "${home}/cloud/Documents";
-      download = "${home}/dl";
-      music = "${home}/cloud/Music";
-      pictures = "${home}/cloud/Pictures";
-      publicShare = "${home}/.publicShare";
-      templates = "${home}/.templates";
-      videos = "${home}/cloud/Videos";
-    };
+  xdg.userDirs = let home = config.home.homeDirectory;
+  in {
+    enable = true;
+    createDirectories = true;
+    desktop = "${home}/.desktop";
+    documents = "${home}/cloud/Documents";
+    download = "${home}/dl";
+    music = "${home}/cloud/Music";
+    pictures = "${home}/cloud/Pictures";
+    publicShare = "${home}/.publicShare";
+    templates = "${home}/.templates";
+    videos = "${home}/cloud/Videos";
+  };
 
   services.syncthing.enable = true;
 }

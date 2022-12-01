@@ -2,8 +2,7 @@
 let
   vs = config.vault-secrets.secrets;
   cfg = config.services.mastodon;
-in
-{
+in {
   system.stateVersion = "21.05";
   # Use DHCP with static leases
   networking.interfaces.eth0.useDHCP = true;
@@ -19,8 +18,7 @@ in
 
   vault-secrets.secrets.mastodon = {
     services = [ "mastodon-init-dirs" "mastodon" "mastodon-media-prune" ];
-    user = cfg.user;
-    group = cfg.group;
+    inherit (cfg) user group;
   };
 
   # Append the init-dirs script to add AWS/Minio secrets
@@ -47,7 +45,7 @@ in
 
     elasticsearch = {
       host = "127.0.0.1";
-      port = config.services.elasticsearch.port;
+      inherit (config.services.elasticsearch) port;
     };
 
     database = {
@@ -98,23 +96,21 @@ in
   };
 
   # https://github.com/NixOS/nixpkgs/issues/116418#issuecomment-799517120
-  systemd.services.mastodon-media-prune =
-    let
-      cfg = config.services.mastodon;
-    in
-    {
-      description = "Mastodon media prune";
-      environment = lib.filterAttrs (n: _: n != "PATH") config.systemd.services.mastodon-web.environment;
-      serviceConfig = {
-        Type = "oneshot";
-        # Remove remote media attachments older than one month.
-        ExecStart = "${cfg.package}/bin/tootctl media remove --days=30";
-        User = cfg.user;
-        Group = cfg.group;
-        EnvironmentFile = "/var/lib/mastodon/.secrets_env";
-        PrivateTmp = true;
-      };
+  systemd.services.mastodon-media-prune = let cfg = config.services.mastodon;
+  in {
+    description = "Mastodon media prune";
+    environment = lib.filterAttrs (n: _: n != "PATH")
+      config.systemd.services.mastodon-web.environment;
+    serviceConfig = {
+      Type = "oneshot";
+      # Remove remote media attachments older than one month.
+      ExecStart = "${cfg.package}/bin/tootctl media remove --days=30";
+      User = cfg.user;
+      Group = cfg.group;
+      EnvironmentFile = "/var/lib/mastodon/.secrets_env";
+      PrivateTmp = true;
     };
+  };
 
   systemd.timers.mastodon-media-prune = {
     description = "Mastodon media prune";
@@ -126,7 +122,6 @@ in
     };
   };
 
-  networking.firewall =
-    let cfg = config.services.mastodon;
-    in { allowedTCPPorts = [ cfg.streamingPort cfg.webPort ]; };
+  networking.firewall = let cfg = config.services.mastodon;
+  in { allowedTCPPorts = [ cfg.streamingPort cfg.webPort ]; };
 }

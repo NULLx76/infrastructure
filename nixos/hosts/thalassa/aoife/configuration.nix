@@ -46,11 +46,33 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.excludePackages = [ pkgs.xterm ];
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
   services.udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
+  environment.gnome.excludePackages =
+    (with pkgs; [ gnome-photos gnome-tour gnome-connections ])
+    ++ (with pkgs.gnome; [
+      atomix # puzzle game
+      epiphany # web browser
+      geary # email reader
+      gedit # text editor
+      gnome-calendar
+      gnome-clocks
+      gnome-contacts
+      gnome-maps
+      gnome-music
+      gnome-notes
+      gnome-terminal
+      gnome-weather
+      hitori # sudoku game
+      iagno # go game
+      simple-scan # document scanner
+      tali # poker game
+      totem # video player
+    ]);
 
   programs.dconf.enable = true;
   services.udisks2.enable = true;
@@ -84,8 +106,8 @@
     #media-session.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [ 
-    gnome3.gnome-tweaks 
+  environment.systemPackages = with pkgs; [
+    gnome3.gnome-tweaks
     wireguard-tools
   ];
 

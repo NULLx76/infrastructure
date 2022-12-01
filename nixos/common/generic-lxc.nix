@@ -1,4 +1,4 @@
-{ ... }: {
+{ _ }: {
   # See also: https://blog.xirion.net/posts/nixos-proxmox-lxc/
 
   # Supress systemd services that don't work (correctly) on LXC

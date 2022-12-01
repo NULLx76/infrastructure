@@ -21,8 +21,7 @@ in {
     };
     cursorTheme = {
       name = cursorTheme;
-      package = config.home.pointerCursor.package;
-      size = config.home.pointerCursor.size;
+      inherit (config.home.pointerCursor) package size;
     };
   };
 

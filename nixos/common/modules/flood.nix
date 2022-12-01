@@ -115,7 +115,7 @@ in {
     # Create user if set to default
     users.users = mkIf (cfg.user == "flood") {
       flood = {
-        group = cfg.group;
+        inherit (cfg) group;
         shell = pkgs.bashInteractive;
         home = cfg.dataDir;
         description = "flood Daemon user";
@@ -124,7 +124,7 @@ in {
     };
 
     # Open firewall if option is set to do so.
-    networking.firewall.allowedTCPPorts = mkIf (cfg.openFirewall) [ cfg.port ];
+    networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ cfg.port ];
 
     # The actual service
     systemd.services.flood = {

@@ -37,7 +37,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    networking.firewall = mkIf (cfg.openFirewall) {
+    networking.firewall = mkIf cfg.openFirewall {
       allowedTCPPorts = [ 53 ];
       allowedUDPPorts = [ 53 ];
     };

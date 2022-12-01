@@ -23,8 +23,7 @@ let vs = config.vault-secrets.secrets; in
   ];
 
   vault-secrets.secrets.outline = {
-    user = config.services.outline.user;
-    group = config.services.outline.group;
+    inherit (config.services.outline) user group;
   };
 
   services.outline = {
