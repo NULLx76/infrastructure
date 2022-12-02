@@ -42,10 +42,12 @@
 
   # Setup packages available everywhere
   environment.systemPackages = with pkgs; [
+    cmatrix
     fzf
     git
     helix
     htop
+    lolcat
     ncdu
     psmisc
     ripgrep
