@@ -80,9 +80,25 @@ in {
       "rust-analyzer.server.path" = "${pkgs.rust-analyzer}/bin/rust-analyzer";
       "terminal.integrated.defaultProfile.linux" = "zsh";
       "nix.enableLanguageServer" = true; # Enable LSP.
-      "nix.serverPath" =
-        "${pkgs.nil}/bin/nil"; # The path to the LSP server executable.
+      "nix.serverPath" = "${pkgs.nil}/bin/nil";
       "[nix]" = { "editor.defaultFormatter" = "brettm12345.nixfmt-vscode"; };
+      # Don't index unecessary things
+      "files.exclude" = {
+        "**/.vscode" = true;
+        "**/.git" = true;
+        "**/.svn" = true;
+        "**/.hg" = true;
+        "**/.deps" = true;
+        "**/CVS" = true;
+        "**/.DS_Store" = true;
+        "/bin" = true;
+        "/boot" = true;
+        "/cdrom" = true;
+        "/dev" = true;
+        "/proc" = true;
+        "/etc" = true;
+        "/nix" = true;
+      };
     };
     extensions = with pkgs.vscode-extensions;
       with pkgs.v.vscode-extensions; [

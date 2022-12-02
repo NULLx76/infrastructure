@@ -140,6 +140,7 @@
           k9s
           kubectl
           kubectx
+          statix
           terraform
           nixfmt
           nixUnstable

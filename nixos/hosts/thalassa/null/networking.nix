@@ -1,4 +1,4 @@
-{ _ }:
+_:
 {
   services.v.dns = {
     enable = true;

@@ -17,7 +17,7 @@ with lib.hm.gvariant;
 
     "org/gnome/mutter" = {
       attach-modal-dialogs = true;
-      dynamic-workspaces = true;
+      dynamic-workspaces = false;
       edge-tiling = true;
       focus-change-on-pointer-rest = true;
       workspaces-only-on-primary = true;
@@ -28,6 +28,15 @@ with lib.hm.gvariant;
       toggle-tiled-right = [ "<Super>bracketright" ];
     };
 
+    "org/gnome/shell/keybindings" = { toggle-overview = [ "<Super>d" ]; };
+
+    "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
+
+    "org/gnome/desktop/wm/preferences" = {
+      auto-raise = true;
+      num-workspaces = 6;
+    };
+
     "org/gnome/desktop/wm/keybindings" = {
       raise-or-lower = [ "<Super>s" ];
       switch-applications = [ "<Super>Tab" ];
@@ -36,10 +45,14 @@ with lib.hm.gvariant;
       move-to-workspace-2 = [ "<Shift><Super>at" ];
       move-to-workspace-3 = [ "<Shift><Super>numbersign" ];
       move-to-workspace-4 = [ "<Shift><Super>dollar" ];
+      move-to-workspace-5 = [ "<Shift><Super>percent" ];
+      move-to-workspace-6 = [ "<Shift><Super>asciicircum" ];
       switch-to-workspace-1 = [ "<Super>1" ];
       switch-to-workspace-2 = [ "<Super>2" ];
       switch-to-workspace-3 = [ "<Super>3" ];
       switch-to-workspace-4 = [ "<Super>4" ];
+      switch-to-workspace-5 = [ "<Super>5" ];
+      switch-to-workspace-6 = [ "<Super>6" ];
       toggle-fullscreen = [ "<Super>f" ];
       toggle-maximized = [ "<Super>m" ];
     };
