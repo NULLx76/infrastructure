@@ -69,13 +69,10 @@ in {
     package = pkgs.vscode;
     userSettings = {
       "ltex.language" = "en-GB";
-      "latex-workshop" = {
-        "linting.chktex.enabled" = true;
-        "latex.clean.subfolder.enabled" = true;
-        "latex.outDir" = "%TMPDIR%/%RELATIVE_DOC%";
-      };
-      "editor.fontFamily" =
-        "'DejaVuSansMono Nerd Font', 'monospace', monospace";
+      "latex-workshop.linting.chktex.enabled" = true;
+      "latex-workshop.latex.clean.subfolder.enabled" = true;
+      "latex-workshop.latex.outDir" = "%TMPDIR%/%RELATIVE_DOC%";
+      "editor.fontFamily" = "'DejaVuSansMono Nerd Font', 'monospace', monospace";
       "keyboard.dispatch" = "keyCode";
       "rust-analyzer.server.path" = "${pkgs.rust-analyzer}/bin/rust-analyzer";
       "terminal.integrated.defaultProfile.linux" = "zsh";

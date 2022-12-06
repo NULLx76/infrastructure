@@ -399,11 +399,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1670331430,
-        "narHash": "sha256-UdXvsPJEu2ktOZwfGrVoR8gl9jHnE60CEZRvsEvNJBw=",
+        "lastModified": 1670358704,
+        "narHash": "sha256-zBClR9FjbV3So2xDoQci6aKjsnkFVtrD1Ipnd1dY1oo=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "7ed401e5e0779e851667c2e5d220c24e9a5b8737",
+        "rev": "993c382e74faddefeb62b3ab7a7281bd9a69990b",
         "type": "github"
       },
       "original": {
@@ -711,11 +711,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1670152712,
-        "narHash": "sha256-LJttwIvJqsZIj8u1LxVRv82vwUtkzVqQVi7Wb8gxPS4=",
+        "lastModified": 1670242877,
+        "narHash": "sha256-jBLh7dRHnbfvPPA9znOC6oQfKrCPJ0El8Zoe0BqnCjQ=",
         "owner": "NULLx76",
         "repo": "nixpkgs",
-        "rev": "14ddeaebcbe9a25748221d1d7ecdf98e20e2325e",
+        "rev": "6e51c97f1c849efdfd4f3b78a4870e6aa2da4198",
         "type": "github"
       },
       "original": {
@@ -792,6 +792,21 @@
         "owner": "rycee",
         "repo": "nmd",
         "type": "gitlab"
+      }
+    },
+    "nur": {
+      "locked": {
+        "lastModified": 1670315682,
+        "narHash": "sha256-/v0RgZZIjvsFuJbJLUlzRbzSlYFXq3olgJTuJBNtcoY=",
+        "owner": "nix-community",
+        "repo": "NUR",
+        "rev": "af814db16c89385c65e758608296440555f61ccc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "NUR",
+        "type": "github"
       }
     },
     "poetry2nix": {
@@ -900,6 +915,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "nixvim": "nixvim",
+        "nur": "nur",
         "riff": "riff",
         "vault-secrets": "vault-secrets",
         "webcord": "webcord"

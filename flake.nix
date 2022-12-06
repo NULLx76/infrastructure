@@ -8,6 +8,9 @@
   inputs = {
     nixpkgs.url = "github:NULLx76/nixpkgs/0x76";
 
+    nur.url = "github:nix-community/NUR";
+    nur.inputs.nixpkgs.follows = "nixpkgs";
+
     colmena.url = "github:zhaofengli/colmena";
     colmena.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -47,7 +50,8 @@
   };
 
   outputs = { self, nixpkgs, vault-secrets, minecraft-servers, colmena
-    , home-manager, hyprpaper, hyprland, nixos-generators, nixos-hardware, ... }@inputs:
+    , home-manager, hyprpaper, hyprland, nixos-generators, nixos-hardware, nur
+    , ... }@inputs:
     let
       inherit (nixpkgs) lib;
       inherit (builtins) mapAttrs;
@@ -72,6 +76,7 @@
           minecraft-servers.overlays.default
           hyprpaper.overlays.default
           hyprland.overlays.default
+          nur.overlay
         ];
       };
 
