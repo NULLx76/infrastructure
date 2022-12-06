@@ -33,8 +33,9 @@ with lib.hm.gvariant;
     "org/gnome/desktop/interface" = { color-scheme = "prefer-dark"; };
 
     "org/gnome/desktop/wm/preferences" = {
-      auto-raise = true;
+      auto-raise = false;
       num-workspaces = 6;
+      focus-mode = "sloppy";
     };
 
     "org/gnome/desktop/wm/keybindings" = {
