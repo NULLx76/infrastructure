@@ -62,9 +62,14 @@ let vs = config.vault-secrets.secrets; in
         allowedIPs = [ "10.100.0.3/32" ];
       }
       {
-        # Laptop
+        # Old Laptop
         publicKey = "L8myt2bcdja7M+i+9eatdQRW8relPUoZZ9lEKSLe+m8=";
         allowedIPs = [ "10.100.0.4/32" ];
+      }
+      {
+        # New Laptop
+        publicKey = "+Ms3xV6LxNZWTQk11zoz+AUIV2uds6A64Wz15JlR/Ak=";
+        allowedIPs = [ "10.100.0.5/32" ];
       }
       {
         # Aerdenhout
