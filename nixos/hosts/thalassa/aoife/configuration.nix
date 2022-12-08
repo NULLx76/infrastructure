@@ -16,7 +16,8 @@
       efi.canTouchEfiVariables = true;
       efi.efiSysMountPoint = "/boot/efi";
     };
-    kernel = { sysctl = { "fs.inotify.max_user_watches" = 524288; }; };
+    kernel.sysctl = { "fs.inotify.max_user_watches" = 524288; };
+    initrd.kernelModules = [ "amdgpu" ];
   };
 
   fileSystems."/".options = [ "compress=zstd" ];
@@ -44,8 +45,18 @@
     LC_TIME = "nl_NL.UTF-8";
   };
 
+  hardware.opengl.driSupport = true;
+  hardware.opengl.extraPackages = with pkgs; [
+    amdvlk
+    rocm-opencl-icd
+    rocm-opencl-runtime
+  ];
+  systemd.tmpfiles.rules =
+    [ "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.hip}" ];
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "amdgpu" ];
   services.xserver.excludePackages = [ pkgs.xterm ];
 
   # Enable the GNOME Desktop Environment.
@@ -107,9 +118,12 @@
   };
 
   environment.systemPackages = with pkgs; [
-    gnome3.gnome-tweaks
+    gnome.gnome-tweaks
+    gnome.gnome-boxes
     wireguard-tools
   ];
+
+  networking.firewall.checkReversePath = false;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.victor = {

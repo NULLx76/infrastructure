@@ -3,8 +3,8 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { lib, config, pkgs, inputs, ... }:
-let vs = config.vault-secrets.secrets; in
-{
+let vs = config.vault-secrets.secrets;
+in {
   imports = [ ];
 
   # This value determines the NixOS release from which the default
@@ -20,14 +20,11 @@ let vs = config.vault-secrets.secrets; in
 
   environment.noXlibs = lib.mkForce false;
 
-  networking.firewall.allowedUDPPorts = [
-    config.networking.wireguard.interfaces.wg0.listenPort
-  ];
+  networking.firewall.allowedUDPPorts =
+    [ config.networking.wireguard.interfaces.wg0.listenPort ];
   networking.firewall.checkReversePath = false;
 
-  vault-secrets.secrets.wireguard = {
-    services = [ "wireguard-wg0" ];
-  };
+  vault-secrets.secrets.wireguard = { services = [ "wireguard-wg0" ]; };
 
   networking.nat = {
     enable = true;
