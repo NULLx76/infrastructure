@@ -10,6 +10,7 @@
     maps.normal = {
       "<leader>ff" = "<cmd>lua require('telescope.builtin').find_files()<cr>";
       "<leader>fg" = "<cmd>lua require('telescope.builtin').live_grep()<cr>";
+      "<C-_>" = "<cmd>lua require('Comment.api').toggle.linewise.current()<cr>"; # map ctrl+/ to commenting code
     };
 
     extraPlugins = with pkgs.vimPlugins; [ catppuccin-nvim luasnip ];
@@ -25,6 +26,7 @@
       };
       surround.enable = true;
       fugitive.enable = true;
+      gitgutter.enable = true;
       lualine = {
         enable = true;
         theme = "catppuccin";
@@ -34,6 +36,7 @@
         extensions.fzf-native.enable = true;
         extensions.fzf-native.fuzzy = true;
       };
+      comment-nvim = { enable = true; };
       lsp = {
         enable = true;
         servers.rust-analyzer.enable = true;

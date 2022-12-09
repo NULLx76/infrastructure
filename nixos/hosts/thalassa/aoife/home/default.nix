@@ -62,7 +62,7 @@ in {
     clock24 = true;
   };
 
-  programs.firefox = { enable = true; };
+  programs.firefox.enable = true;
 
   programs.vscode = {
     enable = true;

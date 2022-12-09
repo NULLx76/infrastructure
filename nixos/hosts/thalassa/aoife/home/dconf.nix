@@ -72,5 +72,6 @@ with lib.hm.gvariant;
       };
 
     "org/gnome/tweaks" = { show-extensions-notice = false; };
+    "org/gnome/boxes" = { first-run = false; };
   };
 }
