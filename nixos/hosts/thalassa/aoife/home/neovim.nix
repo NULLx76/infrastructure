@@ -18,6 +18,7 @@
     colorscheme = "catppuccin-frappe";
 
     plugins = {
+      barbar.enable = true;
       nix.enable = true;
       treesitter = {
         enable = true;

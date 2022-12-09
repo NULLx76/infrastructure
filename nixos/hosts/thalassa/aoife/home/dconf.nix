@@ -1,9 +1,21 @@
-# Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
 { lib, ... }:
 
 with lib.hm.gvariant;
-
-{
+let
+  inherit (builtins) attrNames map;
+  inherit (lib.attrsets) mapAttrs' nameValuePair;
+  generate_custom_keybindings = binds:
+    {
+      "org/gnome/settings-daemon/plugins/media-keys" = {
+        custom-keybindings = map (name:
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${name}/")
+          (attrNames binds);
+      };
+    } // mapAttrs' (name:
+      nameValuePair
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${name}")
+    binds;
+in {
   dconf.settings = {
     "org/gnome/desktop/input-sources" = {
       sources = [ (mkTuple [ "xkb" "us+altgr-intl" ]) ];
@@ -58,20 +70,14 @@ with lib.hm.gvariant;
       toggle-maximized = [ "<Super>m" ];
     };
 
-    "org/gnome/settings-daemon/plugins/media-keys" = {
-      custom-keybindings = [
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-      ];
-    };
-
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" =
-      {
-        binding = "<Super>Return";
-        command = "kgx";
-        name = "Open Terminal";
-      };
-
     "org/gnome/tweaks" = { show-extensions-notice = false; };
+
     "org/gnome/boxes" = { first-run = false; };
+  } // generate_custom_keybindings {
+    "terminal" = {
+      binding = "<Super>Return";
+      command = "kgx";
+      name = "Open Terminal";
+    };
   };
 }
