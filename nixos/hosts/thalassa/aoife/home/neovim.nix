@@ -3,6 +3,7 @@
   programs.nixvim = {
     enable = true;
     package = pkgs.neovim-unwrapped;
+    vimAlias = true;
 
     globals = { mapleader = " "; };
 
@@ -39,7 +40,10 @@
         servers.rnix-lsp.enable = true;
         servers.pyright.enable = true;
         servers.elixirls.enable = true;
+        servers.clangd.enable = true;
       };
+      trouble.enable = true;
+      lspkind.enable = true;
       nvim-cmp = {
         enable = true;
         auto_enable_sources = true;
