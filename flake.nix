@@ -9,7 +9,6 @@
     nixpkgs.url = "github:NULLx76/nixpkgs/0x76";
 
     nur.url = "github:nix-community/NUR";
-    nur.inputs.nixpkgs.follows = "nixpkgs";
 
     colmena.url = "github:zhaofengli/colmena";
     colmena.inputs.nixpkgs.follows = "nixpkgs";

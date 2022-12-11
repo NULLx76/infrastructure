@@ -112,6 +112,8 @@ in {
       "nix.enableLanguageServer" = true; # Enable LSP.
       "nix.serverPath" = "${pkgs.nil}/bin/nil";
       "[nix]" = { "editor.defaultFormatter" = "brettm12345.nixfmt-vscode"; };
+      "rust-analyzer.checkOnSave.command" = "clippy";
+      "debug.allowBreakpointsEverywhere" = true;
       # Don't index unecessary things
       "files.exclude" = {
         "**/.vscode" = true;
@@ -147,6 +149,7 @@ in {
         tamasfe.even-better-toml
         valentjn.vscode-ltex
         vscodevim.vim
+        vadimcn.vscode-lldb
         xaver.clang-format
       ];
   };
