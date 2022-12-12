@@ -18,6 +18,6 @@
     ];
 
     # Make me admin
-    extraGroups = [ "systemd-journal" "wheel" "networkmanager" ];
+    extraGroups = [ "systemd-journal" "wheel" "networkmanager" "libvirtd" ];
   };
 }

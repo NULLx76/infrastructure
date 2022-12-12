@@ -4,35 +4,37 @@
 
 { config, pkgs, inputs, ... }: {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-z
+    ./hardware.nix
+    ./networking.nix
+    ./desktop-env.nix
   ];
 
   # Bootloader.
   boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
       efi.efiSysMountPoint = "/boot/efi";
     };
     kernel.sysctl = { "fs.inotify.max_user_watches" = 524288; };
-    initrd.kernelModules = [ "amdgpu" ];
+    initrd = {
+      kernelModules = [ "amdgpu" ];
+      systemd.enable = true;
+      verbose = false;
+    };
+    resumeDevice = "/dev/nvme0n1p2";
   };
 
   fileSystems."/".options = [ "compress=zstd" ];
-
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  # Enable networking
-  networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "nl_NL.UTF-8";
     LC_IDENTIFICATION = "nl_NL.UTF-8";
@@ -45,60 +47,17 @@
     LC_TIME = "nl_NL.UTF-8";
   };
 
-  hardware.opengl.driSupport = true;
-  hardware.opengl.extraPackages = with pkgs; [
-    amdvlk
-    rocm-opencl-icd
-    rocm-opencl-runtime
-  ];
-  systemd.tmpfiles.rules =
-    [ "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.hip}" ];
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "amdgpu" ];
-  services.xserver.excludePackages = [ pkgs.xterm ];
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  services.udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
-  environment.gnome.excludePackages =
-    (with pkgs; [ gnome-photos gnome-tour gnome-connections ])
-    ++ (with pkgs.gnome; [
-      atomix # puzzle game
-      epiphany # web browser
-      geary # email reader
-      gedit # text editor
-      gnome-calendar
-      gnome-clocks
-      gnome-contacts
-      gnome-maps
-      gnome-music
-      gnome-notes
-      gnome-terminal
-      gnome-weather
-      hitori # sudoku game
-      iagno # go game
-      simple-scan # document scanner
-      tali # poker game
-      totem # video player
-    ]);
-
-  programs.dconf.enable = true;
-  services.udisks2.enable = true;
-  services.dbus.enable = true;
-  services.fstrim.enable = true;
-
-  # Configure keymap in X11
-  services.xserver = {
-    layout = "us";
-    xkbVariant = "altgr-intl";
-    xkbOptions = "caps:swapescape";
-  };
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
+
+  environment.systemPackages = with pkgs; [ wireguard-tools ];
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.victor = import ./home;
+    extraSpecialArgs = { inherit inputs; };
+  };
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -117,28 +76,13 @@
     #media-session.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    gnome.gnome-tweaks
-    gnome.gnome-boxes
-    wireguard-tools
-  ];
-
-  networking.firewall.checkReversePath = false;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.victor = {
-    isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" ];
+  virtualisation = {
+    podman.enable = true;
+    libvirtd = {
+      enable = true;
+      qemu.package = pkgs.qemu_kvm;
+    };
   };
-
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    users.victor = import ./home;
-    extraSpecialArgs = { inherit inputs; };
-  };
-
-  virtualisation.podman.enable = true;
 
   fonts.fonts = with pkgs; [
     material-design-icons
@@ -151,16 +95,6 @@
         [ "DejaVuSansMono" "Ubuntu" "DroidSansMono" "NerdFontsSymbolsOnly" ];
     })
   ];
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # networking.firewall.enable = false;
-
-  powerManagement = {
-    enable = true;
-    powertop.enable = true;
-  };
 
   programs.steam = {
     enable = true;
