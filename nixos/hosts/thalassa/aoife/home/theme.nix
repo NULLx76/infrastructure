@@ -4,9 +4,9 @@ let
   cursorTheme = config.home.pointerCursor.name;
 in {
   home.pointerCursor = {
-    name = "Catppuccin-Frappe-Pink-Cursors";
-    size = 32;
-    package = pkgs.catppuccin-cursors.frappePink;
+    name = "Bibata_Ghost";
+    size = 24;
+    package = pkgs.bibata-cursors-translucent;
   };
 
   gtk = {

@@ -26,7 +26,7 @@
     hyprpaper.url = "github:hyprwm/hyprpaper";
     hyprpaper.inputs.nixpkgs.follows = "nixpkgs";
 
-    riff.url = "github:DeterminateSystems/riff";
+    riff.url = "github:DeterminateSystems/riff/cole/ds-285-use-rustup-based-rustc-and-cargo";
     riff.inputs.nixpkgs.follows = "nixpkgs";
 
     webcord.url = "github:fufexan/webcord-flake";

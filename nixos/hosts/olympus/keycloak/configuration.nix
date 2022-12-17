@@ -28,6 +28,7 @@ let vs = config.vault-secrets.secrets; in
 
   # If loadCredential doesn't work:
   # https://github.com/NixOS/nixpkgs/issues/157449#issuecomment-1208501368
+  # also check: systemd 252 got more strict about how exactly the filesystems need to be set up for credentials to work properly
   services.keycloak = {
     enable = true;
     database = {
