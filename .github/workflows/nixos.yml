@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  build-null:
+  build-aoife:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -33,7 +33,7 @@ jobs:
           extraPullNames: hyprland
       - name: "Build NixOS config ❄️"
         run: |
-          nix run '.#' build -- --on "null"
+          nix run '.#' build -- --on "aoife"
   build-iso:
     runs-on: ubuntu-latest
     steps:

@@ -6,7 +6,7 @@ stdenv.mkDerivation rec {
 
   src = fetchurl {
     url = "https://download.deemix.app/gui/linux-x64-latest.AppImage";
-    sha256 = "sha256-poEvEIYd5FXRweAGIK5AzPjBWY3p8ertiBPbEV0sv+c=";
+    sha256 = "sha256-e2neemsAzGniBpXIPYbKk5LQHoYLvFj5/8QszCcoTYM=";
     name = "${pname}-${version}.AppImage";
   };
 
