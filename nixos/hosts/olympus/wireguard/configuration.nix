@@ -66,7 +66,7 @@ in {
       {
         # New Laptop
         publicKey = "+Ms3xV6LxNZWTQk11zoz+AUIV2uds6A64Wz15JlR/Ak=";
-        allowedIPs = [ "10.100.0.5/32" ];
+        allowedIPs = [ "10.100.0.6/32" ];
       }
       {
         # Aerdenhout
