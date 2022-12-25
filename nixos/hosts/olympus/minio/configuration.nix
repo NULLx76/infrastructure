@@ -2,8 +2,8 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-let 
+{ config, pkgs, lib, ... }:
+let
   vs = config.vault-secrets.secrets;
   listenPort = 9000;
   consolePort = 9001;

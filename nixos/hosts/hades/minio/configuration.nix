@@ -1,8 +1,7 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   vs = config.vault-secrets.secrets;
-in
-{
+in {
   system.stateVersion = "22.11";
 
   networking.firewall.allowedTCPPorts = [ 9000 9001 ];
@@ -14,5 +13,6 @@ in
   services.minio = {
     enable = true;
     rootCredentialsFile = "${vs.minio}/environment";
+    package = pkgs.v.minio-old;
   };
 }
