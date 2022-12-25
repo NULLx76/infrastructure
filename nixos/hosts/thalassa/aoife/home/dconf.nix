@@ -66,7 +66,7 @@ in {
       switch-to-workspace-4 = [ "<Super>4" ];
       switch-to-workspace-5 = [ "<Super>5" ];
       switch-to-workspace-6 = [ "<Super>6" ];
-      toggle-fullscreen = [ "<Super>f" ];
+      toggle-fullscreen = [ "<Super><Shift>M" ];
       toggle-maximized = [ "<Super>m" ];
     };
 
@@ -78,6 +78,11 @@ in {
       binding = "<Super>Return";
       command = "kgx";
       name = "Open Terminal";
+    };
+    "firefox" = {
+      binding = "<Super>f";
+      command = "firefox";
+      name = "Open Firefox";
     };
   };
 }

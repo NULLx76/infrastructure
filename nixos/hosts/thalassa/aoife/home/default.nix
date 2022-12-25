@@ -33,6 +33,7 @@ in {
     rustup
     solo2-cli
     tex
+    yt-dlp
   ];
 
   xdg.mimeApps.enable = true;
