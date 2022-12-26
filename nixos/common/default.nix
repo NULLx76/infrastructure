@@ -1,13 +1,12 @@
 { inputs, lib, config, ... }: {
   # This file deals with everything requiring `inputs`, the rest being delagated to `common.nix`
   # this is because we can't import inputs from all contexts as that can lead to infinite recursion.
-  imports = [
-    ./common.nix
-    inputs.vault-secrets.nixosModules.vault-secrets
-  ];
+  imports = [ ./common.nix inputs.vault-secrets.nixosModules.vault-secrets ];
 
   nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
-  nix.registry.nixpkgs.flake =  inputs.nixpkgs;
+  nix.registry.nixpkgs.flake = inputs.nixpkgs;
+
+  home-manager.sharedModules = [ ./hm-modules ];
 
   vault-secrets = let
     inherit (config.networking) domain hostName;

@@ -21,7 +21,6 @@ in {
     gcc
     gimp
     inputs.comma.packages.${pkgs.system}.default
-    inputs.riff.packages.${pkgs.system}.riff
     inputs.webcord.packages.${pkgs.system}.default
     jetbrains.clion
     jetbrains.idea-ultimate
@@ -35,6 +34,11 @@ in {
     tex
     yt-dlp
   ];
+
+  programs.riff = {
+    enable = true;
+    direnv = true;
+  };
 
   xdg.mimeApps.enable = true;
   xdg.mimeApps.defaultApplications = {
