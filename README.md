@@ -9,4 +9,4 @@ to deploy the infrastructure, this can be accessed running `nix develop`.
 
 
 [Flux]: https://github.com/fluxcd/flux2
-[deploy-rs]: https://colmena.cli.rs/unstable/
+[colmena]: https://colmena.cli.rs/unstable/
