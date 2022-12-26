@@ -1,19 +1,16 @@
-{ config, pkgs, hosts, ... }:
+{ config, pkgs, flat_hosts, ... }:
 let
   inherit (builtins) filter hasAttr;
-  inherit (pkgs.lib.attrsets) mapAttrsToList;
   hostToDhcp = { hostname, mac, ip, ... }: {
     ethernetAddress = mac;
     hostName = hostname;
     ipAddress = ip;
   };
   localDomain = config.networking.domain;
-  # TODO: Alternatively filter on flat_hosts where realm == localDomain
-  local_hosts = mapAttrsToList (name: value: value // { hostname = name; }) hosts.${localDomain};
-  hosts' = filter (h: hasAttr "ip" h && hasAttr "mac" h) local_hosts;
+  hosts =
+    filter (h: hasAttr "ip" h && hasAttr "mac" h && h.realm == localDomain)
+    flat_hosts;
 in {
-  imports = [ ];
-
   networking = {
     defaultGateway = "10.42.42.1";
     nameservers = [ "10.42.42.15" "10.42.42.16" ];
@@ -52,6 +49,6 @@ in {
         range 10.42.43.1 10.42.43.254;
       }
     '';
-    machines = map hostToDhcp hosts';
+    machines = map hostToDhcp hosts;
   };
 }
