@@ -1,10 +1,4 @@
-[
-  {
-    hostname = "null";
-    type = "local";
-  }
-  {
-    hostname = "aoife";
-    type = "local";
-  }
-]
+{
+  "null" = { type = "local"; };
+  "aoife" = { type = "local"; };
+}

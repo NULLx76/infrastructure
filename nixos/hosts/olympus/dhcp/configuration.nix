@@ -1,13 +1,16 @@
 { config, pkgs, hosts, ... }:
 let
   inherit (builtins) filter hasAttr;
+  inherit (pkgs.lib.attrsets) mapAttrsToList;
   hostToDhcp = { hostname, mac, ip, ... }: {
     ethernetAddress = mac;
     hostName = hostname;
     ipAddress = ip;
   };
   localDomain = config.networking.domain;
-  hosts' = filter (h: hasAttr "ip" h && hasAttr "mac" h) hosts.${localDomain};
+  # TODO: Alternatively filter on flat_hosts where realm == localDomain
+  local_hosts = mapAttrsToList (name: value: value // { hostname = name; }) hosts.${localDomain};
+  hosts' = filter (h: hasAttr "ip" h && hasAttr "mac" h) local_hosts;
 in {
   imports = [ ];
 

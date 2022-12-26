@@ -8,7 +8,6 @@ Re-use `hosts` setup and add domain and port information to each host
     # new stuff
     exposes = {
         requests = {
-    port = 3000;
             domain = "requests.xirion.net";
             port = 3000;
         };

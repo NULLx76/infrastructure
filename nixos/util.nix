@@ -1,7 +1,7 @@
 { nixpkgs, home-manager, hyprland, mailserver, ... }:
 let
-  inherit (builtins) filter attrValues concatLists;
-
+  inherit (builtins) filter attrValues concatMap mapAttrs;
+  inherit (nixpkgs.lib.attrsets) mapAttrsToList;
   # Helper function to resolve what should be imported depending on the type of config (lxc, vm, bare metal)
   resolve_imports = let
     # lookup table
@@ -22,14 +22,19 @@ let
   ] ++ import_cases.${type};
 in {
   # Add to whatever realm a host belong to its list of tags
-  add_realm_to_tags = realm:
-    map ({ tags ? [ ], ... }@host:
+  add_realm_to_tags = mapAttrs (realm:
+    mapAttrs (hostname:
+      { tags ? [ ], ... }@host:
       host // {
         tags = [ realm ] ++ tags;
         inherit realm;
-      });
+      }));
+
   # Flatten all hosts to a single list
-  flatten_hosts = hosts: concatLists (attrValues hosts);
+  flatten_hosts = realms:
+    concatMap (mapAttrsToList (name: value: value // { hostname = name; }))
+    (attrValues realms);
+
   # Filter out all hosts which aren't nixos
   filter_nix_hosts = filter ({ nix ? true, ... }: nix);
 

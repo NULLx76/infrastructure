@@ -53,13 +53,12 @@
     , ... }@inputs:
     let
       inherit (nixpkgs) lib;
-      inherit (builtins) mapAttrs;
 
       util = import ./nixos/util.nix inputs;
 
       system = "x86_64-linux";
       # import and add realm to list of tags
-      hosts = mapAttrs util.add_realm_to_tags (import ./nixos/hosts);
+      hosts = util.add_realm_to_tags (import ./nixos/hosts);
       # flatten hosts to single list
       flat_hosts = util.flatten_hosts hosts;
       # Filter out all non-nixos hosts
