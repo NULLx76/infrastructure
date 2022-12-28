@@ -46,7 +46,6 @@
   "kubernetes" = {
     ip = "10.42.42.10";
     mac = "6E:A5:25:99:FE:68";
-    type = "vm";
   };
   "WoolooTV" = {
     ip = "10.42.42.13";
