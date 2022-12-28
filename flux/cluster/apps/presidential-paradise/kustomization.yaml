@@ -3,5 +3,3 @@ kind: Kustomization
 resources:
   - xirion-registry-creds.yaml
   - 0x76dev
-  - wooloofanclub
-  - zookeeper
