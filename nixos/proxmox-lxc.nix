@@ -15,7 +15,7 @@
     openFirewall = true;
   };
 
-  networking.hostName = "template";
+  networking.hostName = lib.mkDefault "template";
 
   time.timeZone = lib.mkDefault "Europe/Amsterdam";
 

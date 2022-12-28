@@ -1,8 +1,7 @@
 # 1. Add port info to hosts
 Re-use `hosts` setup and add domain and port information to each host
 ```nix
-{
-    hostname = "overseerr";
+"overseerr" = {
     ip = "192.168.0.105";
     mac = "8E:21:7F:88:3A:83";
     # new stuff
@@ -21,7 +20,8 @@ virtualHosts."requests.xirion.net" = proxy "http://192.168.0.105:80";
 ```
 
 Ideally hosts should also be able to access their own host information more easily so
-that in service config one could use `thisHost.exposes.requests.port` or similar
+that in service config one could use `thisHost.exposes.requests.port` or similar,
+and the firewall can automatically be opened
 
 # 2. Authoritative nameserver
 Using the definitions from (1), we can then also build authoritative DNS records

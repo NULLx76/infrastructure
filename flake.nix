@@ -26,7 +26,8 @@
     hyprpaper.url = "github:hyprwm/hyprpaper";
     hyprpaper.inputs.nixpkgs.follows = "nixpkgs";
 
-    riff.url = "github:DeterminateSystems/riff/cole/ds-285-use-rustup-based-rustc-and-cargo";
+    riff.url =
+      "github:DeterminateSystems/riff/cole/ds-285-use-rustup-based-rustc-and-cargo";
     riff.inputs.nixpkgs.follows = "nixpkgs";
 
     webcord.url = "github:fufexan/webcord-flake";
@@ -65,7 +66,7 @@
       nixHosts = util.filter_nix_hosts flat_hosts;
 
       # Define args each module gets access to (access to hosts is useful for DNS/DHCP)
-      specialArgs = { inherit hosts flat_hosts inputs; };
+      specialArgs = { inherit flat_hosts inputs; };
       pkgs = import nixpkgs {
         inherit system;
         overlays = [
