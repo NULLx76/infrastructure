@@ -27,6 +27,7 @@ in {
 
   services.minio = {
     enable = true;
+    package = pkgs.v.minio-old;
     rootCredentialsFile = "${vs.minio}/environment";
     listenAddress = ":${toString listenPort}";
     consoleAddress = ":${toString consolePort}";

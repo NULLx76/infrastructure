@@ -21,13 +21,14 @@
   networking.firewall.allowedTCPPorts = [ 5055 ];
 
   virtualisation.podman.enable = true;
+  # TODO: Write NixOS package https://github.com/NixOS/nixpkgs/issues/135885
   virtualisation.oci-containers = {
     backend = "podman";
     containers = {
       overseerr = {
-        image = "ghcr.io/sct/overseerr:1.30.1";
+        image = "ghcr.io/sct/overseerr:1.31.0";
         environment = {
-          LOG_LEVEL = "debug";
+          # LOG_LEVEL = "debug";
           TZ = "Europe/Amsterdam";
         };
         ports = [
