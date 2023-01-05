@@ -133,8 +133,6 @@ in {
     virtualHosts."drone.0x76.dev" = k8s_proxy;
     virtualHosts."msg.0x76.dev" = k8s_proxy;
     virtualHosts."zookeeper.0x76.dev" = k8s_proxy;
-    virtualHosts."wooloofan.club" = k8s_proxy;
-    virtualHosts."whoami.wooloofan.club" = k8s_proxy;
   };
 
   services.nginx.commonHttpConfig = ''
