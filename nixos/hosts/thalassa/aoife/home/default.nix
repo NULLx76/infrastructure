@@ -29,6 +29,7 @@ in {
     nixfmt
     nixpkgs-review
     python3
+    plex-media-player
     rustup
     solo2-cli
     tex
@@ -156,6 +157,7 @@ in {
         vscodevim.vim
         vadimcn.vscode-lldb
         xaver.clang-format
+        sumneko.lua
       ];
   };
 

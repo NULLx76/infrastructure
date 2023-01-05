@@ -10,12 +10,15 @@
     maps.normal = {
       "<leader>ff" = "<cmd>lua require('telescope.builtin').find_files()<cr>";
       "<leader>fg" = "<cmd>lua require('telescope.builtin').live_grep()<cr>";
-      "<C-_>" = "<cmd>lua require('Comment.api').toggle.linewise.current()<cr>"; # map ctrl+/ to commenting code
+      "<C-_>" =
+        "<cmd>lua require('Comment.api').toggle.linewise.current()<cr>"; # map ctrl+/ to commenting code
     };
 
     extraPlugins = with pkgs.vimPlugins; [ catppuccin-nvim luasnip ];
 
     colorscheme = "catppuccin-frappe";
+
+    extraConfigLua = builtins.readFile ./nvim.lua;
 
     plugins = {
       barbar.enable = true;
