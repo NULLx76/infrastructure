@@ -1,10 +1,11 @@
 { config, pkgs, lib, ... }: {
-  imports = [ ./common/common.nix ./common/generic-lxc.nix ];
+  imports = [ ../common/common.nix ../common/generic-vm.nix ];
 
-  proxmoxLXC = {
-    manageNetwork = true;
-    manageHostName = true;
-    privileged = false;
+  proxmox.qemuConf = {
+    virtio0 = "local-zsfs:vm-9999-disk-0";
+    cores = 1;
+    memory = 1024;
+    bios = "ovmf";
   };
   
   # Enable SSH
@@ -21,7 +22,7 @@
 
   networking.useDHCP = true;
 
-  system.stateVersion = "22.11";
+  system.stateVersion = "23.05";
 
   users.users.root.initialPassword = "toor";
 }

@@ -49,9 +49,20 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = { self, nixpkgs, vault-secrets, minecraft-servers, colmena
-    , home-manager, hyprpaper, hyprland, nixos-generators, nixos-hardware, nur
-    , ... }@inputs:
+  outputs =
+    { self
+    , nixpkgs
+    , vault-secrets
+    , minecraft-servers
+    , colmena
+    , home-manager
+    , hyprpaper
+    , hyprland
+    , nixos-generators
+    , nixos-hardware
+    , nur
+    , ...
+    }@inputs:
     let
       inherit (nixpkgs) lib;
 
@@ -90,7 +101,8 @@
         source /etc/set-environment
         nix repl --file "${./.}/repl.nix" $@
       '';
-    in {
+    in
+    {
       # Make the nixosConfigurations for compat reasons
       nixosConfigurations =
         (import (inputs.colmena + "/src/nix/hive/eval.nix") {
@@ -102,12 +114,14 @@
         }).nodes;
 
       # Make the colmena configuration
-      colmena = lib.foldr (el: acc: acc // util.mkColmenaHost el) {
-        meta = {
-          inherit specialArgs;
-          nixpkgs = pkgs;
-        };
-      } nixHosts;
+      colmena = lib.foldr (el: acc: acc // util.mkColmenaHost el)
+        {
+          meta = {
+            inherit specialArgs;
+            nixpkgs = pkgs;
+          };
+        }
+        nixHosts;
 
       packages.${system} = {
         inherit apply-local;
@@ -117,19 +131,26 @@
         iso = nixos-generators.nixosGenerate {
           inherit system pkgs;
           format = "iso";
-          modules = [ (import ./nixos/iso.nix) ];
+          modules = [ (import ./nixos/templates/iso.nix) ];
         };
 
         iso-graphical = nixos-generators.nixosGenerate {
           inherit system pkgs;
           format = "iso";
-          modules = [ (import ./nixos/iso-graphical.nix) ];
+          modules = [ (import ./nixos/templates/iso-graphical.nix) ];
         };
 
         proxmox-lxc = nixos-generators.nixosGenerate {
           inherit system pkgs;
           format = "proxmox-lxc";
-          modules = [ (import ./nixos/proxmox-lxc.nix) ];
+          modules = [ (import ./nixos/templates/proxmox-lxc.nix) ];
+        };
+
+        # Currently broken as it assumes `local-lvm` exists
+        proxmox-vm = nixos-generators.nixosGenerate {
+          inherit system pkgs;
+          format = "proxmox";
+          modules = [ (import ./nixos/templates/proxmox-vm.nix) ];
         };
       };
 
