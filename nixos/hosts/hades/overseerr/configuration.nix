@@ -16,7 +16,7 @@
   system.stateVersion = "22.11"; # Did you read the comment?
 
   # Additional packages
-  environment.systemPackages = with pkgs; [ ];
+  # environment.systemPackages = with pkgs; [ ];
 
   networking.firewall.allowedTCPPorts = [ 5055 ];
 
