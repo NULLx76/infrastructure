@@ -78,10 +78,6 @@
       # Filter out all non-nixos hosts
       nixHosts = util.filter_nix_hosts flat_hosts;
 
-      # Define args each module gets access to (access to hosts is useful for DNS/DHCP)
-      specialArgs = { 
-        inherit hosts flat_hosts inputs; 
-      };
       pkgs = import nixpkgs {
         inherit system;
         overlays = [
