@@ -102,7 +102,7 @@ in {
     userName = "Victor";
     userEmail = "victor@xirion.net";
     lfs.enable = true;
-    delta.enable = true;
+    # delta.enable = true;
     extraConfig = {
       push.autoSetupRemote = true;
       init.defaultBranch = "main";

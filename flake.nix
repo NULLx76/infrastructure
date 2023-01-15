@@ -5,9 +5,12 @@
   # * https://github.com/serokell/pegasus-infra/blob/master/flake.nix
   # * https://git.voidcorp.nl/j00lz/nixos-configs/src/branch/main/flake.nix
 
+  # For minecraft use:
+  # * https://github.com/Infinidoge/nix-minecraft
+
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
-    nixpkgs_22-11.url = "github:nixos/nixpkgs/872973d7d1a71570dee1e9c1114e13a072bf3ffc";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs_22-11.url = "github:nixos/nixpkgs/nixos-22.11";
 
     nur.url = "github:nix-community/NUR";
 
@@ -16,9 +19,6 @@
 
     vault-secrets.url = "github:serokell/vault-secrets";
     vault-secrets.inputs.nixpkgs.follows = "nixpkgs";
-
-    minecraft-servers.url = "github:jyooru/nix-minecraft-servers";
-    minecraft-servers.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -55,7 +55,6 @@
     , nixpkgs
     , nixpkgs_22-11
     , vault-secrets
-    , minecraft-servers
     , colmena
     , home-manager
     , hyprpaper
@@ -83,7 +82,6 @@
         overlays = [
           (import ./nixos/pkgs)
           vault-secrets.overlay
-          minecraft-servers.overlays.default
           hyprpaper.overlays.default
           hyprland.overlays.default
           nur.overlay

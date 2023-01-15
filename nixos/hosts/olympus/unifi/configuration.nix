@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, pkgs_22-11, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [ ];
@@ -25,9 +25,7 @@
   services.unifi = {
     enable = true;
     unifiPackage = pkgs.unifi;
-    # /nix/store/wlk5idiz9kqkans7j3vxp7bgg03xc2c6-mongodb-3.6.13/bin/mongod --noauth --dbpath /var/lib/unifi/data/db --journal
-    # https://www.reddit.com/r/UNIFI/comments/lpwpyk/unifi_controller_any_version_mongodb_36_nearing/
-    mongodbPackage = pkgs_22-11.mongodb-3_6; # TODO: Upgrade 3.6 to 4.2
+    mongodbPackage = pkgs.mongodb-4_2; 
     openFirewall = true;
   };
 }
