@@ -7,6 +7,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs_22-11.url = "github:nixos/nixpkgs/872973d7d1a71570dee1e9c1114e13a072bf3ffc";
 
     nur.url = "github:nix-community/NUR";
 
@@ -52,6 +53,7 @@
   outputs =
     { self
     , nixpkgs
+    , nixpkgs_22-11
     , vault-secrets
     , minecraft-servers
     , colmena
@@ -91,6 +93,14 @@
           nur.overlay
         ];
       };
+
+      pkgs_22-11 = import nixpkgs_22-11 {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
+      # Define args each module gets access to (access to hosts is useful for DNS/DHCP)
+      specialArgs = { inherit hosts flat_hosts inputs pkgs_22-11; };
 
       # Script to apply local colmena deployments
       apply-local = pkgs.writeShellScriptBin "apply-local" ''

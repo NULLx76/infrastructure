@@ -820,6 +820,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_22-11": {
+      "locked": {
+        "lastModified": 1610695443,
+        "narHash": "sha256-WYODk5uqLcdyhXHXApJgP5u9oWCqDzB85UNJxwIONcM=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "872973d7d1a71570dee1e9c1114e13a072bf3ffc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "872973d7d1a71570dee1e9c1114e13a072bf3ffc",
+        "type": "github"
+      }
+    },
     "nixpkgs_3": {
       "locked": {
         "lastModified": 1632864508,
@@ -994,6 +1010,7 @@
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
+        "nixpkgs_22-11": "nixpkgs_22-11",
         "nixvim": "nixvim",
         "nur": "nur",
         "riff": "riff",
