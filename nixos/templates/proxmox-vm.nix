@@ -7,12 +7,14 @@
     memory = 1024;
     bios = "ovmf";
   };
-  
+
   # Enable SSH
   services.openssh = {
     enable = true;
-    passwordAuthentication = false;
-    permitRootLogin = "yes";
+    settings = {
+      PasswordAuthentication = true;
+      PermitRootLogin = "yes";
+    };
     openFirewall = true;
   };
 

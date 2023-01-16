@@ -72,7 +72,9 @@
   # Enable SSH
   services.openssh = {
     enable = true;
-    passwordAuthentication = false;
-    permitRootLogin = lib.mkDefault "no";
+    settings = {
+      PasswordAuthentication = lib.mkDefault false;
+      PermitRootLogin = lib.mkDefault "no";
+    };
   };
 }
