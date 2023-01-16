@@ -8,7 +8,7 @@ let
       proxyWebsockets = true;
     };
   };
-  k8s_proxy = proxy "http://10.42.42.150:8000/";
+  k8s_proxy = proxy "http://kubernetes.olympus:80/";
   clientConfig = {
     "m.homeserver" = {
       base_url = "https://chat.meowy.tech";
@@ -130,9 +130,9 @@ in {
 
     # Kubernetes endpoints
     virtualHosts."0x76.dev" = k8s_proxy;
-    virtualHosts."drone.0x76.dev" = k8s_proxy;
-    virtualHosts."msg.0x76.dev" = k8s_proxy;
-    virtualHosts."zookeeper.0x76.dev" = k8s_proxy;
+    # virtualHosts."drone.0x76.dev" = k8s_proxy;
+    # virtualHosts."msg.0x76.dev" = k8s_proxy;
+    # virtualHosts."zookeeper.0x76.dev" = k8s_proxy;
   };
 
   services.nginx.commonHttpConfig = ''
