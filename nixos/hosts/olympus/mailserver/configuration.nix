@@ -43,10 +43,6 @@ let vs = config.vault-secrets.secrets; in
         aliases = [ "lau@meowy.tech" ];
       };
       # Services
-      "keycloak@0x76.dev" = {
-        hashedPasswordFile = "${vs.mailserver}/keycloak@0x76.dev";
-        sendOnly = true;
-      };
       "gitea@0x76.dev" = {
         hashedPasswordFile = "${vs.mailserver}/gitea@0x76.dev";
         sendOnly = true;

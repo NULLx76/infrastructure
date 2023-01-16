@@ -52,7 +52,6 @@ in {
     virtualHosts."o.0x76.dev" = proxy "http://minio.olympus:9000";
     virtualHosts."grafana.0x76.dev" = proxy "http://victoriametrics.olympus:2342";
     virtualHosts."outline.0x76.dev" = proxy "http://outline.olympus:3000";
-    virtualHosts."id.0x76.dev" = proxy "http://keycloak.olympus:80";
     virtualHosts."ntfy.0x76.dev" = proxy "http://ntfy.olympus:80";
     virtualHosts."ci.0x76.dev" = proxy "http://woodpecker.olympus:8000";
     virtualHosts."dex.0x76.dev" = proxy "http://dex.olympus:5556";

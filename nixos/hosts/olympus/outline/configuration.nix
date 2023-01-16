@@ -16,8 +16,6 @@ let vs = config.vault-secrets.secrets; in
   system.stateVersion = "22.11"; # Did you read the comment?
 
   # Additional packages
-  environment.systemPackages = with pkgs; [ ];
-
   networking.firewall.allowedTCPPorts = [
     config.services.outline.port
   ];
@@ -42,13 +40,13 @@ let vs = config.vault-secrets.secrets; in
       uploadBucketName = "outline";
       region = "us-east-1"; # fake
     };
-    oidcAuthentication = {
-      displayName = "Keycloak";
-      userinfoUrl = "https://id.0x76.dev/realms/master/protocol/openid-connect/userinfo";
-      tokenUrl = "https://id.0x76.dev/realms/master/protocol/openid-connect/token";
+  oidcAuthentication = {
+      displayName = "Dex";
+      userinfoUrl = "https://dex.0x76.dev/userinfo";
+      tokenUrl = "https://dex.0x76.dev/token";
       clientId = "outline";
-      authUrl = "https://id.0x76.dev/realms/master/protocol/openid-connect/auth";
-      clientSecretFile = "${vs.outline}/keycloakClientSecret";
+      authUrl = "https://dex.0x76.dev/auth";
+      clientSecretFile = "${vs.outline}/dexClientSecret";
     };
     smtp = rec {
       username = "outline@0x76.dev";

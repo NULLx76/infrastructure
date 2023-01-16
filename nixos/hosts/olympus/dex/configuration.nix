@@ -49,19 +49,24 @@ in {
       };
       web.http = "0.0.0.0:5556";
 
-      connectors = [
-        {
-          type = "gitea";
-          id = "gitea";
-          name = "Gitea";
-          config = {
-            clientID = "$GITEA_CLIENT_ID";
-            clientSecret = "$GITEA_CLIENT_SECRET";
-            redirectURI = "https://dex.0x76.dev/callback";
-            baseURL = "https://git.0x76.dev";
-          };
-        }
-      ];
+      connectors = [{
+        type = "gitea";
+        id = "gitea";
+        name = "Gitea";
+        config = {
+          clientID = "$GITEA_CLIENT_ID";
+          clientSecret = "$GITEA_CLIENT_SECRET";
+          redirectURI = "https://dex.0x76.dev/callback";
+          baseURL = "https://git.0x76.dev";
+        };
+      }];
+
+      staticClients = [{
+        id = "outline";
+        name = "Outline";
+        redirectURIs = [ "https://outline.0x76.dev/auth/oidc.callback" ];
+        secretEnv = "OUTLINE_CLIENT_SECRET";
+      }];
     };
 
     environmentFile = "${vs.dex}/environment";
