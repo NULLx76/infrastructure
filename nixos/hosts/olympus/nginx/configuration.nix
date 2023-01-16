@@ -55,6 +55,7 @@ in {
     virtualHosts."id.0x76.dev" = proxy "http://keycloak.olympus:80";
     virtualHosts."ntfy.0x76.dev" = proxy "http://ntfy.olympus:80";
     virtualHosts."ci.0x76.dev" = proxy "http://woodpecker.olympus:8000";
+    virtualHosts."dex.0x76.dev" = proxy "http://dex.olympus:5556";
     virtualHosts."pass.0x76.dev" = {
       enableACME = true;
       forceSSL = true;
