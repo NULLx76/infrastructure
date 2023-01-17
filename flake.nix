@@ -42,10 +42,8 @@
     nixvim.url = "github:pta2002/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixos-generators.url = "github:nix-community/nixos-generators";
+    nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
@@ -147,7 +145,7 @@
         };
 
         proxmox-lxc = nixos-generators.nixosGenerate {
-          inherit system pkgs;
+          inherit pkgs;
           format = "proxmox-lxc";
           modules = [ (import ./nixos/templates/proxmox-lxc.nix) ];
         };
