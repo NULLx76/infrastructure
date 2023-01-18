@@ -13,8 +13,8 @@
 
   # Bootloader.
   boot = {
-    # kernelPackages = pkgs.linuxPackages_latest;
-    kernelPackages = pkgs.linuxKernel.packages.linux_zen; 
+    kernelPackages = pkgs.linuxPackages_latest;
+    # kernelPackages = pkgs.linuxKernel.packages.linux_zen; 
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
@@ -111,4 +111,13 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
+  # Enable ccache
+  programs.ccache.enable = true;
+  programs.ccache.packageNames = [
+    # "linux"
+    # "webkitgtk"
+    # "qtwebengine"
+  ];
+  nix.settings.extra-sandbox-paths =
+    [ (toString config.programs.ccache.cacheDir) ];
 }
