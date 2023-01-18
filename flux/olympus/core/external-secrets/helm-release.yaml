@@ -24,6 +24,6 @@ spec:
     webhook:
       serviceMonitor:
         enabled: true
-    certController:
-      serviceMonitor:
-        enabled: true
+    # certController:
+    #   serviceMonitor:
+    #     enabled: true
