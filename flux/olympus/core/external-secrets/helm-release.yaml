@@ -19,11 +19,11 @@ spec:
     installCRDs: true
     replicaCount: 1
     leaderElect: true
-    serviceMonitor:
-      enabled: true
-    webhook:
-      serviceMonitor:
-        enabled: true
+    # serviceMonitor:
+    #   enabled: true
+    # webhook:
+    #   serviceMonitor:
+    #     enabled: true
     # certController:
     #   serviceMonitor:
     #     enabled: true
