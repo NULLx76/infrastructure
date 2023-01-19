@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: renovate
+  namespace: services
+data:
+  config.js: |-
+    module.exports = {
+      "binarySource": "install",
+      "repositories": ["v/infrastructure"],
+      "flux": {
+        "fileMatch": ["flux/.+\\.ya?ml$"]
+      },
+      "helm-values": {
+        "fileMatch": ["flux/.+\\.ya?ml$"]
+      },
+      "kubernetes": {
+        "fileMatch": ["flux/.+\\.ya?ml$"]
+      },
+      "hostRules": [
+        {
+          "hostType": "docker",
+          "matchHost": "ghcr.io",
+          "username": "NULLx76",
+          "password": process.env.GITHUB_COM_TOKEN
+        }
+      ],
+      "packageRules": [
+        {
+          "automerge": true,
+          "automergeType": "branch",
+          "matchPackageNames": [
+            "renovate/renovate"
+          ]
+        }
+      ],
+      // ignore individual fluxcd images
+      "ignoreDeps": [
+        "ghcr.io/fluxcd/helm-controller",
+        "ghcr.io/fluxcd/image-automation-controller",
+        "ghcr.io/fluxcd/image-reflector-controller",
+        "ghcr.io/fluxcd/kustomize-controller",
+        "ghcr.io/fluxcd/notification-controller",
+        "ghcr.io/fluxcd/source-controller"
+      ],
+      "regexManagers": [
+        {
+          "fileMatch": [
+            "flux/cluster/crds/traefik/.+\\.ya?ml$"
+          ],
+          "matchStrings": [
+            "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n"
+          ],
+          "datasourceTemplate": "helm"
+        },
+        {
+          "fileMatch": [
+            "flux/cluster/crds/external-secrets/.+\\.ya?ml$"
+          ],
+          "matchStrings": [
+            "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: helm-chart-(?<currentValue>.*)\n"
+          ],
+          "datasourceTemplate": "helm"
+        },
+      ]
+    };
