@@ -1,4 +1,3 @@
----
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -19,7 +18,7 @@ spec:
               emptyDir: {}
           containers:
             - name: renovate
-              image: renovate/renovate:32.135
+              image: renovate/renovate:34.105.6
               volumeMounts:
                 - name: config-volume
                   mountPath: /opt/renovate/
