@@ -11,7 +11,11 @@ in {
   home.homeDirectory = "/home/victor";
   home.stateVersion = "23.05";
 
-  imports = [ ./dconf.nix ./theme.nix ./neovim.nix ];
+  imports = [
+    ./dconf.nix
+    ./theme.nix
+    # ./neovim.nix 
+  ];
 
   home.packages = with pkgs; [
     btop

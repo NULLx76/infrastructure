@@ -1,0 +1,113 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: renovate-infrastructure
+  namespace: services
+spec:
+  schedule: "@hourly"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+            - name: config-volume
+              configMap:
+                name: renovate-config
+            - name: work-volume
+              emptyDir: {}
+          containers:
+            - name: renovate
+              image: renovate/renovate:32.135
+              volumeMounts:
+                - name: config-volume
+                  mountPath: /opt/renovate/
+                - name: work-volume
+                  mountPath: /tmp/renovate/
+              env:
+                - name: LOG_LEVEL
+                  value: debug
+                - name: RENOVATE_ENDPOINT
+                  value: "https://git.0x76.dev/api/v1/"
+                - name: RENOVATE_PLATFORM
+                  value: gitea
+                - name: RENOVATE_AUTODISCOVER
+                  value: "false"
+                - name: RENOVATE_GIT_AUTHOR
+                  value: "Renovate Bot <renovate@xirion.net>"
+                - name: RENOVATE_CONFIG_FILE
+                  value: "/opt/renovate/config.js"
+                - name: RENOVATE_BASE_DIR
+                  value: "/tmp/renovate"
+              envFrom:
+                - secretRef:
+                    name: renovate
+          restartPolicy: Never
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: renovate-config
+  namespace: gitops
+data:
+  config.js: |-
+    module.exports = {
+      "binarySource": "install",
+      "repositories": ["v/infrastructure"],
+      "flux": {
+        "fileMatch": ["flux/.+\\.ya?ml$"]
+      },
+      "helm-values": {
+        "fileMatch": ["flux/.+\\.ya?ml$"]
+      },
+      "kubernetes": {
+        "fileMatch": ["flux/.+\\.ya?ml$"]
+      },
+      "hostRules": [
+        {
+          "hostType": "docker",
+          "matchHost": "ghcr.io",
+          "username": "NULLx76",
+          "password": process.env.GITHUB_COM_TOKEN
+        }
+      ],
+      "packageRules": [
+        {
+          "automerge": true,
+          "automergeType": "branch",
+          "matchPackageNames": [
+            "renovate/renovate"
+          ]
+        }
+      ],
+      // ignore individual fluxcd images
+      "ignoreDeps": [
+        "ghcr.io/fluxcd/helm-controller",
+        "ghcr.io/fluxcd/image-automation-controller",
+        "ghcr.io/fluxcd/image-reflector-controller",
+        "ghcr.io/fluxcd/kustomize-controller",
+        "ghcr.io/fluxcd/notification-controller",
+        "ghcr.io/fluxcd/source-controller"
+      ],
+      "regexManagers": [
+        {
+          "fileMatch": [
+            "flux/cluster/crds/traefik/.+\\.ya?ml$"
+          ],
+          "matchStrings": [
+            "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n"
+          ],
+          "datasourceTemplate": "helm"
+        },
+        {
+          "fileMatch": [
+            "flux/cluster/crds/external-secrets/.+\\.ya?ml$"
+          ],
+          "matchStrings": [
+            "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: helm-chart-(?<currentValue>.*)\n"
+          ],
+          "datasourceTemplate": "helm"
+        },
+      ]
+    };

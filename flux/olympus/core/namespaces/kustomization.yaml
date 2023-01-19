@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - websites.yaml
   - security.yaml
+  - services.yaml

@@ -44,6 +44,7 @@
       lsp = {
         enable = true;
         servers.rust-analyzer.enable = true;
+        servers.sumneko_lua.enable = false;
         servers.rnix-lsp.enable = true;
         servers.pyright.enable = true;
         servers.elixirls.enable = true;
