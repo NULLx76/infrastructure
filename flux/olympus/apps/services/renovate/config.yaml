@@ -20,6 +20,10 @@ data:
       "nix": {
         "enabled": true
       },
+      "lockFileMaintenance": { 
+        "enabled": true,
+        "schedule": ["hourly"],
+      },
       "hostRules": [
         {
           "hostType": "docker",
