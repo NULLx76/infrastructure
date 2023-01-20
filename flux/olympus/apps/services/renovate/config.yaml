@@ -17,6 +17,9 @@ data:
       "kubernetes": {
         "fileMatch": ["flux/.+\\.ya?ml$"]
       },
+      "nix": {
+        "enabled": true
+      },
       "hostRules": [
         {
           "hostType": "docker",
@@ -42,25 +45,5 @@ data:
         "ghcr.io/fluxcd/kustomize-controller",
         "ghcr.io/fluxcd/notification-controller",
         "ghcr.io/fluxcd/source-controller"
-      ],
-      "regexManagers": [
-        {
-          "fileMatch": [
-            "flux/cluster/crds/traefik/.+\\.ya?ml$"
-          ],
-          "matchStrings": [
-            "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n"
-          ],
-          "datasourceTemplate": "helm"
-        },
-        {
-          "fileMatch": [
-            "flux/cluster/crds/external-secrets/.+\\.ya?ml$"
-          ],
-          "matchStrings": [
-            "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: helm-chart-(?<currentValue>.*)\n"
-          ],
-          "datasourceTemplate": "helm"
-        },
       ]
     };
