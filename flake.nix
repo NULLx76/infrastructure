@@ -173,6 +173,7 @@
           terraform
           nixfmt
           nixUnstable
+          nil
           vault
           (vault-push-approle-envs self { })
           (vault-push-approles self { })
