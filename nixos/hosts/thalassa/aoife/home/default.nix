@@ -14,7 +14,7 @@ in {
   imports = [
     ./dconf.nix
     ./theme.nix
-    # ./neovim.nix 
+    ./neovim.nix 
   ];
 
   home.packages = with pkgs; [

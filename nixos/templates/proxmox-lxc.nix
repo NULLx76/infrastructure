@@ -21,8 +21,6 @@
 
   time.timeZone = lib.mkDefault "Europe/Amsterdam";
 
-  networking.useDHCP = true;
-
   system.stateVersion = "23.05";
 
   users.users.root.initialPassword = "toor";

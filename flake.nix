@@ -9,7 +9,7 @@
   # * https://github.com/Infinidoge/nix-minecraft
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "github:NULLx76/nixpkgs/0x76";
     nixpkgs_22-11.url = "github:nixos/nixpkgs/nixos-22.11";
 
     nur.url = "github:nix-community/NUR";
