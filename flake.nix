@@ -48,20 +48,8 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs =
-    { self
-    , nixpkgs
-    , nixpkgs_22-11
-    , vault-secrets
-    , colmena
-    , home-manager
-    , hyprpaper
-    , hyprland
-    , nixos-generators
-    , nixos-hardware
-    , nur
-    , ...
-    }@inputs:
+  outputs = { self, nixpkgs, nixpkgs_22-11, vault-secrets, colmena, home-manager
+    , hyprpaper, hyprland, nixos-generators, nixos-hardware, nur, ... }@inputs:
     let
       inherit (nixpkgs) lib;
 
@@ -105,8 +93,7 @@
         source /etc/set-environment
         nix repl --file "${./.}/repl.nix" $@
       '';
-    in
-    {
+    in {
       # Make the nixosConfigurations for compat reasons
       nixosConfigurations =
         (import (inputs.colmena + "/src/nix/hive/eval.nix") {
@@ -118,14 +105,12 @@
         }).nodes;
 
       # Make the colmena configuration
-      colmena = lib.foldr (el: acc: acc // util.mkColmenaHost el)
-        {
-          meta = {
-            inherit specialArgs;
-            nixpkgs = pkgs;
-          };
-        }
-        nixHosts;
+      colmena = lib.foldr (el: acc: acc // util.mkColmenaHost el) {
+        meta = {
+          inherit specialArgs;
+          nixpkgs = pkgs;
+        };
+      } nixHosts;
 
       packages.${system} = {
         inherit apply-local;

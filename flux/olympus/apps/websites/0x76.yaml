@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: x76dev
-          image: git.0x76.dev/v/0x76.dev:latest
+          image: git.0x76.dev/v/0x76.dev:4
           ports:
             - containerPort: 80
 ---
