@@ -1,4 +1,3 @@
----
 ignore: |
   charts/
   docs/
@@ -6,8 +5,12 @@ ignore: |
   .terraform/
   .vscode/
   gotk-components.yaml
+  gotk-sync.yaml
 extends: default
 rules:
+  document-start:
+    level: warning
+    present: false
   empty-lines:
     max-end: 1
   truthy:

@@ -1,0 +1,8 @@
+pipeline:
+  check:
+    image: nixos/nix:2.13.1
+    environment:
+      - NIX_CONFIG=experimental-features = nix-command flakes
+    commands:
+      - nix run 'nixpkgs#statix' check
+      - nix run 'nixpkgs#yamllint' .

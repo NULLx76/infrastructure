@@ -20,7 +20,7 @@ data:
       "nix": {
         "enabled": true
       },
-      "lockFileMaintenance": { 
+      "lockFileMaintenance": {
         "enabled": true,
         "automerge": true,
         "automergeType": "pr",
