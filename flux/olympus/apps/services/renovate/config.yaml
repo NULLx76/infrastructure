@@ -25,7 +25,7 @@ data:
         "automerge": true,
         "automergeType": "pr",
         "platformAutomerge": true,
-        "schedule": ["hourly"],
+        "schedule": ["weekly"],
       },
       "hostRules": [
         {
@@ -41,6 +41,9 @@ data:
           "automergeType": "branch",
           "matchPackageNames": [
             "renovate/renovate"
+          ],
+          "matchPackagePrefixes": [
+            "git.0x76.dev" 
           ]
         }
       ],
