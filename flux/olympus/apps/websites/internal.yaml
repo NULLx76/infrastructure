@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: internal
+  namespace: websites
+  labels:
+    app: internal.xirion.net
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: internal.xirion.net
+  template:
+    metadata:
+      labels:
+        app: internal.xirion.net
+    spec:
+      containers:
+        - name: internal.xirion.net
+          image: git.0x76.dev/v/internal.xirion.net:1
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: internal.xirion.net
+  namespace: websites
+spec:
+  selector:
+    app: internal.xirion.net
+  ports:
+    - protocol: TCP
+      port: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: internal.xirion.net
+  namespace: websites
+spec:
+  rules:
+    - host: "internal.xirion.net"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: internal.xirion.net
+                port:
+                  number: 8080

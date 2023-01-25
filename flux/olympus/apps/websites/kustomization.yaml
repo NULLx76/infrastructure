@@ -4,3 +4,4 @@ metadata:
   namespace: websites
 resources:
   - 0x76.yaml
+  - internal.yaml

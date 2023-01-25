@@ -43,7 +43,7 @@ data:
             "renovate/renovate"
           ],
           "matchPackagePrefixes": [
-            "git.0x76.dev" 
+            "git.0x76.dev"
           ]
         }
       ],
