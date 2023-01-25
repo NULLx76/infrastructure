@@ -15,7 +15,6 @@
     nur.url = "github:nix-community/NUR";
 
     colmena.url = "github:zhaofengli/colmena";
-    colmena.inputs.nixpkgs.follows = "nixpkgs";
 
     vault-secrets.url = "github:serokell/vault-secrets";
     vault-secrets.inputs.nixpkgs.follows = "nixpkgs";
