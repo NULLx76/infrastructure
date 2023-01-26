@@ -114,9 +114,7 @@
   # Enable ccache
   programs.ccache.enable = true;
   programs.ccache.packageNames = [
-    # "linux"
-    # "webkitgtk"
-    # "qtwebengine"
+    "evolution-data-server"
   ];
   nix.settings.extra-sandbox-paths =
     [ (toString config.programs.ccache.cacheDir) ];
