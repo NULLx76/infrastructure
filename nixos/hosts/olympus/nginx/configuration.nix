@@ -130,9 +130,7 @@ in {
 
     # Kubernetes endpoints
     virtualHosts."0x76.dev" = k8s_proxy;
-    # virtualHosts."drone.0x76.dev" = k8s_proxy;
-    # virtualHosts."msg.0x76.dev" = k8s_proxy;
-    # virtualHosts."zookeeper.0x76.dev" = k8s_proxy;
+    virtualHosts."internal.xirion.net" = k8s_proxy;
   };
 
   services.nginx.commonHttpConfig = ''
