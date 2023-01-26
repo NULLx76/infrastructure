@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: internal
-          image: git.0x76.dev/v/internal:1
+          image: git.0x76.dev/v/internal.xirion.net:1
           ports:
             - containerPort: 8080
 ---
