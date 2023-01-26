@@ -4,31 +4,31 @@ metadata:
   name: internal
   namespace: websites
   labels:
-    app: internal.xirion.net
+    app: internal
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: internal.xirion.net
+      app: internal
   template:
     metadata:
       labels:
-        app: internal.xirion.net
+        app: internal
     spec:
       containers:
-        - name: internal.xirion.net
-          image: git.0x76.dev/v/internal.xirion.net:1
+        - name: internal
+          image: git.0x76.dev/v/internal:1
           ports:
             - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: internal.xirion.net
+  name: internal
   namespace: websites
 spec:
   selector:
-    app: internal.xirion.net
+    app: internal
   ports:
     - protocol: TCP
       port: 8080
@@ -36,7 +36,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: internal.xirion.net
+  name: internal
   namespace: websites
 spec:
   rules:
@@ -47,6 +47,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: internal.xirion.net
+                name: internal
                 port:
                   number: 8080

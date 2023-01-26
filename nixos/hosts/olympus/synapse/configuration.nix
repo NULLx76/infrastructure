@@ -54,6 +54,27 @@ in
     ];
 
     settings =
+    let log_file = pkgs.writeText "log.yml" ''
+version: 1
+
+formatters:
+    structured:
+        class: synapse.logging.TerseJsonFormatter
+
+handlers:
+    file:
+        class: logging.handlers.TimedRotatingFileHandler
+        formatter: structured
+        filename: /var/lib/matrix-synapse/synapse.log
+        when: midnight
+        backupCount: 3  # Does not include the current log file.
+        encoding: utf8
+
+loggers:
+    synapse:
+        level: INFO
+        handlers: [file]
+    ''; in
       {
         server_name = "meowy.tech";
         enable_registration = true;
@@ -64,6 +85,7 @@ in
         media_retention = {
           remote_media_lifetime = "90d";
         };
+        log_config =  "${log_file}";
         listeners = [
           {
             inherit port;
