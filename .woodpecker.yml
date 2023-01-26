@@ -1,6 +1,6 @@
 pipeline:
   check:
-    image: nixos/nix:2.13.1
+    image: nixos/nix:2.13.2
     environment:
       - NIX_CONFIG=experimental-features = nix-command flakes
     commands:
