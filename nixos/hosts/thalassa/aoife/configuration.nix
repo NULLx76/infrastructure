@@ -14,7 +14,7 @@
   # Bootloader.
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
-    # kernelPackages = pkgs.linuxKernel.packages.linux_zen; 
+    # kernelPackages = pkgs.linuxKernel.packages.linux_zen;
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
@@ -115,6 +115,7 @@
   programs.ccache.enable = true;
   programs.ccache.packageNames = [
     "evolution-data-server"
+    "mongodb"
   ];
   nix.settings.extra-sandbox-paths =
     [ (toString config.programs.ccache.cacheDir) ];

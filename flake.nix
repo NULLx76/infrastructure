@@ -1,7 +1,7 @@
 {
   description = "0x76's infrastructure";
 
-  # Based on: 
+  # Based on:
   # * https://github.com/serokell/pegasus-infra/blob/master/flake.nix
   # * https://git.voidcorp.nl/j00lz/nixos-configs/src/branch/main/flake.nix
 
@@ -17,32 +17,25 @@
     colmena.url = "github:zhaofengli/colmena";
 
     vault-secrets.url = "github:serokell/vault-secrets";
-    vault-secrets.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     hyprland.url = "github:hyprwm/Hyprland";
     hyprpaper.url = "github:hyprwm/hyprpaper";
-    hyprpaper.inputs.nixpkgs.follows = "nixpkgs";
 
-    riff.url =
-      "github:DeterminateSystems/riff/cole/ds-285-use-rustup-based-rustc-and-cargo";
-    riff.inputs.nixpkgs.follows = "nixpkgs";
+    riff.url = "github:DeterminateSystems/riff";
 
     webcord.url = "github:fufexan/webcord-flake";
 
     comma.url = "github:nix-community/comma";
-    comma.inputs.nixpkgs.follows = "nixpkgs";
 
     mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     mailserver.inputs.nixpkgs.follows = "nixpkgs";
 
     nixvim.url = "github:pta2002/nixvim";
-    nixvim.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-generators.url = "github:nix-community/nixos-generators";
-    nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
