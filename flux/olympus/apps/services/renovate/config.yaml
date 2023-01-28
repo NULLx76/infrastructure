@@ -23,8 +23,7 @@ data:
       "lockFileMaintenance": {
         "enabled": true,
         "automerge": true,
-        "automergeType": "pr",
-        "platformAutomerge": true,
+        "automergeType": "branch",
         "schedule": ["weekly"],
       },
       "hostRules": [
