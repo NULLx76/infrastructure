@@ -88,11 +88,11 @@
         "stable": "stable"
       },
       "locked": {
-        "lastModified": 1674888748,
-        "narHash": "sha256-NJ/wtclMjmj8EW+u4fHcvC1QVZgu6aGMPHW5+yirrjU=",
+        "lastModified": 1675019967,
+        "narHash": "sha256-AD9udouBmfWxmsM1j6eNCu+HEB9E41+fA3XRIb765LU=",
         "owner": "zhaofengli",
         "repo": "colmena",
-        "rev": "9cb84136021796647885afa9b04646ce6bf72a55",
+        "rev": "7602e548a78932bd28a7e2f621b3d62b4124e993",
         "type": "github"
       },
       "original": {
