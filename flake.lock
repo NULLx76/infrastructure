@@ -1017,11 +1017,11 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1674753546,
-        "narHash": "sha256-rqkvIQ71xZ2Am2Vhhxl0TCbl/k8nxfmSC5cDieHLfbI=",
+        "lastModified": 1675097940,
+        "narHash": "sha256-A9jcSNaC4Mp1EAq4Km9YckU0abnAfQUiOtBhQXaPrQI=",
         "owner": "DeterminateSystems",
         "repo": "riff",
-        "rev": "a35e66326f2ffb3ce8a6d0b8180b87ce7260a9be",
+        "rev": "a56f088aa328562f2631b73e103dc5304774b651",
         "type": "github"
       },
       "original": {
