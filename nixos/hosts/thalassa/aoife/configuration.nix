@@ -112,9 +112,10 @@
   system.stateVersion = "23.05"; # Did you read the comment?
 
   # Enable ccache
+  # WARNING: Adding packages here makes them always be built from source, so only do so for once that are usually build like that
+  # This should be fixed when nix switches to content-addresabble paths
   programs.ccache.enable = true;
   programs.ccache.packageNames = [
-    "evolution-data-server"
     "mongodb"
   ];
   nix.settings.extra-sandbox-paths =
