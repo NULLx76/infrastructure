@@ -88,11 +88,11 @@
         "stable": "stable"
       },
       "locked": {
-        "lastModified": 1675019967,
-        "narHash": "sha256-AD9udouBmfWxmsM1j6eNCu+HEB9E41+fA3XRIb765LU=",
+        "lastModified": 1675400331,
+        "narHash": "sha256-ja0DhWBARzcimqMBhQ+DP7NQoJSlNasqvlj5GiHRYY0=",
         "owner": "zhaofengli",
         "repo": "colmena",
-        "rev": "7602e548a78932bd28a7e2f621b3d62b4124e993",
+        "rev": "31d8240504e91c3ea5c758d92f02f94af3fae6c3",
         "type": "github"
       },
       "original": {
@@ -926,11 +926,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1675390386,
-        "narHash": "sha256-VK1EGF9+U2A72Gy5lgHHa6DaGOnx3Ml51E0TewYh5L8=",
+        "lastModified": 1675397338,
+        "narHash": "sha256-MQGfK2kXpaVk1Zzl9wTOstKufkUdSYOtVYeBgKQWNxI=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "f9a67871a7c1dcd424a20b6e3723eacc0704bc97",
+        "rev": "728c10fbdb5e3cf4d3f0d1bec92c7b2dc417d6c1",
         "type": "github"
       },
       "original": {
