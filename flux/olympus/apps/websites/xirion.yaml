@@ -1,34 +1,34 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: x76dev
+  name: xirion
   namespace: websites
   labels:
-    app: x76dev
+    app: xirion
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: x76dev
+      app: xirion
   template:
     metadata:
       labels:
-        app: x76dev
+        app: xirion
     spec:
       containers:
-        - name: x76dev
-          image: git.0x76.dev/v/0x76.dev:5
+        - name: xirion
+          image: git.0x76.dev/v/xirion.net:2
           ports:
             - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: x76dev
+  name: xirion
   namespace: websites
 spec:
   selector:
-    app: x76dev
+    app: xirion
   ports:
     - protocol: TCP
       port: 80
@@ -36,17 +36,17 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: x76dev
+  name: xirion
   namespace: websites
 spec:
   rules:
-    - host: "0x76.dev"
+    - host: "xirion.net"
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: x76dev
+                name: xirion
                 port:
                   number: 80
