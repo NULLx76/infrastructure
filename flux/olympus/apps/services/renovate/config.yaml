@@ -58,7 +58,7 @@ data:
           "regexManagers": [
             {
               "fileMatch": [".+\\.nix"],
-              "matchStrings": ["image\\s*=\\s*"(?<depName>.*?):(?<currentValue>.*?)"\\s*;\\s*"],
+              "matchStrings": ["image\\s*=\\s*\"(?<depName>.*?):(?<currentValue>.*?)\"\\s*;\\s*"],
               "datasourceTemplate": "docker"
             }
           ]
