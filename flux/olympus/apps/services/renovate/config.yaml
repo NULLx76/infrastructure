@@ -38,6 +38,7 @@ data:
             {
               "automerge": true,
               "automergeType": "branch",
+              "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
               "matchPackageNames": [
                 "renovate/renovate"
               ],
