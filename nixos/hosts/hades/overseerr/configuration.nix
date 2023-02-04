@@ -26,8 +26,7 @@
     backend = "podman";
     containers = {
       overseerr = {
-        # TODO: Add regex so that renovate catches this
-        image = "ghcr.io/sct/overseerr:1.32.5";
+        image = "ghcr.io/sct/overseerr:1.32.4";
         environment = {
           # LOG_LEVEL = "debug";
           TZ = "Europe/Amsterdam";

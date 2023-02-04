@@ -109,30 +109,29 @@
 
         default = colmena.packages.${system}.colmena;
 
-        iso = nixos-generators.nixosGenerate {
-          inherit system pkgs;
-          format = "iso";
-          modules = [ (import ./nixos/templates/iso.nix) ];
-        };
+        # iso = nixos-generators.nixosGenerate {
+        #   inherit system pkgs;
+        #   format = "iso";
+        #   modules = [ (import ./nixos/templates/iso.nix) ];
+        # };
 
-        iso-graphical = nixos-generators.nixosGenerate {
-          inherit system pkgs;
-          format = "iso";
-          modules = [ (import ./nixos/templates/iso-graphical.nix) ];
-        };
+        # iso-graphical = nixos-generators.nixosGenerate {
+        #   inherit system pkgs;
+        #   format = "iso";
+        #   modules = [ (import ./nixos/templates/iso-graphical.nix) ];
+        # };
 
-        proxmox-lxc = nixos-generators.nixosGenerate {
-          inherit pkgs;
-          format = "proxmox-lxc";
-          modules = [ (import ./nixos/templates/proxmox-lxc.nix) ];
-        };
+        # proxmox-lxc = nixos-generators.nixosGenerate {
+        #   inherit pkgs;
+        #   format = "proxmox-lxc";
+        #   modules = [ (import ./nixos/templates/proxmox-lxc.nix) ];
+        # };
 
-        # Currently broken as it assumes `local-lvm` exists
-        proxmox-vm = nixos-generators.nixosGenerate {
-          inherit system pkgs;
-          format = "proxmox";
-          modules = [ (import ./nixos/templates/proxmox-vm.nix) ];
-        };
+        # proxmox-vm = nixos-generators.nixosGenerate {
+        #   inherit system pkgs;
+        #   format = "proxmox";
+        #   modules = [ (import ./nixos/templates/proxmox-vm.nix) ];
+        # };
       };
 
       # Use by running `nix develop`

@@ -1,58 +1,65 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: renovate
-  namespace: services
+    name: renovate
+    namespace: services
 data:
-  config.js: |-
-    module.exports = {
-      "binarySource": "install",
-      "repositories": ["v/infrastructure"],
-      "flux": {
-        "fileMatch": ["flux/.+\\.ya?ml$"]
-      },
-      "helm-values": {
-        "fileMatch": ["flux/.+\\.ya?ml$"]
-      },
-      "kubernetes": {
-        "fileMatch": ["flux/.+\\.ya?ml$"]
-      },
-      "nix": {
-        "enabled": true
-      },
-      "lockFileMaintenance": {
-        "enabled": true,
-        "automerge": true,
-        "automergeType": "branch",
-        "schedule": ["weekly"],
-      },
-      "hostRules": [
-        {
-          "hostType": "docker",
-          "matchHost": "ghcr.io",
-          "username": "NULLx76",
-          "password": process.env.GITHUB_COM_TOKEN
-        }
-      ],
-      "packageRules": [
-        {
-          "automerge": true,
-          "automergeType": "branch",
-          "matchPackageNames": [
-            "renovate/renovate"
+    config.js: |-
+        module.exports = {
+          "binarySource": "install",
+          "repositories": ["v/infrastructure"],
+          "flux": {
+            "fileMatch": ["flux/.+\\.ya?ml$"]
+          },
+          "helm-values": {
+            "fileMatch": ["flux/.+\\.ya?ml$"]
+          },
+          "kubernetes": {
+            "fileMatch": ["flux/.+\\.ya?ml$"]
+          },
+          "nix": {
+            "enabled": true
+          },
+          "lockFileMaintenance": {
+            "enabled": true,
+            "automerge": true,
+            "automergeType": "branch",
+            "schedule": ["weekly"],
+          },
+          "hostRules": [
+            {
+              "hostType": "docker",
+              "matchHost": "ghcr.io",
+              "username": "NULLx76",
+              "password": process.env.GITHUB_COM_TOKEN
+            }
           ],
-          "matchPackagePrefixes": [
-            "git.0x76.dev"
+          "packageRules": [
+            {
+              "automerge": true,
+              "automergeType": "branch",
+              "matchPackageNames": [
+                "renovate/renovate"
+              ],
+              "matchPackagePrefixes": [
+                "git.0x76.dev"
+              ]
+            }
+          ],
+          // ignore individual fluxcd images
+          "ignoreDeps": [
+            "ghcr.io/fluxcd/helm-controller",
+            "ghcr.io/fluxcd/image-automation-controller",
+            "ghcr.io/fluxcd/image-reflector-controller",
+            "ghcr.io/fluxcd/kustomize-controller",
+            "ghcr.io/fluxcd/notification-controller",
+            "ghcr.io/fluxcd/source-controller"
+          ],
+          "regexManagers": [
+            {
+              "fileMatch": [".+\\.nix"],
+              "matchStrings": ["image\\s*=\\s*"(?<depName>.*?):(?<currentValue>.*?)"\\s*;\\s*"],
+              "datasourceTemplate": "docker"
+            }
           ]
-        }
-      ],
-      // ignore individual fluxcd images
-      "ignoreDeps": [
-        "ghcr.io/fluxcd/helm-controller",
-        "ghcr.io/fluxcd/image-automation-controller",
-        "ghcr.io/fluxcd/image-reflector-controller",
-        "ghcr.io/fluxcd/kustomize-controller",
-        "ghcr.io/fluxcd/notification-controller",
-        "ghcr.io/fluxcd/source-controller"
-      ]
-    };
+        };
