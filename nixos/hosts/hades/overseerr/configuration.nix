@@ -26,7 +26,7 @@
     backend = "podman";
     containers = {
       overseerr = {
-        image = "ghcr.io/sct/overseerr:1.32.4";
+        image = "ghcr.io/sct/overseerr:1.32.5";
         environment = {
           # LOG_LEVEL = "debug";
           TZ = "Europe/Amsterdam";
