@@ -109,11 +109,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1675178298,
-        "narHash": "sha256-5M2VVrYH+IAa1P7Qz9gUPS3YNdqeVOoa1riV8eTtoYE=",
+        "lastModified": 1676319017,
+        "narHash": "sha256-gHyshpxoQAc/3sI3eChqmSCvsBimy+Z6EkzwA3aAYgA=",
         "owner": "nix-community",
         "repo": "comma",
-        "rev": "0c208e098bfe57556bcdea1e2faaf5c08cce4482",
+        "rev": "c4001264668c09d44d765e5ccb1182f291cd91a4",
         "type": "github"
       },
       "original": {
