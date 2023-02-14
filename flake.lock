@@ -911,11 +911,11 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1676393198,
-        "narHash": "sha256-dh7yOX2rkFHlsG5KJHJHmp3J6VjiB9ipP10dTEEkjl0=",
+        "lastModified": 1676398253,
+        "narHash": "sha256-+nS3pdkhvgM6G0mLsgTsVxVj8LuQ2jE3L6raJQurJh8=",
         "owner": "pta2002",
         "repo": "nixvim",
-        "rev": "96c77f126f40c08e4309b3b70305641265c34b2d",
+        "rev": "6e54dc1143539fc5f6d4f963a41b39e84ddf99ef",
         "type": "github"
       },
       "original": {
