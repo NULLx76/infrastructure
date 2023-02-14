@@ -6,7 +6,7 @@
     manageHostName = true;
     privileged = false;
   };
-  
+
   # Enable SSH
   services.openssh = {
     enable = true;
