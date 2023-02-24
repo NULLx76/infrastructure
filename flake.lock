@@ -603,7 +603,7 @@
     "nix": {
       "inputs": {
         "lowdown-src": "lowdown-src",
-        "nixpkgs": "nixpkgs_9"
+        "nixpkgs": "nixpkgs_8"
       },
       "locked": {
         "lastModified": 1633098935,
@@ -652,7 +652,9 @@
     "nixos-generators": {
       "inputs": {
         "nixlib": "nixlib",
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1676297861,
@@ -735,20 +737,6 @@
     },
     "nixpkgs_10": {
       "locked": {
-        "lastModified": 1667318090,
-        "narHash": "sha256-AvxgT+t1BWZs8IfdseHl8+7wvWWm9pvysupMT9wXdH0=",
-        "owner": "serokell",
-        "repo": "nixpkgs",
-        "rev": "4bce79cf151aad3c0bed46a32bdb4b165f00cb7e",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_11": {
-      "locked": {
         "lastModified": 1670507980,
         "narHash": "sha256-riNZa0xzM1it3pzxciwALeMs+0CsBMWIW2FqulzK8vM=",
         "owner": "NixOS",
@@ -829,22 +817,6 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1637186689,
-        "narHash": "sha256-NU7BhgnwA/3ibmCeSzFK6xGi+Bari9mPfn+4cBmyEjw=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "7fad01d9d5a3f82081c00fb57918d64145dc904c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_6": {
-      "locked": {
         "lastModified": 1677063315,
         "narHash": "sha256-qiB4ajTeAOVnVSAwCNEEkoybrAlA+cpeiBxLobHndE8=",
         "owner": "nixos",
@@ -859,7 +831,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_7": {
+    "nixpkgs_6": {
       "locked": {
         "lastModified": 1676721149,
         "narHash": "sha256-mN2EpTGxxVNnFZLoLWRwh6f7UWhXy4qE+wO2CZyrXps=",
@@ -875,7 +847,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_8": {
+    "nixpkgs_7": {
       "locked": {
         "lastModified": 1672580127,
         "narHash": "sha256-3lW3xZslREhJogoOkjeZtlBtvFMyxHku7I/9IVehhT8=",
@@ -891,7 +863,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_9": {
+    "nixpkgs_8": {
       "locked": {
         "lastModified": 1632864508,
         "narHash": "sha256-d127FIvGR41XbVRDPVvozUPQ/uRHbHwvfyKHwEt5xFM=",
@@ -906,11 +878,25 @@
         "type": "indirect"
       }
     },
+    "nixpkgs_9": {
+      "locked": {
+        "lastModified": 1667318090,
+        "narHash": "sha256-AvxgT+t1BWZs8IfdseHl8+7wvWWm9pvysupMT9wXdH0=",
+        "owner": "serokell",
+        "repo": "nixpkgs",
+        "rev": "4bce79cf151aad3c0bed46a32bdb4b165f00cb7e",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
     "nixvim": {
       "inputs": {
         "beautysh": "beautysh",
         "flake-utils": "flake-utils_2",
-        "nixpkgs": "nixpkgs_7"
+        "nixpkgs": "nixpkgs_6"
       },
       "locked": {
         "lastModified": 1677230078,
@@ -928,11 +914,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1677235650,
-        "narHash": "sha256-oRB3vBp1qUq87QqpOAh6dIt63t9favRE83W4ucMCq5A=",
+        "lastModified": 1677243766,
+        "narHash": "sha256-a+2V68cLjb951pYBEGbQGEVBcgti40uWtxTVnzvGFhY=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "2b1eb0e3a383f67ac6126937d996e38dca4364d1",
+        "rev": "9bde3171aeb5954b7955fcb09b231f53caf76b54",
         "type": "github"
       },
       "original": {
@@ -1016,7 +1002,7 @@
       "inputs": {
         "fenix": "fenix",
         "naersk": "naersk_2",
-        "nixpkgs": "nixpkgs_8"
+        "nixpkgs": "nixpkgs_7"
       },
       "locked": {
         "lastModified": 1675881254,
@@ -1042,7 +1028,7 @@
         "mailserver": "mailserver",
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_6",
+        "nixpkgs": "nixpkgs_5",
         "nixpkgs_22-11": "nixpkgs_22-11",
         "nixvim": "nixvim",
         "nur": "nur",
@@ -1166,7 +1152,7 @@
         "flake-compat": "flake-compat_4",
         "flake-utils": "flake-utils_3",
         "nix": "nix",
-        "nixpkgs": "nixpkgs_10"
+        "nixpkgs": "nixpkgs_9"
       },
       "locked": {
         "lastModified": 1676863423,
@@ -1185,7 +1171,7 @@
     "webcord": {
       "inputs": {
         "dream2nix": "dream2nix",
-        "nixpkgs": "nixpkgs_11",
+        "nixpkgs": "nixpkgs_10",
         "webcord": "webcord_2"
       },
       "locked": {

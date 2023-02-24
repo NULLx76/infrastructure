@@ -36,6 +36,7 @@
     nixvim.url = "github:pta2002/nixvim";
 
     nixos-generators.url = "github:nix-community/nixos-generators";
+    nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
@@ -109,17 +110,17 @@
 
         default = colmena.packages.${system}.colmena;
 
-        # iso = nixos-generators.nixosGenerate {
-        #   inherit system pkgs;
-        #   format = "iso";
-        #   modules = [ (import ./nixos/templates/iso.nix) ];
-        # };
+        iso = nixos-generators.nixosGenerate {
+          inherit system pkgs;
+          format = "iso";
+          modules = [ (import ./nixos/templates/iso.nix) ];
+        };
 
-        # iso-graphical = nixos-generators.nixosGenerate {
-        #   inherit system pkgs;
-        #   format = "iso";
-        #   modules = [ (import ./nixos/templates/iso-graphical.nix) ];
-        # };
+        iso-graphical = nixos-generators.nixosGenerate {
+          inherit system pkgs;
+          format = "iso";
+          modules = [ (import ./nixos/templates/iso-graphical.nix) ];
+        };
 
         proxmox-lxc = nixos-generators.nixosGenerate {
           inherit pkgs;
@@ -127,11 +128,11 @@
           modules = [ (import ./nixos/templates/proxmox-lxc.nix) ];
         };
 
-        # proxmox-vm = nixos-generators.nixosGenerate {
-        #   inherit system pkgs;
-        #   format = "proxmox";
-        #   modules = [ (import ./nixos/templates/proxmox-vm.nix) ];
-        # };
+        proxmox-vm = nixos-generators.nixosGenerate {
+          inherit system pkgs;
+          format = "proxmox";
+          modules = [ (import ./nixos/templates/proxmox-vm.nix) ];
+        };
       };
 
       # Use by running `nix develop`
