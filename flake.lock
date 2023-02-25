@@ -899,11 +899,11 @@
         "nixpkgs": "nixpkgs_6"
       },
       "locked": {
-        "lastModified": 1677331434,
-        "narHash": "sha256-Kjd8HY/6eshXegtWoqeS2diwlfCDBIZi+guMnd4b928=",
+        "lastModified": 1677339175,
+        "narHash": "sha256-Bsnvr1jwRcRPMhkPWfhZZkvm+bXA5cc15ao14TUllbs=",
         "owner": "pta2002",
         "repo": "nixvim",
-        "rev": "401f6fb572111dd13e8c79b6eb3efb360d84b97e",
+        "rev": "b7e810638a8dbcb381f73bf51aff3ad64ce35a90",
         "type": "github"
       },
       "original": {
