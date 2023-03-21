@@ -53,7 +53,7 @@
       lspkind.enable = true;
       nvim-cmp = {
         enable = true;
-        auto_enable_sources = true;
+        autoEnableSources = true;
         sources = [
           { name = "nvim_lsp"; }
           { name = "cmp-latex-symbols"; }
@@ -66,11 +66,7 @@
           { name = "path"; }
           { name = "buffer"; }
         ];
-        snippet.expand = ''
-          function(args)
-            require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-          end
-        '';
+        snippet.expand = "luasnip";
         mappingPresets = [ "insert" "cmdline" ];
         mapping = {
           "<CR>" = "cmp.mapping.confirm({ select = true })";
