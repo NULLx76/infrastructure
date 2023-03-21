@@ -14,7 +14,7 @@
     backend = "podman";
     containers = {
       flaresolverr = {
-        image = "flaresolverr/flaresolverr:v3.0.4";
+        image = "flaresolverr/flaresolverr:v3.1.0";
         ports = [
           "8191:8191"
         ];
