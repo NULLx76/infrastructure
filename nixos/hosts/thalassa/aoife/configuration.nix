@@ -85,6 +85,7 @@
     };
   };
 
+  fonts.optimizeForVeryHighDPI = true;
   fonts.fonts = with pkgs; [
     material-design-icons
     noto-fonts

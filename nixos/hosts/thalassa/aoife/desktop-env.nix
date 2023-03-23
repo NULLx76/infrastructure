@@ -6,6 +6,8 @@
 
   # Configure keymap in X11
   services.xserver = {
+    # TODO: Is this smart?
+    dpi = 280;
     layout = "us";
     xkbVariant = "altgr-intl";
     xkbOptions = "caps:swapescape";
