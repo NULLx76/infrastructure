@@ -726,16 +726,16 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1679598117,
-        "narHash": "sha256-Vs1f/7imI77OkMOQhO3xgx4jalN2Gx3D3C2wmnlpWJM=",
-        "owner": "NixOS",
+        "lastModified": 1679726555,
+        "narHash": "sha256-h7Dd/uWu7i5Yv1E+DweyJJUzTvGWXqfSo8/hz1YEolY=",
+        "owner": "toastal",
         "repo": "nixos-hardware",
-        "rev": "648021dcb2b65498eed3ea3a7339cdfc3bea4d82",
+        "rev": "0889479119961000c4a15801a0343cd1f11de556",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "master",
+        "owner": "toastal",
+        "ref": "z-series-no-hidpi",
         "repo": "nixos-hardware",
         "type": "github"
       }

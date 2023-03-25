@@ -38,7 +38,7 @@
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware.url = "github:toastal/nixos-hardware/z-series-no-hidpi";
   };
 
   outputs = { self, nixpkgs, nixpkgs_22-11, vault-secrets, colmena, home-manager

@@ -1,4 +1,4 @@
-{ inputs, pkgs, lib, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [ inputs.nixvim.homeManagerModules.nixvim ];
   programs.nixvim = {
     enable = true;
@@ -25,8 +25,8 @@
       nix.enable = true;
       treesitter = {
         enable = true;
-        nixGrammars = false;
-        ensureInstalled = [ ];
+        nixGrammars = true;
+        # ensureInstalled = [ ];
       };
       surround.enable = true;
       fugitive.enable = true;
