@@ -30,14 +30,14 @@ in {
   in {
     wg0 = {
       address = [ "10.66.153.191/32" "fc00:bbbb:bbbb:bb01::3:99be/128" ];
-      dns = [ "193.138.218.74" ];
+      dns = [ "10.64.0.1" ];
       privateKeyFile = "${vs.rtorrent}/wireguardKey";
       postUp = "${postUpScript}/bin/post_up || true";
 
       peers = [{
-        publicKey = "hnRorSW0YHlHAzGb4Uc/sjOqQIrqDnpJnTQi/n7Rp1c=";
+        publicKey = "DVui+5aifNFRIVDjH3v2y+dQ+uwI+HFZOd21ajbEpBo=";
         allowedIPs = [ "0.0.0.0/0" "::/0" ];
-        endpoint = "185.65.134.223:51820";
+        endpoint = "185.65.134.82:51820";
         persistentKeepalive = 25;
       }];
     };

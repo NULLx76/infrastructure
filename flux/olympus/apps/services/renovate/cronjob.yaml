@@ -4,7 +4,7 @@ metadata:
   name: renovate
   namespace: services
 spec:
-  schedule: "@hourly"
+  schedule: "@daily"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -18,7 +18,7 @@ spec:
               emptyDir: {}
           containers:
             - name: renovate
-              image: renovate/renovate:35.20.1
+              image: renovate/renovate:35.21.0
               volumeMounts:
                 - name: config-volume
                   mountPath: /opt/renovate/
