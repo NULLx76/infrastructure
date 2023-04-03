@@ -26,7 +26,7 @@ in {
     gimp
     inputs.comma.packages.${pkgs.system}.default
     inputs.webcord.packages.${pkgs.system}.default
-    jetbrains.clion
+    # jetbrains.clion
     jetbrains.idea-ultimate
     mullvad-vpn
     neofetch
