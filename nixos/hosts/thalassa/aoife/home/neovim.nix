@@ -21,7 +21,7 @@
     extraConfigLua = builtins.readFile ./nvim.lua;
 
     plugins = {
-      barbar.enable = true;
+      bufferline.enable = true;
       nix.enable = true;
       treesitter = {
         enable = true;
@@ -46,7 +46,7 @@
         servers.rust-analyzer.enable = true;
         servers.rnix-lsp.enable = true;
         servers.pyright.enable = true;
-        # servers.elixirls.enable = true;
+        servers.elixirls.enable = true;
         servers.clangd.enable = true;
       };
       trouble.enable = true;
