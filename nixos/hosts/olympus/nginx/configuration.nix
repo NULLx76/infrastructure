@@ -50,7 +50,8 @@ in {
     virtualHosts."md.0x76.dev" = proxy "http://hedgedoc.olympus:3000/";
     virtualHosts."git.0x76.dev" = proxy "http://gitea.olympus:3000";
     virtualHosts."o.0x76.dev" = proxy "http://minio.olympus:9000";
-    virtualHosts."grafana.0x76.dev" = proxy "http://victoriametrics.olympus:2342";
+    virtualHosts."grafana.0x76.dev" =
+      proxy "http://victoriametrics.olympus:2342";
     virtualHosts."outline.0x76.dev" = proxy "http://outline.olympus:3000";
     virtualHosts."ntfy.0x76.dev" = proxy "http://ntfy.olympus:80";
     virtualHosts."ci.0x76.dev" = proxy "http://woodpecker.olympus:8000";
@@ -80,6 +81,7 @@ in {
       enableACME = true;
       forceSSL = true;
       locations."/".extraConfig = ''
+
         add_header Content-Type 'text/html; charset=UTF-8';
         return 200 '<h1>meow</h1>';
       '';
@@ -96,6 +98,18 @@ in {
       '';
       locations."/_matrix".proxyPass = "http://synapse.olympus:8008";
       locations."/_synapse/client".proxyPass = "http://synapse.olympus:8008";
+      locations."/_synapse/admin" = {
+        # Allow only local and my own IPs
+        extraConfig = ''
+          allow 127.0.0.1;
+          allow 10.42.42.0/23;
+          allow 192.168.0.0/23;
+          allow 80.60.83.220;
+          allow 195.85.167.32/23;
+          deny all;
+        '';
+        proxyPass = "http://synapse.olympus:8008";
+      };
     };
     virtualHosts."element.chat.meowy.tech" = {
       enableACME = true;
