@@ -21,7 +21,6 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    hyprland.url = "github:hyprwm/Hyprland";
     hyprpaper.url = "github:hyprwm/hyprpaper";
 
     riff.url = "github:DeterminateSystems/riff";
@@ -42,7 +41,7 @@
   };
 
   outputs = { self, nixpkgs, nixpkgs_22-11, vault-secrets, colmena, home-manager
-    , hyprpaper, hyprland, nixos-generators, nixos-hardware, nur, ... }@inputs:
+    , hyprpaper, nixos-generators, nixos-hardware, nur, ... }@inputs:
     let
       inherit (nixpkgs) lib;
 
@@ -62,7 +61,6 @@
           (import ./nixos/pkgs)
           vault-secrets.overlay
           hyprpaper.overlays.default
-          hyprland.overlays.default
           nur.overlay
         ];
       };

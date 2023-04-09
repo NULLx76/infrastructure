@@ -5,10 +5,6 @@
     wallpaper = eDP-1,~/cloud/Pictures/Wallpapers-Laptop/wallpaper-nix-pink.png
   '';
 
-  imports = [
-    inputs.hyprland.homeManagerModules.default
-  ];
-
   wayland.windowManager.hyprland = let
     startup-script = pkgs.writeScriptBin "startup" ''
       #!${pkgs.stdenv.shell}

@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, hyprland, mailserver, ... }:
+{ nixpkgs, home-manager, mailserver, ... }:
 let
   inherit (builtins) filter attrValues concatMap mapAttrs;
   inherit (nixpkgs.lib.attrsets) mapAttrsToList;
@@ -11,7 +11,7 @@ let
         ./common/generic-lxc.nix
       ];
       "vm" = [ ./common/generic-vm.nix ];
-      "local" = [ hyprland.nixosModules.default ];
+      "local" = [ ];
     };
   in { hostname, realm, profile ? hostname, type ? "lxc", ... }:
   [
