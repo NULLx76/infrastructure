@@ -48,6 +48,7 @@ in
   services.gitea = {
     enable = true;
     domain = "git.0x76.dev";
+    package = pkgs.forgejo;
     rootUrl = "https://git.0x76.dev";
     lfs.enable = true;
     dump.type = "tar.gz";

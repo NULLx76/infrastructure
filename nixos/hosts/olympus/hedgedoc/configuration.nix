@@ -2,13 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ lib, config, pkgs, inputs, ... }:
+{ lib, config, pkgs, ... }:
 let
   db_name = "hedgedoc";
   db_user = "hedgedoc";
   vs = config.vault-secrets.secrets;
-in
-{
+in {
   imports = [ ];
 
   # This value determines the NixOS release from which the default
@@ -19,27 +18,22 @@ in
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.11"; # Did you read the comment?
 
-  # Additional packages
-  environment.systemPackages = with pkgs; [ ];
-
   environment.noXlibs = lib.mkForce false;
 
-  networking.firewall.allowedTCPPorts = [ config.services.hedgedoc.settings.port ];
+  networking.firewall.allowedTCPPorts =
+    [ config.services.hedgedoc.settings.port ];
 
   vault-secrets.secrets.hedgedoc = { };
 
-  services.postgresql =
-    {
-      enable = true;
-      package = pkgs.postgresql_13;
-      ensureDatabases = [ db_name ];
-      ensureUsers = [
-        {
-          name = db_user;
-          ensurePermissions = { "DATABASE ${db_name}" = "ALL PRIVILEGES"; };
-        }
-      ];
-    };
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_13;
+    ensureDatabases = [ db_name ];
+    ensureUsers = [{
+      name = db_user;
+      ensurePermissions = { "DATABASE ${db_name}" = "ALL PRIVILEGES"; };
+    }];
+  };
 
   services.hedgedoc = {
     enable = true;
@@ -51,10 +45,7 @@ in
       domain = "md.0x76.dev";
       protocolUseSSL = true;
       hsts.enable = true;
-      allowOrigin = [
-        config.services.hedgedoc.settings.domain
-        "hedgedoc"
-      ];
+      allowOrigin = [ config.services.hedgedoc.settings.domain "hedgedoc" ];
       allowAnonymous = false;
       allowEmailRegister = false;
       allowAnonymousEdits = true;
