@@ -56,6 +56,9 @@ in
     mailerPasswordFile = "${vs.gitea}/mailPassword";
 
     settings = {
+      actions = {
+        "ENABLED" = true;
+      };
       repository = {
         "ENABLE_PUSH_CREATE_USER" = true;
         "DEFAULT_PUSH_CREATE_PRIVATE" = false;
