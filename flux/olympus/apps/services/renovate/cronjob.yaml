@@ -4,7 +4,8 @@ metadata:
   name: renovate
   namespace: services
 spec:
-  schedule: "@daily"
+  # Run every 8 hours
+  schedule: "0 */8 * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
