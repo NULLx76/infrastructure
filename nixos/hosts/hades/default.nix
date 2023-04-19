@@ -99,7 +99,7 @@
     ip = "192.168.0.121";
     mac = "4e:e7:64:b7:88:b8";
     profile = "jackett";
-    nix = false; # superseded by prowlarr 
+    nix = false; # superseded by prowlarr
   };
   "nginx" = {
     ip = "192.168.0.123";
@@ -161,11 +161,6 @@
   "mastodon" = {
     ip = "192.168.0.138";
     mac = "52:60:8a:06:86:9c";
-  };
-  "lidarr" = {
-    ip = "192.168.0.139";
-    mac = "7a:0f:25:e5:7f:e5";
-    nix = false;
   };
   "prowlarr" = {
     ip = "192.168.0.140";

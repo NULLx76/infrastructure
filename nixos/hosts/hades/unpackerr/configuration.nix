@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 let vs = config.vault-secrets.secrets;
 in
 {
@@ -24,10 +24,6 @@ in
     radarr = {
       url = "http://radarr2:7878/";
       paths = "/mnt/storage/torrents/r/Movie";
-    };
-    lidarr = {
-      url = "http://lidarr:8686/";
-      paths = "/mnt/storage/torrents/r/Music";
     };
   };
 }
