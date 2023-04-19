@@ -5,7 +5,7 @@
   ];
 
   # Clean /tmp on boot.
-  boot.cleanTmpDir = true;
+  boot.tmp.cleanOnBoot = true;
 
   # Set your time zone.
   time.timeZone = lib.mkDefault "Europe/Amsterdam";
