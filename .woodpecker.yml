@@ -1,3 +1,10 @@
+clone:
+  git:
+    image: woodpeckerci/plugin-git:next
+    settings:
+      depth: 50
+      lfs: false
+
 pipeline:
   check:
     image: nixos/nix:2.15.0
