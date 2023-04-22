@@ -4,9 +4,9 @@ let
   cursorTheme = config.home.pointerCursor.name;
 in {
   home.pointerCursor = {
-    name = "Bibata_Ghost";
+    name = "Bibata-Modern-Classic";
     size = 24;
-    package = pkgs.bibata-cursors-translucent;
+    package = pkgs.bibata-cursors;
   };
 
   gtk = {

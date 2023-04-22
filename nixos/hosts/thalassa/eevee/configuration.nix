@@ -26,7 +26,7 @@
     };
   };
 
-  # fileSystems."/".options = [ "compress=zstd" ];
+  fileSystems."/".options = [ "compress=zstd" ];
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
