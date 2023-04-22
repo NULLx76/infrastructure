@@ -144,6 +144,7 @@
   };
   "woodpecker" = {
     ip = "10.42.42.33";
+    ip6 = "2001:41f0:9639:1:1c24:daff:fedb:4a1a";
     mac = "1E:24:DA:DB:4A:1A";
   };
   "nuc" = {
