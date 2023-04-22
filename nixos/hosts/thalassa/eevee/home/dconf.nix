@@ -21,6 +21,10 @@ in {
       sources = [ (mkTuple [ "xkb" "us+altgr-intl" ]) ];
     };
 
+    "org/gnome/desktop/peripherals/mouse" = {
+        accel-profile = "flat";
+    };
+
     "org/gnome/desktop/peripherals/touchpad" = {
       tap-to-click = true;
       two-finger-scrolling-enabled = true;

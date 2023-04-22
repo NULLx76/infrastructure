@@ -14,7 +14,7 @@ in {
   imports = [
     ./dconf.nix
     ./theme.nix
-    ./neovim.nix 
+    ./neovim.nix
   ];
 
   home.packages = with pkgs; [
@@ -38,6 +38,7 @@ in {
     solo2-cli
     tex
     yt-dlp
+    wootility
   ];
 
   programs.riff = {

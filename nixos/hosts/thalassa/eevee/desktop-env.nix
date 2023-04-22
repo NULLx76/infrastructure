@@ -1,8 +1,7 @@
 { pkgs, ... }: {
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  # TODO: Nvidia
-  # services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver.videoDrivers = [ "nvidia" ];
   services.xserver.excludePackages = [ pkgs.xterm ];
 
   # Configure keymap in X11
