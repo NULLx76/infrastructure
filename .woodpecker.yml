@@ -1,9 +1,6 @@
 clone:
   git:
-    image: woodpeckerci/plugin-git:next
-    settings:
-      depth: 50
-      lfs: false
+    image: rancher/pause
 
 pipeline:
   check:
