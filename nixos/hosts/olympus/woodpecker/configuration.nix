@@ -40,7 +40,7 @@ in {
       WOODPECKER_GITEA_URL = "https://git.0x76.dev";
       WOODPECKER_ADMIN = "v";
       WOODPECKER_AUTHENTICATE_PUBLIC_REPOS = "true";
-      WOODPECKER_SERVER_ADDR = "0.0.0.0:8000";
+      WOODPECKER_SERVER_ADDR = "10.42.42.33:8000";
     };
     environmentFile = "${vs.woodpecker}/environment";
   };
