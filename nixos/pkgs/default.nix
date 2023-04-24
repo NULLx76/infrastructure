@@ -1,9 +1,6 @@
 # nix-build -E 'with import <nixpkgs> {}; callPackage ./default.nix {}'
 final: prev: {
   v = {
-    # nixos 22.11 version of minio, need to upgrade backend from fs to xl
-    minio-old = prev.callPackage ./minio-old { };
-
     glitch-soc = prev.callPackage ./glitch-soc { };
 
     deemix-gui = prev.callPackage ./deemix-gui { };

@@ -1,7 +1,3 @@
-clone:
-  git:
-    image: rancher/pause
-
 pipeline:
   check:
     image: nixos/nix:2.15.0

@@ -120,4 +120,7 @@
   ];
   nix.settings.extra-sandbox-paths =
     [ (toString config.programs.ccache.cacheDir) ];
+
+  # Enable Ozone rendering for Chromium and Electron apps.
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 }

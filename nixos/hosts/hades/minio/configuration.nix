@@ -13,6 +13,6 @@ in {
   services.minio = {
     enable = true;
     rootCredentialsFile = "${vs.minio}/environment";
-    package = pkgs.v.minio-old;
+    package = pkgs.minio_legacy_fs;
   };
 }

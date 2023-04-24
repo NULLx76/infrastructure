@@ -14,7 +14,7 @@ in {
   imports = [
     ./dconf.nix
     ./theme.nix
-    ./neovim.nix 
+    ./neovim.nix
   ];
 
   home.packages = with pkgs; [
@@ -188,6 +188,13 @@ in {
     templates = "${home}/.templates";
     videos = "${home}/cloud/Videos";
   };
+
+  # xdg.configFile."electron-flags.conf".text = ''
+  #   --enable-features=UseOzonePlatform
+  #   --ozone-platform=wayland
+  #   --enable-features=WaylandWindowDecorations
+  #   --ozone-platform-hint=auto
+  # '';
 
   services.syncthing.enable = true;
 }
