@@ -39,11 +39,10 @@ in {
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
     recommendedOptimisation = true;
+    recommendedBrotliSettings = true;
     clientMaxBodySize = "500m";
 
-    package = pkgs.nginxMainline.override {
-      modules = with pkgs.nginxModules; [ brotli ];
-    };
+    package = pkgs.nginxMainline;
 
     # 0x76.dev
     virtualHosts."ha.0x76.dev" = proxy "http://home-assistant.olympus:8123/";
@@ -147,17 +146,6 @@ in {
     virtualHosts."internal.xirion.net" = k8s_proxy;
     virtualHosts."blog.xirion.net" = k8s_proxy;
   };
-
-  services.nginx.commonHttpConfig = ''
-    brotli on;
-    brotli_comp_level 6;
-    brotli_static on;
-    brotli_types application/atom+xml application/javascript application/json application/rss+xml
-                application/vnd.ms-fontobject application/x-font-opentype application/x-font-truetype
-                application/x-font-ttf application/x-javascript application/xhtml+xml application/xml
-                font/eot font/opentype font/otf font/truetype image/svg+xml image/vnd.microsoft.icon
-                image/x-icon image/x-win-bitmap text/css text/javascript text/plain text/xml;
-  '';
 
   security.acme.defaults.email = "victorheld12@gmail.com";
   security.acme.acceptTerms = true;
