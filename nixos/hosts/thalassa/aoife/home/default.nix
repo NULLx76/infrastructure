@@ -8,14 +8,19 @@ let
 in {
   programs.home-manager.enable = true;
 
+  imports = [];
+
   home.username = "victor";
   home.homeDirectory = "/home/victor";
   home.stateVersion = "23.05";
 
-  imports = [ ./theme.nix ./neovim.nix ];
+  # Enable catppuccin theme
+  themes.v.catppuccin.enable = true;
 
   # Custom dconf settings
   dconf.settings."org/gnome/desktop/input-sources".xkb-options = [ "caps:swapescape"];
+
+  programs.v.nvim.enable = true;
 
   home.packages = with pkgs; [
     btop
@@ -188,13 +193,5 @@ in {
     templates = "${home}/.templates";
     videos = "${home}/cloud/Videos";
   };
-
-  # xdg.configFile."electron-flags.conf".text = ''
-  #   --enable-features=UseOzonePlatform
-  #   --ozone-platform=wayland
-  #   --enable-features=WaylandWindowDecorations
-  #   --ozone-platform-hint=auto
-  # '';
-
   services.syncthing.enable = true;
 }

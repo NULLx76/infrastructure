@@ -11,11 +11,15 @@ in {
   home.homeDirectory = "/home/victor";
   home.stateVersion = "23.05";
 
-  imports = [ ./theme.nix ./neovim.nix ];
-
   dconf.settings."org/gnome/desktop/peripherals/mouse" = {
     accel-profile = "flat";
   };
+
+  # Enable my neovim config
+  programs.v.nvim.enable = true;
+
+  # Enable catppuccin theme
+  themes.v.catppuccin.enable = true;
 
   home.packages = with pkgs; [
     btop

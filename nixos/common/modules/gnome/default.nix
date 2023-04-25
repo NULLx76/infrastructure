@@ -9,6 +9,7 @@ in {
     services.xserver.enable = true;
     services.xserver.excludePackages = [ pkgs.xterm ];
 
+    # Add Home-manager dconf stuff
     home-manager.sharedModules = [
       ./dconf.nix
     ];
