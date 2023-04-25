@@ -19,10 +19,7 @@ in {
   dconf.settings = {
     "org/gnome/desktop/input-sources" = {
       sources = [ (mkTuple [ "xkb" "us+altgr-intl" ]) ];
-    };
-
-    "org/gnome/desktop/peripherals/mouse" = {
-        accel-profile = "flat";
+      xkb-options = [ "terminate:ctrl_alt_bksp" ];
     };
 
     "org/gnome/desktop/peripherals/touchpad" = {

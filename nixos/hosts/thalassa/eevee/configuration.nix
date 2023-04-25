@@ -7,7 +7,6 @@
     ../../../common/desktop
     ./hardware-configuration.nix
     ./hardware.nix
-    ./networking.nix
   ];
 
   home-manager = {

@@ -1,7 +1,4 @@
-{ pkgs, config, lib, ... }: {
-  imports = [
-    ./desktop-env.nix
-  ];
+{ pkgs, ... }: {
   # Bootloader.
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
@@ -16,6 +13,9 @@
       verbose = false;
     };
   };
+
+  # Enable my config for the gnome desktop environment
+  services.v.gnome.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
@@ -82,4 +82,9 @@
     # Open ports in the firewall for Steam Remote Play
     remotePlay.openFirewall = true;
   };
+
+  # Networking
+  networking.networkmanager.enable = true;
+  networking.firewall.checkReversePath = false;
+  networking.firewall.enable = false;
 }

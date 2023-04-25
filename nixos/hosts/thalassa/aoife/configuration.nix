@@ -8,7 +8,6 @@
     ./hardware-configuration.nix
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-z
     ./hardware.nix
-    ./networking.nix
   ];
 
   # Bootloader.

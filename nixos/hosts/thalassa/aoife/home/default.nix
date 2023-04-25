@@ -12,7 +12,10 @@ in {
   home.homeDirectory = "/home/victor";
   home.stateVersion = "23.05";
 
-  imports = [ ./dconf.nix ./theme.nix ./neovim.nix ];
+  imports = [ ./theme.nix ./neovim.nix ];
+
+  # Custom dconf settings
+  dconf.settings."org/gnome/desktop/input-sources".xkb-options = [ "caps:swapescape"];
 
   home.packages = with pkgs; [
     btop

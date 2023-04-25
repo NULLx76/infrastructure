@@ -11,11 +11,11 @@ in {
   home.homeDirectory = "/home/victor";
   home.stateVersion = "23.05";
 
-  imports = [
-    ./dconf.nix
-    ./theme.nix
-    ./neovim.nix
-  ];
+  imports = [ ./theme.nix ./neovim.nix ];
+
+  dconf.settings."org/gnome/desktop/peripherals/mouse" = {
+    accel-profile = "flat";
+  };
 
   home.packages = with pkgs; [
     btop
