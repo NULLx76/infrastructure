@@ -29,6 +29,7 @@ in {
     yt-dlp
   ];
 
+  # Enable my own hm modules
   themes.v.catppuccin.enable = true;
   programs.v.nvim.enable = true;
   programs.v.vscode.enable = true;
@@ -37,6 +38,7 @@ in {
     enable = true;
     direnv = true;
   };
+
   programs.exa = {
     enable = true;
     enableAliases = true;

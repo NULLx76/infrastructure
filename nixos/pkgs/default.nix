@@ -3,8 +3,6 @@ final: prev: {
   v = {
     glitch-soc = prev.callPackage ./glitch-soc { };
 
-    deemix-gui = prev.callPackage ./deemix-gui { };
-
     unbound = prev.unbound.override {
       withSystemd = true;
       withDoH = true;

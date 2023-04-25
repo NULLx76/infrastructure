@@ -1,18 +1,24 @@
-{ config, pkgs, lib, flat_hosts, ... }:
+{ config, pkgs, lib, ... }:
 with lib;
 let cfg = config.services.v.gnome;
-
 in {
-  options.services.v.gnome = { enable = mkEnableOption "v.gnome"; };
+  options.services.v.gnome = {
+    enable = mkEnableOption "v.gnome";
+    hm = mkOption {
+      type = types.bool;
+      default = true;
+      description = ''
+        Whether to enable home manager integration to set default dconf values
+      '';
+    };
+  };
 
   config = mkIf cfg.enable {
     services.xserver.enable = true;
     services.xserver.excludePackages = [ pkgs.xterm ];
 
     # Add Home-manager dconf stuff
-    home-manager.sharedModules = [
-      ./hm.nix
-    ];
+    home-manager.sharedModules = mkIf cfg.hm [ ./hm.nix ];
 
     # Configure keymap in X11
     services.xserver = {
