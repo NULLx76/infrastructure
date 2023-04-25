@@ -1,7 +1,6 @@
-{ pkgs, ... }: {
-  # Enable the X11 windowing system.
+{ pkgs, ...}: {
+  # TODO: Create Module
   services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
   services.xserver.excludePackages = [ pkgs.xterm ];
 
   # Configure keymap in X11

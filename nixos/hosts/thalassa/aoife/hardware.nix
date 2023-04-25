@@ -5,6 +5,16 @@
 
   services.hardware.bolt.enable = true;
 
+  # FS
+  fileSystems."/".options = [ "compress=zstd" ];
+
+  # Video Driver
+  services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver = {
+    dpi = 280;
+    xkbOptions = "caps:swapescape";
+  };
+
   # Vulkan
   hardware.opengl.driSupport = true;
   hardware.opengl.extraPackages = with pkgs; [

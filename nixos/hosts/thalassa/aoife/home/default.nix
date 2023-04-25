@@ -4,6 +4,7 @@ let
     inherit (pkgs.texlive) scheme-full;
     dnd-5e-latex-template = { pkgs = [ pkgs.v.dnd-5e-latex-template ]; };
   };
+  my-python-packages = ps: with ps; [ pandas requests numpy ];
 in {
   programs.home-manager.enable = true;
 
@@ -11,11 +12,7 @@ in {
   home.homeDirectory = "/home/victor";
   home.stateVersion = "23.05";
 
-  imports = [
-    ./dconf.nix
-    ./theme.nix
-    ./neovim.nix
-  ];
+  imports = [ ./dconf.nix ./theme.nix ./neovim.nix ];
 
   home.packages = with pkgs; [
     btop
@@ -32,7 +29,7 @@ in {
     neofetch
     nixfmt
     nixpkgs-review
-    python3
+    (python3.withPackages my-python-packages)
     plex-media-player
     rustup
     solo2-cli
