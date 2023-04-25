@@ -11,7 +11,7 @@ in {
 
     # Add Home-manager dconf stuff
     home-manager.sharedModules = [
-      ./dconf.nix
+      ./hm.nix
     ];
 
     # Configure keymap in X11
