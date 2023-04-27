@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   fix-vscode = pkgs.writeScriptBin "fix-vscode" ''
     #!${pkgs.stdenv.shell}
@@ -23,6 +23,15 @@ in {
     ./hardware-configuration.nix
   ];
 
+  # This _should_ fix vscode errors as well
+  programs.nix-ld.enable = true;
+  # environment.variables = {
+  #     NIX_LD_LIBRARY_PATH = lib.makeLibraryPath [
+  #       pkgs.stdenv.cc.cc
+  #     ];
+  #     # NIX_LD = lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker";
+  # };
+
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
@@ -36,7 +45,7 @@ in {
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
 
-  virtualisation.podman.enable = true; 
+  virtualisation.podman.enable = true;
 
   # Additional packages
   environment.systemPackages = with pkgs; [

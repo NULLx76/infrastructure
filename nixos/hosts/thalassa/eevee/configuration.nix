@@ -4,10 +4,9 @@
 
 { config, pkgs, inputs, ... }: {
   imports = [
+    ../../../common/desktop
     ./hardware-configuration.nix
     ./hardware.nix
-    ./desktop-env.nix
-    ./networking.nix
   ];
 
   # Bootloader.
@@ -56,50 +55,6 @@
     users.victor = import ./home;
     extraSpecialArgs = { inherit inputs; };
   };
-
-  # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
-
-  virtualisation = {
-    podman.enable = true;
-    libvirtd = {
-      enable = true;
-      qemu.package = pkgs.qemu_kvm;
-    };
-  };
-
-  fonts.fonts = with pkgs; [
-    material-design-icons
-    noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    dejavu_fonts
-    (nerdfonts.override {
-      fonts =
-        [ "DejaVuSansMono" "Ubuntu" "DroidSansMono" "NerdFontsSymbolsOnly" ];
-    })
-  ];
-
-  programs.steam = {
-    enable = true;
-    # Open ports in the firewall for Steam Remote Play
-    remotePlay.openFirewall = true;
-  };
-
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

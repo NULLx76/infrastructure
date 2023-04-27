@@ -1,8 +1,6 @@
 { pkgs, config, ... }: {
   hardware.enableAllFirmware = true;
 
-  hardware.bluetooth.enable = true;
-
   services.hardware.bolt.enable = true;
 
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -24,7 +22,11 @@
     driSupport = true;
   };
 
+  # udev
   services.udev.packages = with pkgs; [ wooting-udev-rules ];
+
+  # FS
+  fileSystems."/".options = [ "compress=zstd" ];
 
   # SSD Trim
   services.fstrim.enable = true;

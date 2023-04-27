@@ -18,53 +18,43 @@ in {
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
-  networking.firewall.allowedTCPPorts = [ ];
+  networking.firewall.allowedTCPPorts = [ 8000 9000 ];
 
   vault-secrets.secrets.woodpecker = {
-    services = [ "podman-woodpecker-server" "podman-woodpecker-agent" ];
+    services = [ "woodpecker-server" "woodpecker-agent-docker" ];
     quoteEnvironmentValues = false; # Needed for docker
   };
 
   virtualisation.podman = {
     enable = true;
     dockerSocket.enable = true;
+    dockerCompat = true;
   };
 
-  systemd.services.create-woodpecker-pod = with config.virtualisation.oci-containers; {
-    serviceConfig.Type = "oneshot";
-    wantedBy = [ "${backend}-woodpecker-server.service"  "${backend}-woodpecker-agent.service"];
-    script = ''
-      ${pkgs.podman}/bin/podman pod exists woodpecker || \
-        ${pkgs.podman}/bin/podman pod create -n woodpecker -p 8000:8000
-    '';
+  services.woodpecker-server = {
+    enable = true;
+    environment = {
+      WOODPECKER_OPEN = "true";
+      WOODPECKER_HOST = "https://ci.0x76.dev";
+      WOODPECKER_GITEA = "true";
+      WOODPECKER_GITEA_URL = "https://git.0x76.dev";
+      WOODPECKER_ADMIN = "v";
+      WOODPECKER_AUTHENTICATE_PUBLIC_REPOS = "true";
+      WOODPECKER_SERVER_ADDR = "10.42.42.33:8000";
+    };
+    environmentFile = "${vs.woodpecker}/environment";
   };
 
-  virtualisation.oci-containers = {
-    backend = "podman";
-    containers = {
-      woodpecker-server = {
-        image = "woodpeckerci/woodpecker-server:latest";
-        volumes = [ "woodpecker-server-data:/var/lib/woodpecker/" ];
-        environmentFiles = [ "${vs.woodpecker}/environment" ];
-        extraOptions = [ "--pod=woodpecker" ];
-        environment = {
-          WOODPECKER_OPEN = "true";
-          WOODPECKER_HOST = "https://ci.0x76.dev";
-          WOODPECKER_GITEA = "true";
-          WOODPECKER_GITEA_URL = "https://git.0x76.dev";
-          WOODPECKER_ADMIN = "v";
-          WOODPECKER_AUTHENTICATE_PUBLIC_REPOS = "true";
-        };
+  services.woodpecker-agents.agents = {
+    docker = {
+      enable = true;
+      environment = {
+        DOCKER_HOST = "unix:///run/podman/podman.sock";
+        WOODPECKER_BACKEND = "docker";
+        WOODPECKER_SERVER = "localhost:9000";
       };
-      woodpecker-agent = {
-        image = "woodpeckerci/woodpecker-agent:latest";
-        dependsOn = [ "woodpecker-server" ];
-        extraOptions = [ "--pod=woodpecker" ];
-        cmd = [ "agent" ];
-        volumes = [ "/var/run/docker.sock:/var/run/docker.sock" ];
-        environmentFiles = [ "${vs.woodpecker}/environment" ];
-        environment = { WOODPECKER_SERVER = "localhost:9000"; };
-      };
+      environmentFile = [ "${vs.woodpecker}/environment" ];
+      extraGroups = [ "podman" ];
     };
   };
 }

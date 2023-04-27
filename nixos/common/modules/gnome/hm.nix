@@ -16,13 +16,44 @@ let
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${name}")
     binds;
 in {
+  xdg.mimeApps.enable = true;
+  xdg.mimeApps.defaultApplications = {
+    "text/html" = "firefox.desktop";
+    "text/plain" = "org.gnome.TextEditor.desktop";
+    "application/pdf" = "org.gnome.Evince.desktop";
+
+    # Images
+    "image/bmp" = "org.gnome.eog.desktop";
+    "image/gif" = "org.gnome.eog.desktop";
+    "image/jpg" = "org.gnome.eog.desktop";
+    "image/pjpeg" = "org.gnome.eog.desktop";
+    "image/png" = "org.gnome.eog.desktop";
+    "image/tiff" = "org.gnome.eog.desktop";
+    "image/webp" = "org.gnome.eog.desktop";
+    "image/x-bmp" = "org.gnome.eog.desktop";
+    "image/x-gray" = "org.gnome.eog.desktop";
+    "image/x-icb" = "org.gnome.eog.desktop";
+    "image/x-ico" = "org.gnome.eog.desktop";
+    "image/x-png" = "org.gnome.eog.desktop";
+    "image/x-portable-anymap" = "org.gnome.eog.desktop";
+    "image/x-portable-bitmap" = "org.gnome.eog.desktop";
+    "image/x-portable-graymap" = "org.gnome.eog.desktop";
+    "image/x-portable-pixmap" = "org.gnome.eog.desktop";
+    "image/x-xbitmap" = "org.gnome.eog.desktop";
+    "image/x-xpixmap" = "org.gnome.eog.desktop";
+    "image/x-pcx" = "org.gnome.eog.desktop";
+    "image/svg+xml" = "org.gnome.eog.desktop";
+    "image/svg+xml-compressed" = "org.gnome.eog.desktop";
+    "image/vnd.wap.wbmp" = "org.gnome.eog.desktop";
+    "image/x-icns" = "org.gnome.eog.desktop";
+  };
+
+
+
   dconf.settings = {
     "org/gnome/desktop/input-sources" = {
       sources = [ (mkTuple [ "xkb" "us+altgr-intl" ]) ];
-    };
-
-    "org/gnome/desktop/peripherals/mouse" = {
-        accel-profile = "flat";
+      xkb-options = [ "terminate:ctrl_alt_bksp" ];
     };
 
     "org/gnome/desktop/peripherals/touchpad" = {
