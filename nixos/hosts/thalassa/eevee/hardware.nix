@@ -5,9 +5,24 @@
 
   services.hardware.bolt.enable = true;
 
-  hardware.opengl.enable = true;
-  hardware.nvidia.modesetting.enable = true;
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
+
+    # Open drivers cause gdm to crash
+    # open = true;
+
+    # nvidia-drm.modeset=1
+    modesetting.enable = true;
+  };
+
+  # Hardware acceleration
+  hardware.opengl = {
+    enable = true;
+
+    # Vulkan
+    driSupport = true;
+  };
 
   services.udev.packages = with pkgs; [ wooting-udev-rules ];
 

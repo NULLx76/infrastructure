@@ -20,7 +20,7 @@
     };
     kernel.sysctl = { "fs.inotify.max_user_watches" = 524288; };
     initrd = {
-      kernelModules = [ "amdgpu" ];
+      kernelModules =  [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
       systemd.enable = true;
       verbose = false;
     };
