@@ -18,6 +18,6 @@ _: {
     node_id = "olympus-2";
 
     autoUnseal = true;
-    autoUnsealTokenPath = "/var/lib/vault-unseal/keys.json";
+    autoUnsealKeysFile = "/var/lib/vault-unseal/keys.json";
   };
 }

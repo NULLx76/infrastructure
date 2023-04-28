@@ -14,11 +14,11 @@ let
   '') vault_hosts);
 in {
   options.services.v.vault = {
-    enable = mkEnableOption "v.vault";
+    enable = mkEnableOption "v's vault";
 
     node_id = mkOption {
       type = types.str;
-      description = ''
+      description = lib.mdDoc ''
         The cluster node id of this node
       '';
     };
@@ -26,15 +26,15 @@ in {
     openFirewall = mkOption {
       type = types.bool;
       default = false;
-      description = ''
-        Whether to open port port and clusterPort in the firewall for vault
+      description = lib.mdDoc ''
+        Whether to open port `port` and `clusterPort` in the firewall for vault
       '';
     };
 
     port = mkOption {
       type = types.int;
       default = 8200;
-      description = ''
+      description = lib.mdDoc ''
         The port vault listens on
         **note:** this has to be the same for all nodes in a cluster
       '';
@@ -43,7 +43,7 @@ in {
     clusterPort = mkOption {
       type = types.int;
       default = 8201;
-      description = ''
+      description = lib.mdDoc ''
         The cluster port vault listens on
         **note:** this has to be the same for all nodes in a cluster
       '';
@@ -52,24 +52,29 @@ in {
     autoUnseal = mkOption {
       type = types.bool;
       default = false;
-      description = ''
-        whether to auto-unseal this vault
+      description = lib.mdDoc ''
+        Whether to auto-unseal this vault
       '';
     };
 
-    autoUnsealTokenPath = mkOption {
+    autoUnsealKeysFile = mkOption {
       type = types.str;
       default = null;
       example = "/var/lib/vault-unseal/keys.json";
-      description = ''
-        auto unseal tokens to use
+      description = lib.mdDoc ''
+        auto unseal keys to use, has to be a json file with the following structure
+        ```json
+        {
+          keys = [ key_1, ..., key_n ]
+        }
+        ```
       '';
     };
   };
 
   config = mkIf cfg.enable {
     assertions = [{
-      assertion = cfg.autoUnseal -> (cfg.autoUnsealTokenPath != null);
+      assertion = cfg.autoUnseal -> (cfg.autoUnsealKeysFile != null);
       message = "If autoUnseal is enabled, a token path is required!";
     }];
 
@@ -100,7 +105,7 @@ in {
       after = [ "vault.service" ];
       environment = {
         VAULT_ADDR = "http://localhost:${toString cfg.port}";
-        VAULT_KEY_FILE = cfg.autoUnsealTokenPath;
+        VAULT_KEY_FILE = cfg.autoUnsealKeysFile;
       };
       serviceConfig = {
         User = "vault";

@@ -16,5 +16,8 @@
     enable = true;
     openFirewall = true;
     node_id = "olympus-1";
+
+    autoUnseal = true;
+    autoUnsealKeysFile = "/var/lib/vault-unseal/keys.json";
   };
 }
