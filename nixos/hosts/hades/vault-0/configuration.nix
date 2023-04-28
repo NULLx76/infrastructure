@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, hosts, ... }: {
+_: {
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -16,5 +16,8 @@
     enable = true;
     openFirewall = true;
     node_id = "hades-1";
+
+    autoUnseal = true;
+    autoUnsealKeysFile = "/var/lib/vault-unseal/keys.json";
   };
 }
