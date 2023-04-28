@@ -22,7 +22,7 @@ in
 
   environment.noXlibs = lib.mkForce false;
 
-  networking.firewall.allowedTCPPorts = [ config.services.gitea.httpPort ];
+  networking.firewall.allowedTCPPorts = [ config.services.gitea.settings.server.HTTP_PORT ];
 
   services.openssh.startWhenNeeded = false;
 
@@ -47,9 +47,7 @@ in
 
   services.gitea = {
     enable = true;
-    domain = "git.0x76.dev";
     package = pkgs.forgejo;
-    rootUrl = "https://git.0x76.dev";
     lfs.enable = true;
     dump.type = "tar.gz";
     database.type = "postgres";
@@ -80,8 +78,10 @@ in
         "USE_SERVICE_WORKER" = true;
       };
       server = {
-        "LANDING_PAGE" = "explore";
-        "SSH_PORT" = 42;
+        LANDING_PAGE = "explore";
+        SSH_PORT = 42;
+        DOMAIN = "git.0x76.dev";
+        ROOT_URL = "https://git.0x76.dev";
       };
       session = {
         "PROVIDER" = "db";

@@ -6,6 +6,11 @@ let
     hostName = hostname;
     ipAddress = ip;
   };
+  hostToKea = {hostname, mac, ip, ...}: {
+    inherit hostname;
+    hw-address = mac;
+    ip-address = ip;
+  };
   localDomain = config.networking.domain;
   hosts =
     filter (h: hasAttr "ip" h && hasAttr "mac" h && h.realm == localDomain)
@@ -50,5 +55,74 @@ in {
       }
     '';
     machines = map hostToDhcp hosts;
+  };
+
+  services.kea = {
+    dhcp4 = {
+      enable = false;
+      settings = {
+        authoritative = true;
+        valid-lifetime = 4000;
+        rebind-timer = 2000;
+        renew-timer = 1000;
+
+        interfaces-config.interfaces = [ "eth0" ];
+
+        lease-database = {
+          name = "/var/lib/kea/dhcp4.leases";
+          persist = true;
+          type = "memfile";
+        };
+
+        option-data = [
+          {
+            space = "dhcp4";
+            name = "subnet-mask";
+            code = 1;
+            data = "255.255.254.0";
+          }
+          {
+            space = "dhcp4";
+            name = "broadcast-address";
+            code = 28;
+            data = "10.42.43.255";
+          }
+          {
+            space = "dhcp4";
+            name = "routers";
+            code = 3;
+            data = "10.42.42.1";
+          }
+          {
+            space = "dhcp4";
+            name = "domain-name-servers";
+            code = 6;
+            data = "10.42.42.15; 10.42.42.16";
+          }
+          {
+            space = "dhcp4";
+            name = "domain-name";
+            code = 15;
+            data = "${localDomain}";
+          }
+          {
+            space = "dhcp4";
+            name = "domain-search";
+            code = 119;
+            data = "${localDomain}";
+          }
+        ];
+
+        subnet4 = [{
+          id = 1;
+          pools = [{ pool = "10.42.43.1 - 10.42.43.254"; }];
+          subnet = "10.42.42.0/23";
+        }];
+
+        host-reservation-identifiers = [ "hw-address" ];
+        reservation-mode = "global";
+        reservations = map hostToKea hosts;
+      };
+    };
   };
 }

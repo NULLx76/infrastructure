@@ -12,16 +12,8 @@
   # Bootloader.
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
-    loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
-      efi.efiSysMountPoint = "/boot/efi";
-    };
-    kernel.sysctl = { "fs.inotify.max_user_watches" = 524288; };
     initrd = {
       kernelModules =  [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
-      systemd.enable = true;
-      verbose = false;
     };
   };
 

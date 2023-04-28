@@ -2,9 +2,11 @@
 let
   inherit (builtins) filter attrValues concatMap mapAttrs;
   inherit (nixpkgs.lib.attrsets) mapAttrsToList;
-  # Helper function to resolve what should be imported depending on the type of config (lxc, vm, bare metal)
-  resolve_imports = let
-    # lookup table
+  base_imports = [
+    home-manager.nixosModules.home-manager
+    mailserver.nixosModules.mailserver
+  ];
+  type_import = let
     import_cases = {
       "lxc" = [
         "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
@@ -13,14 +15,14 @@ let
       "vm" = [ ./common/generic-vm.nix ];
       "local" = [ ];
     };
-  in { hostname, realm, profile ? hostname, type ? "lxc", ... }:
-  [
-    home-manager.nixosModules.home-manager
-    mailserver.nixosModules.mailserver
-    ./common
-    "${./.}/hosts/${realm}/${profile}/configuration.nix"
-  ] ++ import_cases.${type};
+  in type: import_cases.${type} ++ base_imports;
+  # Helper function to resolve what should be imported depending on the type of config (lxc, vm, bare metal)
+  resolve_imports = { hostname, realm, profile ? hostname, type ? "lxc", ... }:
+    type_import type
+    ++ [ ./common "${./.}/hosts/${realm}/${profile}/configuration.nix" ];
+
 in {
+  inherit base_imports type_import resolve_imports;
   # Add to whatever realm a host belong to its list of tags
   add_realm_to_tags = mapAttrs (realm:
     mapAttrs (hostname:

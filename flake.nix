@@ -123,13 +123,15 @@
         proxmox-lxc = nixos-generators.nixosGenerate {
           inherit pkgs;
           format = "proxmox-lxc";
-          modules = [ (import ./nixos/templates/proxmox-lxc.nix) ];
+          modules = (util.base_imports)
+            ++ [ (import ./nixos/templates/proxmox-lxc.nix) ];
         };
 
         proxmox-vm = nixos-generators.nixosGenerate {
           inherit system pkgs;
           format = "proxmox";
-          modules = [ (import ./nixos/templates/proxmox-vm.nix) ];
+          modules = (util.base_imports)
+            ++ [ (import ./nixos/templates/proxmox-vm.nix) ];
         };
       };
 
