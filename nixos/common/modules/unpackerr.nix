@@ -45,7 +45,7 @@ let
       type = types.bool;
       default = false;
       description = ''
-        Delete archives after import? 
+        Delete archives after import?
         Recommend not setting this to true
       '';
     };

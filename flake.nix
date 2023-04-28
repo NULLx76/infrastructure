@@ -38,10 +38,12 @@
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:toastal/nixos-hardware/z-series-no-hidpi";
+
+    vault-unseal.url = "git+https://git.0x76.dev/v/vault-unseal.git";
   };
 
-  outputs = { self, nixpkgs, nixpkgs_22-11, vault-secrets, colmena, home-manager
-    , hyprpaper, nixos-generators, nixos-hardware, nur, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs_22-11, vault-secrets, colmena, hyprpaper
+    , nixos-generators, nur, ... }@inputs:
     let
       inherit (nixpkgs) lib;
 

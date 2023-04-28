@@ -1,4 +1,4 @@
-{ config, pkgs, lib, flat_hosts, ... }:
+{ config, pkgs, lib, flat_hosts, inputs, ... }:
 with lib;
 let
   cfg = config.services.v.vault;
@@ -48,9 +48,31 @@ in {
         **note:** this has to be the same for all nodes in a cluster
       '';
     };
+
+    autoUnseal = mkOption {
+      type = types.bool;
+      default = false;
+      description = ''
+        whether to auto-unseal this vault
+      '';
+    };
+
+    autoUnsealTokenPath = mkOption {
+      type = types.str;
+      default = null;
+      example = "/var/lib/vault-unseal/keys.json";
+      description = ''
+        auto unseal tokens to use
+      '';
+    };
   };
 
   config = mkIf cfg.enable {
+    assertions = [{
+      assertion = cfg.autoUnseal -> (cfg.autoUnsealTokenPath != null);
+      message = "If autoUnseal is enabled, a token path is required!";
+    }];
+
     networking.firewall.allowedTCPPorts =
       mkIf cfg.openFirewall [ cfg.port cfg.clusterPort ];
 
@@ -70,6 +92,25 @@ in {
         api_addr = "http://${hostIP}:${toString cfg.port}"
         cluster_addr = "http://${hostIP}:${toString cfg.clusterPort}"
       '';
+    };
+
+    systemd.services.vault-unseal = mkIf cfg.autoUnseal {
+      description = "Vault unseal service";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "vault.service" ];
+      environment = {
+        VAULT_ADDR = "http://localhost:${toString cfg.port}";
+        VAULT_KEY_FILE = cfg.autoUnsealTokenPath;
+      };
+      serviceConfig = {
+        User = "vault";
+        Group = "vault";
+        Type = "simple";
+        Restart = "on-failure";
+        ExecStart = "${
+            inputs.vault-unseal.packages.${pkgs.system}.default
+          }/bin/vault-unseal";
+      };
     };
   };
 }
