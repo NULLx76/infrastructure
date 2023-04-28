@@ -1,11 +1,6 @@
 { config, pkgs, flat_hosts, ... }:
 let
   inherit (builtins) filter hasAttr;
-  hostToDhcp = { hostname, mac, ip, ... }: {
-    ethernetAddress = mac;
-    hostName = hostname;
-    ipAddress = ip;
-  };
   hostToKea = {hostname, mac, ip, ...}: {
     inherit hostname;
     hw-address = mac;
@@ -41,25 +36,9 @@ in {
 
   networking.firewall.allowedUDPPorts = [ 67 ];
 
-  services.dhcpd4 = {
-    enable = true;
-    extraConfig = ''
-      option subnet-mask 255.255.254.0;
-      option broadcast-address 10.42.43.255;
-      option routers 10.42.42.1;
-      option domain-name-servers 10.42.42.15, 10.42.42.16;
-      option domain-name "${localDomain}";
-      option domain-search "${localDomain}";
-      subnet 10.42.42.0 netmask 255.255.254.0 {
-        range 10.42.43.1 10.42.43.254;
-      }
-    '';
-    machines = map hostToDhcp hosts;
-  };
-
   services.kea = {
     dhcp4 = {
-      enable = false;
+      enable = true;
       settings = {
         authoritative = true;
         valid-lifetime = 4000;
