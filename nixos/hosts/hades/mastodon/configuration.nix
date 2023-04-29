@@ -37,7 +37,12 @@ in {
     webPort = 55001;
     enableUnixSocket = false;
     localDomain = "xirion.net";
-    trustedProxy = "192.168.0.123";
+    trustedProxy = "192.168.0.122";
+    mediaAutoRemove = {
+      enable = true;
+      olderThanDays = 30;
+      startAt = "weekly";
+    };
 
     configureNginx = false;
 
@@ -78,8 +83,7 @@ in {
       SMTP_AUTH_METHOD = "plain";
       SMTP_OPENSSL_VERIFY_MODE = "none";
 
-      # TODO: Don't?
-      RAILS_SERVE_STATIC_FILES = "true";
+      RAILS_SERVE_STATIC_FILES = "false";
 
       AUTHORIZED_FETCH = "true";
 
@@ -92,33 +96,6 @@ in {
       S3_ENDPOINT = "https://o.xirion.net/";
 
       DEEPL_PLAN = "free";
-    };
-  };
-
-  # https://github.com/NixOS/nixpkgs/issues/116418#issuecomment-799517120
-  systemd.services.mastodon-media-prune = let cfg = config.services.mastodon;
-  in {
-    description = "Mastodon media prune";
-    environment = lib.filterAttrs (n: _: n != "PATH")
-      config.systemd.services.mastodon-web.environment;
-    serviceConfig = {
-      Type = "oneshot";
-      # Remove remote media attachments older than one month.
-      ExecStart = "${cfg.package}/bin/tootctl media remove --days=30";
-      User = cfg.user;
-      Group = cfg.group;
-      EnvironmentFile = "/var/lib/mastodon/.secrets_env";
-      PrivateTmp = true;
-    };
-  };
-
-  systemd.timers.mastodon-media-prune = {
-    description = "Mastodon media prune";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "*-*-* 00:00:00"; # every day
-      Unit = "mastodon-media-prune.service";
-      AccuracySec = "60s";
     };
   };
 

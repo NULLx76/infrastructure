@@ -80,7 +80,6 @@ in {
       enableACME = true;
       forceSSL = true;
       locations."/".extraConfig = ''
-
         add_header Content-Type 'text/html; charset=UTF-8';
         return 200 '<h1>meow</h1>';
       '';
