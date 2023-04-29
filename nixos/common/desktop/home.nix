@@ -9,6 +9,7 @@ in {
   home.packages = with pkgs; [
     btop
     calibre
+    celluloid
     element-desktop
     fusee-launcher
     gcc
@@ -17,6 +18,7 @@ in {
     inputs.webcord.packages.${pkgs.system}.default
     jetbrains.clion
     jetbrains.idea-ultimate
+    kdenlive
     mullvad-vpn
     neofetch
     nixfmt
