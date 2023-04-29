@@ -25,10 +25,16 @@ in {
     quoteEnvironmentValues = false; # Needed for docker
   };
 
+  # For some reason networking is broken in podman
   virtualisation.podman = {
-    enable = true;
+    enable = false;
     dockerSocket.enable = true;
     dockerCompat = true;
+  };
+
+  virtualisation.docker = {
+    enable = true;
+    autoPrune.enable = true;
   };
 
   services.woodpecker-server = {
@@ -49,12 +55,12 @@ in {
     docker = {
       enable = true;
       environment = {
-        DOCKER_HOST = "unix:///run/podman/podman.sock";
+        # DOCKER_HOST = "unix:///run/podman/podman.sock";
         WOODPECKER_BACKEND = "docker";
         WOODPECKER_SERVER = "localhost:9000";
       };
       environmentFile = [ "${vs.woodpecker}/environment" ];
-      extraGroups = [ "podman" ];
+      extraGroups = [ "docker" ];
     };
   };
 }

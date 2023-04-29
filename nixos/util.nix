@@ -2,6 +2,7 @@
 let
   inherit (builtins) filter attrValues concatMap mapAttrs;
   inherit (nixpkgs.lib.attrsets) mapAttrsToList;
+  inherit (nixpkgs.lib) nixosSystem;
   base_imports = [
     home-manager.nixosModules.home-manager
     mailserver.nixosModules.mailserver
@@ -44,7 +45,7 @@ in {
   mkColmenaHost = { ip ? null, hostname, tags, realm, type ? "lxc", ... }@host:
     let
       # this makes local apply work a bit nicer
-      name = if realm == "thalassa" then hostname else "${hostname}.${realm}";
+      name = if type == "local" then hostname else "${hostname}.${realm}";
     in {
       "${name}" = {
         imports = resolve_imports host;

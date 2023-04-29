@@ -23,7 +23,12 @@
   };
 
   # udev
-  services.udev.packages = with pkgs; [ wooting-udev-rules ];
+  services.udev.packages = with pkgs; [
+    android-udev-rules
+    logitech-udev-rules
+    qmk-udev-rules
+    wooting-udev-rules
+  ];
 
   # FS
   fileSystems."/".options = [ "compress=zstd" ];
