@@ -104,7 +104,7 @@ in {
           allow 10.42.42.0/23;
           allow 192.168.0.0/23;
           allow 80.60.83.220;
-          allow 195.85.167.32/23;
+          allow 195.85.167.32/29;
           deny all;
         '';
         proxyPass = "http://synapse.olympus:8008";

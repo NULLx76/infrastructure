@@ -143,21 +143,6 @@
     mac = "ea:ac:be:53:18:27";
     profile = "sonarr";
   };
-  "postgres" = {
-    ip = "192.168.0.133";
-    mac = "6e:92:a9:5e:4c:e2";
-    nix = false;
-  };
-  "vault" = {
-    ip = "192.168.0.134";
-    mac = "56:20:62:16:8a:11";
-    nix = false;
-  };
-  "vmetrics" = {
-    ip = "192.168.0.135";
-    mac = "96:10:41:fd:2a:0a";
-    nix = false;
-  };
   "mastodon" = {
     ip = "192.168.0.138";
     mac = "52:60:8a:06:86:9c";
