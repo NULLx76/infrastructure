@@ -41,6 +41,8 @@
 
   environment.systemPackages = with pkgs; [ wireguard-tools ];
 
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
