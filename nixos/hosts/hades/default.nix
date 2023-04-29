@@ -46,6 +46,12 @@
     profile = "dns";
     tags = [ "networking" ];
   };
+  "dns-2" = {
+    ip = "192.168.0.108";
+    mac = "56:C3:9C:A5:41:81";
+    profile = "dns";
+    tags = [ "networking" ];
+  };
   "MariaDB" = {
     ip = "192.168.0.109";
     mac = "00:0c:29:23:4f:12";
