@@ -87,7 +87,7 @@
         nix repl --file "${./.}/repl.nix" $@
       '';
     in {
-      # Make the nixosConfigurations for compat reasons
+      # Make the nixosConfigurations for compat reasons (e.g. vault)
       nixosConfigurations =
         (import (inputs.colmena + "/src/nix/hive/eval.nix") {
           rawFlake = self;
