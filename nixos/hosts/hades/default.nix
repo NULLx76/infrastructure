@@ -114,6 +114,10 @@
     nix = false; # superseded by prowlarr
   };
   "nginx" = {
+    ip = "192.168.0.122";
+    mac = "52:8E:72:31:AE:AC";
+  };
+  "reverseproxy" = {
     ip = "192.168.0.123";
     mac = "00:0c:29:9b:10:82";
     nix = false;

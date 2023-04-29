@@ -22,7 +22,11 @@ in {
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
-  networking.firewall.allowedTCPPorts = [ ];
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+  security.acme.defaults.email = "victorheld12@gmail.com";
+  security.acme.acceptTerms = true;
+  security.acme.preliminarySelfsigned = true;
 
   services.nginx = {
     enable = true;
@@ -36,15 +40,21 @@ in {
 
     virtualHosts."cshub.nl" = proxy "http://192.168.0.113";
     virtualHosts."ha.xirion.net" = proxy "http://192.168.0.129:8123";
-    virtualHosts."xirion.net" = (proxy "http://10.10.10.12") // {
+    virtualHosts."xirion.net" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/".extraConfig = ''
+        add_header Content-Type 'text/html; charset=UTF-8';
+        return 200 'Hello, World!';
+      '';
       locations."= /.well-known/host-meta".extraConfig = ''
         return 301 https://fedi.xirion.net$request_uri;
       '';
     };
-    virtualHosts."blog.xirion.net" = proxy "http://10.10.10.12";
+    # virtualHosts."blog.xirion.net" = proxy "http://10.10.10.12";
     virtualHosts."git.xirion.net" = proxy "http://10.10.10.12";
     virtualHosts."mail.xirion.net" = proxy "https://192.168.0.118";
-    virtualHosts."o.xirion.net" = proxy "http://192.168.0.112";
+    virtualHosts."o.xirion.net" = proxy "http://192.168.0.112:9000";
     virtualHosts."requests.xirion.net" = proxy "http://overseerr.hades:5055";
     virtualHosts."pass.xirion.net" = proxy "http://bitwarden_rs";
     virtualHosts."repo.xirion.net" = proxy "http://archlinux";
@@ -67,7 +77,7 @@ in {
       forceSSL = true;
 
       root = "${pkgs.v.glitch-soc}/public/";
-      location."/".tryFiles = "$uri @proxy";
+      locations."/".tryFiles = "$uri @proxy";
 
       # 	location ~ ^/(emoji|packs|system/accounts/avatars|system/media_attachments/files) {
       #     	add_header Cache-Control "public, max-age=31536000, immutable";
@@ -81,12 +91,12 @@ in {
       #    		try_files $uri @proxy;
       #   	}
 
-      location."@proxy" = {
+      locations."@proxy" = {
         proxyPass = "http://192.168.0.138:55001";
         proxyWebsockets = true;
       };
 
-      location."api/v1/streaming" = {
+      locations."api/v1/streaming" = {
         proxyPass = "http://192.168.0.138:55000";
         proxyWebsockets = true;
       };
