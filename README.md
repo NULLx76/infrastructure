@@ -1,4 +1,4 @@
-# 0x76's Infrastructure [![NixOS](https://github.com/NULLx76/infrastructure/actions/workflows/nixos.yml/badge.svg)](https://github.com/NULLx76/infrastructure/actions/workflows/nixos.yml)
+# 0x76's Infrastructure 
 This repository contains my fleet of VMs, Containers and Bare Metal machines.
 
 ## Directory Structure
