@@ -11,7 +11,7 @@
   system.stateVersion = "23.05"; # Did you read the comment?
 
   # Additional packages
-  environment.systemPackages = with pkgs; [ dig dog drill ];
+  environment.systemPackages = with pkgs; [ dig dogdns ];
 
   services.v.dns = {
     enable = true;

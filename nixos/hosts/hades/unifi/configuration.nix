@@ -1,13 +1,12 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 {
   system.stateVersion = "21.05";
   networking.interfaces.eth0.useDHCP = true;
 
   services.unifi = {
     enable = true;
-    jrePackage = pkgs.jre8_headless;
     unifiPackage = pkgs.unifi;
-    mongodbPackage = pkgs.mongodb;
+    mongodbPackage = pkgs.mongodb-4_2;
     openFirewall = true;
   };
 

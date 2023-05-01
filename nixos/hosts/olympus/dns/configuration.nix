@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   imports = [ ];
 
@@ -11,10 +11,7 @@
   system.stateVersion = "21.11"; # Did you read the comment?
 
   # Additional packages
-  environment.systemPackages = with pkgs; [ dig dog drill ];
-
-  networking.firewall.allowedTCPPorts = [ 53 ];
-  networking.firewall.allowedUDPPorts = [ 53 ];
+  environment.systemPackages = with pkgs; [ dig dogdns ];
 
   services.v.dns = {
     enable = true;

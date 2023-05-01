@@ -24,7 +24,10 @@ in {
     [ config.networking.wireguard.interfaces.wg0.listenPort ];
   networking.firewall.checkReversePath = false;
 
-  vault-secrets.secrets.wireguard = { services = [ "wireguard-wg0" ]; };
+  vault-secrets.secrets.wireguard = {
+    services = [ "wireguard-wg0" ];
+    loginRetries = 25;
+  };
 
   networking.nat = {
     enable = true;
