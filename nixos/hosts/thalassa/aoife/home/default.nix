@@ -1,4 +1,4 @@
-{ ... }: {
+_: {
   programs.home-manager.enable = true;
 
   home.username = "victor";

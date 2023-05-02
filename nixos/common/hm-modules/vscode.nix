@@ -20,6 +20,7 @@ in {
         "nix.enableLanguageServer" = true; # Enable LSP.
         "nix.serverPath" = "${pkgs.nil}/bin/nil";
         "[nix]" = { "editor.defaultFormatter" = "brettm12345.nixfmt-vscode"; };
+        "[python]" = { "editor.formatOnType" = true; };
         "rust-analyzer.checkOnSave.command" = "clippy";
         "debug.allowBreakpointsEverywhere" = true;
         # Don't index unecessary things

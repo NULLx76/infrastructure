@@ -4,6 +4,7 @@ let
   cfg = config.services.v.vault;
   hostIP = config.deployment.targetHost;
 
+  # Find all vault hosts that do not have the same IP as the current host
   vault_hosts =
     filter ({ tags ? [ ], ip ? "", ... }: (elem "vault" tags) && (ip != hostIP))
     flat_hosts;
