@@ -833,11 +833,11 @@
     },
     "nixpkgs_22-11": {
       "locked": {
-        "lastModified": 1682817260,
-        "narHash": "sha256-kFMXzKNj4d/0Iqbm5l57rHSLyUeyCLMuvlROZIuuhvk=",
+        "lastModified": 1682931856,
+        "narHash": "sha256-phFRasoX9a7pPwfHwUO4A3HjccedEgVQLHR1UoPCY90=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "db1e4eeb0f9a9028bcb920e00abbc1409dd3ef36",
+        "rev": "d529862de0cdabaebac67a48d825af99c2c3b50d",
         "type": "github"
       },
       "original": {
@@ -865,11 +865,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1683011302,
-        "narHash": "sha256-obh4V+P6hla1ek7vr16qmenF/6iI7bVrT0uMjI3SFsM=",
+        "lastModified": 1683035192,
+        "narHash": "sha256-ypkdYzOEWBNTp959hDEY0YBo0KJwXq0aV+jnKsHRC6g=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "9b3e4ea4fd5e0202b2f81b23bdd28081c6607e81",
+        "rev": "549a132b51de555fed118d56c78580df889f3a12",
         "type": "github"
       },
       "original": {
@@ -980,11 +980,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1683007714,
-        "narHash": "sha256-UnW0R/JiTya9DjBjmtDfhW3SlEfVhkBDz5g2FTIK8CQ=",
+        "lastModified": 1683027801,
+        "narHash": "sha256-JD8MHCGCEe/o85sB32O1v6/pElTL67M2P64pW6pLjZk=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "fb2febdfc649f68e7059537605761ffcc7d95cc0",
+        "rev": "6c9338fab80683e440e674c235c2fee2b381e6c4",
         "type": "github"
       },
       "original": {
@@ -1280,11 +1280,11 @@
         "nixpkgs": "nixpkgs_9"
       },
       "locked": {
-        "lastModified": 1683011386,
-        "narHash": "sha256-uFYsk+7753LRf9h2m7QPeIDp3Y3VcMtDSEbFLnWo0+Q=",
+        "lastModified": 1683013874,
+        "narHash": "sha256-B8bQb9IMkrDvtqFUoF/PuBma8Qa2jU7Xv7cFSchg9V8=",
         "ref": "refs/heads/main",
-        "rev": "cafb08b4cd6c1f2a3ddf4acfeccf63dac7a12e4f",
-        "revCount": 7,
+        "rev": "91e7262e87878609c2d6619210988b241e8f8f62",
+        "revCount": 11,
         "type": "git",
         "url": "https://git.0x76.dev/v/vault-unseal.git"
       },
