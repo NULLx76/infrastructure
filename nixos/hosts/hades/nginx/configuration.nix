@@ -28,6 +28,7 @@ in {
   security.acme.acceptTerms = true;
   security.acme.preliminarySelfsigned = true;
 
+
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;
@@ -39,6 +40,8 @@ in {
     package = pkgs.nginxMainline;
 
     virtualHosts."cshub.nl" = proxy "http://192.168.0.113";
+    virtualHosts."api.cshub.nl" = proxy "http://192.168.0.113";
+
     virtualHosts."ha.xirion.net" = proxy "http://192.168.0.129:8123";
     virtualHosts."xirion.net" = {
       enableACME = true;

@@ -21,8 +21,6 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    hyprpaper.url = "github:hyprwm/hyprpaper";
-
     riff.url = "github:DeterminateSystems/riff";
 
     webcord.url = "github:fufexan/webcord-flake";
@@ -42,7 +40,7 @@
     vault-unseal.url = "git+https://git.0x76.dev/v/vault-unseal.git";
   };
 
-  outputs = { self, nixpkgs, nixpkgs_22-11, vault-secrets, colmena, hyprpaper
+  outputs = { self, nixpkgs, nixpkgs_22-11, vault-secrets, colmena
     , nixos-generators, nur, ... }@inputs:
     let
       inherit (nixpkgs) lib;
@@ -59,12 +57,7 @@
 
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [
-          (import ./nixos/pkgs)
-          vault-secrets.overlay
-          hyprpaper.overlays.default
-          nur.overlay
-        ];
+        overlays = [ (import ./nixos/pkgs) vault-secrets.overlay nur.overlay ];
       };
 
       pkgs_22-11 = import nixpkgs_22-11 {

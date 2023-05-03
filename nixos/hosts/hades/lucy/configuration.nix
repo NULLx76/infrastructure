@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [ ./hardware-configuration.nix ];
@@ -16,14 +16,21 @@
   system.stateVersion = "23.05"; # Did you read the comment?
 
   # Additional packages
-  environment.systemPackages = with pkgs; [ ];
+  environment.systemPackages = with pkgs; [
+    gcc
+    jq
+    nuclei
+    rustup
+  ];
 
   networking.firewall.allowedTCPPorts = [ ];
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  boot.loader.grub.device =  "/dev/sda";
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot";
 
-  # Make laura admin
-  users.extraUsers.laura.extraGroups = [ "wheel" ];
+  virtualisation.docker.enable = true;
+
+  users.extraUsers.laura.extraGroups = [ "wheel" "docker" ];
+  users.extraUsers.victor.extraGroups = [ "docker" ];
 }
