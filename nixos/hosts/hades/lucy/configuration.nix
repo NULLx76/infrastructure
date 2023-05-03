@@ -5,8 +5,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix
- ];
+  imports = [ ./hardware-configuration.nix ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -20,4 +19,7 @@
   environment.systemPackages = with pkgs; [ ];
 
   networking.firewall.allowedTCPPorts = [ ];
+
+  boot.loader.grub.enable = true;
+  boot.loader.grub.version = 2;
 }
