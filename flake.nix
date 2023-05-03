@@ -112,13 +112,13 @@
 
         iso = nixos-generators.nixosGenerate {
           inherit system pkgs;
-          format = "iso";
+          format = "install-iso";
           modules = [ (import ./nixos/templates/iso.nix) ];
         };
 
         iso-graphical = nixos-generators.nixosGenerate {
           inherit system pkgs;
-          format = "iso";
+          format = "install-iso";
           modules = [ (import ./nixos/templates/iso-graphical.nix) ];
         };
 

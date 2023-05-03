@@ -53,5 +53,6 @@
     ripgrep
     rsync
     zoxide
+    tmux
   ];
 }
