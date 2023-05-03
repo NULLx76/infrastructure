@@ -5,6 +5,8 @@
 
   services.hardware.bolt.enable = true;
 
+  hardware.trackpoint.enable = true;
+
   # FS
   fileSystems."/".options = [ "compress=zstd" ];
 
