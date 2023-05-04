@@ -20,15 +20,15 @@ let
     };
   };
 in {
-  options = {
-    meta.exposes = mkOption {
+  options.meta = {
+    exposes = mkOption {
       type = with types; attrsOf (submodule exposesOpts);
       description = ''
         Exposed services
       '';
     };
 
-    meta.ipv4 = mkOption {
+    ipv4 = mkOption {
       type = types.str;
       description = ''
         Own IPv4 Address

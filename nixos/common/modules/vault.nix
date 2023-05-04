@@ -2,7 +2,7 @@
 with lib;
 let
   cfg = config.services.v.vault;
-  hostIP = config.deployment.targetHost;
+  hostIP = config.meta.ipv4;
 
   # Find all vault hosts that do not have the same IP as the current host
   vault_hosts =
