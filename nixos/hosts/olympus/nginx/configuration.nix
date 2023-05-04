@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, hosts, ... }:
 let
   proxy = url: {
     enableACME = true;
@@ -44,9 +44,11 @@ in {
 
     package = pkgs.nginxMainline;
 
+    # Templated
+    virtualHosts.${hosts.olympus.hedgedoc.exposes.md.domain} = proxy "http://hedgedoc.olympus:${toString hosts.olympus.hedgedoc.exposes.md.port}/";
+
     # 0x76.dev
     virtualHosts."ha.0x76.dev" = proxy "http://home-assistant.olympus:8123/";
-    virtualHosts."md.0x76.dev" = proxy "http://hedgedoc.olympus:3000/";
     virtualHosts."git.0x76.dev" = proxy "http://gitea.olympus:3000";
     virtualHosts."o.0x76.dev" = proxy "http://minio.olympus:9000";
     virtualHosts."grafana.0x76.dev" =

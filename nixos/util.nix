@@ -13,7 +13,7 @@ let
         ./common/generic-lxc.nix
       ];
       "vm" = [ ./common/generic-vm.nix ];
-      "local" = [ ];
+      "local" = [ ./common/desktop ];
     };
   in type: import_cases.${type} ++ base_imports;
   # Helper function to resolve what should be imported depending on the type of config (lxc, vm, bare metal)
@@ -21,8 +21,6 @@ let
     type_import type
     ++ [ ./common "${./.}/hosts/${realm}/${profile}/configuration.nix" ];
 
-in {
-  inherit base_imports type_import resolve_imports;
   # Add to whatever realm a host belong to its list of tags
   add_realm_to_tags = mapAttrs (realm:
     mapAttrs (_hostname:
@@ -40,8 +38,10 @@ in {
   # Filter out all hosts which aren't nixos
   filter_nix_hosts = filter ({ nix ? true, ... }: nix);
 
+  # outputs
+
   # Helper function to build a colmena host definition
-  mkColmenaHost = { ip ? null, hostname, tags, realm, type ? "lxc", ... }@host:
+  mkColmenaHost = { ip ? null, exposes ? null, hostname, tags, realm, type ? "lxc", ... }@host:
     let
       # this makes local apply work a bit nicer
       name = if type == "local" then hostname else "${hostname}.${realm}";
@@ -52,6 +52,10 @@ in {
           hostName = hostname;
           domain = realm;
         };
+        meta = {
+          inherit exposes;
+          ipv4 = ip;
+        };
         deployment = {
           inherit tags;
           targetHost = ip;
@@ -60,4 +64,9 @@ in {
         };
       };
     };
+  hosts = add_realm_to_tags (import ./hosts);
+  flat_hosts = flatten_hosts hosts;
+  nixHosts = filter_nix_hosts flat_hosts;
+in {
+  inherit base_imports mkColmenaHost hosts flat_hosts nixHosts;
 }

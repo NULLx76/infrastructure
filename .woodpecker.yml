@@ -5,5 +5,5 @@ pipeline:
       - NIX_CONFIG=experimental-features = nix-command flakes
     commands:
       - nix run 'nixpkgs#statix' check
-      - nix run 'github:astro/deadnix' -- -f
+      - nix run 'nixpkgs#deadnix' -- -f
       - nix run 'nixpkgs#yamllint' .

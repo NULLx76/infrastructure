@@ -3,8 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { pkgs, inputs, ... }: {
-  imports =
-    [ ../../../common/desktop ./hardware-configuration.nix ./hardware.nix ];
+  imports = [ ./hardware-configuration.nix ./hardware.nix ];
 
   # Bootloader.
   boot = {

@@ -100,6 +100,12 @@
   "hedgedoc" = {
     ip = "10.42.42.23";
     mac = "86:BC:0C:18:BC:9B";
+    exposes = {
+      md = {
+        domain = "md.0x76.dev";
+        port = 3000;
+      };
+    };
   };
   "zmeura" = {
     ip = "10.42.42.24";
