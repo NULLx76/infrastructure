@@ -18,6 +18,7 @@
   # Additional packages
   environment.systemPackages = with pkgs; [
     gcc
+    go
     jq
     nuclei
     rustup
