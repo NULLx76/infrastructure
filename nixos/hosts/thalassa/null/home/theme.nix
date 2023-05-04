@@ -32,7 +32,7 @@ let
     mantle = "292c3c";
     crust = "232634";
 
-    hex = mapAttrs (name: value: "#${value}") colour;
+    hex = mapAttrs (_name: value: "#${value}") colour;
   };
 in {
   home.file.".xsettingsd".text = ''

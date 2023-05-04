@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+_:
 {
   system.stateVersion = "22.11";
   networking.interfaces.eth0.useDHCP = true;

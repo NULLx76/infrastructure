@@ -1,4 +1,4 @@
-{ lib, stdenv, nodejs-slim, mkYarnPackage, fetchFromGitHub, bundlerEnv, nixosTests
+{ lib, stdenv, nodejs-slim, bundlerEnv, nixosTests
 , yarn, callPackage, imagemagick, ffmpeg, file, ruby_3_0, writeShellScript
 , fetchYarnDeps, fixup_yarn_lock
 

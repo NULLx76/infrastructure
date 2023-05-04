@@ -1,4 +1,4 @@
-{ pkgs, modulesPath, lib, config, ... }: {
+{ pkgs, modulesPath, lib, ... }: {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
   ];

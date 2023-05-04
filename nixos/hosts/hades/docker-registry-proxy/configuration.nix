@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, ... }:
 let vs = config.vault-secrets.secrets; in
 {
   system.stateVersion = "22.05";

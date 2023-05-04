@@ -1,4 +1,4 @@
-{ lib, ... }: {
+_: {
   networking.useDHCP = true;
 
   # Enable qemu guest agent

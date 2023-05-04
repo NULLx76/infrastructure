@@ -1,4 +1,4 @@
-{ config, pkgs, flat_hosts, ... }:
+{ config, flat_hosts, ... }:
 let
   inherit (builtins) filter hasAttr;
   hostToKea = { hostname, mac, ip, ... }: {

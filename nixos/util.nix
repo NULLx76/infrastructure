@@ -2,7 +2,6 @@
 let
   inherit (builtins) filter attrValues concatMap mapAttrs;
   inherit (nixpkgs.lib.attrsets) mapAttrsToList;
-  inherit (nixpkgs.lib) nixosSystem;
   base_imports = [
     home-manager.nixosModules.home-manager
     mailserver.nixosModules.mailserver
@@ -26,7 +25,7 @@ in {
   inherit base_imports type_import resolve_imports;
   # Add to whatever realm a host belong to its list of tags
   add_realm_to_tags = mapAttrs (realm:
-    mapAttrs (hostname:
+    mapAttrs (_hostname:
       { tags ? [ ], ... }@host:
       host // {
         tags = [ realm ] ++ tags;

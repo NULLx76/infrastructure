@@ -1,4 +1,4 @@
-{ lib, stdenvNoCC, fetchFromGitHub }: stdenvNoCC.mkDerivation rec {
+{ stdenvNoCC, fetchFromGitHub }: stdenvNoCC.mkDerivation rec {
   pname = "dnd-5e-latex-template";
   version = "0.8.0";
   tlType = "run";

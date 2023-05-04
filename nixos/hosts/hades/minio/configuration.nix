@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 let
   vs = config.vault-secrets.secrets;
 in {

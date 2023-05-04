@@ -1,5 +1,4 @@
-{ pkgs
-, runCommand
+{ runCommand
 , lib
 , makeWrapper
 , yarn2nix

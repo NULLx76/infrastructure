@@ -1,4 +1,4 @@
-{ config, pkgs, nodes, ... }:
+{ pkgs, ... }:
 let
   proxy = url: {
     enableACME = true;

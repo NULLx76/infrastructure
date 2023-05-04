@@ -258,7 +258,7 @@ in
       after = [ "network.target" ];
       description = "unpackerr system service";
       # Filter out all unset variables else unpackerr complains
-      environment = filterAttrs (n: v: stringLength v > 0)
+      environment = filterAttrs (_n: v: stringLength v > 0)
         {
           # General options
           UN_DEBUG = "${toString cfg.debug}";

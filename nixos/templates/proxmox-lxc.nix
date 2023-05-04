@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ lib, ... }: {
   imports = [ ../common/common.nix ../common/generic-lxc.nix ];
 
   proxmoxLXC = {
