@@ -1,5 +1,4 @@
-_:
-{
+_: {
   networking.interfaces.eth0.useDHCP = true;
   system.stateVersion = "22.11";
 
@@ -15,9 +14,7 @@ _:
     containers = {
       flaresolverr = {
         image = "flaresolverr/flaresolverr:v3.1.2";
-        ports = [
-          "8191:8191"
-        ];
+        ports = [ "8191:8191" ];
       };
     };
   };

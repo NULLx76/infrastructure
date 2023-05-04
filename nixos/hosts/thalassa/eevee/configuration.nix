@@ -3,17 +3,14 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { pkgs, inputs, ... }: {
-  imports = [
-    ../../../common/desktop
-    ./hardware-configuration.nix
-    ./hardware.nix
-  ];
+  imports =
+    [ ../../../common/desktop ./hardware-configuration.nix ./hardware.nix ];
 
   # Bootloader.
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
-      kernelModules =  [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+      kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
     };
   };
 

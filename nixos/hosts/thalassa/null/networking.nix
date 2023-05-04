@@ -1,5 +1,4 @@
-_:
-{
+_: {
   services.v.dns = {
     enable = true;
     openFirewall = false;
@@ -30,21 +29,11 @@ _:
             ca_cert="/etc/ssl/certs/ca-bundle.crt"
           '';
         };
-        "Pikachu 5G" = {
-          psk = "@PIKACHU_PASSWORD@";
-        };
-        "sha256('yeet')" = {
-          psk = "@SHA256_PASSWORD@";
-        };
-        "wired" = {
-          psk = "@WIRED_PASSWORD@";
-        };
-        "meowy hotspot" = {
-          psk = "@HOTSPOT_PASSWORD@";
-        };
-        "WiFi Roest" = {
-          psk = "@WIFI_ROEST_PASSWORD@";
-        };
+        "Pikachu 5G" = { psk = "@PIKACHU_PASSWORD@"; };
+        "sha256('yeet')" = { psk = "@SHA256_PASSWORD@"; };
+        "wired" = { psk = "@WIRED_PASSWORD@"; };
+        "meowy hotspot" = { psk = "@HOTSPOT_PASSWORD@"; };
+        "WiFi Roest" = { psk = "@WIFI_ROEST_PASSWORD@"; };
       };
     };
 

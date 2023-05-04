@@ -1,12 +1,10 @@
-{ lib, stdenv, nodejs-slim, bundlerEnv, nixosTests
-, yarn, callPackage, imagemagick, ffmpeg, file, ruby_3_0, writeShellScript
-, fetchYarnDeps, fixup_yarn_lock
+{ lib, stdenv, nodejs-slim, bundlerEnv, nixosTests, yarn, callPackage
+, imagemagick, ffmpeg, file, ruby_3_0, writeShellScript, fetchYarnDeps
+, fixup_yarn_lock
 
-  # Allow building a fork or custom version of Mastodon:
-, pname ? "mastodon"
-, version ? import ./version.nix
-, srcOverride ? null
-, dependenciesDir ? ./.  # Should contain gemset.nix, yarn.nix and package.json.
+# Allow building a fork or custom version of Mastodon:
+, pname ? "mastodon", version ? import ./version.nix, srcOverride ? null
+, dependenciesDir ? ./. # Should contain gemset.nix, yarn.nix and package.json.
 }:
 
 stdenv.mkDerivation rec {
@@ -14,7 +12,8 @@ stdenv.mkDerivation rec {
 
   # Using overrideAttrs on src does not build the gems and modules with the overridden src.
   # Putting the callPackage up in the arguments list also does not work.
-  src = if srcOverride != null then srcOverride else callPackage ./source.nix {};
+  src =
+    if srcOverride != null then srcOverride else callPackage ./source.nix { };
 
   mastodon-gems = bundlerEnv {
     name = "${pname}-gems-${version}";
@@ -42,11 +41,17 @@ stdenv.mkDerivation rec {
 
     yarnOfflineCache = fetchYarnDeps {
       yarnLock = "${src}/yarn.lock";
-     # sha256 = lib.fakeSha256;
-     sha256 = "sha256-5KmPgKE1QRPoTjeSYidKt/z9vzWzTOoJVr5dNtofKJY=";
+      # sha256 = lib.fakeSha256;
+      sha256 = "sha256-5KmPgKE1QRPoTjeSYidKt/z9vzWzTOoJVr5dNtofKJY=";
     };
 
-    nativeBuildInputs = [ fixup_yarn_lock nodejs-slim yarn mastodon-gems mastodon-gems.wrappedRuby ];
+    nativeBuildInputs = [
+      fixup_yarn_lock
+      nodejs-slim
+      yarn
+      mastodon-gems
+      mastodon-gems.wrappedRuby
+    ];
 
     RAILS_ENV = "production";
     NODE_ENV = "production";
@@ -114,11 +119,12 @@ stdenv.mkDerivation rec {
 
   passthru = {
     tests.mastodon = nixosTests.mastodon;
-    updateScript = callPackage ./update.nix {};
+    updateScript = callPackage ./update.nix { };
   };
 
   meta = with lib; {
-    description = "Self-hosted, globally interconnected microblogging software based on ActivityPub";
+    description =
+      "Self-hosted, globally interconnected microblogging software based on ActivityPub";
     homepage = "https://joinmastodon.org";
     license = licenses.agpl3Plus;
     platforms = [ "x86_64-linux" "i686-linux" "aarch64-linux" ];

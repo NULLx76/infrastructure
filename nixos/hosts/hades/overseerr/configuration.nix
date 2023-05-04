@@ -31,9 +31,7 @@
           # LOG_LEVEL = "debug";
           TZ = "Europe/Amsterdam";
         };
-        ports = [
-          "5055:5055"
-        ];
+        ports = [ "5055:5055" ];
         volumes = [ "/var/lib/overseerr/config:/app/config" ];
       };
     };

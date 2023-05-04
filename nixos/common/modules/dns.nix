@@ -9,13 +9,13 @@ let
   ipv6Hosts = filter (hasAttr "ip6") flat_hosts;
 
   localData = { hostname, realm, ip, ... }: ''"${hostname}.${realm}. A ${ip}"'';
-  local6Data = { hostname, realm, ip6, ... }: ''"${hostname}.${realm}. AAAA ${ip6}"'';
+  local6Data = { hostname, realm, ip6, ... }:
+    ''"${hostname}.${realm}. AAAA ${ip6}"'';
   ptrData = { hostname, realm, ip, ... }: ''"${ip} ${hostname}.${realm}"'';
   ptr6Data = { hostname, realm, ip6, ... }: ''"${ip6} ${hostname}.${realm}"'';
 
   cfg = config.services.v.dns;
-in
-{
+in {
   options.services.v.dns = {
     enable = mkEnableOption "v.dns";
 
@@ -50,7 +50,8 @@ in
             use-syslog = "yes";
             module-config = ''"validator iterator"'';
 
-            local-zone = map (localdomain: ''"${localdomain}}." transparent'') domains;
+            local-zone =
+              map (localdomain: ''"${localdomain}}." transparent'') domains;
             local-data = (map localData ipv4Host) ++ (map local6Data ipv6Hosts);
             local-data-ptr = (map ptrData ipv4Host) ++ (map ptr6Data ipv6Hosts);
 
@@ -83,10 +84,7 @@ in
           })
           (mkIf (cfg.mode == "laptop") {
             interface = [ "127.0.0.1" "::1" ];
-            access-control = [
-              "127.0.0.1/32 allow_snoop"
-              "::1 allow_snoop"
-            ];
+            access-control = [ "127.0.0.1/32 allow_snoop" "::1 allow_snoop" ];
           })
         ];
       };

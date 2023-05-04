@@ -3,8 +3,8 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, ... }:
-let vs = config.vault-secrets.secrets; in
-{
+let vs = config.vault-secrets.secrets;
+in {
   imports = [ ];
 
   # This value determines the NixOS release from which the default
@@ -16,9 +16,7 @@ let vs = config.vault-secrets.secrets; in
   system.stateVersion = "22.11"; # Did you read the comment?
 
   # Additional packages
-  networking.firewall.allowedTCPPorts = [
-    config.services.outline.port
-  ];
+  networking.firewall.allowedTCPPorts = [ config.services.outline.port ];
 
   vault-secrets.secrets.outline = {
     inherit (config.services.outline) user group;
@@ -40,7 +38,7 @@ let vs = config.vault-secrets.secrets; in
       uploadBucketName = "outline";
       region = "us-east-1"; # fake
     };
-  oidcAuthentication = {
+    oidcAuthentication = {
       displayName = "Dex";
       userinfoUrl = "https://dex.0x76.dev/userinfo";
       tokenUrl = "https://dex.0x76.dev/token";

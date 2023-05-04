@@ -1,17 +1,19 @@
 { config, ... }:
-let vs = config.vault-secrets.secrets; in
-{
+let vs = config.vault-secrets.secrets;
+in {
   system.stateVersion = "22.05";
 
   networking.interfaces.eth0.useDHCP = true;
 
   # the registry port and metrics port
-  networking.firewall.allowedTCPPorts = [ config.services.dockerRegistry.port 5001 ];
+  networking.firewall.allowedTCPPorts =
+    [ config.services.dockerRegistry.port 5001 ];
 
   vault-secrets.secrets.docker-registry = { };
 
   # Sets the minio user and password
-  systemd.services.docker-registry.serviceConfig.EnvironmentFile = "${vs.docker-registry}/environment";
+  systemd.services.docker-registry.serviceConfig.EnvironmentFile =
+    "${vs.docker-registry}/environment";
 
   services.dockerRegistry = {
     enable = true;
@@ -34,15 +36,13 @@ let vs = config.vault-secrets.secrets; in
       http.debug.prometheus.enabled = true;
 
       # Webhooks
-      notifications.endpoints = [
-        {
-          name = "keel";
-          url = "http://10.10.10.17:9300/v1/webhooks/registry";
-          timeout = "500ms";
-          treshold = 5;
-          backoff = "1s";
-        }
-      ];
+      notifications.endpoints = [{
+        name = "keel";
+        url = "http://10.10.10.17:9300/v1/webhooks/registry";
+        timeout = "500ms";
+        treshold = 5;
+        backoff = "1s";
+      }];
     };
   };
 }

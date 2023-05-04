@@ -1,9 +1,5 @@
-{ config, pkgs, lib, ... }:
-{
-  imports = [
-    ./laura.nix
-    ./victor.nix
-  ];
+{ config, pkgs, lib, ... }: {
+  imports = [ ./laura.nix ./victor.nix ];
 
   # Setup ZSH to use grml config
   programs.zsh = {
@@ -35,7 +31,8 @@
   # Configure the root account
   users.extraUsers.root = {
     # Allow my SSH keys for logging in as root.
-    openssh.authorizedKeys.keys = config.users.extraUsers.victor.openssh.authorizedKeys.keys;
+    openssh.authorizedKeys.keys =
+      config.users.extraUsers.victor.openssh.authorizedKeys.keys;
     # Also use zsh for root
     shell = pkgs.zsh;
   };

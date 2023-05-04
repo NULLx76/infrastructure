@@ -1,5 +1,4 @@
-{ pkgs, lib, ... }:
-{
+{ pkgs, lib, ... }: {
   networking.interfaces.eth0.useDHCP = true;
 
   # mosh ssh

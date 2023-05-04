@@ -6,8 +6,7 @@
 let
   vmPort = 8428;
   vs = config.vault-secrets.secrets;
-in
-{
+in {
   imports = [ ];
 
   # This value determines the NixOS release from which the default
@@ -21,7 +20,8 @@ in
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
-  networking.firewall.allowedTCPPorts = [ vmPort config.services.grafana.settings.server.http_port ];
+  networking.firewall.allowedTCPPorts =
+    [ vmPort config.services.grafana.settings.server.http_port ];
   networking.firewall.allowedUDPPorts = [ vmPort ];
 
   services.victoriametrics = {
@@ -42,12 +42,10 @@ in
       scrape_configs = [
         {
           job_name = "nginx";
-          static_configs = [
-            {
-              targets = [ "nginx.olympus:9113" ];
-              labels.app = "nginx";
-            }
-          ];
+          static_configs = [{
+            targets = [ "nginx.olympus:9113" ];
+            labels.app = "nginx";
+          }];
         }
         {
           job_name = "synapse";

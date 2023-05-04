@@ -2,9 +2,7 @@
 with lib;
 let cfg = config.themes.v.catppuccin;
 in {
-  options.themes.v.catppuccin = {
-    enable = mkEnableOption "catppuccin";
-  };
+  options.themes.v.catppuccin = { enable = mkEnableOption "catppuccin"; };
   config = let
     theme = "Catppuccin-Pink-Dark";
     cursorTheme = config.home.pointerCursor.name;

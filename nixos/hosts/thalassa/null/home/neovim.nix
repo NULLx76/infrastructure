@@ -10,10 +10,10 @@
 
     plugins = {
       nix.enable = true;
-      treesitter = { 
+      treesitter = {
         enable = true;
         nixGrammars = false;
-        ensureInstalled = [];
+        ensureInstalled = [ ];
       };
       surround.enable = true;
       fugitive.enable = true;

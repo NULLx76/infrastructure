@@ -20,7 +20,8 @@
 
   networking.firewall.allowedTCPPorts = [ 80 ];
 
-  services.ntfy-sh = let datadir = "/var/lib/ntfy"; in {
+  services.ntfy-sh = let datadir = "/var/lib/ntfy";
+  in {
     enable = true;
     settings = {
       base-url = "https://ntfy.0x76.dev";

@@ -1,4 +1,5 @@
-{ stdenvNoCC, fetchFromGitHub }: stdenvNoCC.mkDerivation rec {
+{ stdenvNoCC, fetchFromGitHub }:
+stdenvNoCC.mkDerivation rec {
   pname = "dnd-5e-latex-template";
   version = "0.8.0";
   tlType = "run";
@@ -13,16 +14,14 @@
   phases = [ "installPhase" ];
 
   installPhase = ''
-      runHook preInstall
+    runHook preInstall
 
-      path="$out/tex/latex/${pname}"
-      mkdir -p "$path"
-      cp -r $src/* $path
+    path="$out/tex/latex/${pname}"
+    mkdir -p "$path"
+    cp -r $src/* $path
 
-      runHook postInstall
+    runHook postInstall
   '';
 
-  meta = {
-    description = "DnD 5e latex template";
-  };
+  meta = { description = "DnD 5e latex template"; };
 }
