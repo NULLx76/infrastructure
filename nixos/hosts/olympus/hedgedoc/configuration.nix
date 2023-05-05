@@ -66,7 +66,20 @@ in {
         accessKey = "$MINIO_ACCESS_KEY";
         secretKey = "$MINIO_SECRET_KEY";
       };
-      email = true;
+      email = false;
+      oauth2 = let url = "https://dex.0x76.dev";
+      in {
+        providerName = "Dex";
+        clientID = "hedgedoc";
+        clientSecret = "$DEX_CLIENT_SECRET";
+        scope = "openid email profile";
+        authorizationURL = "${url}/auth";
+        tokenURL = "${url}/token";
+        userProfileURL = "${url}/userinfo";
+        userProfileUsernameAttr = "preferred_username";
+        userProfileDisplayNameAttr = "name";
+        userProfileEmailAttr = "email";
+      };
     };
   };
 }

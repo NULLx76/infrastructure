@@ -64,16 +64,22 @@ in {
 
       staticClients = [
         {
-        id = "outline";
-        name = "Outline";
-        redirectURIs = [ "https://outline.0x76.dev/auth/oidc.callback" ];
-        secretEnv = "OUTLINE_CLIENT_SECRET";
+          id = "outline";
+          name = "Outline";
+          redirectURIs = [ "https://outline.0x76.dev/auth/oidc.callback" ];
+          secretEnv = "OUTLINE_CLIENT_SECRET";
         }
         {
           id = "grafana";
           name = "Grafana";
           redirectURIs = [ "https://grafana.0x76.dev/login/generic_oauth" ];
           secretEnv = "GRAFANA_CLIENT_SECRET";
+        }
+        {
+          id = "hedgedoc";
+          name = "Hedgedoc";
+          redirectURIs = [ "https://md.0x76.dev/auth/oauth2/callback" ];
+          secretEnv = "HEDGEDOC_CLIENT_SECRET";
         }
       ];
     };
