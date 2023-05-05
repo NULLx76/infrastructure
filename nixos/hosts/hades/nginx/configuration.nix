@@ -68,6 +68,7 @@ in {
         locations."/".extraConfig = ''
           allow 127.0.0.1;
           allow 10.42.42.0/23;
+          allow 10.10.10.1/24;
           allow 192.168.0.0/23;
           allow 80.60.83.220;
           allow 195.85.167.32/29;
