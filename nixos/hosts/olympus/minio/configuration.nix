@@ -2,11 +2,11 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 let
   vs = config.vault-secrets.secrets;
-  listenPort = 9000;
-  consolePort = 9001;
+  listenPort = config.meta.exposes.minio.port;
+  consolePort = listenPort + 1;
 in {
   imports = [ ];
 

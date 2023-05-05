@@ -46,14 +46,9 @@
       inherit (nixpkgs) lib;
 
       util = import ./nixos/util.nix inputs;
+      inherit (util) hosts flat_hosts nixHosts;
 
       system = "x86_64-linux";
-      # import and add realm to list of tags
-      hosts = util.add_realm_to_tags (import ./nixos/hosts);
-      # flatten hosts to single list
-      flat_hosts = util.flatten_hosts hosts;
-      # Filter out all non-nixos hosts
-      nixHosts = util.filter_nix_hosts flat_hosts;
 
       pkgs = import nixpkgs {
         inherit system;
@@ -105,13 +100,13 @@
 
         iso = nixos-generators.nixosGenerate {
           inherit system pkgs;
-          format = "iso";
+          format = "install-iso";
           modules = [ (import ./nixos/templates/iso.nix) ];
         };
 
         iso-graphical = nixos-generators.nixosGenerate {
           inherit system pkgs;
-          format = "iso";
+          format = "install-iso";
           modules = [ (import ./nixos/templates/iso-graphical.nix) ];
         };
 
@@ -137,6 +132,7 @@
           apply-local
           colmena.packages.${system}.colmena
           cachix
+          deadnix
           fluxcd
           k9s
           kubectl

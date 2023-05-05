@@ -57,8 +57,7 @@ let
       '';
     };
   };
-in
-{
+in {
   options.services.unpackerr = {
     enable = mkEnableOption "unpackerr";
 
@@ -258,62 +257,61 @@ in
       after = [ "network.target" ];
       description = "unpackerr system service";
       # Filter out all unset variables else unpackerr complains
-      environment = filterAttrs (n: v: stringLength v > 0)
-        {
-          # General options
-          UN_DEBUG = "${toString cfg.debug}";
-          UN_INTERVAL = "${cfg.interval}";
-          UN_START_DELAY = "${cfg.startDelay}";
-          UN_RETRY_DELAY = "${cfg.retryDelay}";
-          UN_MAX_RETRIES = "${toString cfg.maxRetries}";
-          UN_PARALLEL = "${toString cfg.parallel}";
-          UN_FILE_MODE = "${cfg.fileMode}";
-          UN_DIR_MODE = "${cfg.dirMode}";
+      environment = filterAttrs (_n: v: stringLength v > 0) {
+        # General options
+        UN_DEBUG = "${toString cfg.debug}";
+        UN_INTERVAL = "${cfg.interval}";
+        UN_START_DELAY = "${cfg.startDelay}";
+        UN_RETRY_DELAY = "${cfg.retryDelay}";
+        UN_MAX_RETRIES = "${toString cfg.maxRetries}";
+        UN_PARALLEL = "${toString cfg.parallel}";
+        UN_FILE_MODE = "${cfg.fileMode}";
+        UN_DIR_MODE = "${cfg.dirMode}";
 
-          # Sonarr
-          UN_SONARR_0_URL = "${cfg.sonarr.url}";
-          UN_SONARR_0_API_KEY = "${cfg.sonarr.apiKey}";
-          UN_SONARR_0_PATHS_0 = "${cfg.sonarr.paths}";
-          UN_SONARR_0_PROTOCOLS = "${cfg.sonarr.protocols}";
-          UN_SONARR_0_TIMEOUT = "${cfg.sonarr.timeout}";
-          UN_SONARR_0_DELETE_ORIG = "${toString cfg.sonarr.deleteOrginal}";
-          UN_SONARR_0_DELETE_DELAY = "${cfg.sonarr.deleteDelay}";
+        # Sonarr
+        UN_SONARR_0_URL = "${cfg.sonarr.url}";
+        UN_SONARR_0_API_KEY = "${cfg.sonarr.apiKey}";
+        UN_SONARR_0_PATHS_0 = "${cfg.sonarr.paths}";
+        UN_SONARR_0_PROTOCOLS = "${cfg.sonarr.protocols}";
+        UN_SONARR_0_TIMEOUT = "${cfg.sonarr.timeout}";
+        UN_SONARR_0_DELETE_ORIG = "${toString cfg.sonarr.deleteOrginal}";
+        UN_SONARR_0_DELETE_DELAY = "${cfg.sonarr.deleteDelay}";
 
-          # Radarr
-          UN_RADARR_0_URL = "${cfg.radarr.url}";
-          UN_RADARR_0_API_KEY = "${cfg.radarr.apiKey}";
-          UN_RADARR_0_PATHS_0 = "${cfg.radarr.paths}";
-          UN_RADARR_0_PROTOCOLS = "${cfg.radarr.protocols}";
-          UN_RADARR_0_TIMEOUT = "${cfg.radarr.timeout}";
-          UN_RADARR_0_DELETE_ORIG = "${toString cfg.radarr.deleteOrginal}";
-          UN_RADARR_0_DELETE_DELAY = "${cfg.radarr.deleteDelay}";
+        # Radarr
+        UN_RADARR_0_URL = "${cfg.radarr.url}";
+        UN_RADARR_0_API_KEY = "${cfg.radarr.apiKey}";
+        UN_RADARR_0_PATHS_0 = "${cfg.radarr.paths}";
+        UN_RADARR_0_PROTOCOLS = "${cfg.radarr.protocols}";
+        UN_RADARR_0_TIMEOUT = "${cfg.radarr.timeout}";
+        UN_RADARR_0_DELETE_ORIG = "${toString cfg.radarr.deleteOrginal}";
+        UN_RADARR_0_DELETE_DELAY = "${cfg.radarr.deleteDelay}";
 
-          # Lidarr
-          UN_LIDARR_0_URL = "${cfg.lidarr.url}";
-          UN_LIDARR_0_API_KEY = "${cfg.lidarr.apiKey}";
-          UN_LIDARR_0_PATHS_0 = "${cfg.lidarr.paths}";
-          UN_LIDARR_0_PROTOCOLS = "${cfg.lidarr.protocols}";
-          UN_LIDARR_0_TIMEOUT = "${cfg.lidarr.timeout}";
-          UN_LIDARR_0_DELETE_ORIG = "${toString cfg.lidarr.deleteOrginal}";
-          UN_LIDARR_0_DELETE_DELAY = "${cfg.lidarr.deleteDelay}";
+        # Lidarr
+        UN_LIDARR_0_URL = "${cfg.lidarr.url}";
+        UN_LIDARR_0_API_KEY = "${cfg.lidarr.apiKey}";
+        UN_LIDARR_0_PATHS_0 = "${cfg.lidarr.paths}";
+        UN_LIDARR_0_PROTOCOLS = "${cfg.lidarr.protocols}";
+        UN_LIDARR_0_TIMEOUT = "${cfg.lidarr.timeout}";
+        UN_LIDARR_0_DELETE_ORIG = "${toString cfg.lidarr.deleteOrginal}";
+        UN_LIDARR_0_DELETE_DELAY = "${cfg.lidarr.deleteDelay}";
 
-          # Readarr
-          UN_READARR_0_URL = "${cfg.readarr.url}";
-          UN_READARR_0_API_KEY = "${cfg.readarr.apiKey}";
-          UN_READARR_0_PATHS_0 = "${cfg.readarr.paths}";
-          UN_READARR_0_PROTOCOLS = "${cfg.readarr.protocols}";
-          UN_READARR_0_TIMEOUT = "${cfg.readarr.timeout}";
-          UN_READARR_0_DELETE_ORIG = "${toString cfg.readarr.deleteOrginal}";
-          UN_READARR_0_DELETE_DELAY = "${cfg.readarr.deleteDelay}";
+        # Readarr
+        UN_READARR_0_URL = "${cfg.readarr.url}";
+        UN_READARR_0_API_KEY = "${cfg.readarr.apiKey}";
+        UN_READARR_0_PATHS_0 = "${cfg.readarr.paths}";
+        UN_READARR_0_PROTOCOLS = "${cfg.readarr.protocols}";
+        UN_READARR_0_TIMEOUT = "${cfg.readarr.timeout}";
+        UN_READARR_0_DELETE_ORIG = "${toString cfg.readarr.deleteOrginal}";
+        UN_READARR_0_DELETE_DELAY = "${cfg.readarr.deleteDelay}";
 
-          # Folder
-          UN_FOLDER_0_PATH = "${cfg.folder.path}";
-          UN_FOLDER_0_EXTRACT_PATH = "${cfg.folder.extractPath}";
-          UN_FOLDER_0_DELETE_AFTER = "${cfg.folder.deleteAfter}";
-          UN_FOLDER_0_DELETE_ORIGINAL = "${toString cfg.folder.deleteOrginal}";
-          UN_FOLDER_0_DELETE_FILES = "${toString cfg.folder.deleteFiles}";
-          UN_FOLDER_0_MOVE_BACK = "${toString cfg.folder.moveBack}";
-        } // cfg.extraConfig;
+        # Folder
+        UN_FOLDER_0_PATH = "${cfg.folder.path}";
+        UN_FOLDER_0_EXTRACT_PATH = "${cfg.folder.extractPath}";
+        UN_FOLDER_0_DELETE_AFTER = "${cfg.folder.deleteAfter}";
+        UN_FOLDER_0_DELETE_ORIGINAL = "${toString cfg.folder.deleteOrginal}";
+        UN_FOLDER_0_DELETE_FILES = "${toString cfg.folder.deleteFiles}";
+        UN_FOLDER_0_MOVE_BACK = "${toString cfg.folder.moveBack}";
+      } // cfg.extraConfig;
       serviceConfig = {
         User = cfg.user;
         Group = cfg.group;

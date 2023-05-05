@@ -5,8 +5,8 @@
 { lib, config, pkgs, ... }:
 let
   vs = config.vault-secrets.secrets;
-in
-{
+  inherit (config.meta.exposes.git) port;
+in {
   imports = [ ];
 
   # This value determines the NixOS release from which the default
@@ -22,7 +22,7 @@ in
 
   environment.noXlibs = lib.mkForce false;
 
-  networking.firewall.allowedTCPPorts = [ config.services.gitea.settings.server.HTTP_PORT ];
+  networking.firewall.allowedTCPPorts = [ port ];
 
   services.openssh.startWhenNeeded = false;
 
@@ -37,10 +37,8 @@ in
   };
 
   system.activationScripts.gitea-theme =
-    let
-      target_dir = "${config.services.gitea.stateDir}/custom/public/css/";
-    in
-    lib.stringAfter [ "var" ] ''
+    let target_dir = "${config.services.gitea.stateDir}/custom/public/css/";
+    in lib.stringAfter [ "var" ] ''
       mkdir -p ${target_dir}
       ln -sf ${pkgs.v.gitea-agatheme} "${target_dir}/theme-agatheme.css"
     '';
@@ -54,9 +52,7 @@ in
     mailerPasswordFile = "${vs.gitea}/mailPassword";
 
     settings = {
-      actions = {
-        "ENABLED" = true;
-      };
+      actions = { "ENABLED" = true; };
       repository = {
         "ENABLE_PUSH_CREATE_USER" = true;
         "DEFAULT_PUSH_CREATE_PRIVATE" = false;
@@ -82,6 +78,7 @@ in
         SSH_PORT = 42;
         DOMAIN = "git.0x76.dev";
         ROOT_URL = "https://git.0x76.dev";
+        HTTP_PORT = port;
       };
       session = {
         "PROVIDER" = "db";

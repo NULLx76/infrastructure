@@ -1,7 +1,6 @@
 { config, ... }:
 let vs = config.vault-secrets.secrets;
-in
-{
+in {
   networking.interfaces.eth0.useDHCP = true;
 
   fileSystems."/mnt/storage" = {

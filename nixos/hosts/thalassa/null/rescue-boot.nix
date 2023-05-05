@@ -11,9 +11,7 @@ let
   module = {
     system.stateVersion = "22.11";
     boot.supportedFilesystems = [ "btrfs" "ext4" ];
-    environment.systemPackages = with pkgs; [
-      git
-    ];
+    environment.systemPackages = with pkgs; [ git ];
   };
 in {
   boot.loader.systemd-boot = {
@@ -22,7 +20,9 @@ in {
         title Rescue Boot
         linux /rescue-kernel
         initrd /rescue-initrd
-        options init=${netboot.config.system.build.toplevel}/init ${toString netboot.config.boot.kernelParams}
+        options init=${netboot.config.system.build.toplevel}/init ${
+          toString netboot.config.boot.kernelParams
+        }
       '';
     };
 

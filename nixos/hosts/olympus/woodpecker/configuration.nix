@@ -3,7 +3,9 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-let vs = config.vault-secrets.secrets;
+let
+  inherit (config.meta.exposes.ci) port;
+  vs = config.vault-secrets.secrets;
 in {
   imports = [ ];
 
@@ -18,7 +20,7 @@ in {
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
-  networking.firewall.allowedTCPPorts = [ 8000 9000 ];
+  networking.firewall.allowedTCPPorts = [ port 9000 ];
 
   vault-secrets.secrets.woodpecker = {
     services = [ "woodpecker-server" "woodpecker-agent-docker" ];
@@ -46,7 +48,7 @@ in {
       WOODPECKER_GITEA_URL = "https://git.0x76.dev";
       WOODPECKER_ADMIN = "v";
       WOODPECKER_AUTHENTICATE_PUBLIC_REPOS = "true";
-      WOODPECKER_SERVER_ADDR = "10.42.42.33:8000";
+      WOODPECKER_SERVER_ADDR = "10.42.42.33:${toString port}";
     };
     environmentFile = "${vs.woodpecker}/environment";
   };

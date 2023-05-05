@@ -147,6 +147,7 @@ in {
     };
 
     # This is needed to create the dataDir with the correct permissions.
-    systemd.tmpfiles.rules = [ "d '${cfg.dataDir}' 0755 ${cfg.user} ${cfg.group} -" ];
+    systemd.tmpfiles.rules =
+      [ "d '${cfg.dataDir}' 0755 ${cfg.user} ${cfg.group} -" ];
   };
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, texlive, ... }:
+{ config, pkgs, inputs, texlive, ... }:
 let
   tex = pkgs.texlive.combine {
     inherit (pkgs.texlive) scheme-full;

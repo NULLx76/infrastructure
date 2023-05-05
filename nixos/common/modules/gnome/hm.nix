@@ -48,8 +48,6 @@ in {
     "image/x-icns" = "org.gnome.eog.desktop";
   };
 
-
-
   dconf.settings = {
     "org/gnome/desktop/input-sources" = {
       sources = [ (mkTuple [ "xkb" "us+altgr-intl" ]) ];

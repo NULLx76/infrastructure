@@ -2,9 +2,7 @@
 with lib;
 let cfg = config.programs.v.nvim;
 in {
-  options.programs.v.nvim = {
-    enable = mkEnableOption "nvim";
-  };
+  options.programs.v.nvim = { enable = mkEnableOption "nvim"; };
   config = mkIf cfg.enable {
     programs.nixvim = {
       enable = true;

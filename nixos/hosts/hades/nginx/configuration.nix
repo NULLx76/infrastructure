@@ -28,7 +28,6 @@ in {
   security.acme.acceptTerms = true;
   security.acme.preliminarySelfsigned = true;
 
-
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;

@@ -1,14 +1,5 @@
-{ config, pkgs, nodes, ... }:
+{ pkgs, ... }:
 let
-  proxy = url: {
-    enableACME = true;
-    forceSSL = true;
-    locations."/" = {
-      proxyPass = url;
-      proxyWebsockets = true;
-    };
-  };
-  k8s_proxy = proxy "http://kubernetes.olympus:80/";
   clientConfig = {
     "m.homeserver" = {
       base_url = "https://chat.meowy.tech";
@@ -33,6 +24,9 @@ in {
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
+  # Generates vhosts for all hosts that have an `exposes` section
+  services.v.nginx.generateVirtualHosts = true;
+
   services.nginx = {
     enable = true;
     statusPage = true;
@@ -44,106 +38,89 @@ in {
 
     package = pkgs.nginxMainline;
 
-    # 0x76.dev
-    virtualHosts."ha.0x76.dev" = proxy "http://home-assistant.olympus:8123/";
-    virtualHosts."md.0x76.dev" = proxy "http://hedgedoc.olympus:3000/";
-    virtualHosts."git.0x76.dev" = proxy "http://gitea.olympus:3000";
-    virtualHosts."o.0x76.dev" = proxy "http://minio.olympus:9000";
-    virtualHosts."grafana.0x76.dev" =
-      proxy "http://victoriametrics.olympus:2342";
-    virtualHosts."outline.0x76.dev" = proxy "http://outline.olympus:3000";
-    virtualHosts."ntfy.0x76.dev" = proxy "http://ntfy.olympus:80";
-    virtualHosts."ci.0x76.dev" = proxy "http://woodpecker.olympus:8000";
-    virtualHosts."dex.0x76.dev" = proxy "http://dex.olympus:5556";
-    virtualHosts."pass.0x76.dev" = {
-      enableACME = true;
-      forceSSL = true;
-      locations."/" = {
-        proxyPass = "http://vaultwarden.olympus:8222";
-        proxyWebsockets = true;
+    # Templated
+    virtualHosts = {
+      "pass.0x76.dev" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://vaultwarden.olympus:8222";
+          proxyWebsockets = true;
+        };
+        locations."/notifications/hub/negotiate" = {
+          proxyPass = "http://vaultwarden.olympus:8222";
+          proxyWebsockets = true;
+        };
+        locations."/notifications/hub" = {
+          proxyPass = "http://vaultwarden.olympus:3012";
+          proxyWebsockets = true;
+        };
       };
-      locations."/notifications/hub/negotiate" = {
-        proxyPass = "http://vaultwarden.olympus:8222";
-        proxyWebsockets = true;
-      };
-      locations."/notifications/hub" = {
-        proxyPass = "http://vaultwarden.olympus:3012";
-        proxyWebsockets = true;
-      };
-    };
 
-    # Redshifts
-    virtualHosts."andreea.redshifts.xyz" = proxy "http://zmeura.olympus:8008";
-
-    # Meow
-    virtualHosts."meowy.tech" = {
-      enableACME = true;
-      forceSSL = true;
-      locations."/".extraConfig = ''
-        add_header Content-Type 'text/html; charset=UTF-8';
-        return 200 '<h1>meow</h1>';
-      '';
-      locations."= /.well-known/matrix/client".extraConfig =
-        mkWellKnown clientConfig;
-      locations."= /.well-known/matrix/server".extraConfig =
-        mkWellKnown serverConfig;
-    };
-    virtualHosts."chat.meowy.tech" = {
-      enableACME = true;
-      forceSSL = true;
-      locations."/".extraConfig = ''
-        return 307 https://element.chat.meowy.tech;
-      '';
-      locations."/_matrix".proxyPass = "http://synapse.olympus:8008";
-      locations."/_synapse/client".proxyPass = "http://synapse.olympus:8008";
-      locations."/_synapse/admin" = {
-        # Allow only local and my own IPs
-        extraConfig = ''
-          allow 127.0.0.1;
-          allow 10.42.42.0/23;
-          allow 192.168.0.0/23;
-          allow 80.60.83.220;
-          allow 195.85.167.32/29;
-          deny all;
+      # Meow
+      "meowy.tech" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/".extraConfig = ''
+          add_header Content-Type 'text/html; charset=UTF-8';
+          return 200 '<h1>meow</h1>';
         '';
-        proxyPass = "http://synapse.olympus:8008";
+        locations."= /.well-known/matrix/client".extraConfig =
+          mkWellKnown clientConfig;
+        locations."= /.well-known/matrix/server".extraConfig =
+          mkWellKnown serverConfig;
       };
-    };
-    virtualHosts."element.chat.meowy.tech" = {
-      enableACME = true;
-      forceSSL = true;
-
-      root = pkgs.element-web.override {
-        conf = {
-          default_server_config = clientConfig;
-          show_labs_settings = true;
-          brand = "chat.meowy.tech";
+      "chat.meowy.tech" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/".extraConfig = ''
+          return 307 https://element.chat.meowy.tech;
+        '';
+        locations."/_matrix".proxyPass = "http://synapse.olympus:8008";
+        locations."/_synapse/client".proxyPass = "http://synapse.olympus:8008";
+        locations."/_synapse/admin" = {
+          # Allow only local and my own IPs
+          extraConfig = ''
+            allow 127.0.0.1;
+            allow 10.42.42.0/23;
+            allow 192.168.0.0/23;
+            allow 80.60.83.220;
+            allow 195.85.167.32/29;
+            deny all;
+          '';
+          proxyPass = "http://synapse.olympus:8008";
         };
       };
-    };
-    virtualHosts."cinny.chat.meowy.tech" = {
-      enableACME = true;
-      forceSSL = true;
+      "element.chat.meowy.tech" = {
+        enableACME = true;
+        forceSSL = true;
 
-      root = pkgs.cinny.override {
-        conf = {
-          defaultHomeserver = 0;
-          allowCustomHomeservers = false;
-          homeserverList = [ "chat.meowy.tech" ];
+        root = pkgs.element-web.override {
+          conf = {
+            default_server_config = clientConfig;
+            show_labs_settings = true;
+            brand = "chat.meowy.tech";
+          };
         };
       };
-    };
-    virtualHosts."admin.chat.meowy.tech" = {
-      enableACME = true;
-      forceSSL = true;
-      root = pkgs.synapse-admin;
-    };
-    virtualHosts."books.meowy.tech" = proxy "http://bookwyrm.olympus:8001";
+      "cinny.chat.meowy.tech" = {
+        enableACME = true;
+        forceSSL = true;
 
-    # Kubernetes endpoints
-    virtualHosts."0x76.dev" = k8s_proxy;
-    virtualHosts."internal.xirion.net" = k8s_proxy;
-    virtualHosts."blog.xirion.net" = k8s_proxy;
+        root = pkgs.cinny.override {
+          conf = {
+            defaultHomeserver = 0;
+            allowCustomHomeservers = false;
+            homeserverList = [ "chat.meowy.tech" ];
+          };
+        };
+      };
+      "admin.chat.meowy.tech" = {
+        enableACME = true;
+        forceSSL = true;
+        root = pkgs.synapse-admin;
+      };
+    };
   };
 
   security.acme.defaults.email = "victorheld12@gmail.com";

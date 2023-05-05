@@ -7,6 +7,7 @@ let
   vs = config.vault-secrets.secrets;
   db_user = "dex";
   db_name = "dex";
+  inherit (config.meta.exposes.dex) port;
 in {
   imports = [ ];
 
@@ -18,7 +19,7 @@ in {
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
-  networking.firewall.allowedTCPPorts = [ 5556 ];
+  networking.firewall.allowedTCPPorts = [ port ];
 
   services.postgresql = {
     enable = true;
@@ -47,7 +48,7 @@ in {
           database = db_name;
         };
       };
-      web.http = "0.0.0.0:5556";
+      web.http = "0.0.0.0:${toString port}";
 
       connectors = [{
         type = "gitea";
@@ -61,12 +62,26 @@ in {
         };
       }];
 
-      staticClients = [{
-        id = "outline";
-        name = "Outline";
-        redirectURIs = [ "https://outline.0x76.dev/auth/oidc.callback" ];
-        secretEnv = "OUTLINE_CLIENT_SECRET";
-      }];
+      staticClients = [
+        {
+          id = "outline";
+          name = "Outline";
+          redirectURIs = [ "https://outline.0x76.dev/auth/oidc.callback" ];
+          secretEnv = "OUTLINE_CLIENT_SECRET";
+        }
+        {
+          id = "grafana";
+          name = "Grafana";
+          redirectURIs = [ "https://grafana.0x76.dev/login/generic_oauth" ];
+          secretEnv = "GRAFANA_CLIENT_SECRET";
+        }
+        {
+          id = "hedgedoc";
+          name = "Hedgedoc";
+          redirectURIs = [ "https://md.0x76.dev/auth/oauth2/callback" ];
+          secretEnv = "HEDGEDOC_CLIENT_SECRET";
+        }
+      ];
     };
 
     environmentFile = "${vs.dex}/environment";

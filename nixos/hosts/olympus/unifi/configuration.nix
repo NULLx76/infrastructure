@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 
 {
   imports = [ ];
@@ -22,7 +22,7 @@
   services.unifi = {
     enable = true;
     unifiPackage = pkgs.unifi;
-    mongodbPackage = pkgs.mongodb-4_2; 
+    mongodbPackage = pkgs.mongodb-4_2;
     openFirewall = true;
   };
 }

@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [ ];
@@ -20,7 +20,8 @@
 
   networking.firewall.allowedTCPPorts = [ 80 ];
 
-  services.ntfy-sh = let datadir = "/var/lib/ntfy"; in {
+  services.ntfy-sh = let datadir = "/var/lib/ntfy";
+  in {
     enable = true;
     settings = {
       base-url = "https://ntfy.0x76.dev";

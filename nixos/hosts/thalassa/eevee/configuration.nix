@@ -2,18 +2,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }: {
-  imports = [
-    ../../../common/desktop
-    ./hardware-configuration.nix
-    ./hardware.nix
-  ];
+{ pkgs, inputs, ... }: {
+  imports = [ ./hardware-configuration.nix ./hardware.nix ];
 
   # Bootloader.
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
-      kernelModules =  [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+      kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
     };
   };
 

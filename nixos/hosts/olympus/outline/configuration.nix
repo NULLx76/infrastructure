@@ -2,9 +2,11 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-let vs = config.vault-secrets.secrets; in
-{
+{ config, ... }:
+let
+  vs = config.vault-secrets.secrets;
+  inherit (config.meta.exposes.outline) port;
+in {
   imports = [ ];
 
   # This value determines the NixOS release from which the default
@@ -16,18 +18,17 @@ let vs = config.vault-secrets.secrets; in
   system.stateVersion = "22.11"; # Did you read the comment?
 
   # Additional packages
-  networking.firewall.allowedTCPPorts = [
-    config.services.outline.port
-  ];
+  networking.firewall.allowedTCPPorts = [ port ];
 
   vault-secrets.secrets.outline = {
     inherit (config.services.outline) user group;
   };
 
   services.outline = {
+    inherit port;
+
     enable = true;
     concurrency = 1;
-    port = 3000;
     redisUrl = "local";
     databaseUrl = "local";
     publicUrl = "https://outline.0x76.dev";
@@ -40,7 +41,7 @@ let vs = config.vault-secrets.secrets; in
       uploadBucketName = "outline";
       region = "us-east-1"; # fake
     };
-  oidcAuthentication = {
+    oidcAuthentication = {
       displayName = "Dex";
       userinfoUrl = "https://dex.0x76.dev/userinfo";
       tokenUrl = "https://dex.0x76.dev/token";

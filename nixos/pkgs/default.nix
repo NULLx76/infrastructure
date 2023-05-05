@@ -1,5 +1,5 @@
 # nix-build -E 'with import <nixpkgs> {}; callPackage ./default.nix {}'
-final: prev: {
+_final: prev: {
   v = {
     glitch-soc = prev.callPackage ./glitch-soc { };
 

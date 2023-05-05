@@ -1,4 +1,4 @@
-{ config, pkgs, hosts, ... }: {
+{ pkgs, ... }: {
   # packages for administration tasks
   environment.systemPackages = with pkgs; [ kompose kubectl k9s k3s ];
 

@@ -1,8 +1,5 @@
 { config, lib, pkgs, ... }: {
-  imports = [
-    ./users
-    ./modules
-  ];
+  imports = [ ./users ./modules ];
 
   # Clean /tmp on boot.
   boot.tmp.cleanOnBoot = true;

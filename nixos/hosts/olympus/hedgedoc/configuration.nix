@@ -6,6 +6,7 @@
 let
   db_name = "hedgedoc";
   db_user = "hedgedoc";
+  inherit (config.meta.exposes.md) port;
   vs = config.vault-secrets.secrets;
 in {
   imports = [ ];
@@ -20,8 +21,7 @@ in {
 
   environment.noXlibs = lib.mkForce false;
 
-  networking.firewall.allowedTCPPorts =
-    [ config.services.hedgedoc.settings.port ];
+  networking.firewall.allowedTCPPorts = [ port ];
 
   vault-secrets.secrets.hedgedoc = { };
 
@@ -40,7 +40,7 @@ in {
     environmentFile = "${vs.hedgedoc}/environment";
     settings = {
       host = "0.0.0.0";
-      port = 3000;
+      inherit port;
       sessionSecret = "$SESSION_SECRET";
       domain = "md.0x76.dev";
       protocolUseSSL = true;
@@ -66,7 +66,20 @@ in {
         accessKey = "$MINIO_ACCESS_KEY";
         secretKey = "$MINIO_SECRET_KEY";
       };
-      email = true;
+      email = false;
+      oauth2 = let url = "https://dex.0x76.dev";
+      in {
+        providerName = "Dex";
+        clientID = "hedgedoc";
+        clientSecret = "$DEX_CLIENT_SECRET";
+        scope = "openid email profile";
+        authorizationURL = "${url}/auth";
+        tokenURL = "${url}/token";
+        userProfileURL = "${url}/userinfo";
+        userProfileUsernameAttr = "preferred_username";
+        userProfileDisplayNameAttr = "name";
+        userProfileEmailAttr = "email";
+      };
     };
   };
 }

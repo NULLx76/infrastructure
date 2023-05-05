@@ -1,10 +1,4 @@
-{ lib, config, pkgs, inputs, ... }:
-let
-  tex = pkgs.texlive.combine {
-    inherit (pkgs.texlive) scheme-full;
-    dnd-5e-latex-template = { pkgs = [ pkgs.v.dnd-5e-latex-template ]; };
-  };
-in {
+_: {
   programs.home-manager.enable = true;
 
   home.username = "victor";

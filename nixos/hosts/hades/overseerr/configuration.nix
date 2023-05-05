@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ ... }:
 
 {
   imports = [ ];
@@ -31,9 +31,7 @@
           # LOG_LEVEL = "debug";
           TZ = "Europe/Amsterdam";
         };
-        ports = [
-          "5055:5055"
-        ];
+        ports = [ "5055:5055" ];
         volumes = [ "/var/lib/overseerr/config:/app/config" ];
       };
     };

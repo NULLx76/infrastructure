@@ -2,8 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ lib, config, pkgs, inputs, ... }:
-{
+{ lib, pkgs, ... }: {
   imports = [ ];
 
   # This value determines the NixOS release from which the default

@@ -1,4 +1,4 @@
-{ config, pkgs, flat_hosts, ... }:
+{ config, flat_hosts, ... }:
 let
   inherit (builtins) filter hasAttr;
   hostToKea = { hostname, mac, ip, ... }: {
@@ -33,6 +33,12 @@ in {
 
   networking.firewall.allowedUDPPorts = [ 67 ];
 
+  services.prometheus.exporters.kea = {
+    enable = true;
+    openFirewall = true;
+    controlSocketPaths = [ "/run/kea/kea-dhcp4.socket" ];
+  };
+
   services.kea.dhcp4 = {
     enable = true;
     settings = {
@@ -42,6 +48,11 @@ in {
       renew-timer = 1000;
 
       interfaces-config.interfaces = [ "eth0" ];
+
+      control-socket = {
+        socket-type = "unix";
+        socket-name = "/run/kea/kea-dhcp4.socket";
+      };
 
       lease-database = {
         name = "/var/lib/kea/dhcp4.leases";

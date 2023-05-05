@@ -1,4 +1,4 @@
-{ pkgs, inputs, config, ... }: {
+{ pkgs, config, ... }: {
   home.file.".config/hypr/hyprpaper.conf".text = ''
     ipc = off
     preload = ~/cloud/Pictures/Wallpapers-Laptop/wallpaper-nix-pink.png

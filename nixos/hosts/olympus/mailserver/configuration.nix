@@ -3,8 +3,8 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-let vs = config.vault-secrets.secrets; in
-{
+let vs = config.vault-secrets.secrets;
+in {
   imports = [ ];
 
   # This value determines the NixOS release from which the default
@@ -22,9 +22,7 @@ let vs = config.vault-secrets.secrets; in
     10.42.42.6 vault.olympus
   '';
 
-  vault-secrets.secrets.mailserver = {
-    services = [ "dovecot2" "postfix" ];
-  };
+  vault-secrets.secrets.mailserver = { services = [ "dovecot2" "postfix" ]; };
 
   mailserver = {
     enable = true;
@@ -36,7 +34,8 @@ let vs = config.vault-secrets.secrets; in
       # People
       "v@0x76.dev" = {
         hashedPasswordFile = "${vs.mailserver}/v@0x76.dev";
-        aliases = [ "v@meowy.tech" "postmaster@0x76.dev" "postmaster@meowy.tech" ];
+        aliases =
+          [ "v@meowy.tech" "postmaster@0x76.dev" "postmaster@meowy.tech" ];
       };
       "laura@meowy.tech" = {
         hashedPasswordFile = "${vs.mailserver}/laura@meowy.tech";
@@ -79,7 +78,8 @@ let vs = config.vault-secrets.secrets; in
 
   services.roundcube = {
     enable = true;
-    package = pkgs.roundcube.withPlugins (plugins: [ plugins.persistent_login ]);
+    package =
+      pkgs.roundcube.withPlugins (plugins: [ plugins.persistent_login ]);
     plugins = [
       "archive"
       # "enigma"
@@ -98,9 +98,7 @@ let vs = config.vault-secrets.secrets; in
     '';
   };
 
-  services.nginx = {
-    enable = true;
-  };
+  services.nginx = { enable = true; };
 
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "v@0x76.dev";

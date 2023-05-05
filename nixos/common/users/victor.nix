@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-    # The block that specifies my user account.
+  # The block that specifies my user account.
   users.extraUsers.victor = {
     # This account is intended for a non-system user.
     isNormalUser = true;
@@ -18,6 +18,7 @@
     ];
 
     # Make me admin
-    extraGroups = [ "systemd-journal" "wheel" "networkmanager" "libvirtd" "dialout" ];
+    extraGroups =
+      [ "systemd-journal" "wheel" "networkmanager" "libvirtd" "dialout" ];
   };
 }

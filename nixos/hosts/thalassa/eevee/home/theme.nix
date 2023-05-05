@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ pkgs, config, ... }:
 let
   theme = "Catppuccin-Pink-Dark";
   cursorTheme = config.home.pointerCursor.name;

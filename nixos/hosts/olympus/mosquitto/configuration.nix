@@ -4,8 +4,7 @@
 
 { config, pkgs, ... }:
 let mosquittoPort = 1883;
-in
-{
+in {
   imports = [ ];
 
   # This value determines the NixOS release from which the default

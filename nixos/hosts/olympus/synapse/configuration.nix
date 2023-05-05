@@ -7,8 +7,7 @@ let
   vs = config.vault-secrets.secrets;
   port = 8008;
   metricsPort = 9000;
-in
-{
+in {
   imports = [ ];
 
   # This value determines the NixOS release from which the default
@@ -53,66 +52,60 @@ in
       "${vs.synapse}/email_password" # Also contains the rest of the email config
     ];
 
-    settings =
-    let log_file = pkgs.writeText "log.yml" ''
-version: 1
+    settings = let
+      log_file = pkgs.writeText "log.yml" ''
+        version: 1
 
-formatters:
-    structured:
-        class: synapse.logging.TerseJsonFormatter
+        formatters:
+            structured:
+                class: synapse.logging.TerseJsonFormatter
 
-handlers:
-    file:
-        class: logging.handlers.TimedRotatingFileHandler
-        formatter: structured
-        filename: /var/lib/matrix-synapse/synapse.log
-        when: midnight
-        backupCount: 3  # Does not include the current log file.
-        encoding: utf8
+        handlers:
+            file:
+                class: logging.handlers.TimedRotatingFileHandler
+                formatter: structured
+                filename: /var/lib/matrix-synapse/synapse.log
+                when: midnight
+                backupCount: 3  # Does not include the current log file.
+                encoding: utf8
 
-loggers:
-    synapse:
-        level: INFO
-        handlers: [file]
-    ''; in
-      {
-        server_name = "meowy.tech";
-        enable_registration = true;
-        public_baseurl = "https://chat.meowy.tech";
-        enable_metrics = true;
-        max_upload_size = "100M";
-        registration_requires_token = true;
-        media_retention = {
-          remote_media_lifetime = "90d";
-        };
-        log_config =  "${log_file}";
-        listeners = [
-          {
-            inherit port;
-            bind_addresses = [ "0.0.0.0" ];
-            type = "http";
-            tls = false;
-            x_forwarded = true;
-            resources = [
-              {
-                names = [ "client" "federation" ];
-                compress = true;
-              }
-            ];
-          }
-          {
-            port = metricsPort;
-            bind_addresses = [ "0.0.0.0" ];
-            type = "metrics";
-            tls = false;
-            resources = [
-              {
-                names = [ "metrics" ];
-                compress = false;
-              }
-            ];
-          }
-        ];
-      };
+        loggers:
+            synapse:
+                level: INFO
+                handlers: [file]
+      '';
+    in {
+      server_name = "meowy.tech";
+      enable_registration = true;
+      public_baseurl = "https://chat.meowy.tech";
+      enable_metrics = true;
+      max_upload_size = "100M";
+      registration_requires_token = true;
+      media_retention = { remote_media_lifetime = "90d"; };
+      log_config = "${log_file}";
+      listeners = [
+        {
+          inherit port;
+          bind_addresses = [ "0.0.0.0" ];
+          type = "http";
+          tls = false;
+          x_forwarded = true;
+          resources = [{
+            names = [ "client" "federation" ];
+            compress = true;
+          }];
+        }
+        {
+          port = metricsPort;
+          bind_addresses = [ "0.0.0.0" ];
+          type = "metrics";
+          tls = false;
+          resources = [{
+            names = [ "metrics" ];
+            compress = false;
+          }];
+        }
+      ];
+    };
   };
 }

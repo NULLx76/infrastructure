@@ -36,6 +36,10 @@
     ip6 = "2001:41f0:9639:1:bfe7:3fd9:75de:cbee";
     mac = "9E:60:78:ED:81:B4";
     nix = false;
+    exposes.ha = {
+      domain = "ha.0x76.dev";
+      port = 8123;
+    };
   };
   "nginx" = {
     ip = "10.42.42.9";
@@ -46,10 +50,19 @@
   "kubernetes" = {
     ip = "10.42.42.10";
     mac = "6E:A5:25:99:FE:68";
+    exposes = {
+      www.domain = "0x76.dev";
+      internal.domain = "internal.xirion.net";
+      blog.domain = "blog.xirion.net";
+    };
   };
   "dex" = {
     ip = "10.42.42.11";
     mac = "AE:66:7B:FA:15:72";
+    exposes.dex = {
+      domain = "dex.0x76.dev";
+      port = 5556;
+    };
   };
   "WoolooTV" = {
     ip = "10.42.42.13";
@@ -59,6 +72,10 @@
   "outline" = {
     ip = "10.42.42.14";
     mac = "52:13:EB:FD:87:F0";
+    exposes.outline = {
+      domain = "outline.0x76.dev";
+      port = 3000;
+    };
   };
   "dns-1" = {
     profile = "dns";
@@ -75,6 +92,10 @@
   "minio" = {
     ip = "10.42.42.17";
     mac = "0A:06:5E:E7:9A:0C";
+    exposes.minio = {
+      domain = "o.0x76.dev";
+      port = 9000;
+    };
   };
   "mailserver" = {
     ip = "10.42.42.18";
@@ -83,6 +104,12 @@
   "victoriametrics" = {
     ip = "10.42.42.19";
     mac = "9E:91:61:35:84:1F";
+    exposes = {
+      grafana = {
+        domain = "grafana.0x76.dev";
+        port = 2342;
+      };
+    };
   };
   "unifi" = {
     ip = "10.42.42.20";
@@ -96,15 +123,27 @@
   "gitea" = {
     ip = "10.42.42.22";
     mac = "DE:5F:B0:83:6F:34";
+    exposes.git = {
+      domain = "git.0x76.dev";
+      port = 3000;
+    };
   };
   "hedgedoc" = {
     ip = "10.42.42.23";
     mac = "86:BC:0C:18:BC:9B";
+    exposes.md = {
+      domain = "md.0x76.dev";
+      port = 3000;
+    };
   };
   "zmeura" = {
     ip = "10.42.42.24";
     mac = "b8:27:eb:d5:e0:f5";
     nix = false;
+    exposes.andreea = {
+      domain = "andreea.redshifts.xyz";
+      port = 8008;
+    };
   };
   "wireguard" = {
     ip = "10.42.42.25";
@@ -115,6 +154,10 @@
     ip = "10.42.42.27";
     mac = "9E:8A:6C:39:27:DE";
     nix = false;
+    exposes.books = {
+      domain = "books.meowy.tech";
+      port = 8001;
+    };
   };
   "synapse" = {
     ip = "10.42.42.28";
@@ -134,10 +177,15 @@
   "ntfy" = {
     ip = "10.42.42.32";
     mac = "7A:17:9E:80:72:01";
+    exposes.ntfy.domain = "ntfy.0x76.dev";
   };
   "woodpecker" = {
     ip = "10.42.42.33";
     mac = "1E:24:DA:DB:4A:1A";
+    exposes.ci = {
+      domain = "ci.0x76.dev";
+      port = 8000;
+    };
   };
   "nuc" = {
     ip = "10.42.42.42";

@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+_: {
   networking.interfaces.eth0.useDHCP = true;
   system.stateVersion = "22.11";
 
@@ -7,7 +6,7 @@
     enable = true;
     openFirewall = true;
   };
-  
+
   virtualisation.podman.enable = true;
 
   virtualisation.oci-containers = {
@@ -15,9 +14,7 @@
     containers = {
       flaresolverr = {
         image = "flaresolverr/flaresolverr:v3.1.2";
-        ports = [
-          "8191:8191"
-        ];
+        ports = [ "8191:8191" ];
       };
     };
   };

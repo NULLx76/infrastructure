@@ -1,5 +1,7 @@
 {
-  # "null" = { type = "local"; };
-  "aoife" = { type = "local"; };
+  "aoife" = {
+    type = "local";
+    mac = "04:7b:cb:b6:2d:88";
+  };
   "eevee" = { type = "local"; };
 }
