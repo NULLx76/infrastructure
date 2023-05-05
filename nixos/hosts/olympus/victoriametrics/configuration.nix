@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, ... }:
 let
   vmPort = 8428;
   grafanaDomain = config.meta.exposes.grafana.domain;
@@ -18,10 +18,6 @@ in {
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "21.11"; # Did you read the comment?
-
-  # Additional packages
-  environment.systemPackages = with pkgs; [ ];
-
   networking.firewall.allowedTCPPorts = [ vmPort grafanaPort ];
   networking.firewall.allowedUDPPorts = [ vmPort ];
 
@@ -41,6 +37,13 @@ in {
         scrape_timeout = "30s";
       };
       scrape_configs = [
+        {
+          job_name = "kea";
+          static_configs = [{
+            targets = [ "dhcp.olympus:9547" ];
+            labels.app = "dhcp";
+          }];
+        }
         {
           job_name = "nginx";
           static_configs = [{
