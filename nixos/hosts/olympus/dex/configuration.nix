@@ -7,6 +7,7 @@ let
   vs = config.vault-secrets.secrets;
   db_user = "dex";
   db_name = "dex";
+  inherit (config.meta.exposes.dex) port;
 in {
   imports = [ ];
 
@@ -18,7 +19,7 @@ in {
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
-  networking.firewall.allowedTCPPorts = [ 5556 ];
+  networking.firewall.allowedTCPPorts = [ port ];
 
   services.postgresql = {
     enable = true;
@@ -47,7 +48,7 @@ in {
           database = db_name;
         };
       };
-      web.http = "0.0.0.0:5556";
+      web.http = "0.0.0.0:${toString port}";
 
       connectors = [{
         type = "gitea";

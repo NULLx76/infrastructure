@@ -1,16 +1,5 @@
-{ pkgs, config, hosts, lib, ... }:
+{ pkgs, ... }:
 let
-  inherit (builtins) filter hasAttr attrValues concatMap;
-
-  proxy = url: {
-    enableACME = true;
-    forceSSL = true;
-    locations."/" = {
-      proxyPass = url;
-      proxyWebsockets = true;
-    };
-  };
-  k8s_proxy = proxy "http://kubernetes.olympus:80/";
   clientConfig = {
     "m.homeserver" = {
       base_url = "https://chat.meowy.tech";
@@ -24,16 +13,6 @@ let
     add_header Access-Control-Allow-Origin *;
     return 200 '${builtins.toJSON data}';
   '';
-
-  hostsWithExposes =
-    filter (hasAttr "exposes") (attrValues hosts.${config.networking.domain});
-  exposes = { ip, exposes, ... }:
-    map ({ domain, port }: { inherit ip domain port; }) (attrValues exposes);
-  mkVhost = { ip, domain, port }: {
-    "${domain}" = proxy "http://${ip}:${toString port}";
-  };
-  vhosts = lib.foldr (el: acc: acc // mkVhost el) { }
-    (concatMap exposes hostsWithExposes);
 in {
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -44,6 +23,9 @@ in {
   system.stateVersion = "21.05"; # Did you read the comment?
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+  # Generates vhosts for all hosts that have an `exposes` section
+  services.v.nginx.generateVirtualHosts = true;
 
   services.nginx = {
     enable = true;
@@ -57,16 +39,7 @@ in {
     package = pkgs.nginxMainline;
 
     # Templated
-    virtualHosts = vhosts // {
-      # 0x76.dev
-      "ha.0x76.dev" = proxy "http://home-assistant.olympus:8123/";
-      "git.0x76.dev" = proxy "http://gitea.olympus:3000";
-      "o.0x76.dev" = proxy "http://minio.olympus:9000";
-      "grafana.0x76.dev" = proxy "http://victoriametrics.olympus:2342";
-      "outline.0x76.dev" = proxy "http://outline.olympus:3000";
-      "ntfy.0x76.dev" = proxy "http://ntfy.olympus:80";
-      "ci.0x76.dev" = proxy "http://woodpecker.olympus:8000";
-      "dex.0x76.dev" = proxy "http://dex.olympus:5556";
+    virtualHosts = {
       "pass.0x76.dev" = {
         enableACME = true;
         forceSSL = true;
@@ -83,9 +56,6 @@ in {
           proxyWebsockets = true;
         };
       };
-
-      # Redshifts
-      "andreea.redshifts.xyz" = proxy "http://zmeura.olympus:8008";
 
       # Meow
       "meowy.tech" = {
@@ -150,12 +120,6 @@ in {
         forceSSL = true;
         root = pkgs.synapse-admin;
       };
-      "books.meowy.tech" = proxy "http://bookwyrm.olympus:8001";
-
-      # Kubernetes endpoints
-      "0x76.dev" = k8s_proxy;
-      "internal.xirion.net" = k8s_proxy;
-      "blog.xirion.net" = k8s_proxy;
     };
   };
 

@@ -5,6 +5,7 @@
 { config, pkgs, ... }:
 let
   vmPort = 8428;
+  grafanaPort = config.meta.exposes.grafana.port;
   vs = config.vault-secrets.secrets;
 in {
   imports = [ ];
@@ -78,7 +79,7 @@ in {
         domain = "grafana.0x76.dev";
         root_url = "https://grafana.0x76.dev";
         http_addr = "0.0.0.0";
-        http_port = 2342;
+        http_port = grafanaPort;
       };
       security.admin_password = "$__file{${vs.grafana}/password}";
     };

@@ -3,7 +3,9 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { lib, config, pkgs, ... }:
-let vs = config.vault-secrets.secrets;
+let
+  vs = config.vault-secrets.secrets;
+  inherit (config.meta.exposes.git) port;
 in {
   imports = [ ];
 
@@ -20,8 +22,7 @@ in {
 
   environment.noXlibs = lib.mkForce false;
 
-  networking.firewall.allowedTCPPorts =
-    [ config.services.gitea.settings.server.HTTP_PORT ];
+  networking.firewall.allowedTCPPorts = [ port ];
 
   services.openssh.startWhenNeeded = false;
 
@@ -77,6 +78,7 @@ in {
         SSH_PORT = 42;
         DOMAIN = "git.0x76.dev";
         ROOT_URL = "https://git.0x76.dev";
+        HTTP_PORT = port;
       };
       session = {
         "PROVIDER" = "db";

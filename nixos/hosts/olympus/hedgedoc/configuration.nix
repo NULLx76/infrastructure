@@ -21,8 +21,7 @@ in {
 
   environment.noXlibs = lib.mkForce false;
 
-  networking.firewall.allowedTCPPorts =
-    [ config.services.hedgedoc.settings.port ];
+  networking.firewall.allowedTCPPorts = [ port ];
 
   vault-secrets.secrets.hedgedoc = { };
 

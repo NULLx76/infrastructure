@@ -3,7 +3,9 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, ... }:
-let vs = config.vault-secrets.secrets;
+let
+  vs = config.vault-secrets.secrets;
+  inherit (config.meta.exposes.outline) port;
 in {
   imports = [ ];
 
@@ -16,16 +18,17 @@ in {
   system.stateVersion = "22.11"; # Did you read the comment?
 
   # Additional packages
-  networking.firewall.allowedTCPPorts = [ config.services.outline.port ];
+  networking.firewall.allowedTCPPorts = [ port ];
 
   vault-secrets.secrets.outline = {
     inherit (config.services.outline) user group;
   };
 
   services.outline = {
+    inherit port;
+
     enable = true;
     concurrency = 1;
-    port = 3000;
     redisUrl = "local";
     databaseUrl = "local";
     publicUrl = "https://outline.0x76.dev";

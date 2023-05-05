@@ -12,6 +12,7 @@ let
       };
       port = mkOption {
         type = types.int;
+        default = 80;
         example = 4242;
         description = ''
           The port under which the service runs on the host
@@ -21,6 +22,7 @@ let
   };
 in {
   options.meta = {
+
     exposes = mkOption {
       type = with types; attrsOf (submodule exposesOpts);
       description = ''
@@ -37,6 +39,5 @@ in {
   };
 
   config = {
-
   };
 }
