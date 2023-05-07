@@ -2,10 +2,10 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 let
   datadir = "/var/lib/pmm/config";
-  container = "meisnate12/plex-meta-manager:latest";
+  container = config.virtualisation.oci-containers.containers.plex-meta-manager.image;
   run_pmm = pkgs.writeScriptBin "pmm-run" ''
     sudo ${pkgs.podman}/bin/podman run --rm -it \
       -v "/var/lib/pmm/config:/config:rw" \
@@ -36,7 +36,7 @@ in {
     backend = "podman";
     containers = {
       plex-meta-manager = {
-        image = container;
+        image = "meisnate12/plex-meta-manager:v1.19.0";
         volumes = [
           "${datadir}:/config:rw"
           "/etc/pmm/Anime.yml:/config/Anime.yml:ro"
