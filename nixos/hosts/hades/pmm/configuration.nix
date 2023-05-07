@@ -7,7 +7,7 @@ let
   datadir = "/var/lib/pmm/config";
   container = config.virtualisation.oci-containers.containers.plex-meta-manager.image;
   run_pmm = pkgs.writeScriptBin "pmm-run" ''
-    sudo ${pkgs.podman}/bin/podman run --rm -it \
+    sudo ${pkgs.podman}/bin/podman run -d --rm -it \
       -v "/var/lib/pmm/config:/config:rw" \
       -v "/etc/pmm/Anime.yml:/config/Anime.yml:ro" \
       -v "/etc/pmm/Movies.yml:/config/Movies.yml:ro" \

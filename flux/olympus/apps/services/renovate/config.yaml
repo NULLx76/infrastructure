@@ -17,15 +17,6 @@ data:
           "kubernetes": {
             "fileMatch": ["flux/.+\\.ya?ml$"]
           },
-          "nix": {
-            "enabled": true
-          },
-          "lockFileMaintenance": {
-            "enabled": true,
-            "automerge": true,
-            "automergeType": "branch",
-            "schedule": ["weekly"],
-          },
           "hostRules": [
             {
               "hostType": "docker",
