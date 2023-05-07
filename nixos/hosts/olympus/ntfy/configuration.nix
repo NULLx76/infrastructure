@@ -18,7 +18,7 @@
   # Additional packages
   environment.systemPackages = with pkgs; [ ntfy-sh ];
 
-  networking.firewall.allowedTCPPorts = [ 80 ];
+  networking.firewall.allowedTCPPorts = [ 80 9090 ];
 
   services.ntfy-sh = let datadir = "/var/lib/ntfy";
   in {
@@ -31,6 +31,7 @@
       auth-default-access = "deny-all";
       behind-proxy = true;
       attachment-cache-dir = "${datadir}/attachments";
+      metrics-listen-http = ":9090";
     };
   };
 }

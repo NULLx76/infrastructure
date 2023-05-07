@@ -28,6 +28,7 @@ in {
     rustup
     solo2-cli
     tex
+    unzip
     yt-dlp
   ];
 

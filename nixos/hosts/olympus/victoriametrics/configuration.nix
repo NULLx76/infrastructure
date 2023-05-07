@@ -25,7 +25,7 @@ in {
     enable = true;
     listenAddress = ":${toString vmPort}";
     # Data Retention period in months
-    retentionPeriod = 12;
+    retentionPeriod = 36;
   };
 
   services.vmagent = {
@@ -53,7 +53,6 @@ in {
         }
         {
           job_name = "synapse";
-          metrics_path = "/_synapse/metrics";
           static_configs = [{
             targets = [ "synapse.olympus:9000" ];
             labels.app = "synapse";
@@ -64,6 +63,13 @@ in {
           static_configs = [{
             targets = [ "wireguard.olympus:9586" ];
             labels.app = "wireguard";
+          }];
+        }
+        {
+          job_name = "ntfy";
+          static_configs = [{
+            targets = [ "ntfy.olympus:9090"];
+            labels.app = "ntfy";
           }];
         }
       ];
