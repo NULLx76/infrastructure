@@ -46,6 +46,7 @@
     psmisc
     ripgrep
     rsync
+    tmux
     zoxide
     tmux
   ];
