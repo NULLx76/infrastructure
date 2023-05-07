@@ -11,6 +11,8 @@ templates:
       - collection
       - movie
       - list
+      - background
+      - poster
     tmdb_collection_details: <<collection>>
     tmdb_movie: <<movie>>
     tmdb_list: <<list>>
@@ -49,6 +51,7 @@ collections:
       name: Set
       collection: 115575
   National Theatre:
+    imdb_list: https://www.imdb.com/search/title/?companies=co0388435
     template:
       name: Studio
       company: 16355

@@ -3,6 +3,8 @@ templates:
     optional:
       - network
       - list
+      - poster
+      - background
     tmdb_network: <<network>>
     tmdb_list: <<list>>
     sort_title: <<collection_name>>
