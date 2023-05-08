@@ -32,4 +32,16 @@ in {
     listenAddress = ":${toString listenPort}";
     consoleAddress = ":${toString consolePort}";
   };
+
+  # services.garage = {
+  #   enable = true;
+  #   replication_mode = "1";
+  #   package = pkgs.garage_0_8;
+  #   settings = {
+  #     s3_api = {
+  #       api_bind_addr = "0.0.0.0:3900";
+  #       s3_region = "olympus";
+  #     };
+  #   };
+  # };
 }
