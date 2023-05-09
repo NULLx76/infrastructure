@@ -36,7 +36,7 @@ in {
   system.stateVersion = "23.05"; # Did you read the comment?
 
   # Additional packages
-  environment.systemPackages = with pkgs; [ gcc go jq rustup nuclei-latest ];
+  environment.systemPackages = with pkgs; [ gcc go jq rustup trivy nuclei-latest ];
 
   networking.firewall.allowedTCPPorts = [ ];
 
