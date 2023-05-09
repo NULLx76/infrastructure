@@ -72,6 +72,20 @@ in {
             labels.app = "ntfy";
           }];
         }
+        {
+          job_name = "dex";
+          static_configs = [{
+            targets = [ "dex.olympus:5558" ];
+            labels.app = "dex";
+          }];
+        }
+        {
+          job_name = "unbound";
+          static_configs = [{
+            targets = [ "dns-1.olympus:9167" "dns-2.olympus:9167" ];
+            labels.app = "dns";
+          }];
+        }
       ];
     };
   };

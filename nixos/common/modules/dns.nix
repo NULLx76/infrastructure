@@ -22,8 +22,17 @@ in {
     openFirewall = mkOption {
       type = types.bool;
       default = false;
-      description = ''
+      description = lib.mdDoc ''
         Whether to open port 53 in the firwall for unbound dns
+        And `services.prometheus.exporters.unbound.port` for metrics (if enabled).
+      '';
+    };
+
+    enableMetrics = mkOption {
+      type = types.bool;
+      default = cfg.mode == "server";
+      description = ''
+        Enable prometheus metrics
       '';
     };
 
@@ -38,12 +47,19 @@ in {
 
   config = mkIf cfg.enable {
     networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [ 53 ];
+      allowedTCPPorts = [ 53 ] ;
       allowedUDPPorts = [ 53 ];
+    };
+    services.prometheus.exporters.unbound = mkIf cfg.enableMetrics {
+      enable = true;
+      openFirewall = cfg.openFirewall;
+      controlInterface = config.services.unbound.localControlSocketPath;
+      group = config.services.unbound.group;
     };
     services.unbound = {
       enable = true;
       package = pkgs.v.unbound;
+      localControlSocketPath = mkIf cfg.enableMetrics "/run/unbound/unbound.socket";
       settings = {
         server = mkMerge [
           {

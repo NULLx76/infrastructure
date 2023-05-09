@@ -8,6 +8,7 @@ let
   db_user = "dex";
   db_name = "dex";
   inherit (config.meta.exposes.dex) port;
+  metricsPort = 5558;
 in {
   imports = [ ];
 
@@ -19,7 +20,7 @@ in {
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
-  networking.firewall.allowedTCPPorts = [ port ];
+  networking.firewall.allowedTCPPorts = [ port metricsPort ];
 
   services.postgresql = {
     enable = true;
@@ -49,6 +50,7 @@ in {
         };
       };
       web.http = "0.0.0.0:${toString port}";
+      telemetry.http = "0.0.0.0:${toString metricsPort}";
 
       connectors = [{
         type = "gitea";
