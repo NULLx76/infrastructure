@@ -9,7 +9,9 @@
   # * https://github.com/Infinidoge/nix-minecraft
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/master";
+    # nixpkgs.url = "github:nixos/nixpkgs/master";
+    nixpkgs.url = "github:NULLx76/nixpkgs/bazarr-1.2.1";
+
     nixpkgs_22-11.url = "github:nixos/nixpkgs/nixos-22.11";
 
     nur.url = "github:nix-community/NUR";
