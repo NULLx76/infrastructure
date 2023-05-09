@@ -1,2 +1,2 @@
 # NixOS Hosts
-Each folder here is a seperate geographical location, with `thalassa` being for roaming devices like laptops
+Each folder here is a separate geographical location, with `thalassa` being for roaming devices like laptops
