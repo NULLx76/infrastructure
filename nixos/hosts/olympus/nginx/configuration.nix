@@ -25,7 +25,7 @@ in {
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   # Generates vhosts for all hosts that have an `exposes` section
-  services.v.nginx.generateVirtualHosts = true;
+  services.v.nginx.autoExpose = true;
 
   services.nginx = {
     enable = true;

@@ -2,7 +2,7 @@
 with lib;
 let cfg = config.services.v.nginx;
 in  {
-  options.services.v.nginx.generateVirtualHosts =
+  options.services.v.nginx.autoExpose =
     mkEnableOption "generate vhosts";
 
   config = let
@@ -24,9 +24,7 @@ in  {
       "${domain}" = proxy "http://${ip}:${toString port}";
     };
     vhosts = foldr (el: acc: acc // mkVhost el) { } (concatMap exposes hosts');
-  in mkIf cfg.generateVirtualHosts {
-
+  in mkIf cfg.autoExpose {
     services.nginx.virtualHosts = vhosts;
-
   };
 }
