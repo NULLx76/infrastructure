@@ -83,6 +83,12 @@ in {
           redirectURIs = [ "https://md.0x76.dev/auth/oauth2/callback" ];
           secretEnv = "HEDGEDOC_CLIENT_SECRET";
         }
+        {
+          id = "flux";
+          name = "Weave Gitops Flux Dashboard";
+          redirectURIs = [ "https://flux.0x76.dev/oauth2/callback" ];
+          secretEnv = "FLUX_CLIENT_SECRET";
+        }
       ];
     };
 
