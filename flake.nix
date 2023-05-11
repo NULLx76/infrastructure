@@ -148,6 +148,7 @@
           (vault-push-approle-envs self { })
           (vault-push-approles self { })
           fast-repl
+          v.weave-gitops
         ];
       };
     };
