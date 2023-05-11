@@ -52,9 +52,9 @@ in {
     };
     services.prometheus.exporters.unbound = mkIf cfg.enableMetrics {
       enable = true;
-      openFirewall = cfg.openFirewall;
+      inherit (cfg) openFirewall;
+      inherit (config.services.unbound) group;
       controlInterface = config.services.unbound.localControlSocketPath;
-      group = config.services.unbound.group;
     };
     services.unbound = {
       enable = true;
