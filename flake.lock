@@ -502,11 +502,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1683762874,
-        "narHash": "sha256-EC7EDhzz/HjKppcaJFePlCOZqfVg8fooO/aWWUxwAJU=",
+        "lastModified": 1683833146,
+        "narHash": "sha256-ELF0oXgg0NYGyKtU74HW8CeLstFJwwCGbuahnQla67I=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "010c26987729d6a2e0e19da6df7c3f0465ae03b3",
+        "rev": "cc9f65d104e5227d103a529a9fc3687ef4ccb117",
         "type": "github"
       },
       "original": {
@@ -815,16 +815,16 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1683616229,
-        "narHash": "sha256-DGnFcTlPUZWceN8AOjqAGZKFaQPTKm3JieGkwTG5UUI=",
-        "owner": "NULLx76",
+        "lastModified": 1683875450,
+        "narHash": "sha256-LH1e688KeJZsxlo41GIioUXbZkFbovJugQBahkms4KA=",
+        "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "23e98ed600e902cdec403246339b77243e1076a1",
+        "rev": "1b4d6122edc9a0b8058b2a71592de41b21b65f70",
         "type": "github"
       },
       "original": {
-        "owner": "NULLx76",
-        "ref": "bazarr-1.2.1",
+        "owner": "nixos",
+        "ref": "master",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -946,11 +946,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1683787468,
-        "narHash": "sha256-2eJgM7C6KCUhtGWLD73Vd4MEQXARuWaCqkkjJ4CyBIg=",
+        "lastModified": 1683866302,
+        "narHash": "sha256-/OE/VFasqc4U41V6mxfgP2y63CFVhOspyDVa6taA2QU=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "3b9fad6aeb323eef6e249ca7b0eda828b7a33c57",
+        "rev": "6f8d15ef7a6de53c8b01828113262af48ea0fbcd",
         "type": "github"
       },
       "original": {
@@ -1226,11 +1226,11 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1683601533,
-        "narHash": "sha256-DMDeUvjeAEU/rZN7y/U2B1VKMVaOwK12j7tfw6JK1Kg=",
+        "lastModified": 1683797625,
+        "narHash": "sha256-Fgu9rxFziIJ47NiSdEUGO0PSwN9KTwW9lN0iT3uBpYI=",
         "owner": "serokell",
         "repo": "vault-secrets",
-        "rev": "1b4943a99768e502519640f83873bec780d777d1",
+        "rev": "9b23805fd05bf3b291d6f80ddfeb9a97318b6547",
         "type": "github"
       },
       "original": {
