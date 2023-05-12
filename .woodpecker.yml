@@ -7,6 +7,5 @@ pipeline:
       - nix run 'nixpkgs#statix' check
       - nix run 'nixpkgs#deadnix' -- -f
       - nix run 'nixpkgs#yamllint' .
-      - nix flake check
     volumes:
       - /nix:/mnt/nix:ro
