@@ -3,7 +3,10 @@ pipeline:
     image: nixos/nix:2.15.0
     environment:
       - NIX_CONFIG=experimental-features = nix-command flakes
+      - NIX_STORE_DIR=unix:///mnt/nix/var/nix/daemon-socket/socket?root=/mnt
     commands:
       - nix run 'nixpkgs#statix' check
       - nix run 'nixpkgs#deadnix' -- -f
       - nix run 'nixpkgs#yamllint' .
+    volumes:
+      - /nix:/mnt/nix:ro

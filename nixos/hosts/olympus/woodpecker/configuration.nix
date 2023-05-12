@@ -27,18 +27,19 @@ in {
     quoteEnvironmentValues = false; # Needed for docker
   };
 
-  # For some reason networking is broken in podman
   virtualisation.podman = {
-    enable = false;
+    enable = true;
     dockerSocket.enable = true;
     dockerCompat = true;
-  };
-
-  virtualisation.docker = {
-    enable = true;
     autoPrune.enable = true;
   };
 
+  # Fix DNS Lookup in podman
+  virtualisation.podman.defaultNetwork.settings.dns_enable = true;
+  networking.firewall.interfaces."podman+" = {
+    allowedUDPPorts = [ 53 ];
+    allowedTCPPorts = [ 53 ];
+  };
   services.woodpecker-server = {
     enable = true;
     environment = {
@@ -57,12 +58,12 @@ in {
     docker = {
       enable = true;
       environment = {
-        # DOCKER_HOST = "unix:///run/podman/podman.sock";
+        DOCKER_HOST = "unix:///run/podman/podman.sock";
         WOODPECKER_BACKEND = "docker";
         WOODPECKER_SERVER = "localhost:9000";
       };
       environmentFile = [ "${vs.woodpecker}/environment" ];
-      extraGroups = [ "docker" ];
+      extraGroups = [ "podman" ];
     };
   };
 }
