@@ -55,7 +55,7 @@ in {
     };
     # virtualHosts."blog.xirion.net" = proxy "http://10.10.10.12";
     virtualHosts."git.xirion.net" = proxy "http://10.10.10.12";
-    virtualHosts."mail.xirion.net" = proxy "https://192.168.0.118";
+    virtualHosts."mail.xirion.net" = proxy "http://192.168.0.118";
     virtualHosts."o.xirion.net" = proxy "http://192.168.0.112:9000";
     virtualHosts."requests.xirion.net" = proxy "http://overseerr.hades:5055";
     virtualHosts."pass.xirion.net" = proxy "http://bitwarden_rs";
