@@ -37,10 +37,10 @@ spec:
     ingress:
       enabled: true
       hosts:
-      - host: flux.0x76.dev
-        paths:
-          - path: /
-            pathType: ImplementationSpecific
+        - host: flux.0x76.dev
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
     adminUser:
       create: false
       passwordHash: $2a$10$uIY/YYe.CcRerpVvfk04muX86hLfXRH.K6jATZaVPqp.bnUIu/bsC
