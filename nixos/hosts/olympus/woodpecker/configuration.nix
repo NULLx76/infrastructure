@@ -34,6 +34,8 @@ in {
     autoPrune.enable = true;
   };
 
+  # Thanks to: https://blog.kotatsu.dev/posts/2023-04-21-woodpecker-nix-caching/
+
   # Fix DNS Lookup in podman
   virtualisation.podman.defaultNetwork.settings.dns_enable = true;
   networking.firewall.interfaces."podman+" = {
