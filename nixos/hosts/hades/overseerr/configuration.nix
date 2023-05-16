@@ -28,7 +28,6 @@
       overseerr = {
         image = "ghcr.io/sct/overseerr:1.32.5";
         environment = {
-          # LOG_LEVEL = "debug";
           TZ = "Europe/Amsterdam";
         };
         ports = [ "5055:5055" ];

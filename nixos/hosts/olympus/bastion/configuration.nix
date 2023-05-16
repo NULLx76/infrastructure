@@ -34,7 +34,6 @@ in {
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/sda";
 
   # This value determines the NixOS release from which the default
