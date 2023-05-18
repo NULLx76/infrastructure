@@ -2,11 +2,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ ... }:
-
-{
+{ ... }: {
   imports = [
+    ./radarr.nix
+    ./sonarr.nix
     ./lidarr.nix
+    ./prowlarr.nix
+    ./unpackerr.nix
+    ./overseerr.nix
   ];
 
   # This value determines the NixOS release from which the default
@@ -17,29 +20,11 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
 
-  # Additional packages
-  # environment.systemPackages = with pkgs; [ ];
-
-  networking.firewall.allowedTCPPorts = [ 5055 ];
-
   fileSystems."/mnt/storage" = {
     device = "storage:/mnt/storage";
     fsType = "nfs";
   };
 
   virtualisation.podman.enable = true;
-  # TODO: Write NixOS package https://github.com/NixOS/nixpkgs/issues/135885
-  virtualisation.oci-containers = {
-    backend = "podman";
-    containers = {
-      overseerr = {
-        image = "ghcr.io/sct/overseerr:1.32.5";
-        environment = {
-          TZ = "Europe/Amsterdam";
-        };
-        ports = [ "5055:5055" ];
-        volumes = [ "/var/lib/overseerr/config:/app/config" ];
-      };
-    };
-  };
+  virtualisation.oci-containers.backend = "podman";
 }
