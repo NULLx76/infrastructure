@@ -5,7 +5,9 @@
 { ... }:
 
 {
-  imports = [ ];
+  imports = [
+    ./lidarr.nix
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -19,6 +21,11 @@
   # environment.systemPackages = with pkgs; [ ];
 
   networking.firewall.allowedTCPPorts = [ 5055 ];
+
+  fileSystems."/mnt/storage" = {
+    device = "storage:/mnt/storage";
+    fsType = "nfs";
+  };
 
   virtualisation.podman.enable = true;
   # TODO: Write NixOS package https://github.com/NixOS/nixpkgs/issues/135885

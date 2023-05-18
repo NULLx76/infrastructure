@@ -11,6 +11,7 @@
     initrd = {
       kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
     };
+    loader.systemd-boot.configurationLimit = 5;
   };
 
   fileSystems."/".options = [ "compress=zstd" ];
