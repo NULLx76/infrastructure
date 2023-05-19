@@ -1,4 +1,4 @@
-# 0x76's Infrastructure 
+# 0x76's Infrastructure
 This repository contains my fleet of VMs, Containers and Bare Metal machines.
 
 ## Directory Structure

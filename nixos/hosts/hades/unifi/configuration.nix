@@ -2,6 +2,8 @@
   system.stateVersion = "21.05";
   networking.interfaces.eth0.useDHCP = true;
 
+  environment.systemPackages = [ pkgs.mongodb-4_2 ];
+
   services.unifi = {
     enable = true;
     unifiPackage = pkgs.unifi;

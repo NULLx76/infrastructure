@@ -1,4 +1,4 @@
-{ ... }: {
+_: {
   networking.firewall.allowedTCPPorts = [ 5055 ];
   # TODO: Write NixOS package https://github.com/NixOS/nixpkgs/issues/135885
   virtualisation.oci-containers.containers.overseerr = {
