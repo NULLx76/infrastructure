@@ -15,6 +15,8 @@ let
 in {
   imports = [ ];
 
+  nixpkgs.config.permittedInsecurePackages = [ "openssl-1.1.1t" ];
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -70,6 +72,7 @@ in {
           allow 10.10.10.1/24;
           allow 192.168.0.0/23;
           allow 80.60.83.220;
+          allow 83.128.154.23;
           allow 195.85.167.32/29;
           deny all;
         '';
@@ -99,7 +102,7 @@ in {
         proxyWebsockets = true;
       };
 
-      locations."api/v1/streaming" = {
+      locations."/api/v1/streaming" = {
         proxyPass = "http://192.168.0.138:55000";
         proxyWebsockets = true;
       };
