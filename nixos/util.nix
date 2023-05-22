@@ -24,9 +24,10 @@ let
   # Add to whatever realm a host belong to its list of tags
   add_realm_to_tags = mapAttrs (realm:
     mapAttrs (_hostname:
-      { tags ? [ ], ... }@host:
+      { type ? "lxc", tags ? [ ], ... }@host:
       host // {
-        tags = [ realm ] ++ tags;
+        # Tags are for deployment, so don't add them to local machines
+        tags = tags ++ (if type == "local" then [ ] else [ realm ]);
         inherit realm;
       }));
 
@@ -41,7 +42,8 @@ let
   # outputs
 
   # Helper function to build a colmena host definition
-  mkColmenaHost = { ip ? null, exposes ? null, hostname, tags, realm, type ? "lxc", ... }@host:
+  mkColmenaHost = { ip ? null, exposes ? null, hostname, tags, realm
+    , type ? "lxc", ... }@host:
     let
       # this makes local apply work a bit nicer
       name = if type == "local" then hostname else "${hostname}.${realm}";
@@ -67,6 +69,4 @@ let
   hosts = add_realm_to_tags (import ./hosts);
   flat_hosts = flatten_hosts hosts;
   nixHosts = filter_nix_hosts flat_hosts;
-in {
-  inherit base_imports mkColmenaHost hosts flat_hosts nixHosts;
-}
+in { inherit base_imports mkColmenaHost hosts flat_hosts nixHosts; }
