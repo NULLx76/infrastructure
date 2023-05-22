@@ -14,6 +14,10 @@ in {
   # Better cache hits
   environment.noXlibs = lib.mkForce false;
 
+  networking.hosts = {
+    "83.128.154.23" = [ "xirion.net" "o.xirion.net" "hades.xirion.net" ];
+  };
+
   services.elasticsearch = {
     enable = true;
     cluster_name = "mastodon-es";
