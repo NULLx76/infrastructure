@@ -15,7 +15,7 @@ in {
   environment.noXlibs = lib.mkForce false;
 
   networking.hosts = {
-    "83.128.154.23" = [ "xirion.net" "o.xirion.net" "hades.xirion.net" ];
+    "192.168.0.122" = [ "xirion.net" "o.xirion.net" ];
   };
 
   services.elasticsearch = {
