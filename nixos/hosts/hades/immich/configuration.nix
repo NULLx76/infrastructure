@@ -5,7 +5,7 @@
 { pkgs, config, ... }:
 let
   # https://github.com/immich-app/immich/releases
-  version = "1.55.1";
+  # version = "1.55.1";
   dataDir = "/var/lib/immich";
 in {
   imports = [ ];
