@@ -5,7 +5,7 @@ let
     (throw "unsupported platform: ${stdenv.hostPlatform.system}") sources;
 in plexRaw.overrideAttrs (attrs: {
   pname = attrs.pname + "-plexpass";
-  version = source.version;
+  inherit (source) version;
   src = fetchurl {
     inherit (source) url;
     sha256 = source.hash;
