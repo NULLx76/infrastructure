@@ -21,5 +21,9 @@ _final: prev: {
       platformio.platformio-ide =
         prev.callPackage ./vscode-extensions/platformio.nix { };
     };
+
   };
+
+  plex-plexpass = prev.callPackage ./plex-pass { };
+  plexRaw-plexpass = prev.callPackage ./plex-pass/raw.nix { };
 }

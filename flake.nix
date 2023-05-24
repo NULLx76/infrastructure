@@ -54,6 +54,7 @@
 
       pkgs = import nixpkgs {
         inherit system;
+        config.allowUnfree = true;
         overlays = [ (import ./nixos/pkgs) vault-secrets.overlay nur.overlay ];
       };
 
@@ -147,6 +148,7 @@
           nil
           vault
           yamllint
+          jq
           (vault-push-approle-envs self { })
           (vault-push-approles self { })
           fast-repl
