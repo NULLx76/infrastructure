@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i bash -p jq curl vault
+#! nix-shell -i bash -p jq curl vault coreutils
 
 set -x
 shopt -s extglob
