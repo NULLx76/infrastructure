@@ -1,4 +1,6 @@
-#!/usr/bin/env bash
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p jq curl vault
+
 set -x
 shopt -s extglob
 set -eu -o pipefail
