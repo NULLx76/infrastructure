@@ -2,10 +2,10 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, config, lib, ... }:
+{ pkgs, config, ... }:
 let
   # https://github.com/immich-app/immich/releases
-  version = "1.55.1";
+  # version = "1.55.1";
   dataDir = "/var/lib/immich";
 in {
   imports = [ ];

@@ -1,11 +1,12 @@
 pipeline:
   check:
-    image: nixos/nix:2.15.0
+    image: nixos/nix:2.15.1
     commands:
       - echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
       - echo "store = unix:///mnt/nix/var/nix/daemon-socket/socket?root=/mnt" >> /etc/nix/nix.conf
       - nix run 'nixpkgs#statix' check
       - nix run 'nixpkgs#deadnix' -- -f
       - nix run 'nixpkgs#yamllint' .
+      - nix run '.#' -- build --on 'bastion*'
     volumes:
       - /nix:/mnt/nix:ro

@@ -7,8 +7,16 @@ in {
   # Use DHCP with static leases
   networking.interfaces.eth0.useDHCP = true;
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "openssl-1.1.1t"
+  ];
+
   # Better cache hits
   environment.noXlibs = lib.mkForce false;
+
+  networking.hosts = {
+    "192.168.0.122" = [ "xirion.net" "o.xirion.net" ];
+  };
 
   services.elasticsearch = {
     enable = true;

@@ -42,7 +42,7 @@ spec:
             - path: /
               pathType: ImplementationSpecific
     adminUser:
-      create: false
+      create: true
       passwordHash: $2a$10$uIY/YYe.CcRerpVvfk04muX86hLfXRH.K6jATZaVPqp.bnUIu/bsC
       username: admin
 
