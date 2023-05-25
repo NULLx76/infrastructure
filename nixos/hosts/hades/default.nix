@@ -102,13 +102,12 @@
     ip = "192.168.0.119";
     mac = "DE:7C:32:7E:DD:A1";
   };
-  # ip = "192.168.0.120";
-  "jackett2" = {
-    ip = "192.168.0.121";
-    mac = "4e:e7:64:b7:88:b8";
-    profile = "jackett";
-    nix = false; # superseded by prowlarr
+  "plex2" = {
+    ip = "192.168.0.120";
+    mac = "A2:2C:65:32:54:8A";
+    profile = "plex";
   };
+  # ip = "192.168.0.121";
   "nginx" = {
     ip = "192.168.0.122";
     mac = "52:8E:72:31:AE:AC";

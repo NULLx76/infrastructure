@@ -83,7 +83,6 @@ in {
       forceSSL = true;
       enableACME = true;
 
-      proxyWebsockets = true;
 
       extraConfig = ''
         #Some players don't reopen a socket and playback stops totally instead of resuming after an extended pause
@@ -128,7 +127,10 @@ in {
         proxy_redirect off;
         proxy_buffering off;
       '';
-      locations."/" = { proxyPass = "http://plex2.hades:32400/"; };
+      locations."/" = {
+
+      proxyWebsockets = true;
+        proxyPass = "http://plex2.hades:32400/"; };
     };
 
     virtualHosts."fedi.xirion.net" = {
