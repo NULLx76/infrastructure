@@ -4,7 +4,7 @@ pipeline:
     commands:
       - echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
       - echo "store = unix:///mnt/nix/var/nix/daemon-socket/socket?root=/mnt" >> /etc/nix/nix.conf
-      - nix run 'nixpkgs#statix' check
+      - nix run 'nixpkgs#statix' check .
       - nix run 'nixpkgs#deadnix' -- -f
       - nix run 'nixpkgs#yamllint' .
     volumes:
@@ -14,6 +14,7 @@ pipeline:
     commands:
       - echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
       - echo "store = unix:///mnt/nix/var/nix/daemon-socket/socket?root=/mnt" >> /etc/nix/nix.conf
+      - nix profile install 'nixpkgs#jq' 'nixpkgs#curl' 'nixpkgs#vault'
       - ./nixos/pkgs/plex-pass/update.sh
     volumes:
       - /nix:/mnt/nix:ro
