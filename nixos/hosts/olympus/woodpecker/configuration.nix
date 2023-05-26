@@ -42,6 +42,26 @@ in {
     allowedUDPPorts = [ 53 ];
     allowedTCPPorts = [ 53 ];
   };
+
+  services.gitea-actions-runner.instances = {
+    nix-native = {
+      enable = true;
+      name = "nix-native";
+      labels = [ "native:host" ];
+      url = "https://git.0x76.dev";
+      hostPackages = with pkgs; [
+        bash
+        coreutils
+        curl
+        gawk
+        gitMinimal
+        gnused
+        nodejs
+        wget
+      ];
+    };
+  };
+
   services.woodpecker-server = {
     enable = true;
     environment = {
