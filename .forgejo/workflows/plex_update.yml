@@ -1,7 +1,11 @@
 name: Plex Update
-on: [push]
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
 jobs:
-  native-test:
+  update:
     runs-on: native
     steps:
       - uses: actions/checkout@v3
@@ -22,4 +26,3 @@ jobs:
             git commit -m "Update Plex"
             git push origin main
           fi
-
