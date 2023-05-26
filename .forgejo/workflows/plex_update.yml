@@ -17,12 +17,8 @@ jobs:
 
           git add ./nixos/pkgs/plex-pass/
 
-          git status
-
-          git diff
-
           # Push if changed
-          if git status ./nixos/pkgs/plex-pass/ | grep -q modified; then
+          if git status ./nixos/pkgs/plex-pass/ | grep -q "to be committed"; then
             git commit -m "Update Plex"
             git push origin main
           fi
