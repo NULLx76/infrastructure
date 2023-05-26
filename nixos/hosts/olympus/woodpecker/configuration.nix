@@ -27,7 +27,9 @@ in {
     quoteEnvironmentValues = false; # Needed for docker
   };
 
-  vault-secrets.secrets.gitea_runner = { };
+  vault-secrets.secrets.gitea_runner = {
+    services = [ "gitea-runner-nix\x2dnative" ];
+  };
 
   virtualisation.podman = {
     enable = true;
@@ -59,7 +61,10 @@ in {
         gawk
         gitMinimal
         gnused
+        jq
         nodejs
+        nixUnstable
+        vault
         wget
       ];
     };

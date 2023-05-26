@@ -1,0 +1,18 @@
+name: Plex Update
+on: [push]
+jobs:
+  native-test:
+    runs-on: native
+    steps:
+      - uses: actions/checkout@v3
+      - env:
+          VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
+          VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+        run: |
+          git config user.name "Forgejo Actions Bot"
+          git config user.email "<>"
+          ./nixos/pkgs/plex-pass/update.sh
+          git add ./nixos/pkgs/plex-pass/
+          git commit -m "Update Plex"
+          git push origin actions-ci
+

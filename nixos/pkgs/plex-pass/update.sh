@@ -1,6 +1,4 @@
 #! /usr/bin/env bash
-
-set -x
 shopt -s extglob
 set -eu -o pipefail
 
