@@ -27,6 +27,8 @@ in {
     quoteEnvironmentValues = false; # Needed for docker
   };
 
+  vault-secrets.secrets.gitea_runner = { };
+
   virtualisation.podman = {
     enable = true;
     dockerSocket.enable = true;
@@ -49,6 +51,7 @@ in {
       name = "nix-native";
       labels = [ "native:host" ];
       url = "https://git.0x76.dev";
+      tokenFile = "${vs.gitea_runner}/token_native";
       hostPackages = with pkgs; [
         bash
         coreutils
