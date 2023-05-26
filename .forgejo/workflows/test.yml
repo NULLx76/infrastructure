@@ -1,0 +1,10 @@
+name: Test
+on: [push]
+jobs:
+  setup-forgejo:
+    runs-on: nix-native
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          ls
+          echo "Hello, World!"
