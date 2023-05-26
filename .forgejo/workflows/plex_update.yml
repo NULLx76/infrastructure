@@ -11,8 +11,15 @@ jobs:
         run: |
           git config user.name "Forgejo Actions Bot"
           git config user.email "<>"
-          ./nixos/pkgs/plex-pass/update.sh
-          git add ./nixos/pkgs/plex-pass/
-          git commit -m "Update Plex"
-          git push origin actions-ci
 
+          # Run Update script
+          ./nixos/pkgs/plex-pass/update.sh
+
+          git add ./nixos/pkgs/plex-pass/
+
+          # Push if changed
+          git status ./nixos/pkgs/plex-pass/ | grep -q modified
+          if [ $? == 0 ]; then
+            git commit -m "Update Plex"
+            git push origin main
+          fi
