@@ -23,3 +23,5 @@ jobs:
             git commit -m "Update Plex"
             git push origin main
           fi
+
+          true
