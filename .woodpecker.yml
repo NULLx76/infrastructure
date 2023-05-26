@@ -7,5 +7,17 @@ pipeline:
       - nix run 'nixpkgs#statix' check .
       - nix run 'nixpkgs#deadnix' -- -f
       - nix run 'nixpkgs#yamllint' .
+<<<<<<< HEAD
+=======
+    volumes:
+      - /nix:/mnt/nix:ro
+  update_plex:
+    image: nixos/nix:2.15.1
+    commands:
+      - echo "experimental-features = nix-command flakes" >> /etc/nix/nix.conf
+      - echo "store = unix:///mnt/nix/var/nix/daemon-socket/socket?root=/mnt" >> /etc/nix/nix.conf
+      - nix profile install 'nixpkgs#jq' 'nixpkgs#curl' 'nixpkgs#vault'
+      - ./nixos/pkgs/plex-pass/update.sh
+>>>>>>> 9714ee2bd90ec358d58d02f7b492677b1b6a1c6a
     volumes:
       - /nix:/mnt/nix:ro
