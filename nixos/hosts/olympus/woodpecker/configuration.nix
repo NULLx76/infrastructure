@@ -63,6 +63,9 @@ in {
         gnused
         jq
         nodejs
+        statix
+        deadnix
+        yamllint
         nixUnstable
         vault
         wget

@@ -1,0 +1,12 @@
+name: Lint
+
+on: [push]
+
+jobs:
+  lint:
+    runs-on: native
+    steps:
+      - uses: actions/checkout@v3
+      - run: statix check .
+      - run: deadnix -f
+      - run: yamllint .
