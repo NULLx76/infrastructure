@@ -58,17 +58,17 @@ in {
         bash
         coreutils
         curl
+        deadnix
         gawk
         gitMinimal
         gnused
         jq
+        nixUnstable
         nodejs
         statix
-        deadnix
-        yamllint
-        nixUnstable
         vault
         wget
+        yamllint
       ];
     };
   };
