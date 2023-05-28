@@ -2,6 +2,9 @@ name: Plex Update
 
 on:
   push:
+    branches:
+      - main
+      - ci
   schedule:
     - cron: '0 0 * * *'
 
