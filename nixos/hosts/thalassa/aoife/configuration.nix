@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, ... }: {
+{ inputs, lib, ... }: {
   imports = [
     ./hardware-configuration.nix
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-z
@@ -11,8 +11,16 @@
 
   # Bootloader.
   boot = {
+    bootspec.enable = true;
     initrd.kernelModules = [ "amdgpu" ];
     resumeDevice = "/dev/nvme0n1p2";
+    loader.systemd-boot.enable = lib.mkForce false;
+
+    lanzaboote = {
+      enable = true;
+      configurationLimit = 5;
+      pkiBundle = "/etc/secureboot";
+    };
   };
 
   home-manager = {

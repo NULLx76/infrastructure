@@ -38,7 +38,7 @@
   services.printing.enable = true;
 
   # Global Packages
-  environment.systemPackages = with pkgs; [ wireguard-tools ];
+  environment.systemPackages = with pkgs; [ wireguard-tools sbctl ];
 
   # Enable sound with pipewire.
   sound.enable = true;

@@ -1,10 +1,6 @@
 {
   description = "0x76's infrastructure";
 
-  # Based on:
-  # * https://github.com/serokell/pegasus-infra/blob/master/flake.nix
-  # * https://git.voidcorp.nl/j00lz/nixos-configs/src/branch/main/flake.nix
-
   # For minecraft use:
   # * https://github.com/Infinidoge/nix-minecraft
 
@@ -37,6 +33,13 @@
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:toastal/nixos-hardware/z-series-no-hidpi";
+
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote";
+
+      # Optional but recommended to limit the size of your system closure.
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     vault-unseal.url = "git+https://git.0x76.dev/v/vault-unseal.git";
   };

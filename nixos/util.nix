@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, mailserver, ... }:
+{ nixpkgs, home-manager, mailserver, lanzaboote, ... }:
 let
   inherit (builtins) filter attrValues concatMap mapAttrs;
   inherit (nixpkgs.lib.attrsets) mapAttrsToList;
@@ -13,7 +13,10 @@ let
         ./common/generic-lxc.nix
       ];
       "vm" = [ ./common/generic-vm.nix ];
-      "local" = [ ./common/desktop ];
+      "local" = [
+        lanzaboote.nixosModules.lanzaboote
+        ./common/desktop
+      ];
     };
   in type: import_cases.${type} ++ base_imports;
   # Helper function to resolve what should be imported depending on the type of config (lxc, vm, bare metal)
