@@ -76,6 +76,8 @@
     };
   };
 
+
+
   # Debloat
   documentation = {
     enable = lib.mkForce false;

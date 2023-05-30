@@ -6,12 +6,6 @@ let
   };
   my-python-packages = ps: with ps; [ pandas requests numpy ];
 in {
-  programs.home-manager.enable = true;
-
-  home.username = "victor";
-  home.homeDirectory = "/home/victor";
-  home.stateVersion = "23.05";
-
   home.packages = with pkgs; [
     (python3.withPackages my-python-packages)
     btop
@@ -38,7 +32,6 @@ in {
 
   # Enable my own hm modules
   themes.v.catppuccin.enable = true;
-  programs.v.nvim.enable = true;
   programs.v.vscode.enable = true;
 
   programs.riff = {
@@ -65,13 +58,6 @@ in {
     };
 
     difftastic.enable = true;
-  };
-
-  programs.tmux = {
-    enable = true;
-    shortcut = "b";
-    terminal = "screen-256color";
-    clock24 = true;
   };
 
   programs.firefox.enable = true;

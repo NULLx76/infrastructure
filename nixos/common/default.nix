@@ -6,8 +6,12 @@
   nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
 
-  home-manager.sharedModules =
-    [ ./hm-modules inputs.nixvim.homeManagerModules.nixvim ];
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = { inherit inputs; };
+    sharedModules = [ ./hm-modules inputs.nixvim.homeManagerModules.nixvim ];
+  };
 
   vault-secrets = let
     inherit (config.networking) domain hostName;
