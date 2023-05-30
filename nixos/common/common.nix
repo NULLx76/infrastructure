@@ -78,11 +78,11 @@
 
   # Debloat
   documentation = {
-    enable = false;
-    doc.enable = false;
-    man.enable = false;
-    info.enable = false;
-    nixos.enable = false;
+    enable = lib.mkForce false;
+    doc.enable = lib.mkForce false;
+    man.enable = lib.mkForce false;
+    info.enable = lib.mkForce false;
+    nixos.enable = lib.mkForce false;
   };
 
   system.disableInstallerTools = lib.mkDefault true;
