@@ -14,5 +14,5 @@ to deploy the infrastructure, this can be accessed running `nix develop`.
 ## Inspired by the following repos
 * <https://github.com/colemickens/nixcfg>
 * <https://github.com/serokell/pegasus-infra>
-* <https://git.voidcorp.nl/j00lz/nixos-configs>
+* <https://git.asraphiel.dev/j00lz/strato-infra>
 * <https://github.com/tadfisher/flake>
