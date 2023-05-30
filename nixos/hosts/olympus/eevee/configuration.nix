@@ -41,10 +41,7 @@
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
     users.victor = import ./home;
-    extraSpecialArgs = { inherit inputs; };
   };
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

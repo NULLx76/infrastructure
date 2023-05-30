@@ -23,12 +23,7 @@
     };
   };
 
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    users.victor = import ./home;
-    extraSpecialArgs = { inherit inputs; };
-  };
+  home-manager.users.victor = import ./home;
 
   # Enable Ozone rendering for Chromium and Electron apps.
   environment.sessionVariables.NIXOS_OZONE_WL = "1";

@@ -6,7 +6,14 @@ let
   };
   my-python-packages = ps: with ps; [ pandas requests numpy ];
 in {
+  programs.home-manager.enable = true;
+
+  home.username = "victor";
+  home.homeDirectory = "/home/victor";
+  home.stateVersion = "23.05";
+
   home.packages = with pkgs; [
+    (python3.withPackages my-python-packages)
     btop
     calibre
     celluloid
@@ -16,13 +23,11 @@ in {
     gimp
     inputs.comma.packages.${pkgs.system}.default
     inputs.webcord.packages.${pkgs.system}.default
-    # jetbrains.clion
     kdenlive
     mullvad-vpn
     neofetch
     nixfmt
     nixpkgs-review
-    (python3.withPackages my-python-packages)
     plex-media-player
     rustup
     solo2-cli
@@ -54,7 +59,6 @@ in {
     userName = "Victor";
     userEmail = "victor@xirion.net";
     lfs.enable = true;
-    # delta.enable = true;
     extraConfig = {
       push.autoSetupRemote = true;
       init.defaultBranch = "main";
@@ -71,6 +75,11 @@ in {
   };
 
   programs.firefox.enable = true;
+
+  programs.chromium = {
+    enable = true;
+    package = pkgs.ungoogled-chromium;
+  };
 
   programs.direnv = {
     enable = true;

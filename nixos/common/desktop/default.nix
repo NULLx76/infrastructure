@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, inputs, ... }: {
   # Bootloader.
   boot = {
     kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
@@ -12,6 +12,13 @@
       systemd.enable = true;
       verbose = false;
     };
+  };
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.victor = import ./home.nix;
+    extraSpecialArgs = { inherit inputs; };
   };
 
   # Enable my config for the gnome desktop environment
@@ -86,17 +93,6 @@
   };
 
   programs.adb.enable = true;
-
-  # Debloat
-  documentation = {
-    enable = false;
-    doc.enable = false;
-    man.enable = false;
-    info.enable = false;
-    nixos.enable = false;
-  };
-  system.disableInstallerTools = true;
-
   # Networking
   networking.networkmanager.enable = true;
   networking.firewall.checkReversePath = false;
