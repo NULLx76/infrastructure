@@ -23,6 +23,8 @@
   programs.neovim = {
     enable = true;
     viAlias = true;
+    vimAlias = true;
+    defaultEditor = true;
   };
 
   # Disable sudo prompt for `wheel` users.

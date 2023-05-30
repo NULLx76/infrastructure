@@ -22,6 +22,11 @@
     driSupport = true;
   };
 
+  hardware.logitech.wireless = {
+    enable = true;
+    enableGraphical = true;
+  };
+
   # udev
   services.udev.packages = with pkgs; [
     android-udev-rules

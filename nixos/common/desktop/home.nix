@@ -59,6 +59,8 @@ in {
       push.autoSetupRemote = true;
       init.defaultBranch = "main";
     };
+
+    difftastic.enable = true;
   };
 
   programs.tmux = {

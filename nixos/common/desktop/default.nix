@@ -3,7 +3,7 @@
   boot = {
     kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
     loader = {
-      systemd-boot.enable = true;
+      systemd-boot.enable = lib.mkDefault true;
       efi.canTouchEfiVariables = true;
       efi.efiSysMountPoint = "/boot/efi";
     };
@@ -38,7 +38,9 @@
   services.printing.enable = true;
 
   # Global Packages
-  environment.systemPackages = with pkgs; [ wireguard-tools sbctl ];
+  environment = {
+    systemPackages = with pkgs; [ wireguard-tools sbctl ];
+  };
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -82,6 +84,18 @@
     # Open ports in the firewall for Steam Remote Play
     remotePlay.openFirewall = true;
   };
+
+  programs.adb.enable = true;
+
+  # Debloat
+  documentation = {
+    enable = false;
+    doc.enable = false;
+    man.enable = false;
+    info.enable = false;
+    nixos.enable = false;
+  };
+  system.disableInstallerTools = true;
 
   # Networking
   networking.networkmanager.enable = true;
