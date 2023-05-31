@@ -45,7 +45,7 @@
   };
 
   outputs = { self, nixpkgs, nixpkgs_22-11, vault-secrets, colmena
-    , nixos-generators, nur, nixvim, ... }@inputs:
+    , nixos-generators, nur, ... }@inputs:
     let
       inherit (nixpkgs) lib;
 
