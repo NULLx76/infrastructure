@@ -1,5 +1,5 @@
 { lib, ... }: {
-  imports = [ ../common/common.nix ../common/generic-lxc.nix ];
+  imports = [ ../common ../common/generic-lxc.nix ];
 
   proxmoxLXC = {
     manageNetwork = true;
