@@ -136,19 +136,19 @@
     mac = "12:fa:24:02:65:e6";
     nix = false;
   };
-  "docker-registry-proxy" = {
-    ip = "192.168.0.128";
-    mac = "0e:11:65:62:66:9f";
-  };
+  # "docker-registry-proxy" = {
+  #   ip = "192.168.0.128";
+  #   mac = "0e:11:65:62:66:9f";
+  # };
   "hassio" = {
     ip = "192.168.0.129";
     mac = "e6:80:32:fb:00:75";
     nix = false;
   };
-  "docker-registry" = {
-    ip = "192.168.0.130";
-    mac = "5e:0e:a6:cf:64:70";
-  };
+  # "docker-registry" = {
+  #   ip = "192.168.0.130";
+  #   mac = "5e:0e:a6:cf:64:70";
+  # };
   "minecraft" = {
     ip = "192.168.0.131";
     mac = "00:0c:29:9b:e1:c4";
