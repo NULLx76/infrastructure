@@ -2,7 +2,7 @@
   imports = [ ../common/common.nix ../common/generic-vm.nix ];
 
   proxmox.qemuConf = {
-    virtio0 = "local-zsfs:vm-9999-disk-0";
+    virtio0 = "local-zfs:vm-9999-disk-0";
     cores = 1;
     memory = 1024;
     bios = "ovmf";

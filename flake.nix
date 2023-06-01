@@ -100,32 +100,12 @@
 
         default = colmena.packages.${system}.colmena;
 
-        iso = nixos-generators.nixosGenerate {
-          inherit system pkgs;
-          format = "install-iso";
-          modules = [ (import ./nixos/templates/iso.nix) ];
-        };
-
-        iso-graphical = nixos-generators.nixosGenerate {
-          inherit system pkgs;
-          format = "install-iso";
-          modules = [ (import ./nixos/templates/iso-graphical.nix) ];
-        };
-
         proxmox-lxc = nixos-generators.nixosGenerate {
           inherit pkgs;
           format = "proxmox-lxc";
           modules = util.base_imports
             ++ [ (import ./nixos/templates/proxmox-lxc.nix) ];
         };
-
-        # Broken
-        # proxmox-vm = nixos-generators.nixosGenerate {
-        #   inherit system pkgs;
-        #   format = "proxmox";
-        #   modules = util.base_imports
-        #     ++ [ (import ./nixos/templates/proxmox-vm.nix) ];
-        # };
       };
 
       # Use by running `nix develop`

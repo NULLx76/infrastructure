@@ -10,6 +10,7 @@ in {
     btop
     calibre
     celluloid
+    chromium
     element-desktop
     fusee-launcher
     gcc
@@ -29,6 +30,7 @@ in {
     tex
     unzip
     yt-dlp
+    qmk
   ];
 
   # Enable my own hm modules

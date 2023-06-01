@@ -28,7 +28,7 @@ in {
     enable = true;
     fqdn = "mail.0x76.dev";
     domains = [ "0x76.dev" "meowy.tech" ];
-    certificateScheme = 3;
+    certificateScheme = "acme-nginx";
 
     loginAccounts = {
       # People

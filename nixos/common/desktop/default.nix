@@ -14,6 +14,8 @@
     };
   };
 
+  hardware.keyboard.qmk.enable = true;
+
   # Enable my config for the gnome desktop environment
   services.v.gnome.enable = true;
 

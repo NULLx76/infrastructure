@@ -237,7 +237,6 @@ in {
   services.udev.packages = with pkgs; [
     android-udev-rules
     logitech-udev-rules
-    qmk-udev-rules
     wooting-udev-rules
   ];
 
