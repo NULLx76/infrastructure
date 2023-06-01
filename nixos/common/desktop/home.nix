@@ -11,7 +11,6 @@ in {
     btop
     calibre
     celluloid
-    chromium
     element-desktop
     fusee-launcher
     gcc
