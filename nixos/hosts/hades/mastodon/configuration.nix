@@ -7,16 +7,8 @@ in {
   # Use DHCP with static leases
   networking.interfaces.eth0.useDHCP = true;
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "openssl-1.1.1t"
-  ];
-
   # Better cache hits
   environment.noXlibs = lib.mkForce false;
-
-  networking.hosts = {
-    "192.168.0.122" = [ "xirion.net" "o.xirion.net" ];
-  };
 
   services.elasticsearch = {
     enable = true;
@@ -25,7 +17,7 @@ in {
   };
 
   vault-secrets.secrets.mastodon = {
-    services = [ "mastodon-init-dirs" "mastodon" "mastodon-media-prune" ];
+    services = [ "mastodon-init-dirs" "mastodon" "mastodon-media-autoremove" ];
     inherit (cfg) user group;
   };
 
@@ -49,12 +41,12 @@ in {
     mediaAutoRemove = {
       enable = true;
       olderThanDays = 30;
-      startAt = "weekly";
+      startAt = "daily";
     };
 
     configureNginx = false;
 
-    redis = { createLocally = true; };
+    redis.createLocally = true;
 
     elasticsearch = {
       host = "127.0.0.1";
