@@ -7,6 +7,7 @@ let
   my-python-packages = ps: with ps; [ pandas requests numpy ];
 in {
   home.packages = with pkgs; [
+    (python3.withPackages my-python-packages)
     btop
     calibre
     celluloid
@@ -17,13 +18,11 @@ in {
     gimp
     inputs.comma.packages.${pkgs.system}.default
     inputs.webcord.packages.${pkgs.system}.default
-    # jetbrains.clion
     kdenlive
     mullvad-vpn
     neofetch
     nixfmt
     nixpkgs-review
-    (python3.withPackages my-python-packages)
     plex-media-player
     rustup
     solo2-cli
@@ -35,7 +34,6 @@ in {
 
   # Enable my own hm modules
   themes.v.catppuccin.enable = true;
-  programs.v.nvim.enable = true;
   programs.v.vscode.enable = true;
 
   programs.riff = {
@@ -56,21 +54,20 @@ in {
     userName = "Victor";
     userEmail = "victor@xirion.net";
     lfs.enable = true;
-    # delta.enable = true;
     extraConfig = {
       push.autoSetupRemote = true;
       init.defaultBranch = "main";
     };
-  };
 
-  programs.tmux = {
-    enable = true;
-    shortcut = "b";
-    terminal = "screen-256color";
-    clock24 = true;
+    difftastic.enable = true;
   };
 
   programs.firefox.enable = true;
+
+  programs.chromium = {
+    enable = true;
+    package = pkgs.ungoogled-chromium;
+  };
 
   programs.direnv = {
     enable = true;

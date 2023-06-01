@@ -1,4 +1,4 @@
-{ stdenvNoCC, fetchFromGitHub }:
+{ lib, stdenvNoCC, fetchFromGitHub }:
 stdenvNoCC.mkDerivation rec {
   pname = "dnd-5e-latex-template";
   version = "0.8.0";
@@ -23,5 +23,8 @@ stdenvNoCC.mkDerivation rec {
     runHook postInstall
   '';
 
-  meta = { description = "DnD 5e latex template"; };
+  meta = {
+    description = "DnD 5e latex template";
+    license = lib.licenses.mit;
+  };
 }

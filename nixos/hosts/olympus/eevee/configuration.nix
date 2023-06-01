@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, inputs, ... }: {
+{ pkgs, ... }: {
   imports = [ ./hardware-configuration.nix ./hardware.nix ];
 
   # Bootloader.
@@ -41,10 +41,7 @@
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
     users.victor = import ./home;
-    extraSpecialArgs = { inherit inputs; };
   };
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

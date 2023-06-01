@@ -1,9 +1,4 @@
 _: {
-  programs.home-manager.enable = true;
-  home.username = "victor";
-  home.homeDirectory = "/home/victor";
-  home.stateVersion = "22.05";
-
   programs.direnv = {
     enable = true;
     nix-direnv = { enable = true; };

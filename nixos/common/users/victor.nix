@@ -21,4 +21,21 @@
     extraGroups =
       [ "systemd-journal" "wheel" "networkmanager" "libvirtd" "dialout" ];
   };
+
+  home-manager.users.victor = {
+    programs.home-manager.enable = true;
+
+    home.username = "victor";
+    home.homeDirectory = "/home/victor";
+    home.stateVersion = "23.05";
+
+    programs.v.nvim.enable = true;
+
+    programs.tmux = {
+      enable = true;
+      shortcut = "b";
+      terminal = "screen-256color";
+      clock24 = true;
+    };
+  };
 }

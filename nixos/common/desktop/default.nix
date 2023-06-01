@@ -1,9 +1,9 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, inputs, ... }: {
   # Bootloader.
   boot = {
     kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
     loader = {
-      systemd-boot.enable = true;
+      systemd-boot.enable = lib.mkDefault true;
       efi.canTouchEfiVariables = true;
       efi.efiSysMountPoint = "/boot/efi";
     };
@@ -15,6 +15,12 @@
   };
 
   hardware.keyboard.qmk.enable = true;
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.victor = import ./home.nix;
+    extraSpecialArgs = { inherit inputs; };
+  };
 
   # Enable my config for the gnome desktop environment
   services.v.gnome.enable = true;
@@ -40,7 +46,9 @@
   services.printing.enable = true;
 
   # Global Packages
-  environment.systemPackages = with pkgs; [ wireguard-tools ];
+  environment = {
+    systemPackages = with pkgs; [ wireguard-tools sbctl ];
+  };
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -85,6 +93,7 @@
     remotePlay.openFirewall = true;
   };
 
+  programs.adb.enable = true;
   # Networking
   networking.networkmanager.enable = true;
   networking.firewall.checkReversePath = false;

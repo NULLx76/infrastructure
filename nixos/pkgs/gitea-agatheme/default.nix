@@ -1,4 +1,4 @@
-{ stdenvNoCC, fetchurl }:
+{ stdenvNoCC, fetchurl, lib }:
 stdenvNoCC.mkDerivation {
   pname = "gitea-agatheme";
   version = "1.2";
@@ -14,4 +14,8 @@ stdenvNoCC.mkDerivation {
   installPhase = ''
     cp $src $out
   '';
+
+  meta = with lib; {
+    description = "Gitea/Forgejo purple theme";
+  };
 }

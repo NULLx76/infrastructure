@@ -10,3 +10,9 @@ to deploy the infrastructure, this can be accessed running `nix develop`.
 
 [Flux]: https://github.com/fluxcd/flux2
 [colmena]: https://colmena.cli.rs/unstable/
+
+## Inspired by the following repos
+* <https://github.com/colemickens/nixcfg>
+* <https://github.com/serokell/pegasus-infra>
+* <https://git.asraphiel.dev/j00lz/strato-infra>
+* <https://github.com/tadfisher/flake>

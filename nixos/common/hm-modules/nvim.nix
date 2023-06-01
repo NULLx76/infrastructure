@@ -11,11 +11,16 @@ in {
 
       globals = { mapleader = " "; };
 
+      options = { number = true; };
+
       maps.normal = {
         "<leader>ff" = "<cmd>lua require('telescope.builtin').find_files()<cr>";
         "<leader>fg" = "<cmd>lua require('telescope.builtin').live_grep()<cr>";
+
         "<C-_>" =
           "<cmd>lua require('Comment.api').toggle.linewise.current()<cr>"; # map ctrl+/ to commenting code
+
+        "g=" = "<cmd>lua vim.lsp.buf.format{async=true}<cr>";
       };
 
       extraPlugins = with pkgs.vimPlugins; [ catppuccin-nvim luasnip ];
@@ -26,6 +31,19 @@ in {
 
       plugins = {
         bufferline.enable = true;
+        null-ls = {
+          enable = true;
+          sources = {
+            formatting.nixpkgs_fmt.enable = true;
+            code_actions.shellcheck.enable = true;
+            code_actions.statix.enable = true;
+            diagnostics = {
+              statix.enable = true;
+              deadnix.enable = true;
+              shellcheck.enable = true;
+            };
+          };
+        };
         nix.enable = true;
         treesitter = {
           enable = true;
@@ -47,8 +65,8 @@ in {
         comment-nvim = { enable = true; };
         lsp = {
           enable = true;
+          servers.nil_ls.enable = true;
           servers.rust-analyzer.enable = true;
-          servers.rnix-lsp.enable = true;
           servers.pyright.enable = true;
           servers.elixirls.enable = true;
           servers.clangd.enable = true;
