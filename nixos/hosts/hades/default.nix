@@ -139,17 +139,17 @@
     mac = "12:fa:24:02:65:e6";
     nix = false;
   };
-  # "docker-registry-proxy" = {
-  #   ip = "192.168.0.128";
-  #   mac = "0e:11:65:62:66:9f";
-  # };
+  "attic" = {
+    ip = "192.168.0.128";
+    mac = "9E:AF:E9:FE:D4:D9";
+  };
   "hassio" = {
     ip = "192.168.0.129";
     mac = "e6:80:32:fb:00:75";
     nix = false;
   };
   # "docker-registry" = {
-  #   ip = "192.168.0.130";
+  #   ip = "192.168.0.130"attic, ;
   #   mac = "5e:0e:a6:cf:64:70";
   # };
   "minecraft" = {

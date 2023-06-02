@@ -5,7 +5,7 @@
   # * https://github.com/Infinidoge/nix-minecraft
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
 
     nixpkgs_22-11.url = "github:nixos/nixpkgs/nixos-22.11";
 
@@ -42,6 +42,8 @@
     };
 
     vault-unseal.url = "git+https://git.0x76.dev/v/vault-unseal.git";
+
+    attic.url = "github:zhaofengli/attic";
   };
 
   outputs = { self, nixpkgs, nixpkgs_22-11, vault-secrets, colmena

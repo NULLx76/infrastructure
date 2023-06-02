@@ -63,6 +63,7 @@ in {
     virtualHosts."pass.xirion.net" = proxy "http://bitwarden_rs";
     virtualHosts."repo.xirion.net" = proxy "http://archlinux";
     virtualHosts."thelounge.xirion.net" = proxy "http://thelounge:9000";
+    virtualHosts."attic.xirion.net" = proxy "http://attic.hades:8080";
 
     virtualHosts."tautulli.xirion.net" = proxy "http://tautulli.hades:8080";
     virtualHosts."peepeepoopoo.xirion.net" = proxy "http://tautulli.hades:8080"; # Deprecated but Ricardo has it bookmarked already!

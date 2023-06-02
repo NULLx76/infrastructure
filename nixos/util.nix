@@ -1,10 +1,11 @@
-{ nixpkgs, home-manager, mailserver, lanzaboote, ... }:
+{ nixpkgs, home-manager, mailserver, lanzaboote, attic, ... }:
 let
   inherit (builtins) filter attrValues concatMap mapAttrs;
   inherit (nixpkgs.lib.attrsets) mapAttrsToList;
   base_imports = [
     home-manager.nixosModules.home-manager
     mailserver.nixosModules.mailserver
+    attic.nixosModules.atticd
   ];
   type_import = let
     import_cases = {
