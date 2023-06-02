@@ -2,10 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, ... }:
-
-{
+{ pkgs, config, ... }:
+let vs = config.vault-secrets.secrets;
+in {
   imports = [ ];
+
+  vault-secrets.secrets.garage = { };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -18,33 +20,35 @@
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
-  networking.firewall.allowedTCPPorts = [ ];
+  networking.firewall.allowedTCPPorts = [ 3900 3901 3902 ];
+
+  # Defines rpc_secret
+  systemd.services.garage.serviceConfig.EnvironmentFile = "${vs.garage}/environment";
 
   # See also: https://github.com/NixOS/nixpkgs/tree/master/nixos/tests/garage
   services.garage = {
-    enable = false;
+    enable = true;
     package = pkgs.garage_0_8;
     settings = {
-      # rpc_bind_addr = "[::]:3901"
-      # rpc_public_addr = "127.0.0.1:3901"
-      # rpc_secret = "$(openssl rand -hex 32)"
+      db_engine = "lmdb"; # Recommended for mastodon
+      replication_mode = "1";
+      compression_level = 0;
 
-      # [s3_api]
-      # s3_region = "garage"
-      # api_bind_addr = "[::]:3900"
-      # root_domain = ".s3.garage.localhost"
+      # For inter-node comms
+      rpc_bind_addr = "[::]:3901";
+      rpc_public_addr = "${config.meta.ipv4}:3901";
 
-      # [s3_web]
-      # bind_addr = "[::]:3902"
-      # root_domain = ".web.garage.localhost"
-      # index = "index.html"
+      # Standard S3 api endpoint
+      s3_api = {
+        s3_region = "hades";
+        api_bind_addr = "[::]:3900";
+      };
 
-      # [k2v_api]
-      # api_bind_addr = "[::]:3904"
-
-      # [admin]
-      # api_bind_addr = "0.0.0.0:3903"
-      # admin_token = "$(openssl rand -base64 32)"
+      # Static file serve endpoint
+      s3_web = {
+        bind_addr = "[::]:3902";
+        root_domain = "g.xirion.net";
+      };
     };
   };
 }

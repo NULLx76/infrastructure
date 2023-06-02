@@ -24,8 +24,8 @@ in {
   # Append the init-dirs script to add AWS/Minio secrets
   systemd.services.mastodon-init-dirs.script = ''
     cat >> /var/lib/mastodon/.secrets_env <<EOF
-    AWS_ACCESS_KEY_ID="$(cat ${vs.mastodon}/awsAccessKeyId)"
-    AWS_SECRET_ACCESS_KEY="$(cat ${vs.mastodon}/awsSecretAccessKey)"
+    AWS_ACCESS_KEY_ID="$(cat ${vs.mastodon}/garageKeyId)"
+    AWS_SECRET_ACCESS_KEY="$(cat ${vs.mastodon}/garageSecretKey)"
     DEEPL_API_KEY="$(cat ${vs.mastodon}/deeplAPIKey)"
     EOF
   '';
@@ -90,10 +90,10 @@ in {
       # https://github.com/cybrespace/cybrespace-meta/blob/master/s3.md;
       # https://shivering-isles.com/Mastodon-and-Amazon-S3
       S3_ENABLED = "true";
+      S3_REGION = "hades";
       S3_BUCKET = "mastodon";
-      S3_PROTOCOL = "https";
-      S3_HOSTNAME = "o.xirion.net";
-      S3_ENDPOINT = "https://o.xirion.net/";
+      S3_ENDPOINT = "http://garage.hades:3900";
+      S3_ALIAS_HOST = "fedi-media.xirion.net";
 
       DEEPL_PLAN = "free";
     };

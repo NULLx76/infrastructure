@@ -21,6 +21,8 @@
   services.unbound.settings.server = {
     local-zone = [
       "xirion.net typetransparent"
+      "o.xirion.net typetransparent"
+      "fedi-media.xirion.net typetransparent"
       "hades.xirion.net typetransparent"
       "requests.xirion.net typetransparent"
       "ha.xirion.net typetransparent"
@@ -30,6 +32,8 @@
     local-data = [
       ''"xirion.net A 192.168.0.122"''
       ''"hades.xirion.net A 192.168.0.122"''
+      ''"o.xirion.net A 192.168.0.122"''
+      ''"fedi-media.xirion.net A 192.168.0.122"''
       ''"requests.xirion.net A 192.168.0.122"''
       ''"ha.xirion.net A 192.168.0.122"''
       ''"mail.xirion.net A 192.168.0.122"''
