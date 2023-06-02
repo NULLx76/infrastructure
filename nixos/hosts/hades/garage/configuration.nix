@@ -25,7 +25,6 @@ in {
   # Defines rpc_secret
   systemd.services.garage.serviceConfig.EnvironmentFile = "${vs.garage}/environment";
 
-  # See also: https://github.com/NixOS/nixpkgs/tree/master/nixos/tests/garage
   services.garage = {
     enable = true;
     package = pkgs.garage_0_8;

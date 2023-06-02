@@ -22,11 +22,6 @@ in {
 
   networking.firewall.allowedTCPPorts = [ port 9000 ];
 
-  vault-secrets.secrets.woodpecker = {
-    services = [ "woodpecker-server" "woodpecker-agent-docker" ];
-    quoteEnvironmentValues = false; # Needed for docker
-  };
-
   vault-secrets.secrets.gitea_runner = {
     services = [ "gitea-runner-nix\x2dnative" ];
   };
@@ -70,33 +65,6 @@ in {
         wget
         yamllint
       ];
-    };
-  };
-
-  services.woodpecker-server = {
-    enable = true;
-    environment = {
-      WOODPECKER_OPEN = "true";
-      WOODPECKER_HOST = "https://ci.0x76.dev";
-      WOODPECKER_GITEA = "true";
-      WOODPECKER_GITEA_URL = "https://git.0x76.dev";
-      WOODPECKER_ADMIN = "v";
-      WOODPECKER_AUTHENTICATE_PUBLIC_REPOS = "true";
-      WOODPECKER_SERVER_ADDR = "10.42.42.33:${toString port}";
-    };
-    environmentFile = "${vs.woodpecker}/environment";
-  };
-
-  services.woodpecker-agents.agents = {
-    docker = {
-      enable = true;
-      environment = {
-        DOCKER_HOST = "unix:///run/podman/podman.sock";
-        WOODPECKER_BACKEND = "docker";
-        WOODPECKER_SERVER = "localhost:9000";
-      };
-      environmentFile = [ "${vs.woodpecker}/environment" ];
-      extraGroups = [ "podman" ];
     };
   };
 }

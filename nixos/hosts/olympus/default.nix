@@ -180,13 +180,9 @@
     mac = "7A:17:9E:80:72:01";
     exposes.ntfy.domain = "ntfy.0x76.dev";
   };
-  "woodpecker" = {
+  "ci" = {
     ip = "10.42.42.33";
     mac = "1E:24:DA:DB:4A:1A";
-    exposes.ci = {
-      domain = "ci.0x76.dev";
-      port = 8000;
-    };
   };
   "nuc" = {
     ip = "10.42.42.42";
