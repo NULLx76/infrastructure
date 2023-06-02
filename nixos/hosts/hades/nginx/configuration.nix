@@ -64,6 +64,9 @@ in {
     virtualHosts."repo.xirion.net" = proxy "http://archlinux";
     virtualHosts."thelounge.xirion.net" = proxy "http://thelounge:9000";
 
+    virtualHosts."tautulli.xirion.net" = proxy "http://tautulli.hades:8080";
+    virtualHosts."peepeepoopoo.xirion.net" = proxy "http://tautulli.hades:8080"; # Deprecated but Ricardo has it bookmarked already!
+
     virtualHosts."registry.xirion.net" = proxy "http://docker-registry:5000"
       // {
         locations."/".extraConfig = ''

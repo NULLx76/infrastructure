@@ -4,7 +4,6 @@
 
 { config, pkgs, ... }:
 let
-  inherit (config.meta.exposes.ci) port;
   vs = config.vault-secrets.secrets;
 in {
   imports = [ ];
@@ -19,8 +18,6 @@ in {
 
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
-
-  networking.firewall.allowedTCPPorts = [ port 9000 ];
 
   vault-secrets.secrets.gitea_runner = {
     services = [ "gitea-runner-nix\x2dnative" ];
