@@ -47,7 +47,7 @@
   };
 
   outputs = { self, nixpkgs, nixpkgs_22-11, vault-secrets, colmena
-    , nixos-generators, nur, ... }@inputs:
+    , nixos-generators, nur, attic, ... }@inputs:
     let
       inherit (nixpkgs) lib;
 
@@ -125,6 +125,7 @@
       devShells.${system}.default = pkgs.mkShell {
         VAULT_ADDR = "http://vault.olympus:8200/";
         buildInputs = with pkgs; [
+          attic.packages.${pkgs.system}.attic
           apply-local
           colmena.packages.${system}.colmena
           cachix

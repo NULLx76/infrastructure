@@ -34,12 +34,20 @@ in {
       privateKeyFile = "${vs.rtorrent}/wireguardKey";
       postUp = "${postUpScript}/bin/post_up || true";
 
-      peers = [{
-        publicKey = "DVui+5aifNFRIVDjH3v2y+dQ+uwI+HFZOd21ajbEpBo=";
-        allowedIPs = [ "0.0.0.0/0" "::/0" ];
-        endpoint = "185.65.134.82:51820";
-        persistentKeepalive = 25;
-      }];
+      peers = [
+        {
+          publicKey = "33BoONMGCm2vknq2eq72eozRsHmHQY6ZHEEZ4851TkY=";
+          allowedIPs = [ "0.0.0.0/0" "::/0"];
+          endpoint = "193.32.249.70:51820";
+          persistentKeepalive = 25;
+        }
+        # {
+        # publicKey = "DVui+5aifNFRIVDjH3v2y+dQ+uwI+HFZOd21ajbEpBo=";
+        # allowedIPs = [ "0.0.0.0/0" "::/0" ];
+        # endpoint = "185.65.134.82:51820";
+        # persistentKeepalive = 25;
+        # }
+      ];
     };
   };
 }
