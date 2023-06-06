@@ -22,6 +22,8 @@
     local-zone = [
       "xirion.net typetransparent"
       "o.xirion.net typetransparent"
+      "attic.xirion.net typetransparent"
+      "g.xirion.net typetransparent"
       "fedi-media.xirion.net typetransparent"
       "hades.xirion.net typetransparent"
       "requests.xirion.net typetransparent"
@@ -33,6 +35,8 @@
       ''"xirion.net A 192.168.0.122"''
       ''"hades.xirion.net A 192.168.0.122"''
       ''"o.xirion.net A 192.168.0.122"''
+      ''"attic.xirion.net A 192.168.0.122"''
+      ''"g.xirion.net A 192.168.0.122"''
       ''"fedi-media.xirion.net A 192.168.0.122"''
       ''"requests.xirion.net A 192.168.0.122"''
       ''"ha.xirion.net A 192.168.0.122"''
