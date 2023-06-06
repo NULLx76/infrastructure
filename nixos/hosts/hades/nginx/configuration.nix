@@ -36,7 +36,7 @@ in {
     recommendedTlsSettings = true;
     recommendedOptimisation = true;
     recommendedBrotliSettings = true;
-    clientMaxBodySize = "500m";
+    clientMaxBodySize = "1024m";
 
     package = pkgs.nginxMainline;
 
