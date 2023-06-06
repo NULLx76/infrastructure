@@ -74,7 +74,7 @@
       apply-local = pkgs.writeShellScriptBin "apply-local" ''
         "${
           colmena.packages.${system}.colmena
-        }"/bin/colmena apply-local --sudo $@
+        }"/bin/colmena apply-local --sudo --keep-result $@
       '';
 
       fast-repl = pkgs.writeShellScriptBin "fast-repl" ''
