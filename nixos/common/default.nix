@@ -77,7 +77,7 @@
   nixpkgs.config.allowUnfree = true;
 
   nixpkgs.config.permittedInsecurePackages =
-    [ "nodejs-14.21.3" "openssl-1.1.1t" "nodejs-16.20.0" ];
+    [ "nodejs-14.21.3" "openssl-1.1.1t" "nodejs-16.20.0" "openssl-1.1.1u" ];
 
   # Limit the systemd journal to 100 MB of disk or the
   # last 7 days of logs, whichever happens first.
