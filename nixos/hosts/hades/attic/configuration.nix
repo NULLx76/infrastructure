@@ -18,10 +18,21 @@ in {
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
-  vault-secrets.secrets.attic = {
-    services = [ "atticd" ];
-   };
+  vault-secrets.secrets.attic = { services = [ "atticd" ]; };
 
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_15;
+    ensureDatabases = [ "atticd" ];
+    ensureUsers = [{
+      name = "atticd";
+      ensurePermissions = {
+        "DATABASE atticd" = "ALL PRIVILEGES";
+        "schema public" = "ALL";
+      };
+    }];
+
+  };
 
   services.atticd = {
     enable = true;
@@ -43,6 +54,8 @@ in {
         type = "zstd";
         level = 8;
       };
+
+      database.url = "postgresql://atticd?host=/run/postgresql";
 
       storage = {
         type = "s3";
