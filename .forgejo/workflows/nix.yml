@@ -1,7 +1,5 @@
 name: Nix
 
-on: [push]
-
 jobs:
   lint:
     runs-on: docker
