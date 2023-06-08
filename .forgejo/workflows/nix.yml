@@ -1,0 +1,20 @@
+name: Nix
+
+on: [push]
+
+jobs:
+  lint:
+    runs-on: docker
+    env:
+    container:
+      image: ghcr.io/catthehacker/ubuntu:js-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: https://github.com/cachix/install-nix-action@v20
+        env:
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+      - name: Run `nix flake check`
+        run: |
+          sed -i '/^access-tokens/ d' /etc/nix/nix.conf
+          nix run '.#' -- -V
