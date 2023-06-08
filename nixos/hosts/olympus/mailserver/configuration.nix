@@ -31,6 +31,11 @@ in {
     certificateScheme = "acme-nginx";
     enableManageSieve = true;
 
+    monitoring = {
+      alertAddress = "v@0x76.dev";
+      enable = true;
+    };
+
     loginAccounts = {
       # People
       "v@0x76.dev" = {
