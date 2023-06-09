@@ -79,6 +79,7 @@ in {
       DEFAULT_LOCALE = "en";
 
       WEB_DOMAIN = "fedi.xirion.net";
+      ALTERNATE_DOMAINS = "meowy.tech";
 
       SMTP_AUTH_METHOD = "plain";
       SMTP_OPENSSL_VERIFY_MODE = "none";
