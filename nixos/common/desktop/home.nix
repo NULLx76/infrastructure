@@ -79,6 +79,13 @@ in {
     sessionVariables = { DIRENV_LOG_FORMAT = ""; };
   };
 
+  programs.thunderbird = {
+    enable = true;
+    profiles.default = {
+      isDefault = true;
+    };
+  };
+
   # Syncthing
   services.syncthing.enable = true;
   xdg.userDirs = let home = config.home.homeDirectory;
