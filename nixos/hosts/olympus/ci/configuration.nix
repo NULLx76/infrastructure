@@ -40,6 +40,15 @@ in {
   };
 
   services.gitea-actions-runner.instances = {
+    runner_1 = {
+      name = "runner_1";
+      enable = true;
+      labels = [
+        "docker:docker://node:16-bullseye"
+      ];
+      url = "https://git.0x76.dev";
+      tokenFile = "${vs.gitea_runner}/token_runner_1";
+    };
     nix-native = {
       enable = true;
       name = "nix-native";

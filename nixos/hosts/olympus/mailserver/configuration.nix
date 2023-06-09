@@ -27,20 +27,37 @@ in {
   mailserver = {
     enable = true;
     fqdn = "mail.0x76.dev";
-    domains = [ "0x76.dev" "meowy.tech" ];
+    domains = [ "0x76.dev" "meowy.tech" "xirion.net" ];
     certificateScheme = "acme-nginx";
+    enableManageSieve = true;
+
+    monitoring = {
+      alertAddress = "v@0x76.dev";
+      enable = true;
+    };
 
     loginAccounts = {
       # People
       "v@0x76.dev" = {
         hashedPasswordFile = "${vs.mailserver}/v@0x76.dev";
-        aliases =
-          [ "v@meowy.tech" "postmaster@0x76.dev" "postmaster@meowy.tech" ];
+        catchAll = [ "xirion.net" "0x76.dev" ];
+        aliases = [
+          "postmaster@0x76.dev"
+          "abuse@0x76.dev"
+
+          "v@meowy.tech"
+          "abuse@meowy.tech"
+          "postmaster@meowy.tech"
+
+          "@xirion.net"
+          "@0x76.dev"
+        ];
       };
       "laura@meowy.tech" = {
         hashedPasswordFile = "${vs.mailserver}/laura@meowy.tech";
         aliases = [ "lau@meowy.tech" ];
       };
+
       # Services
       "gitea@0x76.dev" = {
         hashedPasswordFile = "${vs.mailserver}/gitea@0x76.dev";
@@ -82,6 +99,7 @@ in {
       pkgs.roundcube.withPlugins (plugins: [ plugins.persistent_login ]);
     plugins = [
       "archive"
+      "managesieve"
       # "enigma"
       # "markasjunk"
       "persistent_login"

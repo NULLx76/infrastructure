@@ -70,6 +70,7 @@ in {
           servers.pyright.enable = true;
           servers.elixirls.enable = true;
           servers.clangd.enable = true;
+          servers.yamlls.enable = true;
         };
         trouble.enable = true;
         lspkind.enable = true;

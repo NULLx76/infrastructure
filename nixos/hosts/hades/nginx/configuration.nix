@@ -36,7 +36,7 @@ in {
     recommendedTlsSettings = true;
     recommendedOptimisation = true;
     recommendedBrotliSettings = true;
-    clientMaxBodySize = "500m";
+    clientMaxBodySize = "1024m";
 
     package = pkgs.nginxMainline;
 
@@ -59,6 +59,7 @@ in {
     virtualHosts."git.xirion.net" = proxy "http://10.10.10.12";
     virtualHosts."mail.xirion.net" = proxy "http://192.168.0.118";
     virtualHosts."o.xirion.net" = proxy "http://192.168.0.112:9000";
+    virtualHosts."g.xirion.net" = proxy "http://garage.hades:3900";
     virtualHosts."requests.xirion.net" = proxy "http://overseerr.hades:5055";
     virtualHosts."pass.xirion.net" = proxy "http://bitwarden_rs";
     virtualHosts."repo.xirion.net" = proxy "http://archlinux";
