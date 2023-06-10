@@ -47,7 +47,7 @@ in {
 
   networking.wireguard.interfaces.wg0 = {
     ips = [ "10.100.0.1/24" ];
-    listenPort = 51820;
+    listenPort = 51821;
     privateKeyFile = "${vs.wireguard}/privateKey";
 
     peers = [
