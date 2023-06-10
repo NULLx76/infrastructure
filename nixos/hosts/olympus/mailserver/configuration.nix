@@ -75,6 +75,10 @@ in {
         hashedPasswordFile = "${vs.mailserver}/vaultwarden@0x76.dev";
         sendOnly = true;
       };
+      "snapraid@0x76.dev" = {
+        hashedPasswordFile = "${vs.mailserver}/snapraid@0x76.dev";
+        sendOnly = true;
+      };
     };
 
     indexDir = "/var/lib/dovecot/indices";
