@@ -65,7 +65,7 @@ in {
     smtp = {
       createLocally = false;
       fromAddress = "mastodon@xirion.net";
-      host = "mail.xirion.net";
+      host = "mail.0x76.dev";
       user = "mastodon@xirion.net";
       authenticate = true;
       port = 587;

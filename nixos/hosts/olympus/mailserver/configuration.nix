@@ -79,6 +79,10 @@ in {
         hashedPasswordFile = "${vs.mailserver}/snapraid@0x76.dev";
         sendOnly = true;
       };
+      "mastodon@xirion.net" = {
+        hashedPasswordFile = "${vs.mailserver}/mastodon@xirion.net";
+        sendOnly = true;
+      };
     };
 
     indexDir = "/var/lib/dovecot/indices";
