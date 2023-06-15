@@ -36,15 +36,35 @@ in {
   system.stateVersion = "23.05"; # Did you read the comment?
 
   # Additional packages
-  environment.systemPackages = with pkgs; [ gcc go jq rustup trivy nuclei-latest ];
+  environment.systemPackages = with pkgs; [
+    gcc
+    go
+    jq
+    rustup
+    trivy
+    nuclei-latest
+  ];
 
-  networking.firewall.allowedTCPPorts = [ ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
 
   virtualisation.docker.enable = true;
+
+  services.mosquitto = {
+    enable = true;
+    listeners = [{
+      acl = [ "pattern readwrite #" ];
+      omitPasswordAuth = true;
+      settings.allow_anonymous = true;
+    }];
+  };
+
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 1883 ];
+  };
 
   users.extraUsers.laura.extraGroups = [ "wheel" "docker" ];
   users.extraUsers.victor.extraGroups = [ "docker" ];
