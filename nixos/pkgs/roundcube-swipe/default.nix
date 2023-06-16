@@ -1,18 +1,19 @@
-{ runCommand, fetchzip }:
+{ runCommand, fetchFromGitHub }:
 let
   roundcubePlugin = { pname, version, src }:
 
-    runCommand "roundcube-plugin-${pname}-${version}" { } ''
+    runCommand "roundcube-plugin-swipe-${version}" { } ''
       mkdir -p $out/plugins/
-      cp -r ${src} $out/plugins/${pname}
+      cp -r ${src} $out/plugins/swipe
     '';
 in roundcubePlugin rec {
   pname = "roundcube-swipe";
   version = "0.5";
 
-  src = fetchzip {
-    url =
-      "https://github.com/johndoh/roundcube-swipe/archive/refs/tags/${version}.tar.gz";
-    sha256 = "sha256-ExTnYE4uF8E+Fatz7fL+vVmxgLxawEI30Rw2uAWNCNw=";
+  src = fetchFromGitHub {
+    owner = "johndoh";
+    repo = pname;
+    rev = "de96f82183bc593d879c335e6614fa983d51abfc";
+    sha256 = "sha256-vrMSvGwUzufSFDsUvUSL9JLR/+GtWdebVqgKiXMOOq4=";
   };
 }
