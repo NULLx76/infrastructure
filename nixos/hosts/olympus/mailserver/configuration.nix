@@ -103,11 +103,12 @@ in {
 
   services.roundcube = {
     enable = true;
-    package =
-      pkgs.roundcube.withPlugins (plugins: [ plugins.persistent_login ]);
+    package = pkgs.roundcube.withPlugins
+      (plugins: [ plugins.persistent_login pkgs.v.roundcube-swipe ]);
     plugins = [
       "archive"
       "managesieve"
+      "swipe"
       # "enigma"
       # "markasjunk"
       "persistent_login"
@@ -121,6 +122,19 @@ in {
       $config['smtp_host'] = "tls://${config.mailserver.fqdn}";
       $config['smtp_user'] = "%u";
       $config['smtp_pass'] = "%p";
+
+      $config['swipe_actions'] = [
+        'messagelist' => [
+          'left' => 'archive',
+          'right' => 'archive',
+          'down' => 'none'
+        ],
+        'contactlist' => [
+          'left' => 'none',
+          'right' => 'none',
+          'down' => 'none'
+        ]
+      ];
     '';
   };
 
