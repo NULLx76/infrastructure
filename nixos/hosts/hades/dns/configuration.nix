@@ -30,6 +30,7 @@
       "requests.xirion.net typetransparent"
       "ha.xirion.net typetransparent"
       "mail.xirion.net typetransparent"
+      "plex.xirion.net typetransparent"
     ];
 
     local-data = [
@@ -43,6 +44,7 @@
       ''"requests.xirion.net A 192.168.0.122"''
       ''"ha.xirion.net A 192.168.0.122"''
       ''"mail.xirion.net A 192.168.0.122"''
+      ''"plex.xirion.net A 192.168.0.122"''
     ];
   };
 }
