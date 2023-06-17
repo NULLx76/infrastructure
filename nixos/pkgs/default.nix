@@ -14,6 +14,8 @@ _final: prev: {
 
     dnd-5e-latex-template = prev.callPackage ./dnd-5e-latex-template { };
 
+    roundcube-swipe = prev.callPackage ./roundcube-swipe { };
+
     gitea-agatheme = prev.callPackage ./gitea-agatheme { };
 
     # nix-shell -p "(vscode-with-extensions.override {vscodeExtensions = with vscode-extensions; [ jnoortheen.nix-ide ]; })" -I nixpkgs=.

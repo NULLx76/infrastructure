@@ -5,9 +5,9 @@
   # * https://github.com/Infinidoge/nix-minecraft
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "nixpkgs/nixos-unstable-small";
 
-    nixpkgs_22-11.url = "github:nixos/nixpkgs/nixos-22.11";
+    nixpkgs_stable.url = "nixpkgs/nixos-23.05";
 
     nur.url = "github:nix-community/NUR";
 
@@ -46,7 +46,7 @@
     attic.url = "github:zhaofengli/attic";
   };
 
-  outputs = { self, nixpkgs, nixpkgs_22-11, vault-secrets, colmena
+  outputs = { self, nixpkgs, nixpkgs_stable, vault-secrets, colmena
     , nixos-generators, nur, attic, ... }@inputs:
     let
       inherit (nixpkgs) lib;
@@ -62,13 +62,13 @@
         overlays = [ (import ./nixos/pkgs) vault-secrets.overlay nur.overlay ];
       };
 
-      pkgs_22-11 = import nixpkgs_22-11 {
+      pkgs_stable = import nixpkgs_stable {
         inherit system;
         config.allowUnfree = true;
       };
 
       # Define args each module gets access to (access to hosts is useful for DNS/DHCP)
-      specialArgs = { inherit hosts flat_hosts inputs pkgs_22-11; };
+      specialArgs = { inherit hosts flat_hosts inputs pkgs_stable; };
 
       # Script to apply local colmena deployments
       apply-local = pkgs.writeShellScriptBin "apply-local" ''
