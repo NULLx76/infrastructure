@@ -1,6 +1,6 @@
 { runCommand, fetchFromGitHub }:
 let
-  roundcubePlugin = { pname, version, src }:
+  roundcubePlugin = { version, src }:
 
     runCommand "roundcube-plugin-swipe-${version}" { } ''
       mkdir -p $out/plugins/
