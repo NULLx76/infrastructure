@@ -3,8 +3,6 @@ _final: prev: {
   v = {
     glitch-soc = prev.callPackage ./glitch-soc { };
 
-    weave-gitops = prev.callPackage ./weave-gitops { };
-
     unbound = prev.unbound.override {
       withSystemd = true;
       withDoH = true;
