@@ -15,9 +15,9 @@ in {
         init.defaultBranch = "main";
         # Git merge driver that always grabs upstream changes
         # Useful for e.g. lock files
-        merge.theirs = {
-          name = "Keep Upstream Changes";
-          driver = "cp -f '%B' '%A'";
+        merge.ours = {
+          name = "Overwrite Upstream Changes";
+          driver = "cp -f '%A' '%B'";
         };
       };
 
@@ -25,7 +25,7 @@ in {
     };
 
     home.file.".config/git/attributes".text = ''
-      flake.lock merge=theirs
+      flake.lock merge=ours
     '';
   };
 }
