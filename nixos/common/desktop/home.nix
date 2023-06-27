@@ -27,6 +27,7 @@ in {
     rustup
     solo2-cli
     tex
+    plexamp
     unzip
     yt-dlp
     qmk
