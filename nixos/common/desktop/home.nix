@@ -41,27 +41,6 @@ in {
     direnv = true;
   };
 
-  programs.exa = {
-    enable = true;
-    enableAliases = true;
-  };
-
-  programs.bat.enable = true;
-
-  programs.git = {
-    enable = true;
-    package = pkgs.gitAndTools.gitFull;
-    userName = "Victor";
-    userEmail = "victor@xirion.net";
-    lfs.enable = true;
-    extraConfig = {
-      push.autoSetupRemote = true;
-      init.defaultBranch = "main";
-    };
-
-    difftastic.enable = true;
-  };
-
   programs.firefox.enable = true;
 
   programs.chromium = {

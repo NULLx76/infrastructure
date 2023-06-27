@@ -30,6 +30,7 @@
     home.stateVersion = "23.05";
 
     programs.v.nvim.enable = true;
+    programs.v.git.enable = true;
 
     programs.tmux = {
       enable = true;
@@ -37,5 +38,13 @@
       terminal = "screen-256color";
       clock24 = true;
     };
+
+    programs.exa = {
+      enable = true;
+      enableAliases = true;
+    };
+
+    programs.bat.enable = true;
+
   };
 }
