@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     yarnOfflineCache = fetchYarnDeps {
       yarnLock = "${src}/yarn.lock";
       # sha256 = lib.fakeSha256;
-      sha256 = "sha256-+i5vejb1XWwNQffg9gzRY8FVOt8MK6ht4cxSSrGAS/Q=";
+      sha256 = "sha256-8fUJ1RBQZ16R3IpA/JEcn+PO04ApQ9TkHuYKycvV8BY=";
     };
 
     nativeBuildInputs = [
