@@ -1786,10 +1786,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1mr2ibfk874ncv0qbdkynay738w2mfinlkhnbd5lyk5yiw5q1p10";
+      sha256 = "1jw8a20a9k05fpz3q24im19b97idss3179z76yn5scc5b8lk2rl7";
       type = "gem";
     };
-    version = "1.15.2";
+    version = "1.15.3";
   };
   oj = {
     groups = ["default"];
@@ -2607,10 +2607,10 @@
     platforms = [];
     source = {
       remotes = ["https://rubygems.org"];
-      sha256 = "1ga8yzc9zj45m92ycwnzhzahkwvc3dp3lym5m3f3880hs4jhh7l3";
+      sha256 = "1kymrjdpbmn4yaml3aaqyj1dzj8gqmm9h030dc2rj5mvja7fpi28";
       type = "gem";
     };
-    version = "6.0.1";
+    version = "6.0.2";
   };
   scenic = {
     dependencies = ["activerecord" "railties"];
