@@ -37,12 +37,14 @@ in {
 
   # Additional packages
   environment.systemPackages = with pkgs; [
+    ffuf
     gcc
     go
     jq
+    nuclei-latest
     rustup
     trivy
-    nuclei-latest
+    wapiti
   ];
 
   boot.loader.systemd-boot.enable = true;
