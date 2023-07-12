@@ -3,8 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-let
-  vs = config.vault-secrets.secrets;
+let vs = config.vault-secrets.secrets;
 in {
   imports = [ ];
 
@@ -20,7 +19,7 @@ in {
   environment.systemPackages = with pkgs; [ ];
 
   vault-secrets.secrets.gitea_runner = {
-    services = [ "gitea-runner-nix\x2dnative" ];
+    services = [ "gitea-runner-nix_native" "gitea-runner-runner_1" ];
   };
 
   virtualisation.podman = {
@@ -43,13 +42,11 @@ in {
     runner_1 = {
       name = "runner_1";
       enable = true;
-      labels = [
-        "docker:docker://node:16-bullseye"
-      ];
+      labels = [ "docker:docker://node:16-bullseye" ];
       url = "https://git.0x76.dev";
       tokenFile = "${vs.gitea_runner}/token_runner_1";
     };
-    nix-native = {
+    nix_native = {
       enable = true;
       name = "nix-native";
       labels = [ "native:host" ];
