@@ -19,7 +19,7 @@ spec:
               emptyDir: {}
           containers:
             - name: renovate
-              image: renovate/renovate:36.8.11
+              image: renovate/renovate:36.9.1
               volumeMounts:
                 - name: config-volume
                   mountPath: /opt/renovate/
