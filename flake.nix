@@ -5,7 +5,7 @@
   # * https://github.com/Infinidoge/nix-minecraft
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs/master";
 
     nixpkgs_stable.url = "nixpkgs/nixos-23.05";
 
