@@ -11,6 +11,7 @@ in {
     btop
     calibre
     celluloid
+    cinny-desktop
     element-desktop
     fusee-launcher
     gcc
