@@ -52,6 +52,7 @@ in {
     mailerPasswordFile = "${vs.gitea}/mailPassword";
 
     settings = {
+      default.WORK_PATH = "/var/lib/gitea";
       actions = { "ENABLED" = true; };
       repository = {
         "ENABLE_PUSH_CREATE_USER" = true;
@@ -64,7 +65,6 @@ in {
       indexer = {
         "REPO_INDEXER_ENABLED" = true;
         "REPO_INDEXER_PATH" = "indexers/repos.bleve";
-        "UPDATE_BUFFER_LEN" = 20;
         "MAX_FILE_SIZE" = 1048576;
         "REPO_INDEXER_EXCLUDE" = "node_modules/**";
       };
@@ -86,10 +86,10 @@ in {
       };
       mailer = {
         "ENABLED" = true;
-        "IS_TLS_ENABLED" = true;
-        "HOST" = "mail.0x76.dev:465";
+        # "IS_TLS_ENABLED" = true;
+        # "HOST" = "mail.0x76.dev:465";
         "FROM" = "gitea@0x76.dev";
-        "MAILER_TYPE" = "smtp";
+        # "MAILER_TYPE" = "smtp";
         "USER" = "gitea@0x76.dev";
 
         # Below is prep for 1.18
