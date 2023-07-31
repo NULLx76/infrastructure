@@ -75,7 +75,7 @@
     };
   };
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     material-design-icons
     noto-fonts
     noto-fonts-cjk
