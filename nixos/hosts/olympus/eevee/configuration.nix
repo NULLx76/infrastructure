@@ -40,6 +40,20 @@
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
+
+  services.kubo = {
+    enable = true;
+    # enableGC = true;
+    autoMount = true;
+    settings = {
+      Addresses.API = "/ip4/127.0.0.1/tcp/2324";
+      Experimental = {
+        AcceleratedDHTClient = true;
+        FilestoreEnabled = true;
+      };
+    };
+  };
+
   home-manager = {
     users.victor = import ./home;
   };
