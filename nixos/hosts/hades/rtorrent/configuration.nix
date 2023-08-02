@@ -36,17 +36,11 @@ in {
 
       peers = [
         {
-          publicKey = "33BoONMGCm2vknq2eq72eozRsHmHQY6ZHEEZ4851TkY=";
+          publicKey = "HQHCrq4J6bSpdW1fI5hR/bvcrYa6HgGgwaa5ZY749ik=";
           allowedIPs = [ "0.0.0.0/0" "::/0"];
-          endpoint = "193.32.249.70:51820";
-          persistentKeepalive = 25;
+          endpoint = "185.213.155.73:51820";
+          # persistentKeepalive = 25;
         }
-        # {
-        # publicKey = "DVui+5aifNFRIVDjH3v2y+dQ+uwI+HFZOd21ajbEpBo=";
-        # allowedIPs = [ "0.0.0.0/0" "::/0" ];
-        # endpoint = "185.65.134.82:51820";
-        # persistentKeepalive = 25;
-        # }
       ];
     };
   };
