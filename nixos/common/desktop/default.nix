@@ -46,9 +46,7 @@
   services.printing.enable = true;
 
   # Global Packages
-  environment = {
-    systemPackages = with pkgs; [ wireguard-tools sbctl ];
-  };
+  environment = { systemPackages = with pkgs; [ wireguard-tools sbctl ]; };
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -91,7 +89,12 @@
     enable = true;
     # Open ports in the firewall for Steam Remote Play
     remotePlay.openFirewall = true;
+    package = pkgs.steam.override {
+      extraPkgs = pkgs: with pkgs; [ gamescope mangohud ];
+    };
   };
+
+  programs.gamemode.enable = true;
 
   programs.adb.enable = true;
   # Networking
