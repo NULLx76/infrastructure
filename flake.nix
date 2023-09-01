@@ -5,7 +5,7 @@
   # * https://github.com/Infinidoge/nix-minecraft
 
   inputs = {
-    nixpkgs.url = "nixpkgs/master";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
 
     nixpkgs_stable.url = "nixpkgs/nixos-23.05";
 
@@ -32,7 +32,7 @@
     nixos-generators.url = "github:nix-community/nixos-generators";
     nixos-generators.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixos-hardware.url = "github:toastal/nixos-hardware/z-series-no-hidpi";
+    nixos-hardware.url = "github:nixos/nixos-hardware";
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote";

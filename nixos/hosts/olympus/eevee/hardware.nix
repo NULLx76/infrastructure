@@ -5,7 +5,7 @@
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
 
     # Open drivers cause gdm to crash
     # open = true;
