@@ -20,7 +20,7 @@
 
   networking.firewall.allowedTCPPorts = [ 80 9090 ];
 
-  services.ntfy-sh = let datadir = "/var/lib/ntfy";
+  services.ntfy-sh = let datadir = "/var/lib/ntfy-sh";
   in {
     enable = true;
     settings = {
