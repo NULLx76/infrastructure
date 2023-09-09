@@ -46,9 +46,9 @@ in {
       url = "https://git.0x76.dev";
       tokenFile = "${vs.gitea_runner}/token_runner_1";
     };
-    nix_native = {
+    native_nix = {
       enable = true;
-      name = "nix-native";
+      name = "native_nix";
       labels = [ "native:host" ];
       url = "https://git.0x76.dev";
       tokenFile = "${vs.gitea_runner}/token_native";
