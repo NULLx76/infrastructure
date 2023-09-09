@@ -69,8 +69,8 @@ in {
         "REPO_INDEXER_EXCLUDE" = "node_modules/**";
       };
       ui = {
-        "THEMES" = "gitea,arc-green,agatheme";
-        "DEFAULT_THEME" = "agatheme";
+        "THEMES" = "forgejo-auto,forgejo-light,forgejo-dark,auto,gitea,arc-green,agatheme";
+        "DEFAULT_THEME" = "forgejo-auto";
         "USE_SERVICE_WORKER" = true;
       };
       server = {

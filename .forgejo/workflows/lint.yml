@@ -4,9 +4,19 @@ on: [push]
 
 jobs:
   lint:
-    runs-on: native
+    runs-on: docker
+    env:
+    container:
+      image: ghcr.io/catthehacker/ubuntu:js-20.04
     steps:
       - uses: actions/checkout@v3
-      - run: statix check .
-      - run: deadnix -f
-      - run: yamllint .
+      - uses: https://github.com/cachix/install-nix-action@v22
+        env:
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+      - run: |
+          sed -i '/^access-tokens/ d' /etc/nix/nix.conf
+          nix profile install 'nixpkgs#deadnix' 'nixpkgs#statix' 'nixpkgs#yamllint'
+          statix check .
+          deadnix -f
+          yamllint .

@@ -10,9 +10,14 @@ on:
 
 jobs:
   update:
-    runs-on: native
+    runs-on: docker
+    container:
+      image: ghcr.io/catthehacker/ubuntu:js-20.04
     steps:
       - uses: actions/checkout@v3
+      - uses: https://github.com/cachix/install-nix-action@v22
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
       - env:
           VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
           VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}

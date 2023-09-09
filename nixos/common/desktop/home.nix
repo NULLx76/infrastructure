@@ -20,6 +20,7 @@ in {
     inputs.comma.packages.${pkgs.system}.default
     inputs.webcord.packages.${pkgs.system}.default
     kdenlive
+    mattermost-desktop
     mullvad-vpn
     neofetch
     nixfmt
