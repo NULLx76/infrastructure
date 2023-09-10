@@ -15,6 +15,8 @@ jobs:
       image: ghcr.io/catthehacker/ubuntu:js-20.04
     steps:
       - uses: actions/checkout@v3
+      - name: Check Nix flake inputs
+        uses: DeterminateSystems/flake-checker-action@v5
       - uses: https://github.com/cachix/install-nix-action@v22
         with:
           nix_path: nixpkgs=channel:nixos-unstable
