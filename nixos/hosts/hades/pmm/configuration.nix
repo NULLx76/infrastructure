@@ -36,7 +36,7 @@ in {
     backend = "podman";
     containers = {
       plex-meta-manager = {
-        image = "meisnate12/plex-meta-manager:v1.19.0";
+        image = "meisnate12/plex-meta-manager:v1.19.1";
         volumes = [
           "${datadir}:/config:rw"
           "/etc/pmm/Anime.yml:/config/Anime.yml:ro"
