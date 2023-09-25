@@ -11,5 +11,6 @@
   home.packages = with pkgs; [
     libreoffice-fresh
     jetbrains.clion
+    jetbrains.rust-rover
   ];
 }
