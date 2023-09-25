@@ -16,6 +16,10 @@
     resumeDevice = "/dev/nvme0n1p2";
     loader.systemd-boot.enable = lib.mkForce false;
 
+    kernel.sysctl = {
+      "perf_event_paranoid" = 1;
+      "kptr_restrict" = 0;
+    };
     lanzaboote = {
       enable = true;
       configurationLimit = 5;

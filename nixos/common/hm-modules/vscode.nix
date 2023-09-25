@@ -23,6 +23,7 @@ in {
         "[python]" = { "editor.formatOnType" = true; };
         "rust-analyzer.checkOnSave.command" = "clippy";
         "debug.allowBreakpointsEverywhere" = true;
+        "C_Cpp.clang_format_fallbackStyle" = "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 0}";
         # Don't index unecessary things
         "files.exclude" = {
           "**/.vscode" = true;
