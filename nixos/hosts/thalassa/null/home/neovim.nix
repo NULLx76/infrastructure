@@ -27,9 +27,11 @@
       };
       lsp = {
         enable = true;
-        servers.rust-analyzer.enable = true;
-        servers.rnix-lsp.enable = true;
-        servers.pyright.enable = true;
+        servers = {
+          rust-analyzer.enable = true;
+          rnix-lsp.enable = true;
+          pyright.enable = true;
+        };
       };
       nvim-cmp = { enable = true; };
     };

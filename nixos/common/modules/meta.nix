@@ -20,7 +20,8 @@ let
       };
     };
   };
-in {
+in
+{
   options.meta = {
 
     exposes = mkOption {
@@ -38,6 +39,5 @@ in {
     };
   };
 
-  config = {
-  };
+  config = { };
 }

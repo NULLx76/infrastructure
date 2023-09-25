@@ -7,7 +7,8 @@ let
   vs = config.vault-secrets.secrets;
   listenPort = config.meta.exposes.minio.port;
   consolePort = listenPort + 1;
-in {
+in
+{
   imports = [ ];
 
   # This value determines the NixOS release from which the default

@@ -7,7 +7,8 @@ let
   # https://github.com/immich-app/immich/releases
   # version = "1.55.1";
   dataDir = "/var/lib/immich";
-in {
+in
+{
   imports = [ ];
 
   # This value determines the NixOS release from which the default

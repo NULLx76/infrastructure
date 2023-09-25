@@ -1,9 +1,22 @@
-{ lib, stdenv, nodejs-slim, bundlerEnv, nixosTests, yarn, callPackage
-, imagemagick, ffmpeg, file, ruby_3_0, writeShellScript, fetchYarnDeps
+{ lib
+, stdenv
+, nodejs-slim
+, bundlerEnv
+, nixosTests
+, yarn
+, callPackage
+, imagemagick
+, ffmpeg
+, file
+, ruby_3_0
+, writeShellScript
+, fetchYarnDeps
 , fixup_yarn_lock
 
-# Allow building a fork or custom version of Mastodon:
-, pname ? "mastodon", version ? import ./version.nix, srcOverride ? null
+  # Allow building a fork or custom version of Mastodon:
+, pname ? "mastodon"
+, version ? import ./version.nix
+, srcOverride ? null
 , dependenciesDir ? ./. # Should contain gemset.nix, yarn.nix and package.json.
 }:
 
@@ -106,16 +119,18 @@ stdenv.mkDerivation rec {
     ln -s /tmp tmp
   '';
 
-  installPhase = let
-    run-streaming = writeShellScript "run-streaming.sh" ''
-      # NixOS helper script to consistently use the same NodeJS version the package was built with.
-      ${nodejs-slim}/bin/node ./streaming
+  installPhase =
+    let
+      run-streaming = writeShellScript "run-streaming.sh" ''
+        # NixOS helper script to consistently use the same NodeJS version the package was built with.
+        ${nodejs-slim}/bin/node ./streaming
+      '';
+    in
+    ''
+      mkdir -p $out
+      cp -r * $out/
+      ln -s ${run-streaming} $out/run-streaming.sh
     '';
-  in ''
-    mkdir -p $out
-    cp -r * $out/
-    ln -s ${run-streaming} $out/run-streaming.sh
-  '';
 
   passthru = {
     tests.mastodon = nixosTests.mastodon;

@@ -5,7 +5,8 @@ let
     dnd-5e-latex-template = { pkgs = [ pkgs.v.dnd-5e-latex-template ]; };
   };
   my-python-packages = ps: with ps; [ pandas requests numpy ];
-in {
+in
+{
   home.packages = with pkgs; [
     (python3.withPackages my-python-packages)
     btop
@@ -37,50 +38,53 @@ in {
 
   # Enable my own hm modules
   themes.v.catppuccin.enable = true;
-  programs.v.vscode.enable = true;
+  programs = {
+    v.vscode.enable = true;
 
-  programs.riff = {
-    enable = true;
-    direnv = true;
-  };
+    riff = {
+      enable = true;
+      direnv = true;
+    };
 
-  programs.firefox.enable = true;
+    firefox.enable = true;
 
-  programs.chromium = {
-    enable = true;
-    package = pkgs.ungoogled-chromium;
-  };
+    chromium = {
+      enable = true;
+      package = pkgs.ungoogled-chromium;
+    };
 
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-  };
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
 
-  programs.zsh = {
-    enable = true;
-    sessionVariables = { DIRENV_LOG_FORMAT = ""; };
-  };
+    zsh = {
+      enable = true;
+      sessionVariables = { DIRENV_LOG_FORMAT = ""; };
+    };
 
-  programs.thunderbird = {
-    enable = true;
-    profiles.default = {
-      isDefault = true;
+    thunderbird = {
+      enable = true;
+      profiles.default = {
+        isDefault = true;
+      };
     };
   };
 
   # Syncthing
   services.syncthing.enable = true;
-  xdg.userDirs = let home = config.home.homeDirectory;
-  in {
-    enable = true;
-    createDirectories = true;
-    desktop = "${home}/.desktop";
-    documents = "${home}/cloud/Documents";
-    download = "${home}/dl";
-    music = "${home}/cloud/Music";
-    pictures = "${home}/cloud/Pictures";
-    publicShare = "${home}/.publicShare";
-    templates = "${home}/.templates";
-    videos = "${home}/cloud/Videos";
-  };
+  xdg.userDirs =
+    let home = config.home.homeDirectory;
+    in {
+      enable = true;
+      createDirectories = true;
+      desktop = "${home}/.desktop";
+      documents = "${home}/cloud/Documents";
+      download = "${home}/dl";
+      music = "${home}/cloud/Music";
+      pictures = "${home}/cloud/Pictures";
+      publicShare = "${home}/.publicShare";
+      templates = "${home}/.templates";
+      videos = "${home}/cloud/Videos";
+    };
 }

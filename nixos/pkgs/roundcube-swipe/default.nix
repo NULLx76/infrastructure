@@ -6,7 +6,8 @@ let
       mkdir -p $out/plugins/
       cp -r ${src} $out/plugins/swipe
     '';
-in roundcubePlugin rec {
+in
+roundcubePlugin rec {
   pname = "roundcube-swipe";
   version = "0.5";
 

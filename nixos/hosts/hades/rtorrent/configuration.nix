@@ -21,27 +21,29 @@ in {
   vault-secrets.secrets.rtorrent = { services = [ "wg-quick-wg0" ]; };
 
   # Mullvad VPN
-  networking.wg-quick.interfaces = let
-    postUpScript = pkgs.writeScriptBin "post_up" ''
-      #!${pkgs.stdenv.shell}
-      ${pkgs.iproute2}/bin/ip route add 10.42.42.0/23 via 192.168.0.1
-      ${pkgs.iproute2}/bin/ip route add 10.100.0.0/24 via 192.168.0.1
-    '';
-  in {
-    wg0 = {
-      address = [ "10.66.153.191/32" "fc00:bbbb:bbbb:bb01::3:99be/128" ];
-      dns = [ "10.64.0.1" ];
-      privateKeyFile = "${vs.rtorrent}/wireguardKey";
-      postUp = "${postUpScript}/bin/post_up || true";
+  networking.wg-quick.interfaces =
+    let
+      postUpScript = pkgs.writeScriptBin "post_up" ''
+        #!${pkgs.stdenv.shell}
+        ${pkgs.iproute2}/bin/ip route add 10.42.42.0/23 via 192.168.0.1
+        ${pkgs.iproute2}/bin/ip route add 10.100.0.0/24 via 192.168.0.1
+      '';
+    in
+    {
+      wg0 = {
+        address = [ "10.66.153.191/32" "fc00:bbbb:bbbb:bb01::3:99be/128" ];
+        dns = [ "10.64.0.1" ];
+        privateKeyFile = "${vs.rtorrent}/wireguardKey";
+        postUp = "${postUpScript}/bin/post_up || true";
 
-      peers = [
-        {
-          publicKey = "HQHCrq4J6bSpdW1fI5hR/bvcrYa6HgGgwaa5ZY749ik=";
-          allowedIPs = [ "0.0.0.0/0" "::/0"];
-          endpoint = "185.213.155.73:51820";
-          # persistentKeepalive = 25;
-        }
-      ];
+        peers = [
+          {
+            publicKey = "HQHCrq4J6bSpdW1fI5hR/bvcrYa6HgGgwaa5ZY749ik=";
+            allowedIPs = [ "0.0.0.0/0" "::/0" ];
+            endpoint = "185.213.155.73:51820";
+            # persistentKeepalive = 25;
+          }
+        ];
+      };
     };
-  };
 }

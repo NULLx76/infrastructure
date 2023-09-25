@@ -2,14 +2,16 @@
   imports =
     [ ./users ./modules inputs.vault-secrets.nixosModules.vault-secrets ];
 
-  vault-secrets = let
-    inherit (config.networking) domain hostName;
-    server = if domain == "olympus" then "vault" else "vault-0";
-  in lib.mkIf (domain == "olympus" || domain == "hades") {
-    vaultPrefix = "${domain}_secrets/nixos";
-    vaultAddress = "http://${server}.${domain}:8200/";
-    approlePrefix = "${domain}-${hostName}";
-  };
+  vault-secrets =
+    let
+      inherit (config.networking) domain hostName;
+      server = if domain == "olympus" then "vault" else "vault-0";
+    in
+    lib.mkIf (domain == "olympus" || domain == "hades") {
+      vaultPrefix = "${domain}_secrets/nixos";
+      vaultAddress = "http://${server}.${domain}:8200/";
+      approlePrefix = "${domain}-${hostName}";
+    };
 
   home-manager = {
     useGlobalPkgs = true;

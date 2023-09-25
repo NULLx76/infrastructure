@@ -19,20 +19,60 @@ in {
   environment.systemPackages = with pkgs; [ wireguard-tools ];
 
   environment.noXlibs = lib.mkForce false;
+  networking = {
 
-  networking.firewall.allowedUDPPorts =
-    [ config.networking.wireguard.interfaces.wg0.listenPort ];
-  networking.firewall.checkReversePath = false;
+    firewall.allowedUDPPorts =
+      [ config.networking.wireguard.interfaces.wg0.listenPort ];
+    firewall.checkReversePath = false;
+
+    nat = {
+      enable = true;
+      internalInterfaces = [ "wg0" "eth0" ];
+      externalInterface = "eth0";
+    };
+
+    wireguard.interfaces.wg0 = {
+      ips = [ "10.100.0.1/24" ];
+      listenPort = 51821;
+      privateKeyFile = "${vs.wireguard}/privateKey";
+
+      peers = [
+        {
+          # Phone
+          publicKey = "K+99mvSYs4urcclreQDLA1pekD4xtu/mpS2uVWw8Bws=";
+          allowedIPs = [ "10.100.0.2/32" ];
+        }
+        {
+          # Laura's laptop
+          publicKey = "ZWIaDGrASlTkEK75j10VeGCvrIGfpk4GPobmqcYX2D0=";
+          allowedIPs = [ "10.100.0.3/32" ];
+        }
+        {
+          # Old Laptop
+          publicKey = "L8myt2bcdja7M+i+9eatdQRW8relPUoZZ9lEKSLe+m8=";
+          allowedIPs = [ "10.100.0.4/32" ];
+        }
+        {
+          # New Laptop
+          publicKey = "+Ms3xV6LxNZWTQk11zoz+AUIV2uds6A64Wz15JlR/Ak=";
+          allowedIPs = [ "10.100.0.6/32" ];
+        }
+        {
+          # Aerdenhout
+          # Useful setup video for opnsense: https://www.youtube.com/watch?v=RoXHe5dqCM0
+          # https://docs.opnsense.org/manual/how-tos/wireguard-s2s.html
+          publicKey = "KgqLhmUMX6kyTjRoa/GOCrZOvXNE5HWYuOr/T3v8/VI=";
+          allowedIPs = [ "10.100.0.5/32" "192.168.0.0/23" "10.10.10.0/24" ];
+          endpoint = "83.128.154.23:51820";
+          persistentKeepalive = 25;
+        }
+      ];
+    };
+  };
 
   vault-secrets.secrets.wireguard = {
     services = [ "wireguard-wg0" ];
     loginRetries = 25;
-  };
-
-  networking.nat = {
-    enable = true;
-    internalInterfaces = [ "wg0" "eth0" ];
-    externalInterface = "eth0";
   };
 
   boot.kernel.sysctl = {
@@ -43,43 +83,5 @@ in {
   services.prometheus.exporters.wireguard = {
     enable = true;
     openFirewall = true;
-  };
-
-  networking.wireguard.interfaces.wg0 = {
-    ips = [ "10.100.0.1/24" ];
-    listenPort = 51821;
-    privateKeyFile = "${vs.wireguard}/privateKey";
-
-    peers = [
-      {
-        # Phone
-        publicKey = "K+99mvSYs4urcclreQDLA1pekD4xtu/mpS2uVWw8Bws=";
-        allowedIPs = [ "10.100.0.2/32" ];
-      }
-      {
-        # Laura's laptop
-        publicKey = "ZWIaDGrASlTkEK75j10VeGCvrIGfpk4GPobmqcYX2D0=";
-        allowedIPs = [ "10.100.0.3/32" ];
-      }
-      {
-        # Old Laptop
-        publicKey = "L8myt2bcdja7M+i+9eatdQRW8relPUoZZ9lEKSLe+m8=";
-        allowedIPs = [ "10.100.0.4/32" ];
-      }
-      {
-        # New Laptop
-        publicKey = "+Ms3xV6LxNZWTQk11zoz+AUIV2uds6A64Wz15JlR/Ak=";
-        allowedIPs = [ "10.100.0.6/32" ];
-      }
-      {
-        # Aerdenhout
-        # Useful setup video for opnsense: https://www.youtube.com/watch?v=RoXHe5dqCM0
-        # https://docs.opnsense.org/manual/how-tos/wireguard-s2s.html
-        publicKey = "KgqLhmUMX6kyTjRoa/GOCrZOvXNE5HWYuOr/T3v8/VI=";
-        allowedIPs = [ "10.100.0.5/32" "192.168.0.0/23" "10.10.10.0/24" ];
-        endpoint = "83.128.154.23:51820";
-        persistentKeepalive = 25;
-      }
-    ];
   };
 }

@@ -30,23 +30,39 @@ let
 
     exec Hyprland
   '';
-in {
+in
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./rescue-boot.nix
     ./networking.nix
   ];
+  home-manager = {
 
-  # home-manager
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-  home-manager.users.victor = import ./home;
-  home-manager.extraSpecialArgs = { inherit inputs; };
+    # home-manager
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.victor = import ./home;
+    extraSpecialArgs = { inherit inputs; };
+  };
+  security = {
 
-  security.pam.services.swaylock = { };
+    pam.services.swaylock = { };
 
-  security.sudo.wheelNeedsPassword = true;
+    sudo.wheelNeedsPassword = true;
+    rtkit.enable = true;
+
+    # Enables logging in with my Solokey
+    pam.u2f = {
+      enable = true;
+      debug = false;
+      cue = true;
+      control = "sufficient";
+      authFile =
+        "/etc/u2f-mappings"; # use `pamu2fcfg` from `pkgs.pam_u2f` to generate this config
+    };
+  };
 
   fonts = {
     fonts = with pkgs; [
@@ -79,61 +95,116 @@ in {
   # boot.initrd.systemd.enable = true; # Experimental
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
-    loader.systemd-boot.editor = false;
-    loader.systemd-boot.enable = true;
-    # loader.systemd-boot.configurationLimit = 6;
-    loader.efi.canTouchEfiVariables = true;
-    loader.efi.efiSysMountPoint = "/boot/efi";
+    loader = {
+      systemd-boot.editor = false;
+      systemd-boot.enable = true;
+      # loader.systemd-boot.configurationLimit = 6;
+      efi.canTouchEfiVariables = true;
+      efi.efiSysMountPoint = "/boot/efi";
+    };
 
     kernel.sysctl = { "fs.inotify.max_user_watches" = 524288; };
   };
+  services = {
 
-  services.gnome.gnome-keyring.enable = true;
+    gnome.gnome-keyring.enable = true;
 
-  fileSystems."/".options = [ "compress=zstd" ];
-  fileSystems."/home".options = [ "compress=zstd" ];
-  fileSystems."/nix".options = [ "compress=zstd" "noatime" ];
+    udisks2.enable = true;
+    dbus.enable = true;
 
-  # Filesystem dedup
-  # services.beesd.filesystems = {
-  #  root = {
-  #    spec = "LABEL=nixos";
-  #    hashTableSizeMB = 256;
-  #    verbosity = "crit";
-  #    extraOptions = [ "--loadavg-target" "2.0" ];
-  #  };
-  # };
+    xserver = {
+      enable = false;
+      layout = "us";
+      xkbVariant = "altgr-intl";
+      xkbOptions = "caps:swapescape";
+      videoDrivers = [ "nvidia" ];
+    };
+    blueman.enable = true;
 
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_GB.utf8";
+    # Enable CUPS to print documents.
+    printing.enable = true;
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      # If you want to use JACK applications, uncomment this
+      #jack.enable = true;
 
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "nl_NL.UTF-8";
-    LC_IDENTIFICATION = "nl_NL.UTF-8";
-    LC_MEASUREMENT = "nl_NL.UTF-8";
-    LC_MONETARY = "nl_NL.UTF-8";
-    LC_NAME = "nl_NL.UTF-8";
-    LC_NUMERIC = "nl_NL.UTF-8";
-    LC_PAPER = "nl_NL.UTF-8";
-    LC_TELEPHONE = "nl_NL.UTF-8";
-    LC_TIME = "en_DK.UTF-8";
+      # use the example session manager (no others are packaged yet so this is enabled by default,
+      # no need to redefine it in your config for now)
+      #media-session.enable = true;
+    };
+
+    fstrim.enable = true;
+
+    # don't shutdown when power button is short-pressed
+    logind.extraConfig = ''
+      HandlePowerKey=suspend
+    '';
+
+    udev.packages = with pkgs; [
+      android-udev-rules
+      logitech-udev-rules
+      wooting-udev-rules
+    ];
   };
+  fileSystems = {
 
-  i18n.supportedLocales =
-    [ "en_GB.UTF-8/UTF-8" "nl_NL.UTF-8/UTF-8" "en_DK.UTF-8/UTF-8" ];
+    "/".options = [ "compress=zstd" ];
+    "/home".options = [ "compress=zstd" ];
+    "/nix".options = [ "compress=zstd" "noatime" ];
+  };
+  i18n = {
+
+    # Filesystem dedup
+    # services.beesd.filesystems = {
+    #  root = {
+    #    spec = "LABEL=nixos";
+    #    hashTableSizeMB = 256;
+    #    verbosity = "crit";
+    #    extraOptions = [ "--loadavg-target" "2.0" ];
+    #  };
+    # };
+
+    # Select internationalisation properties.
+    defaultLocale = "en_GB.utf8";
+
+    extraLocaleSettings = {
+      LC_ADDRESS = "nl_NL.UTF-8";
+      LC_IDENTIFICATION = "nl_NL.UTF-8";
+      LC_MEASUREMENT = "nl_NL.UTF-8";
+      LC_MONETARY = "nl_NL.UTF-8";
+      LC_NAME = "nl_NL.UTF-8";
+      LC_NUMERIC = "nl_NL.UTF-8";
+      LC_PAPER = "nl_NL.UTF-8";
+      LC_TELEPHONE = "nl_NL.UTF-8";
+      LC_TIME = "en_DK.UTF-8";
+    };
+
+    supportedLocales =
+      [ "en_GB.UTF-8/UTF-8" "nl_NL.UTF-8/UTF-8" "en_DK.UTF-8/UTF-8" ];
+  };
 
   xdg.portal = {
     enable = true;
     wlr.enable = true;
   };
+  programs = {
 
-  services.udisks2.enable = true;
-  services.dbus.enable = true;
+    # Hyprland
+    hyprland = {
+      enable = true;
+      package = null; # Managed by home manager
+    };
 
-  # Hyprland
-  programs.hyprland = {
-    enable = true;
-    package = null; # Managed by home manager
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true;
+      dedicatedServer.openFirewall = true;
+    };
+
+    ssh.startAgent = true;
   };
 
   environment.loginShellInit = ''
@@ -141,57 +212,34 @@ in {
       ${run-hyprland}/bin/run-hyprland
     fi
   '';
+  hardware = {
 
-  services.xserver = {
-    enable = false;
-    layout = "us";
-    xkbVariant = "altgr-intl";
-    xkbOptions = "caps:swapescape";
-    videoDrivers = [ "nvidia" ];
+    nvidia.prime = {
+      offload.enable = true;
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
+
+    opengl = {
+      enable = true;
+      extraPackages = with pkgs; [
+        vaapiVdpau
+        intel-media-driver # LIBVA_DRIVER_NAME=iHD
+        vaapiIntel # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+        libvdpau-va-gl
+      ];
+    };
+
+    bluetooth.enable = true;
+
+    saleae-logic.enable = true;
+    pulseaudio.enable = false;
   };
-
-  hardware.nvidia.prime = {
-    offload.enable = true;
-    intelBusId = "PCI:0:2:0";
-    nvidiaBusId = "PCI:1:0:0";
-  };
-
-  hardware.opengl = {
-    enable = true;
-    extraPackages = with pkgs; [
-      vaapiVdpau
-      intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      vaapiIntel # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-      libvdpau-va-gl
-    ];
-  };
-
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
 
   virtualisation.podman.enable = true;
 
-  hardware.saleae-logic.enable = true;
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
   # Enable sound with pipewire.
   sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
 
   environment.systemPackages = with pkgs; [
     pciutils
@@ -204,41 +252,10 @@ in {
     swaylock-effects # Has to be installed globally so that pam module works
   ];
 
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-  };
-
-  services.fstrim.enable = true;
-
   nix.extraOptions = ''
     keep-outputs = true
     keep-derivations = true
   '';
-
-  # Enables logging in with my Solokey
-  security.pam.u2f = {
-    enable = true;
-    debug = false;
-    cue = true;
-    control = "sufficient";
-    authFile =
-      "/etc/u2f-mappings"; # use `pamu2fcfg` from `pkgs.pam_u2f` to generate this config
-  };
-
-  programs.ssh.startAgent = true;
-
-  # don't shutdown when power button is short-pressed
-  services.logind.extraConfig = ''
-    HandlePowerKey=suspend
-  '';
-
-  services.udev.packages = with pkgs; [
-    android-udev-rules
-    logitech-udev-rules
-    wooting-udev-rules
-  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

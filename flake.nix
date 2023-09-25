@@ -46,8 +46,17 @@
     attic.url = "github:zhaofengli/attic";
   };
 
-  outputs = { self, nixpkgs, nixpkgs_stable, vault-secrets, colmena
-    , nixos-generators, nur, attic, ... }@inputs:
+  outputs =
+    { self
+    , nixpkgs
+    , nixpkgs_stable
+    , vault-secrets
+    , colmena
+    , nixos-generators
+    , nur
+    , attic
+    , ...
+    }@inputs:
     let
       inherit (nixpkgs) lib;
 
@@ -81,7 +90,8 @@
         source /etc/set-environment
         nix repl --file "${./.}/repl.nix" $@
       '';
-    in {
+    in
+    {
       # Make the nixosConfigurations for compat reasons (e.g. vault)
       nixosConfigurations =
         (import (inputs.colmena + "/src/nix/hive/eval.nix") {
@@ -93,12 +103,14 @@
         }).nodes;
 
       # Make the colmena configuration
-      colmena = lib.foldr (el: acc: acc // util.mkColmenaHost el) {
-        meta = {
-          inherit specialArgs;
-          nixpkgs = pkgs;
-        };
-      } nixHosts;
+      colmena = lib.foldr (el: acc: acc // util.mkColmenaHost el)
+        {
+          meta = {
+            inherit specialArgs;
+            nixpkgs = pkgs;
+          };
+        }
+        nixHosts;
 
       packages.${system} = {
         inherit apply-local;
@@ -137,6 +149,7 @@
           statix
           terraform
           nixfmt
+          nixpkgs-fmt
           nixUnstable
           nil
           vault

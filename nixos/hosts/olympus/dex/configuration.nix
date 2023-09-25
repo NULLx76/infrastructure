@@ -9,7 +9,8 @@ let
   db_name = "dex";
   inherit (config.meta.exposes.dex) port;
   metricsPort = 5558;
-in {
+in
+{
   imports = [ ];
 
   # This value determines the NixOS release from which the default

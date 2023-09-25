@@ -23,23 +23,27 @@
   };
 
   home-manager.users.victor = {
-    programs.home-manager.enable = true;
+    programs = {
+      home-manager.enable = true;
 
-    home.username = "victor";
-    home.homeDirectory = "/home/victor";
-    home.stateVersion = "23.05";
+      v.nvim.enable = true;
+      v.git.enable = true;
 
-    programs.v.nvim.enable = true;
-    programs.v.git.enable = true;
+      tmux = {
+        enable = true;
+        shortcut = "b";
+        terminal = "screen-256color";
+        clock24 = true;
+      };
 
-    programs.tmux = {
-      enable = true;
-      shortcut = "b";
-      terminal = "screen-256color";
-      clock24 = true;
+      bat.enable = true;
     };
+    home = {
 
-    programs.bat.enable = true;
+      username = "victor";
+      homeDirectory = "/home/victor";
+      stateVersion = "23.05";
+    };
 
   };
 }

@@ -6,7 +6,8 @@
 let
   vs = config.vault-secrets.secrets;
   inherit (config.meta.exposes.git) port;
-in {
+in
+{
   imports = [ ];
 
   # This value determines the NixOS release from which the default
@@ -23,12 +24,71 @@ in {
   environment.noXlibs = lib.mkForce false;
 
   networking.firewall.allowedTCPPorts = [ port ];
+  services = {
 
-  services.openssh.startWhenNeeded = false;
+    openssh.startWhenNeeded = false;
 
-  services.fail2ban = {
-    enable = true;
-    maxretry = 3;
+    fail2ban = {
+      enable = true;
+      maxretry = 3;
+    };
+
+    gitea = {
+      enable = true;
+      package = pkgs.forgejo;
+      lfs.enable = true;
+      dump.type = "tar.gz";
+      database.type = "postgres";
+      mailerPasswordFile = "${vs.gitea}/mailPassword";
+
+      settings = {
+        default.WORK_PATH = "/var/lib/gitea";
+        actions = { "ENABLED" = true; };
+        repository = {
+          "ENABLE_PUSH_CREATE_USER" = true;
+          "DEFAULT_PUSH_CREATE_PRIVATE" = false;
+        };
+        service = {
+          "DEFAULT_KEEP_EMAIL_PRIVATE" = true;
+          "DISABLE_REGISTRATION" = true;
+        };
+        indexer = {
+          "REPO_INDEXER_ENABLED" = true;
+          "REPO_INDEXER_PATH" = "indexers/repos.bleve";
+          "MAX_FILE_SIZE" = 1048576;
+          "REPO_INDEXER_EXCLUDE" = "node_modules/**";
+        };
+        ui = {
+          "THEMES" = "forgejo-auto,forgejo-light,forgejo-dark,auto,gitea,arc-green,agatheme";
+          "DEFAULT_THEME" = "forgejo-auto";
+          "USE_SERVICE_WORKER" = true;
+        };
+        server = {
+          LANDING_PAGE = "explore";
+          SSH_PORT = 42;
+          DOMAIN = "git.0x76.dev";
+          ROOT_URL = "https://git.0x76.dev";
+          HTTP_PORT = port;
+        };
+        session = {
+          "PROVIDER" = "db";
+          "COOKIE_SECURE" = true;
+        };
+        mailer = {
+          "ENABLED" = true;
+          # "IS_TLS_ENABLED" = true;
+          # "HOST" = "mail.0x76.dev:465";
+          "FROM" = "gitea@0x76.dev";
+          # "MAILER_TYPE" = "smtp";
+          "USER" = "gitea@0x76.dev";
+
+          # Below is prep for 1.18
+          "PROTOCOL" = "smtps";
+          "SMTP_ADDR" = "mail.0x76.dev";
+          "SMTP_PORT" = 465;
+        };
+      };
+    };
   };
 
   vault-secrets.secrets.gitea = {
@@ -42,61 +102,4 @@ in {
       mkdir -p ${target_dir}
       ln -sf ${pkgs.v.gitea-agatheme} "${target_dir}/theme-agatheme.css"
     '';
-
-  services.gitea = {
-    enable = true;
-    package = pkgs.forgejo;
-    lfs.enable = true;
-    dump.type = "tar.gz";
-    database.type = "postgres";
-    mailerPasswordFile = "${vs.gitea}/mailPassword";
-
-    settings = {
-      default.WORK_PATH = "/var/lib/gitea";
-      actions = { "ENABLED" = true; };
-      repository = {
-        "ENABLE_PUSH_CREATE_USER" = true;
-        "DEFAULT_PUSH_CREATE_PRIVATE" = false;
-      };
-      service = {
-        "DEFAULT_KEEP_EMAIL_PRIVATE" = true;
-        "DISABLE_REGISTRATION" = true;
-      };
-      indexer = {
-        "REPO_INDEXER_ENABLED" = true;
-        "REPO_INDEXER_PATH" = "indexers/repos.bleve";
-        "MAX_FILE_SIZE" = 1048576;
-        "REPO_INDEXER_EXCLUDE" = "node_modules/**";
-      };
-      ui = {
-        "THEMES" = "forgejo-auto,forgejo-light,forgejo-dark,auto,gitea,arc-green,agatheme";
-        "DEFAULT_THEME" = "forgejo-auto";
-        "USE_SERVICE_WORKER" = true;
-      };
-      server = {
-        LANDING_PAGE = "explore";
-        SSH_PORT = 42;
-        DOMAIN = "git.0x76.dev";
-        ROOT_URL = "https://git.0x76.dev";
-        HTTP_PORT = port;
-      };
-      session = {
-        "PROVIDER" = "db";
-        "COOKIE_SECURE" = true;
-      };
-      mailer = {
-        "ENABLED" = true;
-        # "IS_TLS_ENABLED" = true;
-        # "HOST" = "mail.0x76.dev:465";
-        "FROM" = "gitea@0x76.dev";
-        # "MAILER_TYPE" = "smtp";
-        "USER" = "gitea@0x76.dev";
-
-        # Below is prep for 1.18
-        "PROTOCOL" = "smtps";
-        "SMTP_ADDR" = "mail.0x76.dev";
-        "SMTP_PORT" = 465;
-      };
-    };
-  };
 }

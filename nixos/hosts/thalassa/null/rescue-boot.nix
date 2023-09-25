@@ -13,7 +13,8 @@ let
     boot.supportedFilesystems = [ "btrfs" "ext4" ];
     environment.systemPackages = with pkgs; [ git ];
   };
-in {
+in
+{
   boot.loader.systemd-boot = {
     extraEntries = {
       "rescue.conf" = ''

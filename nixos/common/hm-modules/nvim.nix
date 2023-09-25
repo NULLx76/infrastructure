@@ -65,12 +65,14 @@ in {
         comment-nvim = { enable = true; };
         lsp = {
           enable = true;
-          servers.nil_ls.enable = true;
-          servers.rust-analyzer.enable = true;
-          servers.pyright.enable = true;
-          servers.elixirls.enable = true;
-          servers.clangd.enable = true;
-          servers.yamlls.enable = true;
+          servers = {
+            nil_ls.enable = true;
+            rust-analyzer.enable = true;
+            pyright.enable = true;
+            elixirls.enable = true;
+            clangd.enable = true;
+            yamlls.enable = true;
+          };
         };
         trouble.enable = true;
         lspkind.enable = true;

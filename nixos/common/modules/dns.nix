@@ -15,7 +15,8 @@ let
   ptr6Data = { hostname, realm, ip6, ... }: ''"${ip6} ${hostname}.${realm}"'';
 
   cfg = config.services.v.dns;
-in {
+in
+{
   options.services.v.dns = {
     enable = mkEnableOption "v.dns";
 
@@ -47,7 +48,7 @@ in {
 
   config = mkIf cfg.enable {
     networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [ 53 ] ;
+      allowedTCPPorts = [ 53 ];
       allowedUDPPorts = [ 53 ];
     };
     services.prometheus.exporters.unbound = mkIf cfg.enableMetrics {

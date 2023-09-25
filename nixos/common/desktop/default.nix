@@ -21,9 +21,26 @@
     users.victor = import ./home.nix;
     extraSpecialArgs = { inherit inputs; };
   };
+  services = {
 
-  # Enable my config for the gnome desktop environment
-  services.v.gnome.enable = true;
+    # Enable my config for the gnome desktop environment
+    v.gnome.enable = true;
+
+    # Enable CUPS to print documents.
+    printing.enable = true;
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      # If you want to use JACK applications, uncomment this
+      #jack.enable = true;
+
+      # use the example session manager (no others are packaged yet so this is enabled by default,
+      # no need to redefine it in your config for now)
+      #media-session.enable = true;
+    };
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
@@ -42,9 +59,6 @@
     LC_TIME = "nl_NL.UTF-8";
   };
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
   # Global Packages
   environment = { systemPackages = with pkgs; [ wireguard-tools sbctl ]; };
 
@@ -52,18 +66,6 @@
   sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
 
   virtualisation = {
     podman.enable = true;
@@ -84,21 +86,27 @@
         [ "DejaVuSansMono" "Ubuntu" "DroidSansMono" "NerdFontsSymbolsOnly" ];
     })
   ];
+  programs = {
+    steam = {
 
-  programs.steam = {
-    enable = true;
-    # Open ports in the firewall for Steam Remote Play
-    remotePlay.openFirewall = true;
-    package = pkgs.steam.override {
-      extraPkgs = pkgs: with pkgs; [ gamescope mangohud ];
+
+      enable = true;
+      # Open ports in the firewall for Steam Remote Play
+      remotePlay.openFirewall = true;
+      package = pkgs.steam.override {
+        extraPkgs = pkgs: with pkgs; [ gamescope mangohud ];
+      };
     };
+
+
+    gamemode.enable = true;
+
+    adb.enable = true;
   };
-
-  programs.gamemode.enable = true;
-
-  programs.adb.enable = true;
-  # Networking
-  networking.networkmanager.enable = true;
-  networking.firewall.checkReversePath = false;
-  networking.firewall.enable = false;
+  networking = {
+    # Networking
+    networkmanager.enable = true;
+    firewall.checkReversePath = false;
+    firewall.enable = false;
+  };
 }

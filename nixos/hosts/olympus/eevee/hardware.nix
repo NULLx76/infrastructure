@@ -1,42 +1,46 @@
 { pkgs, config, ... }: {
-  hardware.enableAllFirmware = true;
+  hardware = {
+    enableAllFirmware = true;
+    nvidia = {
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
 
-  services.hardware.bolt.enable = true;
+      # Open drivers cause gdm to crash
+      # open = true;
 
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+      # nvidia-drm.modeset=1
+      modesetting.enable = true;
+    };
 
-    # Open drivers cause gdm to crash
-    # open = true;
+    # Hardware acceleration
+    opengl = {
+      enable = true;
 
-    # nvidia-drm.modeset=1
-    modesetting.enable = true;
+      # Vulkan
+      driSupport = true;
+    };
+
+    logitech.wireless = {
+      enable = true;
+      enableGraphical = true;
+    };
   };
+  services = {
 
-  # Hardware acceleration
-  hardware.opengl = {
-    enable = true;
+    hardware.bolt.enable = true;
 
-    # Vulkan
-    driSupport = true;
+    xserver.videoDrivers = [ "nvidia" ];
+
+    # udev
+    udev.packages = with pkgs; [
+      android-udev-rules
+      logitech-udev-rules
+      wooting-udev-rules
+    ];
+
+    # SSD Trim
+    fstrim.enable = true;
   };
-
-  hardware.logitech.wireless = {
-    enable = true;
-    enableGraphical = true;
-  };
-
-  # udev
-  services.udev.packages = with pkgs; [
-    android-udev-rules
-    logitech-udev-rules
-    wooting-udev-rules
-  ];
 
   # FS
   fileSystems."/".options = [ "compress=zstd" ];
-
-  # SSD Trim
-  services.fstrim.enable = true;
 }

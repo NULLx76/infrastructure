@@ -7,13 +7,16 @@ let
   # Find all vault hosts that do not have the same IP as the current host
   vault_hosts =
     filter ({ tags ? [ ], ip ? "", ... }: (elem "vault" tags) && (ip != hostIP))
-    flat_hosts;
-  cluster_config = concatStrings (map ({ ip, ... }: ''
-    retry_join {
-      leader_api_addr = "http://${ip}:${toString cfg.port}"
-    }
-  '') vault_hosts);
-in {
+      flat_hosts;
+  cluster_config = concatStrings (map
+    ({ ip, ... }: ''
+      retry_join {
+        leader_api_addr = "http://${ip}:${toString cfg.port}"
+      }
+    '')
+    vault_hosts);
+in
+{
   options.services.v.vault = {
     enable = mkEnableOption "v's vault";
 

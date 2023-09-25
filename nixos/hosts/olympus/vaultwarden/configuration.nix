@@ -6,7 +6,8 @@
 let
   vs = config.vault-secrets.secrets;
   cfg = config.services.vaultwarden.config;
-in {
+in
+{
   imports = [ ];
 
   # This value determines the NixOS release from which the default

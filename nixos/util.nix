@@ -7,19 +7,21 @@ let
     mailserver.nixosModules.mailserver
     attic.nixosModules.atticd
   ];
-  type_import = let
-    import_cases = {
-      "lxc" = [
-        "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
-        ./common/generic-lxc.nix
-      ];
-      "vm" = [ ./common/generic-vm.nix ];
-      "local" = [
-        lanzaboote.nixosModules.lanzaboote
-        ./common/desktop
-      ];
-    };
-  in type: import_cases.${type} ++ base_imports;
+  type_import =
+    let
+      import_cases = {
+        "lxc" = [
+          "${nixpkgs}/nixos/modules/virtualisation/lxc-container.nix"
+          ./common/generic-lxc.nix
+        ];
+        "vm" = [ ./common/generic-vm.nix ];
+        "local" = [
+          lanzaboote.nixosModules.lanzaboote
+          ./common/desktop
+        ];
+      };
+    in
+    type: import_cases.${type} ++ base_imports;
   # Helper function to resolve what should be imported depending on the type of config (lxc, vm, bare metal)
   resolve_imports = { hostname, realm, profile ? hostname, type ? "lxc", ... }:
     type_import type
@@ -38,7 +40,7 @@ let
   # Flatten all hosts to a single list
   flatten_hosts = realms:
     concatMap (mapAttrsToList (name: value: value // { hostname = name; }))
-    (attrValues realms);
+      (attrValues realms);
 
   # Filter out all hosts which aren't nixos
   filter_nix_hosts = filter ({ nix ? true, ... }: nix);
@@ -46,12 +48,20 @@ let
   # outputs
 
   # Helper function to build a colmena host definition
-  mkColmenaHost = { ip ? null, exposes ? null, hostname, tags, realm
-    , type ? "lxc", ... }@host:
+  mkColmenaHost =
+    { ip ? null
+    , exposes ? null
+    , hostname
+    , tags
+    , realm
+    , type ? "lxc"
+    , ...
+    }@host:
     let
       # this makes local apply work a bit nicer
       name = if type == "local" then hostname else "${hostname}.${realm}";
-    in {
+    in
+    {
       "${name}" = {
         imports = resolve_imports host;
         networking = {
@@ -73,4 +83,5 @@ let
   hosts = add_realm_to_tags (import ./hosts);
   flat_hosts = flatten_hosts hosts;
   nixHosts = filter_nix_hosts flat_hosts;
-in { inherit base_imports mkColmenaHost hosts flat_hosts nixHosts; }
+in
+{ inherit base_imports mkColmenaHost hosts flat_hosts nixHosts; }

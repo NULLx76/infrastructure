@@ -2,7 +2,8 @@
 let
   vs = config.vault-secrets.secrets;
   cfg = config.services.mastodon;
-in {
+in
+{
   system.stateVersion = "21.05";
   # Use DHCP with static leases
   networking.interfaces.eth0.useDHCP = true;
@@ -100,6 +101,7 @@ in {
     };
   };
 
-  networking.firewall = let cfg = config.services.mastodon;
-  in { allowedTCPPorts = [ cfg.streamingPort cfg.webPort ]; };
+  networking.firewall =
+    let cfg = config.services.mastodon;
+    in { allowedTCPPorts = [ cfg.streamingPort cfg.webPort ]; };
 }

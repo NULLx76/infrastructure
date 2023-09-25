@@ -7,15 +7,18 @@ let
   generate_custom_keybindings = binds:
     {
       "org/gnome/settings-daemon/plugins/media-keys" = {
-        custom-keybindings = map (name:
-          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${name}/")
+        custom-keybindings = map
+          (name:
+            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${name}/")
           (attrNames binds);
       };
-    } // mapAttrs' (name:
-      nameValuePair
-      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${name}")
-    binds;
-in {
+    } // mapAttrs'
+      (name:
+        nameValuePair
+          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${name}")
+      binds;
+in
+{
   xdg.mimeApps.enable = true;
   xdg.mimeApps.defaultApplications = {
     "text/plain" = "org.gnome.TextEditor.desktop";

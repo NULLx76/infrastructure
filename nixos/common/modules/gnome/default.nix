@@ -14,22 +14,28 @@ in {
   };
 
   config = mkIf cfg.enable {
-    services.xserver.enable = true;
-    services.xserver.excludePackages = [ pkgs.xterm ];
+    services = {
+      xserver = {
+        enable = true;
+        excludePackages = [ pkgs.xterm ];
+
+        # Configure keymap in X11
+
+        layout = "us";
+        xkbVariant = "altgr-intl";
+
+
+        # Enable the GNOME Desktop Environment.
+        displayManager.gdm.enable = true;
+        desktopManager.gnome.enable = true;
+      };
+      udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
+      dbus.enable = true;
+      udisks2.enable = true;
+    };
 
     # Add Home-manager dconf stuff
     home-manager.sharedModules = mkIf cfg.hm [ ./hm.nix ];
-
-    # Configure keymap in X11
-    services.xserver = {
-      layout = "us";
-      xkbVariant = "altgr-intl";
-    };
-
-    # Enable the GNOME Desktop Environment.
-    services.xserver.displayManager.gdm.enable = true;
-    services.xserver.desktopManager.gnome.enable = true;
-    services.udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
     environment.gnome.excludePackages =
       (with pkgs; [ gnome-photos gnome-tour gnome-connections ])
       ++ (with pkgs.gnome; [
@@ -54,8 +60,6 @@ in {
 
     # Services required for gnome
     programs.dconf.enable = true;
-    services.dbus.enable = true;
-    services.udisks2.enable = true;
 
     # Extra gnome packages
     environment.systemPackages = with pkgs; [

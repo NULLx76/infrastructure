@@ -6,7 +6,8 @@
 let
   vs = config.vault-secrets.secrets;
   inherit (config.meta.exposes.outline) port;
-in {
+in
+{
   imports = [ ];
 
   # This value determines the NixOS release from which the default

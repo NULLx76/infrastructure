@@ -9,8 +9,9 @@ let
   localDomain = config.networking.domain;
   hosts =
     filter (h: hasAttr "ip" h && hasAttr "mac" h && h.realm == localDomain)
-    flat_hosts;
-in {
+      flat_hosts;
+in
+{
   networking = {
     defaultGateway = "10.42.42.1";
     nameservers = [ "10.42.42.15" "10.42.42.16" ];

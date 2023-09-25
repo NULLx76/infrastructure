@@ -20,18 +20,19 @@
 
   networking.firewall.allowedTCPPorts = [ 80 9090 ];
 
-  services.ntfy-sh = let datadir = "/var/lib/ntfy-sh";
-  in {
-    enable = true;
-    settings = {
-      base-url = "https://ntfy.0x76.dev";
-      listen-http = ":80";
-      cache-file = "${datadir}/cache.db";
-      auth-file = "${datadir}/user.db";
-      auth-default-access = "deny-all";
-      behind-proxy = true;
-      attachment-cache-dir = "${datadir}/attachments";
-      metrics-listen-http = ":9090";
+  services.ntfy-sh =
+    let datadir = "/var/lib/ntfy-sh";
+    in {
+      enable = true;
+      settings = {
+        base-url = "https://ntfy.0x76.dev";
+        listen-http = ":80";
+        cache-file = "${datadir}/cache.db";
+        auth-file = "${datadir}/user.db";
+        auth-default-access = "deny-all";
+        behind-proxy = true;
+        attachment-cache-dir = "${datadir}/attachments";
+        metrics-listen-http = ":9090";
+      };
     };
-  };
 }

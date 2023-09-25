@@ -8,7 +8,8 @@ let
   db_user = "hedgedoc";
   inherit (config.meta.exposes.md) port;
   vs = config.vault-secrets.secrets;
-in {
+in
+{
   imports = [ ];
 
   # This value determines the NixOS release from which the default
@@ -67,19 +68,20 @@ in {
         secretKey = "$MINIO_SECRET_KEY";
       };
       email = false;
-      oauth2 = let url = "https://dex.0x76.dev";
-      in {
-        providerName = "Dex";
-        clientID = "hedgedoc";
-        clientSecret = "$DEX_CLIENT_SECRET";
-        scope = "openid email profile";
-        authorizationURL = "${url}/auth";
-        tokenURL = "${url}/token";
-        userProfileURL = "${url}/userinfo";
-        userProfileUsernameAttr = "preferred_username";
-        userProfileDisplayNameAttr = "name";
-        userProfileEmailAttr = "email";
-      };
+      oauth2 =
+        let url = "https://dex.0x76.dev";
+        in {
+          providerName = "Dex";
+          clientID = "hedgedoc";
+          clientSecret = "$DEX_CLIENT_SECRET";
+          scope = "openid email profile";
+          authorizationURL = "${url}/auth";
+          tokenURL = "${url}/token";
+          userProfileURL = "${url}/userinfo";
+          userProfileUsernameAttr = "preferred_username";
+          userProfileDisplayNameAttr = "name";
+          userProfileEmailAttr = "email";
+        };
     };
   };
 }

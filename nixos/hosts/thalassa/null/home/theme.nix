@@ -34,16 +34,48 @@ let
 
     hex = mapAttrs (_name: value: "#${value}") colour;
   };
-in {
-  home.file.".xsettingsd".text = ''
-    Net/ThemeName "${theme}"
-    Gtk/CursorThemeName "${cursorTheme}"
-  '';
+in
+{
+  home = {
+    file.".xsettingsd".text = ''
+      Net/ThemeName "${theme}"
+      Gtk/CursorThemeName "${cursorTheme}"
+    '';
 
-  home.pointerCursor = {
-    name = "Catppuccin-Frappe-Pink-Cursors";
-    size = 32;
-    package = pkgs.catppuccin-cursors.frappePink;
+    pointerCursor = {
+      name = "Catppuccin-Frappe-Pink-Cursors";
+      size = 32;
+      package = pkgs.catppuccin-cursors.frappePink;
+    };
+
+    file.".config/eww/eww.scss".text = lib.mkBefore ''
+      $rosewater: ${colour.hex.rosewater};
+      $flamingo: ${colour.hex.flamingo};
+      $pink: ${colour.hex.pink};
+      $mauve: ${colour.hex.mauve};
+      $red: ${colour.hex.red};
+      $maroon: ${colour.hex.maroon};
+      $peach: ${colour.hex.peach};
+      $yellow: ${colour.hex.yellow};
+      $green: ${colour.hex.green};
+      $teal: ${colour.hex.teal};
+      $sky: ${colour.hex.sky};
+      $sapphire: ${colour.hex.sapphire};
+      $blue: ${colour.hex.blue};
+      $lavender: ${colour.hex.lavender};
+      $text: ${colour.hex.text};
+      $subtext0: ${colour.hex.subtext0};
+      $subtext1: ${colour.hex.subtext1};
+      $overlay0: ${colour.hex.overlay0};
+      $overlay1: ${colour.hex.overlay1};
+      $overlay2: ${colour.hex.overlay2};
+      $surface0: ${colour.hex.surface0};
+      $surface1: ${colour.hex.surface1};
+      $surface2: ${colour.hex.surface2};
+      $base: ${colour.hex.base};
+      $mantle: ${colour.hex.mantle};
+      $crust: ${colour.hex.crust};
+    '';
   };
 
   gtk = {
@@ -92,33 +124,4 @@ in {
     textColor = colour.hex.text;
     borderRadius = 5;
   };
-
-  home.file.".config/eww/eww.scss".text = lib.mkBefore ''
-    $rosewater: ${colour.hex.rosewater};
-    $flamingo: ${colour.hex.flamingo};
-    $pink: ${colour.hex.pink};
-    $mauve: ${colour.hex.mauve};
-    $red: ${colour.hex.red};
-    $maroon: ${colour.hex.maroon};
-    $peach: ${colour.hex.peach};
-    $yellow: ${colour.hex.yellow};
-    $green: ${colour.hex.green};
-    $teal: ${colour.hex.teal};
-    $sky: ${colour.hex.sky};
-    $sapphire: ${colour.hex.sapphire};
-    $blue: ${colour.hex.blue};
-    $lavender: ${colour.hex.lavender};
-    $text: ${colour.hex.text};
-    $subtext0: ${colour.hex.subtext0};
-    $subtext1: ${colour.hex.subtext1};
-    $overlay0: ${colour.hex.overlay0};
-    $overlay1: ${colour.hex.overlay1};
-    $overlay2: ${colour.hex.overlay2};
-    $surface0: ${colour.hex.surface0};
-    $surface1: ${colour.hex.surface1};
-    $surface2: ${colour.hex.surface2};
-    $base: ${colour.hex.base};
-    $mantle: ${colour.hex.mantle};
-    $crust: ${colour.hex.crust};
-  '';
 }

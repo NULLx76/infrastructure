@@ -14,7 +14,8 @@ let
       -v "/etc/pmm/TVShows.yml:/config/TVShows.yml:ro" \
     ${container} --run
   '';
-in {
+in
+{
   imports = [ ];
 
   # This value determines the NixOS release from which the default

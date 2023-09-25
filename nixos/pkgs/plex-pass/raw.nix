@@ -2,8 +2,10 @@
 let
   sources = builtins.fromJSON (builtins.readFile ./sources.json);
   source = lib.findFirst (x: x.platform == stdenv.hostPlatform.system)
-    (throw "unsupported platform: ${stdenv.hostPlatform.system}") sources;
-in plexRaw.overrideAttrs (attrs: {
+    (throw "unsupported platform: ${stdenv.hostPlatform.system}")
+    sources;
+in
+plexRaw.overrideAttrs (attrs: {
   pname = attrs.pname + "-plexpass";
   inherit (source) version;
   src = fetchurl {

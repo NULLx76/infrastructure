@@ -24,7 +24,8 @@ let
 
     doCheck = false;
   };
-in {
+in
+{
   imports = [ ./hardware-configuration.nix ];
 
   # This value determines the NixOS release from which the default
@@ -46,10 +47,12 @@ in {
     trivy
     wapiti
   ];
+  boot.loader = {
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot";
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+    efi.efiSysMountPoint = "/boot";
+  };
 
   virtualisation.docker.enable = true;
 
