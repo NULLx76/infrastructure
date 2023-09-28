@@ -23,7 +23,7 @@ in {
   networking.firewall.allowedTCPPorts = [ 3900 3901 3902 ];
 
   # Defines rpc_secret
-  systemd.services.garage.serviceConfig.EnvironmentFile = "${vs.garage}/environment";
+  systemd.services.garage.serviceConfig.EnvironmentFile = [ "${vs.garage}/environment" ];
 
   services.garage = {
     enable = true;
