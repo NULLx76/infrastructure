@@ -40,6 +40,7 @@ in
   themes.v.catppuccin.enable = true;
   programs = {
     v.vscode.enable = true;
+    v.nvim.enable = true;
 
     riff = {
       enable = true;
