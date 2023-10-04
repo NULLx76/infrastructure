@@ -20,20 +20,23 @@ in
     inputs.attic.packages.${pkgs.system}.attic
     inputs.comma.packages.${pkgs.system}.default
     inputs.webcord.packages.${pkgs.system}.default
+    jetbrains.clion
+    jetbrains.rust-rover
     kdenlive
+    libreoffice-fresh
     mattermost-desktop
     mullvad-vpn
     neofetch
     nixfmt
     nixpkgs-review
     plex-media-player
+    plexamp
+    qmk
     rustup
     solo2-cli
     tex
-    plexamp
     unzip
     yt-dlp
-    qmk
   ];
 
   # Enable my own hm modules
