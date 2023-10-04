@@ -26,7 +26,6 @@
     programs = {
       home-manager.enable = true;
 
-      v.nvim.enable = true;
       v.git.enable = true;
 
       tmux = {
