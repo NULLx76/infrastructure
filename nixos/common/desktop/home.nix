@@ -13,7 +13,7 @@ in
     calibre
     celluloid
     cinny-desktop
-    element-desktop
+    element-desktop-wayland
     fusee-launcher
     gcc
     gimp

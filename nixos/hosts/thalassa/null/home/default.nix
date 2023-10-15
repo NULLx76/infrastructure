@@ -119,7 +119,6 @@ in
       calibre
       cinny-desktop
       discord-canary
-      element-desktop-wayland
       fluxcd
       fusee-launcher
       gcc
