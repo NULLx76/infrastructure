@@ -38,9 +38,6 @@
   # FS
   fileSystems."/".options = [ "compress=zstd" ];
 
-  systemd.tmpfiles.rules =
-    [ "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.hip}" ];
-
   powerManagement = {
     enable = true;
     powertop.enable = true;
