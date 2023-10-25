@@ -9,19 +9,30 @@ in {
       package = pkgs.neovim-unwrapped;
       vimAlias = true;
 
-      globals = { mapleader = " "; };
+      globals.mapleader = " ";
 
-      options = { number = true; };
+      options.number = true;
 
-      maps.normal = {
-        "<leader>ff" = "<cmd>lua require('telescope.builtin').find_files()<cr>";
-        "<leader>fg" = "<cmd>lua require('telescope.builtin').live_grep()<cr>";
-
-        "<C-_>" =
-          "<cmd>lua require('Comment.api').toggle.linewise.current()<cr>"; # map ctrl+/ to commenting code
-
-        "g=" = "<cmd>lua vim.lsp.buf.format{async=true}<cr>";
-      };
+      keymaps = [
+        {
+          key = "<leader>ff";
+          mode = "n";
+          lua = true;
+          action = "require('telescope.builtin').find_files()<cr>";
+        }
+        {
+          key = "<leader>fg";
+          mode = "n";
+          lua = true;
+          action = "require('Comment.api').toggle.linewise.current()<cr>";
+        }
+        {
+          key = "g=";
+          mode = "n";
+          lua = true;
+          action = "vim.lsp.buf.format{async=true}<cr>";
+        }
+      ];
 
       extraPlugins = with pkgs.vimPlugins; [ catppuccin-nvim luasnip ];
 
@@ -31,7 +42,7 @@ in {
 
       plugins = {
         bufferline.enable = true;
-        null-ls = {
+        none-ls = {
           enable = true;
           sources = {
             formatting.nixpkgs_fmt.enable = true;
