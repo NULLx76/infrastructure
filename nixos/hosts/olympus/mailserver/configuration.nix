@@ -36,6 +36,10 @@ in {
       enable = true;
     };
 
+    forwards = {
+      "thijmen@xirion.net" = "Thijmen@nouwens-lindemans.nl";
+    };
+
     loginAccounts = {
       # People
       "v@0x76.dev" = {
