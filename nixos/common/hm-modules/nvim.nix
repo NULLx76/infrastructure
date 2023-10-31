@@ -15,24 +15,51 @@ in {
 
       keymaps = [
         {
+          mode = "n";
           key = "<leader>ff";
-          mode = "n";
+          action = "require('telescope.builtin').find_files";
           lua = true;
-          action = "require('telescope.builtin').find_files()<cr>";
         }
         {
+          mode = "n";
           key = "<leader>fg";
-          mode = "n";
+          action = "require('telescope.builtin').live_grep";
           lua = true;
-          action = "require('Comment.api').toggle.linewise.current()<cr>";
         }
         {
-          key = "g=";
           mode = "n";
+          key = "<C-_>";
+          action = "require('Comment.api').toggle.linewise.current";
           lua = true;
-          action = "vim.lsp.buf.format{async=true}<cr>";
+        }
+        {
+          mode = "n";
+          key = "g=";
+          action = "vim.lsp.buf.format";
+          lua = true;
         }
       ];
+
+      # keymaps = [
+      #   {
+      #     key = "<leader>ff";
+      #     mode = "n";
+      #     lua = true;
+      #     action = "require('telescope.builtin').find_files()";
+      #   }
+      #   {
+      #     key = "<leader>fg";
+      #     mode = "n";
+      #     lua = true;
+      #     action = "require('Comment.api').toggle.linewise.current()<cr>";
+      #   }
+      #   {
+      #     key = "g=";
+      #     mode = "n";
+      #     lua = true;
+      #     action = "vim.lsp.buf.format{async=true}<cr>";
+      #   }
+      # ];
 
       extraPlugins = with pkgs.vimPlugins; [ catppuccin-nvim luasnip ];
 
