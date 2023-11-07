@@ -1,5 +1,5 @@
 { config, pkgs, lib, ... }: {
-  imports = [ ./laura.nix ./victor.nix ];
+  imports = [ ./laura.nix ./victor.nix ./jonathan.nix ];
 
   # Setup ZSH to use grml config
   programs.zsh = {

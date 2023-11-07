@@ -62,6 +62,10 @@
   # Global Packages
   environment = { systemPackages = with pkgs; [ wireguard-tools sbctl ]; };
 
+  # programs.virt-manager = {
+  #   enable = true;
+  # };
+
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
