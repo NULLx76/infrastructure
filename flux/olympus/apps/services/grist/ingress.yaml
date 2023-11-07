@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: grist
+  namespace: services
+spec:
+  selector:
+    app: grist
+  ports:
+    - protocol: TCP
+      port: 8484
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grist
+  namespace: services
+spec:
+  rules:
+    - host: "grist.0x76.dev"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: grist
+                port:
+                  number: 8484

@@ -90,6 +90,12 @@ in
           redirectURIs = [ "https://flux.0x76.dev/oauth2/callback" ];
           secretEnv = "FLUX_CLIENT_SECRET";
         }
+        {
+          id = "oauth2-proxy";
+          name = "OAuth2 Proxy";
+          redirectURIs = [ "https://o2p.0x76.dev/oauth2/callback" ];
+          secretEnv = "O2P_CLIENT_SECRET";
+        }
       ];
     };
 
