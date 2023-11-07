@@ -53,6 +53,7 @@
     exposes = {
       www.domain = "0x76.dev";
       flux.domain = "flux.0x76.dev";
+      o2p.domain = "o2p.0x76.dev";
       internal.domain = "internal.xirion.net";
       blog.domain = "blog.xirion.net";
     };
