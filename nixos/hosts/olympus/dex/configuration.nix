@@ -101,4 +101,13 @@ in
 
     environmentFile = "${vs.dex}/environment";
   };
+
+  services.oauth2_proxy = {
+    enable = true;
+    provider = "oidc";
+    redirectURL = "https://o2p.0x76.dev/oauth2/callback";
+    cookie.secure = false;
+    httpAddress = "0.0.0.0:4180";
+    keyFile = "";
+  };
 }
