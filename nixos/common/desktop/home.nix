@@ -35,7 +35,6 @@ in
     plexamp
     spotify
     qmk
-    rustup
     solo2-cli
     tex
     unzip
@@ -47,6 +46,7 @@ in
   programs = {
     v.vscode.enable = true;
     v.nvim.enable = true;
+    v.rust.enable = true;
 
     riff = {
       enable = true;
