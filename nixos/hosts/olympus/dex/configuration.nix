@@ -9,8 +9,7 @@ let
   db_name = "dex";
   inherit (config.meta.exposes.dex) port;
   metricsPort = 5558;
-in
-{
+in {
   imports = [ ];
 
   # This value determines the NixOS release from which the default
@@ -23,91 +22,93 @@ in
 
   networking.firewall.allowedTCPPorts = [ port metricsPort ];
 
-  services.postgresql = {
-    enable = true;
-    package = pkgs.postgresql_15;
-    ensureDatabases = [ db_name ];
-    ensureUsers = [{
-      name = db_user;
-      ensurePermissions = {
-        "DATABASE ${db_name}" = "ALL PRIVILEGES";
-        "schema public" = "ALL";
-      };
-    }];
-  };
-
   vault-secrets.secrets.dex = { };
+  services = {
 
-  services.dex = {
-    enable = true;
-    settings = {
-      issuer = "https://dex.0x76.dev";
-      storage = {
-        type = "postgres";
-        config = {
-          host = "/var/run/postgresql";
-          user = db_user;
-          database = db_name;
-        };
-      };
-      web.http = "0.0.0.0:${toString port}";
-      telemetry.http = "0.0.0.0:${toString metricsPort}";
-
-      connectors = [{
-        type = "gitea";
-        id = "gitea";
-        name = "Gitea";
-        config = {
-          clientID = "$GITEA_CLIENT_ID";
-          clientSecret = "$GITEA_CLIENT_SECRET";
-          redirectURI = "https://dex.0x76.dev/callback";
-          baseURL = "https://git.0x76.dev";
+    postgresql = {
+      enable = true;
+      package = pkgs.postgresql_15;
+      ensureDatabases = [ db_name ];
+      ensureUsers = [{
+        name = db_user;
+        ensurePermissions = {
+          "DATABASE ${db_name}" = "ALL PRIVILEGES";
+          "schema public" = "ALL";
         };
       }];
-
-      staticClients = [
-        {
-          id = "outline";
-          name = "Outline";
-          redirectURIs = [ "https://outline.0x76.dev/auth/oidc.callback" ];
-          secretEnv = "OUTLINE_CLIENT_SECRET";
-        }
-        {
-          id = "grafana";
-          name = "Grafana";
-          redirectURIs = [ "https://grafana.0x76.dev/login/generic_oauth" ];
-          secretEnv = "GRAFANA_CLIENT_SECRET";
-        }
-        {
-          id = "hedgedoc";
-          name = "Hedgedoc";
-          redirectURIs = [ "https://md.0x76.dev/auth/oauth2/callback" ];
-          secretEnv = "HEDGEDOC_CLIENT_SECRET";
-        }
-        {
-          id = "flux";
-          name = "Weave Gitops Flux Dashboard";
-          redirectURIs = [ "https://flux.0x76.dev/oauth2/callback" ];
-          secretEnv = "FLUX_CLIENT_SECRET";
-        }
-        {
-          id = "oauth2-proxy";
-          name = "OAuth2 Proxy";
-          redirectURIs = [ "https://o2p.0x76.dev/oauth2/callback" ];
-          secretEnv = "O2P_CLIENT_SECRET";
-        }
-      ];
     };
 
-    environmentFile = "${vs.dex}/environment";
-  };
+    dex = {
+      enable = true;
+      settings = {
+        issuer = "https://dex.0x76.dev";
+        storage = {
+          type = "postgres";
+          config = {
+            host = "/var/run/postgresql";
+            user = db_user;
+            database = db_name;
+          };
+        };
+        web.http = "0.0.0.0:${toString port}";
+        telemetry.http = "0.0.0.0:${toString metricsPort}";
 
-  services.oauth2_proxy = {
-    enable = true;
-    provider = "oidc";
-    redirectURL = "https://o2p.0x76.dev/oauth2/callback";
-    cookie.secure = false;
-    httpAddress = "0.0.0.0:4180";
-    keyFile = "";
+        connectors = [{
+          type = "gitea";
+          id = "gitea";
+          name = "Gitea";
+          config = {
+            clientID = "$GITEA_CLIENT_ID";
+            clientSecret = "$GITEA_CLIENT_SECRET";
+            redirectURI = "https://dex.0x76.dev/callback";
+            baseURL = "https://git.0x76.dev";
+          };
+        }];
+
+        staticClients = [
+          {
+            id = "outline";
+            name = "Outline";
+            redirectURIs = [ "https://outline.0x76.dev/auth/oidc.callback" ];
+            secretEnv = "OUTLINE_CLIENT_SECRET";
+          }
+          {
+            id = "grafana";
+            name = "Grafana";
+            redirectURIs = [ "https://grafana.0x76.dev/login/generic_oauth" ];
+            secretEnv = "GRAFANA_CLIENT_SECRET";
+          }
+          {
+            id = "hedgedoc";
+            name = "Hedgedoc";
+            redirectURIs = [ "https://md.0x76.dev/auth/oauth2/callback" ];
+            secretEnv = "HEDGEDOC_CLIENT_SECRET";
+          }
+          {
+            id = "flux";
+            name = "Weave Gitops Flux Dashboard";
+            redirectURIs = [ "https://flux.0x76.dev/oauth2/callback" ];
+            secretEnv = "FLUX_CLIENT_SECRET";
+          }
+          {
+            id = "oauth2-proxy";
+            name = "OAuth2 Proxy";
+            redirectURIs = [ "https://o2p.0x76.dev/oauth2/callback" ];
+            secretEnv = "O2P_CLIENT_SECRET";
+          }
+        ];
+      };
+
+      environmentFile = "${vs.dex}/environment";
+    };
+
+    oauth2_proxy = {
+      enable = true;
+      provider = "oidc";
+      redirectURL = "https://o2p.0x76.dev/oauth2/callback";
+      cookie.secure = false;
+      httpAddress = "0.0.0.0:4180";
+      keyFile = "";
+    };
   };
 }

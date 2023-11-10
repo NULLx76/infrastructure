@@ -4,18 +4,20 @@ let cfg = config.programs.v.rust;
 in {
   options.programs.v.rust = { enable = mkEnableOption "rust"; };
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ rustup ];
+    home = {
+      packages = with pkgs; [ rustup ];
 
-    home.file = {
-      ".cargo/config.toml".text = ''
-        [registries.crates-io]
-        protocol = "sparse"
+      file = {
+        ".cargo/config.toml".text = ''
+          [registries.crates-io]
+          protocol = "sparse"
 
-        [build]
-        rustc-wrapper = "${pkgs.sccache}/bin/sccache"
-      '';
+          [build]
+          rustc-wrapper = "${pkgs.sccache}/bin/sccache"
+        '';
+      };
+
+      sessionPath = [ "$HOME/.cargo/bin" ];
     };
-
-    home.sessionPath = [ "$HOME/.cargo/bin" ];
   };
 }
