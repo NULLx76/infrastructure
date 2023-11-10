@@ -15,6 +15,7 @@ in
     cinny-desktop
     element-desktop-wayland
     fusee-launcher
+    fractal-next
     gcc
     gimp
     helix
