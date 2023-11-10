@@ -9,7 +9,6 @@
     direnv
     git-crypt
     nix-update
-    nodejs-14_x
     pinentry-curses
     ripgrep
     rsync
