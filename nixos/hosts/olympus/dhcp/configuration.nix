@@ -34,11 +34,11 @@ in
 
   networking.firewall.allowedUDPPorts = [ 67 ];
 
-  services.prometheus.exporters.kea = {
-    enable = true;
-    openFirewall = true;
-    controlSocketPaths = [ "/run/kea/kea-dhcp4.socket" ];
-  };
+  # services.prometheus.exporters.kea = {
+  #   enable = true;
+  #   openFirewall = true;
+  #   controlSocketPaths = [ "/run/kea/kea-dhcp4.socket" ];
+  # };
 
   services.kea.dhcp4 = {
     enable = true;
@@ -50,10 +50,11 @@ in
 
       interfaces-config.interfaces = [ "eth0" ];
 
-      control-socket = {
-        socket-type = "unix";
-        socket-name = "/run/kea/kea-dhcp4.socket";
-      };
+      # control-socket = {
+      #   socket-type = "unix";
+      #   socket-name = "/run/kea/kea-dhcp4.socket";
+      # };
+      # failed to initialize Kea server: configuration error using file '/etc/kea/dhcp4-server.conf': cannot create socket lockfile, /run/kea/kea-dhcp4.socket.lock, : No such file or directory
 
       lease-database = {
         name = "/var/lib/kea/dhcp4.leases";

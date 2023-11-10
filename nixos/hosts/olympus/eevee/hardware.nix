@@ -2,13 +2,14 @@
   hardware = {
     enableAllFirmware = true;
     nvidia = {
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      # package = config.boot.kernelPackages.nvidiaPackages.stable;
 
       # Open drivers cause gdm to crash
       # open = true;
 
       # nvidia-drm.modeset=1
       modesetting.enable = true;
+      powerManagement.enable = false;
     };
 
     # Hardware acceleration
@@ -17,6 +18,7 @@
 
       # Vulkan
       driSupport = true;
+      driSupport32Bit = true;
     };
 
     logitech.wireless = {

@@ -33,6 +33,7 @@ in
     nixpkgs-review
     plex-media-player
     plexamp
+    spotify
     qmk
     rustup
     solo2-cli
