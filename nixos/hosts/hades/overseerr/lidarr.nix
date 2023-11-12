@@ -5,6 +5,7 @@ in {
 
   vault-secrets.secrets.lidarr = {
     quoteEnvironmentValues = false; # Needed for docker
+    services = [ "podman-lidarr" ];
   };
 
   virtualisation.oci-containers.containers.lidarr = {
