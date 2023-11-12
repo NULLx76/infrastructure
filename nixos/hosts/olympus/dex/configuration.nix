@@ -23,6 +23,8 @@ in {
   networking.firewall.allowedTCPPorts = [ port metricsPort ];
 
   vault-secrets.secrets.dex = { };
+  vault-secrets.secrets.oauth2_proxy = { };
+
   services = {
 
     postgresql = {
@@ -91,24 +93,15 @@ in {
             secretEnv = "FLUX_CLIENT_SECRET";
           }
           {
-            id = "oauth2-proxy";
-            name = "OAuth2 Proxy";
-            redirectURIs = [ "https://o2p.0x76.dev/oauth2/callback" ];
-            secretEnv = "O2P_CLIENT_SECRET";
+            id = "grist";
+            name = "grist";
+            redirectURIs = [ "https://grist.0x76.dev/oauth2/callback" ];
+            secretEnv = "GRIST_CLIENT_SECRET";
           }
         ];
       };
 
       environmentFile = "${vs.dex}/environment";
-    };
-
-    oauth2_proxy = {
-      enable = true;
-      provider = "oidc";
-      redirectURL = "https://o2p.0x76.dev/oauth2/callback";
-      cookie.secure = false;
-      httpAddress = "0.0.0.0:4180";
-      keyFile = "";
     };
   };
 }
