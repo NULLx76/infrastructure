@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: {
+{ pkgs, ... }: {
   hardware = {
     enableAllFirmware = true;
     nvidia = {
