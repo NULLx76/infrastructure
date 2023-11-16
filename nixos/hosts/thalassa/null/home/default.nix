@@ -23,8 +23,8 @@ in
     git = {
       enable = true;
       package = pkgs.gitAndTools.gitFull;
-      userName = "Victor";
-      userEmail = "victor@xirion.net";
+      userName = "0x76";
+      userEmail = "v@0x76";
       lfs.enable = true;
       # delta.enable = true;
       extraConfig = {
@@ -108,8 +108,8 @@ in
     };
   };
   home = {
-    username = "victor";
-    homeDirectory = "/home/victor";
+    username = "vivian";
+    homeDirectory = "/home/vivian";
     stateVersion = "22.05";
 
     packages = with pkgs; [

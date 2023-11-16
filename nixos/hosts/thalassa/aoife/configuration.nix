@@ -27,7 +27,7 @@
     };
   };
 
-  home-manager.users.victor = import ./home;
+  home-manager.users.vivian = import ./home;
 
   # Enable Ozone rendering for Chromium and Electron apps.
   environment.sessionVariables.NIXOS_OZONE_WL = "1";

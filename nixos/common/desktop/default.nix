@@ -18,7 +18,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.victor = import ./home.nix;
+    users.vivian = import ./home.nix;
     extraSpecialArgs = { inherit inputs; };
   };
   services = {
@@ -60,7 +60,7 @@
   };
 
   # Global Packages
-  environment = { systemPackages = with pkgs; [ wireguard-tools sbctl ]; };
+  environment.systemPackages = with pkgs; [ wireguard-tools sbctl podman-compose ];
 
   # programs.virt-manager = {
   #   enable = true;
@@ -93,7 +93,6 @@
   programs = {
     steam = {
 
-
       enable = true;
       # Open ports in the firewall for Steam Remote Play
       remotePlay.openFirewall = true;
@@ -101,7 +100,6 @@
         extraPkgs = pkgs: with pkgs; [ gamescope mangohud ];
       };
     };
-
 
     gamemode.enable = true;
 

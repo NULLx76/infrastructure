@@ -142,7 +142,7 @@ in
   security = {
     acme = {
 
-      defaults.email = "victorheld12@gmail.com";
+      defaults.email = "vivian@0x76.dev";
       acceptTerms = true;
       preliminarySelfsigned = true;
     };

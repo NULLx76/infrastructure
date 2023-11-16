@@ -70,5 +70,5 @@ in
     pinentryFlavor = "curses";
   };
 
-  home-manager.users.victor = import ./home.nix;
+  home-manager.users.vivian = import ./home.nix;
 }
