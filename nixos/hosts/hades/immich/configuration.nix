@@ -22,6 +22,8 @@ in
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
+
+
   # TODO: https://github.com/suderman/nixos/tree/main/modules/nixos/immich
 
   fileSystems."/mnt/storage" = {
@@ -33,6 +35,8 @@ in
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/misc/ids.nix
   ids.uids.immich = 911;
   ids.gids.immich = 911;
+
+  users.groups.photos = {};
 
   users.users.immich = {
     isSystemUser = true;

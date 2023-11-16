@@ -103,7 +103,7 @@ in
   };
 
   services.oauth2_proxy = {
-    enable = true;
+    enable = false;
     provider = "oidc";
     redirectURL = "https://o2p.0x76.dev/oauth2/callback";
     cookie.secure = false;

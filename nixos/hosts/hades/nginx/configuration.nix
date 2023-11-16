@@ -41,10 +41,6 @@ in
 
     package = pkgs.nginxMainline;
     virtualHosts = {
-
-      "cshub.nl" = proxy "http://192.168.0.113";
-      "api.cshub.nl" = proxy "http://192.168.0.113";
-
       "ha.xirion.net" = proxy "http://192.168.0.129:8123";
       "xirion.net" = {
         enableACME = true;
