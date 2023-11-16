@@ -53,7 +53,6 @@
     exposes = {
       www.domain = "0x76.dev";
       flux.domain = "flux.0x76.dev";
-      o2p.domain = "o2p.0x76.dev";
       internal.domain = "internal.xirion.net";
       blog.domain = "blog.xirion.net";
     };
@@ -61,9 +60,15 @@
   "dex" = {
     ip = "10.42.42.11";
     mac = "AE:66:7B:FA:15:72";
-    exposes.dex = {
-      domain = "dex.0x76.dev";
-      port = 5556;
+    exposes = {
+      dex = {
+        domain = "dex.0x76.dev";
+        port = 5556;
+      };
+      o2p_proxy = {
+        domain = "o2p.0x76.dev";
+        port = 8484;
+      };
     };
   };
   "WoolooTV" = {
@@ -151,7 +156,14 @@
     ip = "10.42.42.25";
     mac = "1E:ED:97:2C:C3:9D";
   };
-  # 10.42.42.26
+  "grist" = {
+    ip = "10.42.42.26";
+    mac = "B2:AA:AB:5D:2F:22";
+    exposes.grist = {
+      domain = "grist.0x76.dev";
+      port = 8484;
+    };
+  };
   "bookwyrm" = {
     ip = "10.42.42.27";
     mac = "9E:8A:6C:39:27:DE";

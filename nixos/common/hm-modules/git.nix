@@ -7,7 +7,7 @@ in {
     programs.git = {
       enable = true;
       package = pkgs.gitAndTools.gitFull;
-      userName = "Victor";
+      userName = "0x76";
       userEmail = "victor@xirion.net";
       lfs.enable = true;
       extraConfig = {

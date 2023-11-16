@@ -118,7 +118,7 @@
         default = colmena.packages.${system}.colmena;
 
         proxmox-lxc = nixos-generators.nixosGenerate {
-          inherit system pkgs specialArgs;
+          inherit system specialArgs;
           format = "proxmox-lxc";
           modules = util.base_imports
             ++ [ (import ./nixos/templates/proxmox-lxc.nix) ];
