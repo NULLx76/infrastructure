@@ -51,5 +51,5 @@
       tctiEnvironment.enable = true;
     };
   }; # TPM2TOOLS_TCTI and TPM2_PKCS11_TCTI env variables
-  users.users.victor.extraGroups = [ "tss" ]; # tss group has access to TPM devices
+  users.users.vivian.extraGroups = [ "tss" ]; # tss group has access to TPM devices
 }

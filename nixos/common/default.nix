@@ -41,7 +41,7 @@
     package = pkgs.nixUnstable;
     settings = {
       auto-optimise-store = true;
-      trusted-users = [ "root" "victor" ];
+      trusted-users = [ "root" "vivian" ];
       substituters = [
         "https://nix-community.cachix.org"
         "https://nixpkgs-review-bot.cachix.org"

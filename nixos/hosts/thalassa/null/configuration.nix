@@ -43,7 +43,7 @@ in
     # home-manager
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.victor = import ./home;
+    users.vivian = import ./home;
     extraSpecialArgs = { inherit inputs; };
   };
   security = {

@@ -41,7 +41,7 @@
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   home-manager = {
-    users.victor = import ./home;
+    users.vivian = import ./home;
   };
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

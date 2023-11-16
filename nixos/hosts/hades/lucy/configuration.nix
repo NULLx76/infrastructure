@@ -71,5 +71,5 @@ in
   };
 
   users.extraUsers.laura.extraGroups = [ "wheel" "docker" ];
-  users.extraUsers.victor.extraGroups = [ "docker" ];
+  users.extraUsers.vivian.extraGroups = [ "docker" ];
 }

@@ -25,7 +25,7 @@ in {
       settings.allow_anonymous = true;
       acl = [ "topic readwrite #" ];
       users = {
-        victor = { acl = [ "readwrite #" ]; };
+        vivian = { acl = [ "readwrite #" ]; };
         zigbee2mqtt = { acl = [ "readwrite #" ]; };
       };
     }];
