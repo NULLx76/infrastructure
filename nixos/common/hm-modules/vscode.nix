@@ -56,12 +56,14 @@ in {
           ms-vscode.cpptools
           platformio.platformio-ide
           redhat.vscode-yaml
+          redhat.vscode-xml
           tamasfe.even-better-toml
           valentjn.vscode-ltex
           vscodevim.vim
           vadimcn.vscode-lldb
           xaver.clang-format
           sumneko.lua
+          davidlday.languagetool-linter
         ];
     };
 

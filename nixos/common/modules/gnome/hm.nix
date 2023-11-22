@@ -7,18 +7,15 @@ let
   generate_custom_keybindings = binds:
     {
       "org/gnome/settings-daemon/plugins/media-keys" = {
-        custom-keybindings = map
-          (name:
-            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${name}/")
+        custom-keybindings = map (name:
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${name}/")
           (attrNames binds);
       };
-    } // mapAttrs'
-      (name:
-        nameValuePair
-          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${name}")
-      binds;
-in
-{
+    } // mapAttrs' (name:
+      nameValuePair
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${name}")
+    binds;
+in {
   xdg.mimeApps.enable = true;
   xdg.mimeApps.defaultApplications = {
     "text/plain" = "org.gnome.TextEditor.desktop";
@@ -100,12 +97,12 @@ in
       raise-or-lower = [ "<Super>s" ];
       switch-applications = [ "<Super>Tab" ];
       switch-applications-backward = [ "<Super>Tab" ];
-      move-to-workspace-1 = [ "<Shift><Super>exclam" ];
-      move-to-workspace-2 = [ "<Shift><Super>at" ];
-      move-to-workspace-3 = [ "<Shift><Super>numbersign" ];
-      move-to-workspace-4 = [ "<Shift><Super>dollar" ];
-      move-to-workspace-5 = [ "<Shift><Super>percent" ];
-      move-to-workspace-6 = [ "<Shift><Super>asciicircum" ];
+      move-to-workspace-1 = [ "<Shift><Super>1" ];
+      move-to-workspace-2 = [ "<Shift><Super>2" ];
+      move-to-workspace-3 = [ "<Shift><Super>3" ];
+      move-to-workspace-4 = [ "<Shift><Super>4" ];
+      move-to-workspace-5 = [ "<Shift><Super>5" ];
+      move-to-workspace-6 = [ "<Shift><Super>6" ];
       switch-to-workspace-1 = [ "<Super>1" ];
       switch-to-workspace-2 = [ "<Super>2" ];
       switch-to-workspace-3 = [ "<Super>3" ];
@@ -114,6 +111,7 @@ in
       switch-to-workspace-6 = [ "<Super>6" ];
       toggle-fullscreen = [ "<Super><Shift>M" ];
       toggle-maximized = [ "<Super>m" ];
+      close = [ "<Super>Q" ];
     };
 
     "org/gnome/tweaks" = { show-extensions-notice = false; };

@@ -6,12 +6,14 @@
 
   environment.systemPackages = with pkgs; [
     cachix
+    clang
     direnv
     git-crypt
     nix-update
     pinentry-curses
     ripgrep
     rsync
+    rustup
     tmux
     vault
   ];
