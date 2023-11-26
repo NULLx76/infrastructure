@@ -6,6 +6,9 @@ in {
   networking.interfaces.eth0.useDHCP = true;
   system.stateVersion = "22.05";
 
+  networking.firewall.allowedTCPPorts = [ config.services.rtorrent.port ];
+  networking.firewall.allowedUDPPorts = [ config.services.rtorrent.port ];
+
   fileSystems."/mnt/storage" = {
     device = "storage:/mnt/storage";
     fsType = "nfs";

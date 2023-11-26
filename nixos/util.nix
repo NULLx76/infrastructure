@@ -76,7 +76,7 @@ let
           inherit tags;
           targetHost = ip;
           allowLocalDeployment = type == "local";
-          targetUser = "victor"; # Defaults to $USER
+          targetUser = null; # Defaults to $USER
         };
       };
     };
