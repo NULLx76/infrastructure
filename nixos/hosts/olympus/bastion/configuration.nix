@@ -3,6 +3,22 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { pkgs, inputs, ... }: {
+let
+  fix-vscode = pkgs.writeScriptBin "fix-vscode" ''
+    #!${pkgs.stdenv.shell}
+    # Check if vscode-server dir exists
+    if [[ -d "$HOME/.vscode-server/bin" ]]; then
+      # For every bin folder within
+      for versiondir in "$HOME"/.vscode-server/bin/*; do
+        # Remove bundled node (dynamic links are borked for nix)
+        rm "$versiondir/node"
+        # symlink node form the nixpkg
+        ln -s "${pkgs.nodejs-slim}/bin/node" "$versiondir/node"
+      done
+    fi
+  '';
+in
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
