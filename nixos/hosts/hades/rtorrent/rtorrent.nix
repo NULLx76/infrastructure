@@ -1,7 +1,7 @@
-{ config, lib, pkgs, ... }: {
+{ config, pkgs, ... }: {
   services.rtorrent = {
     enable = true;
-    port = 54945; # Port Forwarded in mullvad
+    port = 14764; # port forwarded
     downloadDir = "/mnt/storage/torrents/r";
     package = pkgs.jesec-rtorrent;
     configText =

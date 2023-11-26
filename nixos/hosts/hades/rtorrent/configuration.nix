@@ -20,7 +20,6 @@ in {
 
   vault-secrets.secrets.rtorrent = { services = [ "wg-quick-wg0" ]; };
 
-  # Mullvad VPN
   networking.wg-quick.interfaces =
     let
       postUpScript = pkgs.writeScriptBin "post_up" ''
@@ -31,17 +30,19 @@ in {
     in
     {
       wg0 = {
-        address = [ "10.66.153.191/32" "fc00:bbbb:bbbb:bb01::3:99be/128" ];
-        dns = [ "10.64.0.1" ];
+        address = [ "10.129.112.89/32, fd7d:76ee:e68f:a993:edd1:668b:49f7:b7c3/128" ];
+        mtu = 1320;
+        dns = [ "10.128.0.1" "fd7d:76ee:e68f:a993::1" ];
         privateKeyFile = "${vs.rtorrent}/wireguardKey";
         postUp = "${postUpScript}/bin/post_up || true";
 
         peers = [
           {
-            publicKey = "HQHCrq4J6bSpdW1fI5hR/bvcrYa6HgGgwaa5ZY749ik=";
+            publicKey = "PyLCXAQT8KkM4T+dUsOQfn+Ub3pGxfGlxkIApuig+hk=";
             allowedIPs = [ "0.0.0.0/0" "::/0" ];
-            endpoint = "185.213.155.73:51820";
-            # persistentKeepalive = 25;
+            endpoint = "europe3.vpn.airdns.org:1637";
+            presharedKeyFile = "${vs.rtorrent}/presharedKey";
+            persistentKeepalive = 15;
           }
         ];
       };
