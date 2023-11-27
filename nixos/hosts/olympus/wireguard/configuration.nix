@@ -63,7 +63,7 @@ in {
           # https://docs.opnsense.org/manual/how-tos/wireguard-s2s.html
           publicKey = "KgqLhmUMX6kyTjRoa/GOCrZOvXNE5HWYuOr/T3v8/VI=";
           allowedIPs = [ "10.100.0.5/32" "192.168.0.0/23" "10.10.10.0/24" ];
-          endpoint = "83.128.154.23:51820";
+          endpoint = "62.45.26.248:51820";
           persistentKeepalive = 25;
         }
       ];
