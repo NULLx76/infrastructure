@@ -1,6 +1,16 @@
 { config, pkgs, lib, ... }:
 with lib;
-let cfg = config.programs.v.nvim;
+let
+  cfg = config.programs.v.nvim;
+  cmp-vimtex = pkgs.vimUtils.buildVimPlugin {
+    name = "cmp-vimtex";
+    src = pkgs.fetchFromGitHub {
+      owner = "micangl";
+      repo = "cmp-vimtex";
+      rev = "2b5089a79b29418e6afcdc7804d2b9f2f002946b";
+      hash = "sha256-IcXjCNXfiV8WMP4S41uy3C9OsKUi3zJnvg5MJVu3Khw=";
+    };
+  };
 in {
   options.programs.v.nvim = { enable = mkEnableOption "nvim"; };
   config = mkIf cfg.enable {
@@ -8,10 +18,13 @@ in {
       enable = true;
       package = pkgs.neovim-unwrapped;
       vimAlias = true;
+      luaLoader.enable = true;
 
       globals.mapleader = " ";
 
       options.number = true;
+
+      clipboard = { providers.wl-copy.enable = true; };
 
       keymaps = [
         {
@@ -33,6 +46,16 @@ in {
           lua = true;
         }
         {
+          mode = "x";
+          key = "<C-_>";
+          action = ''
+            function()
+             require('Comment.api').toggle.linewise(vim.fn.visualmode())
+            end
+          '';
+          lua = true;
+        }
+        {
           mode = "n";
           key = "g=";
           action = "vim.lsp.buf.format";
@@ -40,32 +63,31 @@ in {
         }
       ];
 
-      # keymaps = [
-      #   {
-      #     key = "<leader>ff";
-      #     mode = "n";
-      #     lua = true;
-      #     action = "require('telescope.builtin').find_files()";
-      #   }
-      #   {
-      #     key = "<leader>fg";
-      #     mode = "n";
-      #     lua = true;
-      #     action = "require('Comment.api').toggle.linewise.current()<cr>";
-      #   }
-      #   {
-      #     key = "g=";
-      #     mode = "n";
-      #     lua = true;
-      #     action = "vim.lsp.buf.format{async=true}<cr>";
-      #   }
-      # ];
+      extraPlugins = with pkgs.vimPlugins; [
+        FixCursorHold-nvim
+        cmp-vimtex
+        luasnip
+        plenary-nvim
+        neotest
+        neotest-plenary
+        neotest-rust
+      ];
 
-      extraPlugins = with pkgs.vimPlugins; [ catppuccin-nvim luasnip ];
+      colorschemes.catppuccin = {
+        enable = true;
+        flavour = "frappe";
+      };
 
-      colorscheme = "catppuccin-frappe";
-
-      extraConfigLua = "";
+      extraConfigLua = ''
+        require("neotest").setup({
+          adapters = {
+            require("neotest-plenary"),
+            require("neotest-rust") {
+              args = { "--no-capture" },
+            }
+          },
+        })
+      '';
 
       plugins = {
         bufferline.enable = true;
@@ -86,7 +108,7 @@ in {
         treesitter = {
           enable = true;
           nixGrammars = true;
-          # ensureInstalled = [ ];
+          disabledLanguages = [ "latex" ];
         };
         surround.enable = true;
         fugitive.enable = true;
@@ -105,7 +127,10 @@ in {
           enable = true;
           servers = {
             nil_ls.enable = true;
-            rust-analyzer.enable = true;
+            rust-analyzer = {
+              installCargo = false;
+              installRustc = false;
+            };
             pyright.enable = true;
             elixirls.enable = true;
             clangd.enable = true;
@@ -114,12 +139,18 @@ in {
         };
         trouble.enable = true;
         lspkind.enable = true;
+
+        vimtex.enable = true;
+
         nvim-cmp = {
           enable = true;
           autoEnableSources = true;
           sources = [
             { name = "nvim_lsp"; }
-            { name = "cmp-latex-symbols"; }
+            {
+              name = "vimtex";
+            }
+            # { name = "cmp-latex-symbols"; }
             {
               name = "luasnip";
               option = { show_autosnippets = true; };

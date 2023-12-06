@@ -5,7 +5,7 @@ in {
   options.programs.v.rust = { enable = mkEnableOption "rust"; };
   config = mkIf cfg.enable {
     home = {
-      packages = with pkgs; [ rustup ];
+      packages = with pkgs; [ rustup cargo-nextest cargo-msrv  ];
 
       file = {
         ".cargo/config.toml".text = ''
