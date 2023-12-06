@@ -24,7 +24,7 @@ in {
 
     oci-containers.containers.grist = {
       image =
-        "gristlabs/grist:1.1.8";
+        "gristlabs/grist:1.1.9";
       environment = {
         APP_HOME_URL = "https://grist.0x76.dev";
         GRIST_SUPPORT_ANON = "false";
@@ -43,6 +43,7 @@ in {
         PYTHON_VERSION_ON_CREATION = "3";
 
         GRIST_OIDC_IDP_ISSUER = "https://dex.0x76.dev";
+        GRIST_OIDC_IDP_SKIP_END_SESSION_ENDPOINT= "true";
       };
       environmentFiles = [ "${vs.grist}/environment" ];
       ports = [ "8484:8484" ];
