@@ -1,7 +1,6 @@
 { pkgs, ... }: {
   # The block that specifies my user account.
   users.extraUsers.vivian = {
-    uid = 1000;
     # This account is intended for a non-system user.
     isNormalUser = true;
 

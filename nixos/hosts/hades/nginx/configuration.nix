@@ -52,6 +52,10 @@ in
         locations."= /.well-known/host-meta".extraConfig = ''
           return 301 https://fedi.xirion.net$request_uri;
         '';
+        locations."/.well-known/webfinger".extraConfig = ''
+          add_header Access-Control-Allow-Origin '*';
+          return 301 https://fedi.xirion.net$request_uri;
+        '';
       };
       # virtualHosts."blog.xirion.net" = proxy "http://10.10.10.12";
       "git.xirion.net" = proxy "http://10.10.10.12";
