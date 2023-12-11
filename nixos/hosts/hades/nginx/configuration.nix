@@ -57,9 +57,7 @@ in
           return 301 https://fedi.xirion.net$request_uri;
         '';
       };
-      # virtualHosts."blog.xirion.net" = proxy "http://10.10.10.12";
       "git.xirion.net" = proxy "http://10.10.10.12";
-      # virtualHosts."mail.xirion.net" = proxy "http://192.168.0.118";
       "o.xirion.net" = proxy "http://192.168.0.112:9000";
       "g.xirion.net" = proxy "http://garage.hades:3900";
       "requests.xirion.net" = proxy "http://overseerr.hades:5055";
