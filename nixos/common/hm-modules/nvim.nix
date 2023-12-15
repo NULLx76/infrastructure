@@ -1,17 +1,6 @@
 { config, pkgs, lib, ... }:
-with lib;
-let
-  cfg = config.programs.v.nvim;
-  cmp-vimtex = pkgs.vimUtils.buildVimPlugin {
-    name = "cmp-vimtex";
-    src = pkgs.fetchFromGitHub {
-      owner = "micangl";
-      repo = "cmp-vimtex";
-      rev = "2b5089a79b29418e6afcdc7804d2b9f2f002946b";
-      hash = "sha256-IcXjCNXfiV8WMP4S41uy3C9OsKUi3zJnvg5MJVu3Khw=";
-    };
-  };
-in {
+let cfg = config.programs.v.nvim;
+in with lib; {
   options.programs.v.nvim = { enable = mkEnableOption "nvim"; };
   config = mkIf cfg.enable {
     programs.nixvim = {
@@ -50,7 +39,11 @@ in {
           key = "<C-_>";
           action = ''
             function()
-             require('Comment.api').toggle.linewise(vim.fn.visualmode())
+              local esc = vim.api.nvim_replace_termcodes(
+                '<ESC>', true, false, true
+              )
+              vim.api.nvim_feedkeys(esc, 'nx', false)
+              require('Comment.api').toggle.linewise(vim.fn.visualmode())
             end
           '';
           lua = true;
@@ -61,11 +54,21 @@ in {
           action = "vim.lsp.buf.format";
           lua = true;
         }
+        {
+          mode = "n";
+          key = "t";
+          action = ":FloatermToggle myfloat<CR>";
+        }
+        {
+          mode = "t";
+          key = "<ESC>";
+          action = "function() vim.cmd(':FloatermToggle myfloat') end";
+          lua = true;
+        }
       ];
 
       extraPlugins = with pkgs.vimPlugins; [
         FixCursorHold-nvim
-        cmp-vimtex
         luasnip
         plenary-nvim
         neotest
@@ -142,15 +145,13 @@ in {
 
         vimtex.enable = true;
 
+        floaterm.enable = true;
+
         nvim-cmp = {
           enable = true;
           autoEnableSources = true;
           sources = [
             { name = "nvim_lsp"; }
-            {
-              name = "vimtex";
-            }
-            # { name = "cmp-latex-symbols"; }
             {
               name = "luasnip";
               option = { show_autosnippets = true; };

@@ -14,6 +14,8 @@
     };
   };
 
+  programs.nix-ld.enable = true;
+
   hardware.keyboard.qmk.enable = true;
   home-manager = {
     useGlobalPkgs = true;
