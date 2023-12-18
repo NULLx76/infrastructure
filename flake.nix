@@ -125,12 +125,12 @@
         };
 
         # Broken
-        # proxmox-vm = nixos-generators.nixosGenerate {
-        #   inherit system pkgs specialArgs;
-        #   format = "proxmox";
-        #   modules = util.base_imports
-        #     ++ [ (import ./nixos/templates/proxmox-vm.nix) ];
-        # };
+        proxmox-vm = nixos-generators.nixosGenerate {
+          inherit system specialArgs;
+          format = "proxmox";
+          modules = util.base_imports
+            ++ [ (import ./nixos/templates/proxmox-vm.nix) ];
+        };
       };
 
       # Use by running `nix develop`
@@ -142,12 +142,7 @@
           colmena.packages.${system}.colmena
           cachix
           deadnix
-          fluxcd
-          k9s
-          kubectl
-          kubectx
           statix
-          terraform
           nixfmt
           nixpkgs-fmt
           nixUnstable
@@ -158,7 +153,6 @@
           (vault-push-approle-envs self { })
           (vault-push-approles self { })
           fast-repl
-          weave-gitops
         ];
       };
     };

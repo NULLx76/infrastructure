@@ -3,6 +3,7 @@ let
   inherit (builtins) filter attrValues concatMap mapAttrs;
   inherit (nixpkgs.lib.attrsets) mapAttrsToList;
   base_imports = [
+    ./common
     home-manager.nixosModules.home-manager
     mailserver.nixosModules.mailserver
     attic.nixosModules.atticd
@@ -25,7 +26,7 @@ let
   # Helper function to resolve what should be imported depending on the type of config (lxc, vm, bare metal)
   resolve_imports = { hostname, realm, profile ? hostname, type ? "lxc", ... }:
     type_import type
-    ++ [ ./common "${./.}/hosts/${realm}/${profile}/configuration.nix" ];
+    ++ [ "${./.}/hosts/${realm}/${profile}/configuration.nix" ];
 
   # Add to whatever realm a host belong to its list of tags
   add_realm_to_tags = mapAttrs (realm:

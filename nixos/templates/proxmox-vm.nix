@@ -1,11 +1,12 @@
 { lib, ... }: {
-  imports = [ ../common/common.nix ../common/generic-vm.nix ];
+  imports = [ ../common ../common/generic-vm.nix ];
 
   proxmox.qemuConf = {
     virtio0 = "local-zfs:vm-9999-disk-0";
-    cores = 1;
-    memory = 1024;
+    cores = 4;
+    memory = 4096;
     bios = "ovmf";
+    additionalSpace = "20G";
   };
 
   # Enable SSH
