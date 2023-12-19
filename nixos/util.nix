@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, mailserver, lanzaboote, attic, ... }:
+{ nixpkgs, home-manager, mailserver, lanzaboote, attic, gnome-autounlock-keyring, ... }:
 let
   inherit (builtins) filter attrValues concatMap mapAttrs;
   inherit (nixpkgs.lib.attrsets) mapAttrsToList;
@@ -18,6 +18,7 @@ let
         "vm" = [ ./common/generic-vm.nix ];
         "local" = [
           lanzaboote.nixosModules.lanzaboote
+          gnome-autounlock-keyring.nixosModules.default
           ./common/desktop
         ];
       };

@@ -11,6 +11,17 @@ in {
         Whether to enable home manager integration to set default dconf values
       '';
     };
+
+    auto-unlock-keyring = mkOption {
+      type = types.bool;
+      default = true;
+      description = ''
+        Whether to automatically unlock the keyring upon login.
+        This is mostly useful if you are logging in using a fingerprint
+        or FIDO device and the keyring does not automatically get unlocked.
+        Make sure you have enrolled you password into the keyring unlocker.
+      '';
+    };
   };
 
   config = mkIf cfg.enable {
@@ -24,7 +35,6 @@ in {
         layout = "us";
         xkbVariant = "altgr-intl";
 
-
         # Enable the GNOME Desktop Environment.
         displayManager.gdm.enable = true;
         desktopManager.gnome.enable = true;
@@ -33,6 +43,8 @@ in {
       dbus.enable = true;
       udisks2.enable = true;
     };
+
+    services.gnome-autounlock-keyring.enable = cfg.auto-unlock-keyring;
 
     # Add Home-manager dconf stuff
     home-manager.sharedModules = mkIf cfg.hm [ ./hm.nix ];

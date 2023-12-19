@@ -5,7 +5,7 @@
     virtio0 = "local-zfs:vm-9999-disk-0";
     cores = 4;
     memory = 4096;
-    bios = "ovmf";
+    bios = "seabios";
     additionalSpace = "20G";
   };
 

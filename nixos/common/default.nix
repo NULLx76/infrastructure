@@ -101,6 +101,4 @@
     info.enable = lib.mkForce false;
     nixos.enable = lib.mkForce false;
   };
-
-  system.disableInstallerTools = lib.mkDefault true;
 }
