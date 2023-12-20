@@ -34,7 +34,7 @@ in
   services.mastodon = {
     enable = true;
     package = pkgs.v.glitch-soc;
-    streamingPort = 55000;
+    streamingProcesses = 3;
     webPort = 55001;
     enableUnixSocket = false;
     localDomain = "xirion.net";
@@ -103,5 +103,5 @@ in
 
   networking.firewall =
     let cfg = config.services.mastodon;
-    in { allowedTCPPorts = [ cfg.streamingPort cfg.webPort ]; };
+    in { allowedTCPPorts = [ cfg.webPort ]; };
 }
