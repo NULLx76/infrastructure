@@ -18,7 +18,6 @@ let
         "vm" = [ ./common/generic-vm.nix ];
         "local" = [
           lanzaboote.nixosModules.lanzaboote
-          gnome-autounlock-keyring.nixosModules.default
           ./common/desktop
         ];
       };

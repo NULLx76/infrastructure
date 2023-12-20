@@ -16,15 +16,17 @@ in {
           "'DejaVuSansMono Nerd Font', 'monospace', monospace";
         "keyboard.dispatch" = "keyCode";
         "rust-analyzer.server.path" = "${pkgs.rust-analyzer}/bin/rust-analyzer";
+        "rust-analyzer.check.extraArgs" = ["--profile" "rust-analyzer"];
+        "rust-analyzer.check.command" = "clippy";
         "terminal.integrated.defaultProfile.linux" = "zsh";
         "nix.enableLanguageServer" = true; # Enable LSP.
         "nix.serverPath" = "${pkgs.nil}/bin/nil";
         "[nix]" = { "editor.defaultFormatter" = "brettm12345.nixfmt-vscode"; };
         "[python]" = { "editor.formatOnType" = true; };
-        "rust-analyzer.checkOnSave.command" = "clippy";
         "debug.allowBreakpointsEverywhere" = true;
-        "C_Cpp.clang_format_fallbackStyle" = "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 0}";
-        "crates.compatibleDecorator" =  "✓";
+        "C_Cpp.clang_format_fallbackStyle" =
+          "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 0}";
+        "crates.compatibleDecorator" = "✓";
         "crates.errorDecorator" = "✗";
         "crates.incompatibleDecorator" = "🛇";
         # Don't index unecessary things

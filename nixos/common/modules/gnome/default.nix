@@ -1,7 +1,11 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 with lib;
 let cfg = config.services.v.gnome;
 in {
+  imports = [
+    inputs.gnome-autounlock-keyring.nixosModules.default
+  ];
+
   options.services.v.gnome = {
     enable = mkEnableOption "v.gnome";
     hm = mkOption {

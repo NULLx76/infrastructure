@@ -14,6 +14,9 @@ in {
 
           [build]
           rustc-wrapper = "${pkgs.sccache}/bin/sccache"
+
+          [profile.rust-analyzer]
+          inherits = "dev"
         '';
       };
 
