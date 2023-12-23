@@ -31,6 +31,8 @@ in
     preliminarySelfsigned = true;
   };
 
+  services.v.nginx.autoExpose = true;
+
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;
@@ -41,7 +43,6 @@ in
 
     package = pkgs.nginxMainline;
     virtualHosts = {
-      "ha.xirion.net" = proxy "http://192.168.0.129:8123";
       "xirion.net" = {
         enableACME = true;
         forceSSL = true;
@@ -49,6 +50,8 @@ in
           add_header Content-Type 'text/html; charset=UTF-8';
           return 200 'Hello, World!';
         '';
+
+        # Mastodon federation
         locations."= /.well-known/host-meta".extraConfig = ''
           return 301 https://fedi.xirion.net$request_uri;
         '';
@@ -57,32 +60,8 @@ in
           return 301 https://fedi.xirion.net$request_uri;
         '';
       };
-      "git.xirion.net" = proxy "http://10.10.10.12";
-      "o.xirion.net" = proxy "http://192.168.0.112:9000";
-      "g.xirion.net" = proxy "http://garage.hades:3900";
-      "requests.xirion.net" = proxy "http://overseerr.hades:5055";
-      "pass.xirion.net" = proxy "http://bitwarden_rs";
-      "repo.xirion.net" = proxy "http://archlinux";
-      "thelounge.xirion.net" = proxy "http://thelounge:9000";
-      "attic.xirion.net" = proxy "http://attic.hades:8080";
 
-      "tautulli.xirion.net" = proxy "http://tautulli.hades:8080";
       "peepeepoopoo.xirion.net" = proxy "http://tautulli.hades:8080"; # Deprecated but Ricardo has it bookmarked already!
-
-      "registry.xirion.net" = proxy "http://docker-registry:5000"
-        // {
-        locations."/".extraConfig = ''
-          allow 127.0.0.1;
-          allow 10.42.42.0/23;
-          allow 10.10.10.1/24;
-          allow 192.168.0.0/23;
-          allow 80.60.83.220;
-          allow 83.128.154.23;
-          allow 62.45.26.248;
-          allow 195.85.167.32/29;
-          deny all;
-        '';
-      };
 
       "plex.xirion.net" = {
         # Since we want a secure connection, we force SSL
@@ -170,8 +149,6 @@ in
           };
         };
       };
-
-      "fedi-media.xirion.net" = proxy "http://garage.hades:3902";
     };
   };
 }

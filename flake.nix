@@ -5,11 +5,13 @@
   # * https://github.com/Infinidoge/nix-minecraft
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs/nixos-unstable-small";
     nixpkgs_stable.url = "nixpkgs/nixos-23.05";
     nur.url = "github:nix-community/NUR";
     colmena.url = "github:zhaofengli/colmena";
     vault-secrets.url = "github:serokell/vault-secrets";
+
+    microvm.url = "github:astro/microvm.nix";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -52,6 +54,7 @@
     , nixos-generators
     , nur
     , attic
+    , microvm
     , ...
     }@inputs:
     let

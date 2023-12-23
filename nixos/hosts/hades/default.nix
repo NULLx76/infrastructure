@@ -35,10 +35,18 @@
   "overseerr" = {
     ip = "192.168.0.105";
     mac = "8E:21:7F:88:3A:83";
+    exposes.requests = {
+      domain = "requests.xirion.net";
+      port = 5055;
+    };
   };
   "tautulli" = {
     ip = "192.168.0.106";
     mac = "BE:30:DB:F8:C6:55";
+    exposes.tautulli = {
+      domain = "tautulli.xirion.net";
+      port = 8080;
+    };
   };
   "dns-1" = {
     ip = "192.168.0.107";
@@ -84,11 +92,6 @@
     ip = "192.168.0.116";
     mac = "06:8a:8e:3e:43:45";
   };
-  "thelounge" = {
-    ip = "192.168.0.117";
-    mac = "00:0c:29:2a:69:8f";
-    nix = false;
-  };
   "mail" = {
     ip = "192.168.0.118";
     mac = "00:50:56:91:3b:03";
@@ -106,6 +109,16 @@
   "garage" = {
     ip = "192.168.0.121";
     mac = "3A:19:32:A2:F8:96";
+    exposes = {
+      garage = {
+        domain = "g.xirion.net";
+        port = 3900;
+      };
+      fedi-media = {
+        domain = "fedi-media.xirion.net";
+        port = 3902;
+      };
+    };
   };
   "nginx" = {
     ip = "192.168.0.122";
@@ -138,10 +151,18 @@
   "attic" = {
     ip = "192.168.0.128";
     mac = "9E:AF:E9:FE:D4:D9";
+    exposes.attic = {
+      domain = "attic.xirion.net";
+      port = 8080;
+    };
   };
   "hassio" = {
     ip = "192.168.0.129";
     mac = "e6:80:32:fb:00:75";
+    exposes.ha = {
+      domain = "ha.xirion.net";
+      port = 8123;
+    };
     nix = false;
   };
   # "docker-registry" = {
@@ -156,6 +177,16 @@
   "tudelft" = {
     ip = "192.168.0.132";
     mac = "AE:B3:93:4B:04:76";
+    exposes = {
+      grist = {
+        domain = "grist.tud.0x76.dev";
+        port = 8484;
+      };
+      dex = {
+        domain = "dex.tud.0x76.dev";
+        port = 8000;
+      };
+    };
     nix = false;
   };
   "mastodon" = {

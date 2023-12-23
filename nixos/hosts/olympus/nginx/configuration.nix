@@ -42,7 +42,7 @@ in
 
       # Templated
       virtualHosts = {
-        "pass.0x76.dev" = {
+       "pass.0x76.dev" = {
           enableACME = true;
           forceSSL = true;
           locations = {

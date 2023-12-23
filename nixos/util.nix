@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, mailserver, lanzaboote, attic, gnome-autounlock-keyring, ... }:
+{ nixpkgs, home-manager, mailserver, lanzaboote, attic, microvm, ... }:
 let
   inherit (builtins) filter attrValues concatMap mapAttrs;
   inherit (nixpkgs.lib.attrsets) mapAttrsToList;
