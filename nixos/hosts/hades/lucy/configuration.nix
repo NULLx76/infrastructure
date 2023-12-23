@@ -24,8 +24,7 @@ let
 
     doCheck = false;
   };
-in
-{
+in {
   imports = [ ./hardware-configuration.nix ];
 
   # This value determines the NixOS release from which the default
@@ -37,10 +36,7 @@ in
   system.stateVersion = "23.05"; # Did you read the comment?
 
   # Additional packages
-  environment.systemPackages = with pkgs; [
-    jq
-    jre_minimal
-  ];
+  environment.systemPackages = with pkgs; [ jq wget jre8 ];
   boot.loader = {
 
     systemd-boot.enable = true;
@@ -54,4 +50,16 @@ in
   };
 
   users.extraUsers.laura.extraGroups = [ "wheel" ];
+  users.groups.mc = { };
+
+  users.extraUsers.julia = {
+    isNormalUser = true;
+    shell = pkgs.zsh;
+
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKTvqk+CJG4VwN8wg3H1ZdbUVj1JuX7RYKH1ewRKfCPv julia@juliadijkstraarch"
+    ];
+
+    extraGroups = [ "mc" "wheel" ];
+  };
 }
