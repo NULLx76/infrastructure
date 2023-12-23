@@ -27,7 +27,7 @@ in {
 
   services.garage = {
     enable = true;
-    package = pkgs.garage_0_8;
+    package = pkgs.garage_0_9;
     settings = {
       db_engine = "lmdb"; # Recommended for mastodon
       replication_mode = "1";
