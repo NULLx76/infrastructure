@@ -38,14 +38,8 @@ in
 
   # Additional packages
   environment.systemPackages = with pkgs; [
-    ffuf
-    gcc
-    go
     jq
-    nuclei-latest
-    rustup
-    trivy
-    wapiti
+    jre_minimal
   ];
   boot.loader = {
 
@@ -54,22 +48,10 @@ in
     efi.efiSysMountPoint = "/boot";
   };
 
-  virtualisation.docker.enable = true;
-
-  services.mosquitto = {
-    enable = true;
-    listeners = [{
-      acl = [ "pattern readwrite #" ];
-      omitPasswordAuth = true;
-      settings.allow_anonymous = true;
-    }];
-  };
-
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 1883 ];
+    allowedTCPPorts = [ 25565 ];
   };
 
-  users.extraUsers.laura.extraGroups = [ "wheel" "docker" ];
-  users.extraUsers.vivian.extraGroups = [ "docker" ];
+  users.extraUsers.laura.extraGroups = [ "wheel" ];
 }
