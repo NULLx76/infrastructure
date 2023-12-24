@@ -70,6 +70,7 @@ in {
           sumneko.lua
           davidlday.languagetool-linter
           serayuzgur.crates
+          skellock.just
         ];
     };
 

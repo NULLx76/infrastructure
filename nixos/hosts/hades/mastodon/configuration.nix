@@ -31,6 +31,12 @@ in
     EOF
   '';
 
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_16;
+    # The rest of the database setup is handled by mastodon
+  };
+
   services.mastodon = {
     enable = true;
     package = pkgs.v.glitch-soc;
@@ -54,14 +60,7 @@ in
       inherit (config.services.elasticsearch) port;
     };
 
-    database = {
-      createLocally = false;
-      user = "mastodon";
-      passwordFile = "${vs.mastodon}/db-password";
-      port = 5432;
-      name = "mastodon";
-      host = "192.168.0.126";
-    };
+    database.createLocally = true;
 
     smtp = {
       createLocally = false;
