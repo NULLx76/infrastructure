@@ -34,6 +34,12 @@ in
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_16;
+    settings = {
+      shared_preload_libraries = "pg_stat_statements";
+      "pg_stat_statements.track" = "all";
+      "pg_stat_statements.max" = 10000;
+      track_activity_query_size = 2048;
+    };
     # The rest of the database setup is handled by mastodon
   };
 
