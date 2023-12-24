@@ -1,31 +1,36 @@
 { config, pkgs, lib, ... }: {
   imports = [ ./laura.nix ./vivian.nix ./jonathan.nix ];
+  programs = {
 
-  # Setup ZSH to use grml config
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    syntaxHighlighting.enable = true;
-    interactiveShellInit = ''
-      source "${pkgs.grml-zsh-config}/etc/zsh/zshrc"
-      export FZF_DEFAULT_COMMAND="${pkgs.ripgrep}/bin/rg --files --follow"
-      source "${pkgs.fzf}/share/fzf/key-bindings.zsh"
-      source "${pkgs.fzf}/share/fzf/completion.zsh"
-      eval "$(${pkgs.zoxide}/bin/zoxide init zsh)"
-    '';
-    # otherwise it'll override the grml prompt
-    promptInit = "";
+    # Setup ZSH to use grml config
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      syntaxHighlighting.enable = true;
+      autosuggestions.enable = true;
+      interactiveShellInit = ''
+        source "${pkgs.grml-zsh-config}/etc/zsh/zshrc"
+        export FZF_DEFAULT_COMMAND="${pkgs.ripgrep}/bin/rg --files --follow"
+        source "${pkgs.fzf}/share/fzf/key-bindings.zsh"
+        source "${pkgs.fzf}/share/fzf/completion.zsh"
+        eval "$(${pkgs.zoxide}/bin/zoxide init zsh)"
+      '';
+      # otherwise it'll override the grml prompt
+      promptInit = "";
+    };
+
+    # Install Neovim and set it as alias for vi(m)
+    neovim = {
+      enable = true;
+      viAlias = true;
+      vimAlias = true;
+      defaultEditor = true;
+    };
+
+    tmux.enable = true;
   };
 
   environment.pathsToLink = [ "/share/zsh" ];
-
-  # Install Neovim and set it as alias for vi(m)
-  programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-    defaultEditor = true;
-  };
 
   # Disable sudo prompt for `wheel` users.
   security.sudo.wheelNeedsPassword = lib.mkDefault false;
@@ -41,15 +46,15 @@
 
   # Setup packages available everywhere
   environment.systemPackages = with pkgs; [
+    file
     fzf
     git
     htop
     ncdu
     psmisc
+    helix
     ripgrep
     rsync
-    tmux
     zoxide
-    tmux
   ];
 }

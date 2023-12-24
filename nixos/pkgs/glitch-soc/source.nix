@@ -11,7 +11,7 @@ in
       rev = "v${version}";
       hash = "sha256-fZH3zPEU5jnYFhLx8OKDNrvsSVT46Peu92L84Fg5YpQ=";
     };
-    patches = patches ++ [];
+    inherit patches;
   }) // {
   inherit version;
   yarnHash = "sha256-P7KswzsCusyiS4MxUFnC1HYMTQ6fLpIwd97AglCukIk=";

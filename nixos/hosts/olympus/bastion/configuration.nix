@@ -2,36 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, ... }:
-let
-  fix-vscode = pkgs.writeScriptBin "fix-vscode" ''
-    #!${pkgs.stdenv.shell}
-    # Check if vscode-server dir exists
-    if [[ -d "$HOME/.vscode-server/bin" ]]; then
-      # For every bin folder within
-      for versiondir in "$HOME"/.vscode-server/bin/*; do
-        # Remove bundled node (dynamic links are borked for nix)
-        rm "$versiondir/node"
-        # symlink node form the nixpkg
-        ln -s "${pkgs.nodejs-16_x}/bin/node" "$versiondir/node"
-      done
-    fi
-  '';
-in
-{
+{ pkgs, ... }: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
-  # This _should_ fix vscode errors as well
   programs.nix-ld.enable = true;
-  # environment.variables = {
-  #     NIX_LD_LIBRARY_PATH = lib.makeLibraryPath [
-  #       pkgs.stdenv.cc.cc
-  #     ];
-  #     # NIX_LD = lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker";
-  # };
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
@@ -48,22 +25,7 @@ in
   virtualisation.podman.enable = true;
 
   # Additional packages
-  environment.systemPackages = with pkgs; [
-    binutils
-    fix-vscode
-    fluxcd
-    k9s
-    kubectl
-    kubectx
-    nix-prefetch-git
-    nixpkgs-fmt
-    nixpkgs-review
-    ripgrep
-    rsync
-    tmux
-    vault
-    vim
-  ];
+  environment.systemPackages = with pkgs; [ vault ];
 
   programs.gnupg.agent = {
     enable = true;
