@@ -1,6 +1,6 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+# and in the NixOS manual (accessible by running `nixos-help`).
 
 { pkgs, ... }:
 let
@@ -24,29 +24,19 @@ let
 
     doCheck = false;
   };
-in
-{
+in {
   imports = [ ./hardware-configuration.nix ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # on your system were taken. It's perfectly fine and recommended to leave
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
   # Additional packages
-  environment.systemPackages = with pkgs; [
-    ffuf
-    gcc
-    go
-    jq
-    nuclei-latest
-    rustup
-    trivy
-    wapiti
-  ];
+  environment.systemPackages = with pkgs; [ jq wget jre8 ];
   boot.loader = {
 
     systemd-boot.enable = true;
@@ -54,22 +44,22 @@ in
     efi.efiSysMountPoint = "/boot";
   };
 
-  virtualisation.docker.enable = true;
-
-  services.mosquitto = {
-    enable = true;
-    listeners = [{
-      acl = [ "pattern readwrite #" ];
-      omitPasswordAuth = true;
-      settings.allow_anonymous = true;
-    }];
-  };
-
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 1883 ];
+    allowedTCPPorts = [ 25565 ];
   };
 
-  users.extraUsers.laura.extraGroups = [ "wheel" "docker" ];
-  users.extraUsers.vivian.extraGroups = [ "docker" ];
+  users.extraUsers.laura.extraGroups = [ "wheel" ];
+  users.groups.mc = { };
+
+  users.extraUsers.julia = {
+    isNormalUser = true;
+    shell = pkgs.zsh;
+
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKTvqk+CJG4VwN8wg3H1ZdbUVj1JuX7RYKH1ewRKfCPv julia@juliadijkstraarch"
+    ];
+
+    extraGroups = [ "mc" "wheel" ];
+  };
 }
