@@ -49,8 +49,9 @@ in {
     allowedTCPPorts = [ 25565 ];
   };
 
-  users.extraUsers.laura.extraGroups = [ "wheel" ];
   users.groups.mc = { };
+  users.extraUsers.laura.extraGroups = [ "wheel" ];
+  users.extraUsers.vivian.extraGroups = [ "mc" ];
 
   users.extraUsers.julia = {
     isNormalUser = true;

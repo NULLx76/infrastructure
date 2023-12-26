@@ -31,7 +31,6 @@
       tmux = {
         enable = true;
         shortcut = "b";
-        terminal = "screen-256color";
         clock24 = true;
       };
 

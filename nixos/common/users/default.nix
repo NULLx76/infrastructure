@@ -48,8 +48,19 @@
     psmisc
     ripgrep
     rsync
-    tmux
     zoxide
-    tmux
   ];
+
+  programs.tmux = {
+    enable = true;
+    withUtempter = true;
+    terminal = "tmux-256color";
+    secureSocket = false;
+    extraConfig = ''
+      set -g mouse on
+      setw -g mouse on
+    '';
+  };
+
+
 }
