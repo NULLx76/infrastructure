@@ -37,6 +37,7 @@
   };
 
   # security.polkit.enable = lib.mkDefault true;
+  boot.tmp.useTmpfs = lib.mkDefault true;
 
   # Nix Settings
   nix = {

@@ -15,6 +15,8 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
 
+  boot.tmp.useTmpfs = true;
+
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
