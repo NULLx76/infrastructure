@@ -18,7 +18,14 @@
     ip = "192.168.0.101";
     mac = "5a:00:b7:6c:d1:e2";
   };
-  # ip = "192.168.0.102";
+  "jellyfin" = {
+    ip = "192.168.0.102";
+    mac = "C6:7E:2B:DC:09:CC";
+    exposes.jellyfin = {
+      domain = "jf.0x76.dev";
+      port = 8096;
+    };
+  };
   "vault-0" = {
     ip = "192.168.0.103";
     mac = "7A:14:15:ED:D1:E6";
