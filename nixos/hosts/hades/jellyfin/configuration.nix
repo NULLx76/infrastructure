@@ -18,6 +18,11 @@
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
+  fileSystems."/mnt/storage" = {
+    device = "storage:/mnt/storage";
+    fsType = "nfs";
+  };
+
   services.jellyfin = {
     enable = true;
     openFirewall = true;
@@ -33,18 +38,20 @@
     [ "d '/var/lib/watchstate' 0755 watchstate watchstate -" ];
 
 
+  networking.firewall.allowedTCPPorts = [ 8080 ];
+
   # Managed imperatively through its CLI
   virtualisation.oci-containers.containers.watchstate = {
     image = "ghcr.io/arabcoders/watchstate:latest";
     extraOptions = [ "--pull=newer" ];
     user = "0:0";
-    environment = { WS_TZ = "Europe/Amsterdam"; };
+    environment = {
+      WS_TZ = "Europe/Amsterdam";
+      WS_CRON_IMPORT = "1";
+      WS_CRON_EXPORT = "1";
+    };
     ports = [ "8080:8080" ];
     volumes = [ "/var/lib/watchstate:/config:rw" ];
   };
 
-  fileSystems."/mnt/storage" = {
-    device = "storage:/mnt/storage";
-    fsType = "nfs";
-  };
 }

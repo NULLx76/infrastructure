@@ -36,7 +36,7 @@
     enableUserServices = true;
   };
 
-  security.polkit.enable = lib.mkDefault true;
+  # security.polkit.enable = lib.mkDefault true;
 
   # Nix Settings
   nix = {
