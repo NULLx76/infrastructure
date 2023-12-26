@@ -20,6 +20,8 @@
     sharedModules = [ ./hm-modules inputs.nixvim.homeManagerModules.nixvim ];
   };
 
+  virtualisation.oci-containers.backend = lib.mkDefault "podman";
+
   # Clean /tmp on boot.
   boot.tmp.cleanOnBoot = true;
 

@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, mailserver, lanzaboote, attic, microvm, ... }:
+{ nixpkgs, home-manager, mailserver, lanzaboote, attic, ... }:
 let
   inherit (builtins) filter attrValues concatMap mapAttrs;
   inherit (nixpkgs.lib.attrsets) mapAttrsToList;

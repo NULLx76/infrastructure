@@ -12,9 +12,10 @@ in {
     calibre
     celluloid
     cinny-desktop
-    element-desktop-wayland
+    element-desktop
     fusee-launcher
     fractal-next
+    foliate
     gcc
     gimp
     helix

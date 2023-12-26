@@ -23,6 +23,26 @@
     openFirewall = true;
   };
 
+  users.groups.watchstate = { };
+  users.users.watchstate = {
+    isSystemUser = true;
+    group = "watchstate";
+  };
+
+  systemd.tmpfiles.rules =
+    [ "d '/var/lib/watchstate' 0755 watchstate watchstate -" ];
+
+
+  # Managed imperatively through its CLI
+  virtualisation.oci-containers.containers.watchstate = {
+    image = "ghcr.io/arabcoders/watchstate:latest";
+    extraOptions = [ "--pull=newer" ];
+    user = "0:0";
+    environment = { WS_TZ = "Europe/Amsterdam"; };
+    ports = [ "8080:8080" ];
+    volumes = [ "/var/lib/watchstate:/config:rw" ];
+  };
+
   fileSystems."/mnt/storage" = {
     device = "storage:/mnt/storage";
     fsType = "nfs";
