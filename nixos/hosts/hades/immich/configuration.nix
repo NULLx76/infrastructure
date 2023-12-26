@@ -7,8 +7,7 @@ let
   # https://github.com/immich-app/immich/releases
   # version = "1.55.1";
   dataDir = "/var/lib/immich";
-in
-{
+in {
   imports = [ ];
 
   # This value determines the NixOS release from which the default
@@ -22,31 +21,32 @@ in
   # Additional packages
   environment.systemPackages = with pkgs; [ ];
 
-
-
   # TODO: https://github.com/suderman/nixos/tree/main/modules/nixos/immich
 
   fileSystems."/mnt/storage" = {
     device = "storage:/mnt/storage";
     fsType = "nfs";
   };
-
-  # Unused uid/gid snagged from this list:
-  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/misc/ids.nix
-  ids.uids.immich = 911;
-  ids.gids.immich = 911;
-
-  users.groups.photos = {};
-
-  users.users.immich = {
-    isSystemUser = true;
-    group = "photos";
-    description = "Immich daemon user";
-    home = dataDir;
-    uid = config.ids.uids.immich;
+  ids = {
+    # Unused uid/gid snagged from this list:
+    # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/misc/ids.nix
+    uids.immich = 911;
+    gids.immich = 911;
   };
+  users = {
+    groups = {
+      photos = { };
+      immich = { gid = config.ids.gids.immich; };
+    };
 
-  users.groups.immich = { gid = config.ids.gids.immich; };
+    users.immich = {
+      isSystemUser = true;
+      group = "photos";
+      description = "Immich daemon user";
+      home = dataDir;
+      uid = config.ids.uids.immich;
+    };
+  };
 
   # Postgres database configuration
   services.postgresql = {
@@ -56,7 +56,7 @@ in
 
     ensureUsers = [{
       name = "immich";
-      ensurePermissions = { "DATABASE immich" = "ALL PRIVILEGES"; };
+      ensureDBOwnership = true;
     }];
     ensureDatabases = [ "immich" ];
 

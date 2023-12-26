@@ -54,7 +54,6 @@
     , nixos-generators
     , nur
     , attic
-    , microvm
     , ...
     }@inputs:
     let

@@ -12,8 +12,7 @@ let
       proxyWebsockets = true;
     };
   };
-in
-{
+in {
   imports = [ ];
 
   # This value determines the NixOS release from which the default
@@ -46,22 +45,25 @@ in
       "xirion.net" = {
         enableACME = true;
         forceSSL = true;
-        locations."/".extraConfig = ''
-          add_header Content-Type 'text/html; charset=UTF-8';
-          return 200 'Hello, World!';
-        '';
+        locations = {
+          "/".extraConfig = ''
+            add_header Content-Type 'text/html; charset=UTF-8';
+            return 200 'Hello, World!';
+          '';
 
-        # Mastodon federation
-        locations."= /.well-known/host-meta".extraConfig = ''
-          return 301 https://fedi.xirion.net$request_uri;
-        '';
-        locations."/.well-known/webfinger".extraConfig = ''
-          add_header Access-Control-Allow-Origin '*';
-          return 301 https://fedi.xirion.net$request_uri;
-        '';
+          # Mastodon federation
+          "= /.well-known/host-meta".extraConfig = ''
+            return 301 https://fedi.xirion.net$request_uri;
+          '';
+          "/.well-known/webfinger".extraConfig = ''
+            add_header Access-Control-Allow-Origin '*';
+            return 301 https://fedi.xirion.net$request_uri;
+          '';
+        };
       };
 
-      "peepeepoopoo.xirion.net" = proxy "http://tautulli.hades:8080"; # Deprecated but Ricardo has it bookmarked already!
+      "peepeepoopoo.xirion.net" = proxy
+        "http://tautulli.hades:8080"; # Deprecated but Ricardo has it bookmarked already!
 
       "plex.xirion.net" = {
         # Since we want a secure connection, we force SSL

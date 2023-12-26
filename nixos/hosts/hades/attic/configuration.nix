@@ -26,10 +26,7 @@ in {
     ensureDatabases = [ "atticd" ];
     ensureUsers = [{
       name = "atticd";
-      ensurePermissions = {
-        "DATABASE atticd" = "ALL PRIVILEGES";
-        "schema public" = "ALL";
-      };
+      ensureDBOwnership = true;
     }];
 
   };

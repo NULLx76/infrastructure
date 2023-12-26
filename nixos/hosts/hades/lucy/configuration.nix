@@ -49,17 +49,17 @@ in {
     allowedTCPPorts = [ 25565 ];
   };
 
-  users.groups.mc = { };
   users.extraUsers.laura.extraGroups = [ "wheel" ];
-  users.extraUsers.vivian.extraGroups = [ "mc" ];
+  users.extraUsers.vivian.extraGroups = [ "wheel" ];
+  users.groups.mc = { };
 
   users.extraUsers.julia = {
     isNormalUser = true;
     shell = pkgs.zsh;
 
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKTvqk+CJG4VwN8wg3H1ZdbUVj1JuX7RYKH1ewRKfCPv julia@juliadijkstraarch"
-    ];
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKTvqk+CJG4VwN8wg3H1ZdbUVj1JuX7RYKH1ewRKfCPv julia@juliadijkstraarch"
+        ];
 
     extraGroups = [ "mc" "wheel" ];
   };
