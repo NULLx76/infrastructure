@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 let
   clientConfig = {
     "m.homeserver" = {
@@ -61,6 +61,26 @@ in
           };
         };
 
+        "0x76.dev" = {
+          enableACME = true;
+          forceSSL = true;
+
+          locations."/".extraConfig = ''
+              add_header Content-Type 'text/html; charset=UTF-8';
+              return 200 '<h1>Under Construction</h1>';
+          '';
+        };
+
+        "blog.xirion.net" = {
+          enableACME = true;
+          forceSSL = true;
+
+          locations."/".extraConfig = ''
+              add_header Content-Type 'text/html; charset=UTF-8';
+              return 200 '<h1>Under Construction</h1>';
+          '';
+        };
+
         # Meow
         "meowy.tech" = {
           enableACME = true;
@@ -112,6 +132,11 @@ in
               brand = "chat.meowy.tech";
             };
           };
+        };
+        "es.0x76.dev" = {
+          enableACME = true;
+          forceSSL = true;
+          root = inputs.essentials.packages.${pkgs.system}.default;
         };
         "cinny.chat.meowy.tech" = {
           enableACME = true;

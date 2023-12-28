@@ -7,8 +7,8 @@ in {
     programs.git = {
       enable = true;
       package = pkgs.gitAndTools.gitFull;
-      userName = "0x76";
-      userEmail = "v@0x76.dev";
+      userName = "Vivian";
+      userEmail = "vivian@0x76.dev";
       lfs.enable = true;
       extraConfig = {
         push.autoSetupRemote = true;

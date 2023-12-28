@@ -59,8 +59,11 @@ in {
 
         openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKTvqk+CJG4VwN8wg3H1ZdbUVj1JuX7RYKH1ewRKfCPv julia@juliadijkstraarch"
-          # Below is Evelyn's key
+          # Below is Evelyn's keys
           "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDnZSVdqSybDwVooSZ+SGFM0YNu15sO/jgVqCBGDm33wj0fML5T4oviUrY6yABh+eAgy/NAztgM7+6L8Hlze5DBeMwNAvj9gr9QSzUetW0iqCscZJ8dDbW30O9449gw2JY/XZzcFMZAP5QEQGEgG/6QQ3yRwA3DMCsGhQQ37l/aS+RsKYq3ZSN4f1nFJCrm397QB8r+bhaexufXqwumxe8rlefoUNNVnmu54FA8Pc3jSdsWT4s/3mqF6NiRa53w13SBWyS+zopCy1tTSnRszgAkldpE7Vft/QnmpFavAWHzpfArv/uFXQ3fx5Cj5t70zB6VJEtaBxhdKXeQUFBCn7fmwfjV0Un9b8jLW94uDhDD3059trhMvJvqKebuqyZe74MTZH0IC3IobpSb9fHHvxuRwUQOMkkJmjv1p2y2R6v7s2tA1sZlIEBmRDvZcKo4hPBe6q13OePV3O8KAFzCmPBIfE6kQ/nLc+3k9OjFWFTshdDXUYpSVGjNrv/IanCXbEs="
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA0KA0uOoLXUN4LhU7LgtSk0atWyPlEz5LA8dIXs9xTl"
+
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIfooZjMWXvXZu1ReOEACDZ0TMb2WJRBSOLlWE8y6fUh victor@aoife"
         ];
 
     extraGroups = [ "mc" "wheel" ];

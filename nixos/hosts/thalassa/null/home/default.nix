@@ -23,8 +23,8 @@ in
     git = {
       enable = true;
       package = pkgs.gitAndTools.gitFull;
-      userName = "0x76";
-      userEmail = "v@0x76";
+      userName = "Vivian";
+      userEmail = "vivian@0x76.dev";
       lfs.enable = true;
       # delta.enable = true;
       extraConfig = {

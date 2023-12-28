@@ -43,6 +43,9 @@
     gnome-autounlock-keyring.url = "git+https://git.0x76.dev/v/gnome-autounlock-keyring.git";
 
     attic.url = "github:zhaofengli/attic";
+
+    # Website(s)
+    essentials.url = "github:jdonszelmann/essentials";
   };
 
   outputs =

@@ -51,10 +51,7 @@
     ip = "10.42.42.10";
     mac = "6E:A5:25:99:FE:68";
     exposes = {
-      www.domain = "0x76.dev";
       flux.domain = "flux.0x76.dev";
-      internal.domain = "internal.xirion.net";
-      blog.domain = "blog.xirion.net";
     };
   };
   "dex" = {
