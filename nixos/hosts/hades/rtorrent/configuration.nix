@@ -41,6 +41,8 @@ in {
     fsType = "nfs";
   };
 
+  systemd.services.rtorrent.after = [ "nfs-client.target" ];
+
   services.flood = {
     enable = true;
     host = "0.0.0.0";

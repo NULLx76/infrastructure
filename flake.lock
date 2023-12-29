@@ -234,11 +234,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1703781671,
-        "narHash": "sha256-sldUCqfp0E3AV82jJ2YLi0tbOajn9fg4+ms9naeAYKA=",
+        "lastModified": 1703800106,
+        "narHash": "sha256-PceYQ8qL0GsOMl22FBzJON1aZeFfj+HJqptGKEdT1EM=",
         "owner": "jdonszelmann",
         "repo": "essentials",
-        "rev": "6b10889113e4356e0b5d050874effb9b9f3d8903",
+        "rev": "49d5ed74bca121b9fb750f43e53c815dff61e223",
         "type": "github"
       },
       "original": {

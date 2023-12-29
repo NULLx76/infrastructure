@@ -1,6 +1,6 @@
 { pkgs, ... }: {
 
-  environment.systemPackages = with pkgs; [ mergerfs ];
+  environment.systemPackages = with pkgs; [ mergerfs mergerfs-tools ];
 
   fileSystems."/mnt/disk1" = {
     fsType = "ext4";
@@ -56,12 +56,5 @@
       "moveonenospc=true"
       "category.create=mfs"
     ];
-  };
-
-  services.nfs.server = {
-    enable = true;
-    exports = ''
-      /mnt/storage *(rw,async,no_subtree_check,fsid=0,all_squash,anonuid=0,anongid=0)
-    '';
   };
 }
