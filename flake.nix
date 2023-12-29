@@ -9,6 +9,7 @@
     nixpkgs_stable.url = "nixpkgs/nixos-23.05";
     nur.url = "github:nix-community/NUR";
     colmena.url = "github:zhaofengli/colmena";
+    deploy.url = "github:serokell/deploy-rs";
     vault-secrets.url = "github:serokell/vault-secrets";
 
     microvm.url = "github:astro/microvm.nix";
@@ -57,6 +58,7 @@
     , nixos-generators
     , nur
     , attic
+    , deploy
     , ...
     }@inputs:
     let
@@ -142,6 +144,7 @@
           attic.packages.${pkgs.system}.attic
           apply-local
           colmena.packages.${system}.colmena
+          deploy.packages.${system}.deploy-rs
           cachix
           deadnix
           statix

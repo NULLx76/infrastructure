@@ -2,10 +2,11 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./vms.nix
   ];
 
   programs.nix-ld.enable = true;
@@ -27,10 +28,10 @@
   # Additional packages
   environment.systemPackages = with pkgs; [ vault ];
 
+  networking.useNetworkd = true;
+
   programs.gnupg.agent = {
     enable = true;
     pinentryFlavor = "curses";
   };
-
-  home-manager.users.vivian = import ./home.nix;
 }
