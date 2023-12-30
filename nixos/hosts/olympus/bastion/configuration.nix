@@ -6,7 +6,8 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./vms.nix
+    ./containers
+    # ./vms.nix
   ];
 
   programs.nix-ld.enable = true;
