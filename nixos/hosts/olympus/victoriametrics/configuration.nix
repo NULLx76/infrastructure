@@ -8,8 +8,7 @@ let
   grafanaDomain = config.meta.exposes.grafana.domain;
   grafanaPort = config.meta.exposes.grafana.port;
   vs = config.vault-secrets.secrets;
-in
-{
+in {
   imports = [ ];
 
   # This value determines the NixOS release from which the default
@@ -115,9 +114,8 @@ in
           token_url = "https://dex.0x76.dev/token";
           api_url = "https://dex.0x76.dev/userinfo";
           skip_org_role_sync = true;
-          auto_login = true;
+          auto_login = false;
         };
-
       };
     };
   };

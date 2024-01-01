@@ -22,7 +22,11 @@
     snapraid = {
       enable = true;
       parityFiles =
-        [ "/mnt/parity1/snapraid.parity" "/mnt/parity2/snapraid.parity-2" ];
+        [
+        "/mnt/parity1/snapraid.parity"
+        "/mnt/parity2/snapraid.parity-2"
+        "/mnt/parity3/snapraid.parity-3"
+        ];
       dataDisks = {
         d1 = "/mnt/disk1";
         d2 = "/mnt/disk2";
