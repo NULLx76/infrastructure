@@ -1,6 +1,10 @@
 { pkgs, ... }: {
 
-  environment.systemPackages = with pkgs; [ mergerfs mergerfs-tools smartmontools ];
+  environment.systemPackages = with pkgs; [
+    mergerfs
+    mergerfs-tools
+    smartmontools
+  ];
   fileSystems = {
     "/mnt/disk1" = {
       fsType = "ext4";
@@ -32,17 +36,17 @@
       device = "/dev/disk/by-uuid/63381321-fe00-4838-8668-4d1decc94296";
     };
 
+    "/mnt/disk7" = {
+      fsType = "ext4";
+      device = "/dev/disk/by-uuid/6c568887-9d2e-45ce-ab85-4c48cca2226a";
+    };
+
     "/mnt/parity1" = {
       fsType = "ext4";
       device = "/dev/disk/by-partuuid/7c9b88ed-b8f8-40c9-bbc3-b75d30e04e01";
     };
 
     "/mnt/parity2" = {
-      fsType = "ext4";
-      device = "/dev/disk/by-uuid/6c568887-9d2e-45ce-ab85-4c48cca2226a";
-    };
-
-    "/mnt/parity3" = {
       fsType = "ext4";
       device = "/dev/disk/by-partuuid/5d2d7e3e-3730-4d9b-8759-dc14396f3357";
     };

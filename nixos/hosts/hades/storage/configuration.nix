@@ -24,8 +24,7 @@
       parityFiles =
         [
         "/mnt/parity1/snapraid.parity"
-        "/mnt/parity2/snapraid.parity-2"
-        "/mnt/parity3/snapraid.parity-3"
+        "/mnt/parity2/snapraid.parity"
         ];
       dataDisks = {
         d1 = "/mnt/disk1";
@@ -34,6 +33,7 @@
         d4 = "/mnt/disk4";
         d5 = "/mnt/disk5";
         d6 = "/mnt/disk6";
+        d7 = "/mnt/disk7";
       };
       contentFiles = [
         "/var/lib/snapraid/snapraid.content"
@@ -51,7 +51,6 @@
         "/rancher/"
         "/torrents/"
         "/exclusion-zone/"
-        "/roms/"
         "/roms/"
       ];
     };

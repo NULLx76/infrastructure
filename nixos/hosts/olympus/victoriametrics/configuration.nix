@@ -38,13 +38,13 @@ in {
           scrape_timeout = "30s";
         };
         scrape_configs = [
-          {
-            job_name = "kea";
-            static_configs = [{
-              targets = [ "dhcp.olympus:9547" ];
-              labels.app = "dhcp";
-            }];
-          }
+          # {
+          #   job_name = "kea";
+          #   static_configs = [{
+          #     targets = [ "dhcp.olympus:9547" ];
+          #     labels.app = "dhcp";
+          #   }];
+          # }
           {
             job_name = "nginx";
             static_configs = [{
