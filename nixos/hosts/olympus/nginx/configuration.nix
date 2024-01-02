@@ -13,8 +13,7 @@ let
     add_header Access-Control-Allow-Origin *;
     return 200 '${builtins.toJSON data}';
   '';
-in
-{
+in {
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -40,9 +39,15 @@ in
 
       package = pkgs.nginxMainline;
 
+      commonHttpConfig = ''
+        types {
+          application/javascript mjs;
+        }
+      '';
+
       # Templated
       virtualHosts = {
-       "pass.0x76.dev" = {
+        "pass.0x76.dev" = {
           enableACME = true;
           forceSSL = true;
           locations = {
@@ -66,8 +71,8 @@ in
           forceSSL = true;
 
           locations."/".extraConfig = ''
-              add_header Content-Type 'text/html; charset=UTF-8';
-              return 200 '<h1>Under Construction</h1>';
+            add_header Content-Type 'text/html; charset=UTF-8';
+            return 200 '<h1>Under Construction</h1>';
           '';
         };
 
@@ -76,8 +81,8 @@ in
           forceSSL = true;
 
           locations."/".extraConfig = ''
-              add_header Content-Type 'text/html; charset=UTF-8';
-              return 200 '<h1>Under Construction</h1>';
+            add_header Content-Type 'text/html; charset=UTF-8';
+            return 200 '<h1>Under Construction</h1>';
           '';
         };
 

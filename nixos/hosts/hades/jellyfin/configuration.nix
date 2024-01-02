@@ -39,7 +39,6 @@
   systemd.tmpfiles.rules =
     [ "d '/var/lib/watchstate' 0755 watchstate watchstate -" ];
 
-
   networking.firewall.allowedTCPPorts = [ 8080 ];
 
   # Managed imperatively through its CLI
@@ -51,6 +50,7 @@
       WS_TZ = "Europe/Amsterdam";
       WS_CRON_IMPORT = "1";
       WS_CRON_EXPORT = "1";
+      WS_CRON_PROGRESS = "1";
     };
     ports = [ "8080:8080" ];
     volumes = [ "/var/lib/watchstate:/config:rw" ];

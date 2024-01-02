@@ -15,8 +15,7 @@ let
   ptr6Data = { hostname, realm, ip6, ... }: ''"${ip6} ${hostname}.${realm}"'';
 
   cfg = config.services.v.dns;
-in
-{
+in {
   options.services.v.dns = {
     enable = mkEnableOption "v.dns";
 
@@ -38,7 +37,7 @@ in
     };
 
     mode = mkOption {
-      type = types.strMatching "^(server|laptop)$";
+      type = enum [ "server" "laptop" ];
       default = "laptop";
       description = ''
         Whether to configure the DNS in server mode (listen on all interfaces) or laptop mode (just on localhost)
@@ -60,7 +59,8 @@ in
     services.unbound = {
       enable = true;
       package = pkgs.v.unbound;
-      localControlSocketPath = mkIf cfg.enableMetrics "/run/unbound/unbound.socket";
+      localControlSocketPath =
+        mkIf cfg.enableMetrics "/run/unbound/unbound.socket";
       settings = {
         server = mkMerge [
           {

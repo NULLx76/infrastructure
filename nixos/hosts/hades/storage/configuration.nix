@@ -6,11 +6,12 @@
     ./fs.nix
   ];
 
+
   boot.loader.systemd-boot.enable = true;
   services = {
 
     # Enable the OpenSSH daemon.
-    openssh.enable = true; # Did you read the comment?
+    openssh.enable = true;
 
     nfs.server = {
       enable = true;
@@ -22,10 +23,7 @@
     snapraid = {
       enable = true;
       parityFiles =
-        [
-        "/mnt/parity1/snapraid.parity"
-        "/mnt/parity2/snapraid.parity"
-        ];
+        [ "/mnt/parity1/snapraid.parity" "/mnt/parity2/snapraid.parity" ];
       dataDisks = {
         d1 = "/mnt/disk1";
         d2 = "/mnt/disk2";
