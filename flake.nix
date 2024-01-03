@@ -83,7 +83,7 @@
       nixosConfigurations."bastion.olympus" = lib.nixosSystem {
         inherit system pkgs;
         specialArgs = { inherit inputs; };
-        modules = [ ./common ./hosts/olympus/bastion ];
+        modules = [ ./common ./common/generic-vm.nix ./hosts/olympus/bastion ];
       };
 
       deploy = {

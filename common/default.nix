@@ -2,6 +2,7 @@
   imports = [
     inputs.home-manager.nixosModules.home-manager
     ./users
+    ./modules
   ];
 
   home-manager = {
