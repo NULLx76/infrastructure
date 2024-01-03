@@ -19,7 +19,8 @@
     ip = "10.42.42.4";
     ip6 = "2001:41f0:9639:1:80f0:7cff:fecb:bd6d";
     mac = "82:F0:7C:CB:BD:6D";
-    type = "vm";
+    # type = "vm";
+    nix = false; # Now managed in the `new` branch
   };
   "vault" = {
     ip = "10.42.42.6";
