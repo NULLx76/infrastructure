@@ -26,9 +26,9 @@ jobs:
           git config user.email "<>"
 
           # Run Update script
-          ./nixos/pkgs/plex-pass/update.sh
+          ./pkgs/plex-pass/update.sh
 
-          git add ./nixos/pkgs/plex-pass/
+          git add ./pkgs/plex-pass/
 
           # Push if changed
           if git status ./nixos/pkgs/plex-pass/ | grep -q "to be committed"; then
