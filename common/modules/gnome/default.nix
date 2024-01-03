@@ -54,7 +54,7 @@ in {
         atomix # puzzle game
         epiphany # web browser
         geary # email reader
-        gedit # text editor
+        pkgs.gedit # text editor
         gnome-calendar
         gnome-clocks
         gnome-contacts

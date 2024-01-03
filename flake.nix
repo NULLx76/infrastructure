@@ -54,7 +54,7 @@
   };
 
   outputs = { self, nixpkgs, nixpkgs_stable, flake-utils-plus, nur, attic
-    , deploy, home-manager, gnome-autounlock-keyring, ... }@inputs:
+    , deploy, home-manager, gnome-autounlock-keyring, lanzaboote, ... }@inputs:
     let
       # fast-repl = pkgs.writeShellScriptBin "fast-repl" ''
       #   source /etc/set-environment
@@ -81,26 +81,45 @@
           gnome-autounlock-keyring.nixosModules.default
           ./common
         ];
+
+        specialArgs = { inherit inputs; };
       };
 
       # hosts
+      hosts = {
 
-      hosts."bastion.olympus" = {
-        modules = [ ./common/generic-vm.nix ./hosts/olympus/bastion ];
+        "bastion.olympus" = {
+          modules = [ ./common/generic-vm.nix ./hosts/olympus/bastion ];
+        };
+
+        aoife = {
+          modules =
+            [ lanzaboote.nixosModules.lanzaboote ./hosts/thalassa/aoife ];
+        };
       };
 
       # deploy-rs
       deploy = {
         user = "root";
-        nodes."bastion.olympus" = {
-          hostname = "olympus.0x76.dev";
-          fastConnection = true;
-          remoteBuild = true;
-          profiles = {
-            system = {
-              path = deploy.lib.x86_64-linux.activate.nixos
-                self.nixosConfigurations."bastion.olympus";
+        nodes = {
+          "bastion.olympus" = {
+            hostname = "olympus.0x76.dev";
+            fastConnection = true;
+            remoteBuild = true;
+            profiles = {
+              system = {
+                path = deploy.lib.x86_64-linux.activate.nixos
+                  self.nixosConfigurations."bastion.olympus";
+              };
             };
+          };
+
+          aoife = {
+            remoteBuild = true;
+            fastConnection = true;
+            hostname = "localhost";
+            profiles.system.path = deploy.lib.x86_64-linux.activate.nixos
+              self.nixosConfigurations.aoife;
           };
         };
       };
