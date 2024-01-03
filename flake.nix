@@ -71,7 +71,7 @@
 
       # Channels config
       channelsConfig = { allowUnfree = true; };
-      sharedOverlays = [ (import ./nixos/pkgs) nur.overlay ];
+      sharedOverlays = [ (import ./pkgs) nur.overlay ];
 
       # host defaults
       hostDefaults = {
