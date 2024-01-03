@@ -54,7 +54,7 @@
   };
 
   outputs = { self, nixpkgs, nixpkgs_stable, flake-utils-plus, nur, attic
-    , deploy, home-manager, ... }@inputs:
+    , deploy, home-manager, gnome-autounlock-keyring, ... }@inputs:
     let
       # fast-repl = pkgs.writeShellScriptBin "fast-repl" ''
       #   source /etc/set-environment
@@ -78,9 +78,9 @@
         system = "x86_64-linux";
         modules = [
           home-manager.nixosModules.home-manager
+          gnome-autounlock-keyring.nixosModules.default
           ./common
         ];
-        extraArgs = { inherit inputs; };
       };
 
       # hosts
@@ -107,7 +107,7 @@
 
       # Outputs
       outputsBuilder = channels: {
-        devShell = channels.nixpkgs.mkShell {
+        devShells.default = channels.nixpkgs.mkShell {
           name = "devShell";
           VAULT_ADDR = "http://vault.olympus:8200/";
           packages = with pkgs; [

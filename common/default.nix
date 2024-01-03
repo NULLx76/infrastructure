@@ -21,7 +21,7 @@
   # https://src.fedoraproject.org/rpms/systemd/tree/acb90c49c42276b06375a66c73673ac3510255
   systemd.oomd = {
     enableRootSlice = true;
-    enableUserServices = true;
+    enableUserSlices = true;
   };
 
   # security.polkit.enable = lib.mkDefault true;
