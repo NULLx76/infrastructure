@@ -41,6 +41,5 @@
       homeDirectory = "/home/vivian";
       stateVersion = "23.05";
     };
-
   };
 }

@@ -1,4 +1,16 @@
 { lib, inputs, pkgs, ... }: {
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+    ./users
+  ];
+
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = { inherit inputs; };
+    sharedModules = [ ./hm-modules inputs.nixvim.homeManagerModules.nixvim ];
+  };
+
   virtualisation.oci-containers.backend = lib.mkDefault "podman";
 
   # Set your time zone.
