@@ -7,6 +7,9 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs_stable.url = "nixpkgs/nixos-23.05";
+
+    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.4.0";
+
     nur.url = "github:nix-community/NUR";
     colmena.url = "github:zhaofengli/colmena";
     deploy.url = "github:serokell/deploy-rs";
@@ -50,45 +53,45 @@
     essentials.url = "github:jdonszelmann/essentials";
   };
 
-  outputs = { self, nixpkgs, nixpkgs_stable, vault-secrets, colmena, nur, attic
-    , deploy, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs_stable, flake-utils-plus, nur, attic
+    , deploy, home-manager, ... }@inputs:
     let
-      inherit (nixpkgs) lib;
+      # fast-repl = pkgs.writeShellScriptBin "fast-repl" ''
+      #   source /etc/set-environment
+      #   nix repl --file "${./.}/repl.nix" $@
+      # '';
 
-      system = "x86_64-linux";
+      pkgs = self.pkgs.x86_64-linux.nixpkgs;
+    in flake-utils-plus.lib.mkFlake {
+      # `self` and `inputs` arguments are required
+      inherit self inputs;
 
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-        overlays = [ (import ./nixos/pkgs) vault-secrets.overlay nur.overlay ];
+      # Supported systems, used for packages, apps, devShell and multiple other definitions. Defaults to `flake-utils.lib.defaultSystems`.
+      supportedSystems = [ "x86_64-linux" ];
+
+      # Channels config
+      channelsConfig = { allowUnfree = true; };
+      sharedOverlays = [ (import ./nixos/pkgs) nur.overlay ];
+
+      # host defaults
+      hostDefaults = {
+        system = "x86_64-linux";
+        modules = [
+          home-manager.nixosModules.home-manager
+          ./common
+        ];
+        extraArgs = { inherit inputs; };
       };
 
-      pkgs_stable = import nixpkgs_stable {
-        inherit system;
-        config.allowUnfree = true;
+      # hosts
+
+      hosts."bastion.olympus" = {
+        modules = [ ./common/generic-vm.nix ./hosts/olympus/bastion ];
       };
 
-      # Script to apply local colmena deployments
-      apply-local = pkgs.writeShellScriptBin "apply-local" ''
-        "${
-          colmena.packages.${system}.colmena
-        }"/bin/colmena apply-local --sudo $@
-      '';
-
-      fast-repl = pkgs.writeShellScriptBin "fast-repl" ''
-        source /etc/set-environment
-        nix repl --file "${./.}/repl.nix" $@
-      '';
-    in {
-      nixosConfigurations."bastion.olympus" = lib.nixosSystem {
-        inherit system pkgs;
-        specialArgs = { inherit inputs; };
-        modules = [ ./common ./common/generic-vm.nix ./hosts/olympus/bastion ];
-      };
-
+      # deploy-rs
       deploy = {
         user = "root";
-
         nodes."bastion.olympus" = {
           hostname = "olympus.0x76.dev";
           fastConnection = true;
@@ -102,29 +105,35 @@
         };
       };
 
+      # Outputs
+      outputsBuilder = channels: {
+        devShell = channels.nixpkgs.mkShell {
+          name = "devShell";
+          VAULT_ADDR = "http://vault.olympus:8200/";
+          packages = with pkgs; [
+            attic.packages.${pkgs.system}.attic
+            # apply-local
+            deploy.packages.${system}.deploy-rs
+            deadnix
+            statix
+            # nixfmt
+            # nixpkgs-fmt
+            nixUnstable
+            # nil
+            vault
+            yamllint
+            jq
+            # (vault-push-approle-envs self { })
+            # (vault-push-approles self { })
+            # fast-repl
+            fup-repl
+          ];
+        };
+      };
+
+      # Checks
       checks = builtins.mapAttrs
         (system: deployLib: deployLib.deployChecks self.deploy) deploy.lib;
-
-      # Use by running `nix develop`
-      devShells.${system}.default = pkgs.mkShell {
-        VAULT_ADDR = "http://vault.olympus:8200/";
-        packages = with pkgs; [
-          attic.packages.${pkgs.system}.attic
-          apply-local
-          deploy.packages.${system}.deploy-rs
-          deadnix
-          statix
-          # nixfmt
-          # nixpkgs-fmt
-          nixUnstable
-          # nil
-          vault
-          yamllint
-          jq
-          # (vault-push-approle-envs self { })
-          # (vault-push-approles self { })
-          fast-repl
-        ];
-      };
     };
+
 }
