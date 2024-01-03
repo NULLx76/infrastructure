@@ -41,7 +41,8 @@
     };
 
     vault-unseal.url = "git+https://git.0x76.dev/v/vault-unseal.git";
-    gnome-autounlock-keyring.url = "git+https://git.0x76.dev/v/gnome-autounlock-keyring.git";
+    gnome-autounlock-keyring.url =
+      "git+https://git.0x76.dev/v/gnome-autounlock-keyring.git";
 
     attic.url = "github:zhaofengli/attic";
 
@@ -49,23 +50,10 @@
     essentials.url = "github:jdonszelmann/essentials";
   };
 
-  outputs =
-    { self
-    , nixpkgs
-    , nixpkgs_stable
-    , vault-secrets
-    , colmena
-    , nixos-generators
-    , nur
-    , attic
-    , deploy
-    , ...
-    }@inputs:
+  outputs = { self, nixpkgs, nixpkgs_stable, vault-secrets, colmena, nur, attic
+    , deploy, ... }@inputs:
     let
       inherit (nixpkgs) lib;
-
-      util = import ./nixos/util.nix inputs;
-      inherit (util) hosts flat_hosts nixHosts;
 
       system = "x86_64-linux";
 
@@ -80,9 +68,6 @@
         config.allowUnfree = true;
       };
 
-      # Define args each module gets access to (access to hosts is useful for DNS/DHCP)
-      specialArgs = { inherit hosts flat_hosts inputs pkgs_stable; };
-
       # Script to apply local colmena deployments
       apply-local = pkgs.writeShellScriptBin "apply-local" ''
         "${
@@ -94,69 +79,50 @@
         source /etc/set-environment
         nix repl --file "${./.}/repl.nix" $@
       '';
-    in
-    {
-      # Make the nixosConfigurations for compat reasons (e.g. vault)
-      nixosConfigurations =
-        (import (inputs.colmena + "/src/nix/hive/eval.nix") {
-          rawFlake = self;
-          colmenaOptions =
-            import (inputs.colmena + "/src/nix/hive/options.nix");
-          colmenaModules =
-            import (inputs.colmena + "/src/nix/hive/modules.nix");
-        }).nodes;
+    in {
+      nixosConfigurations."bastion.olympus" = lib.nixosSystem {
+        inherit system pkgs;
+        specialArgs = { inherit inputs; };
+        modules = [ ./common ./hosts/olympus/bastion ];
+      };
 
-      # Make the colmena configuration
-      colmena = lib.foldr (el: acc: acc // util.mkColmenaHost el)
-        {
-          meta = {
-            inherit specialArgs;
-            nixpkgs = pkgs;
+      deploy = {
+        user = "root";
+
+        nodes."bastion.olympus" = {
+          hostname = "olympus.0x76.dev";
+          fastConnection = true;
+          remoteBuild = true;
+          profiles = {
+            system = {
+              path = deploy.lib.x86_64-linux.activate.nixos
+                self.nixosConfigurations."bastion.olympus";
+            };
           };
-        }
-        nixHosts;
-
-      packages.${system} = {
-        inherit apply-local;
-
-        default = colmena.packages.${system}.colmena;
-
-        proxmox-lxc = nixos-generators.nixosGenerate {
-          inherit system specialArgs;
-          format = "proxmox-lxc";
-          modules = util.base_imports
-            ++ [ (import ./nixos/templates/proxmox-lxc.nix) ];
-        };
-
-        # Broken
-        proxmox-vm = nixos-generators.nixosGenerate {
-          inherit system specialArgs;
-          format = "proxmox";
-          modules = util.base_imports
-            ++ [ (import ./nixos/templates/proxmox-vm.nix) ];
         };
       };
+
+      checks = builtins.mapAttrs
+        (system: deployLib: deployLib.deployChecks self.deploy) deploy.lib;
 
       # Use by running `nix develop`
       devShells.${system}.default = pkgs.mkShell {
         VAULT_ADDR = "http://vault.olympus:8200/";
-        buildInputs = with pkgs; [
+        packages = with pkgs; [
           attic.packages.${pkgs.system}.attic
           apply-local
-          colmena.packages.${system}.colmena
           deploy.packages.${system}.deploy-rs
-          cachix
           deadnix
           statix
-          nixfmt
-          nixpkgs-fmt
+          # nixfmt
+          # nixpkgs-fmt
           nixUnstable
-          nil
+          # nil
           vault
           yamllint
           jq
-          (vault-push-approle-envs self { })
-          (vault-push-approles self { })
+          # (vault-push-approle-envs self { })
+          # (vault-push-approles self { })
           fast-repl
         ];
       };

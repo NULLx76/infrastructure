@@ -1,9 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-metadata:
-  namespace: websites
-resources:
-  - 0x76.yaml
-  - internal.yaml
-  - blog.yaml
-  - xirion.yaml
