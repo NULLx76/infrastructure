@@ -143,6 +143,11 @@ in {
           forceSSL = true;
           root = inputs.essentials.packages.${pkgs.system}.default;
         };
+        "bear.0x76.dev" = {
+          enableACME = true;
+          forceSSL = true;
+          root = inputs.essentials.packages.${pkgs.system}.default;
+        };
         "cinny.chat.meowy.tech" = {
           enableACME = true;
           forceSSL = true;
