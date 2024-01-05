@@ -55,13 +55,7 @@
 
   outputs = { self, nixpkgs, nixpkgs_stable, flake-utils-plus, nur, attic
     , deploy, home-manager, gnome-autounlock-keyring, lanzaboote, ... }@inputs:
-    let
-      # fast-repl = pkgs.writeShellScriptBin "fast-repl" ''
-      #   source /etc/set-environment
-      #   nix repl --file "${./.}/repl.nix" $@
-      # '';
-
-      pkgs = self.pkgs.x86_64-linux.nixpkgs;
+    let pkgs = self.pkgs.x86_64-linux.nixpkgs;
     in flake-utils-plus.lib.mkFlake {
       # `self` and `inputs` arguments are required
       inherit self inputs;
@@ -93,8 +87,11 @@
         };
 
         aoife = {
-          modules =
-            [ lanzaboote.nixosModules.lanzaboote ./hosts/thalassa/aoife ];
+          modules = [
+            lanzaboote.nixosModules.lanzaboote
+            ./common/desktop
+            ./hosts/thalassa/aoife
+          ];
         };
       };
 
@@ -117,7 +114,7 @@
           aoife = {
             remoteBuild = true;
             fastConnection = true;
-            hostname = "localhost";
+            hostname = "aoife";
             profiles.system.path = deploy.lib.x86_64-linux.activate.nixos
               self.nixosConfigurations.aoife;
           };
