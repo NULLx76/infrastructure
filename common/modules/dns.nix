@@ -1,18 +1,22 @@
-{ config, pkgs, lib, hosts, flat_hosts, ... }:
+{ config, pkgs, lib, self, ... }:
 # DNS Module to set up Unbound DNS with all my hosts in the config
 # Used for DNS Servers and my laptop
 with lib;
 let
-  inherit (builtins) filter hasAttr attrNames;
-  domains = attrNames hosts;
-  ipv4Host = filter (hasAttr "ip") flat_hosts;
-  ipv6Hosts = filter (hasAttr "ip6") flat_hosts;
+  inherit (builtins) filter attrValues;
+  domains = [ "hades" "olympus" "thalassa" ];
+  mapConfig = host: {
+    inherit (host.config.networking) hostName domain;
+    inherit (host.config.meta) ipv4 ipv6;
+  };
+  hosts = (map mapConfig (attrValues self.nixosConfigurations));
+  ipv4Hosts = filter (v: v.ipv4 != null) hosts;
+  ipv6Hosts = filter (v: v.ipv6 != null) hosts;
 
-  localData = { hostname, realm, ip, ... }: ''"${hostname}.${realm}. A ${ip}"'';
-  local6Data = { hostname, realm, ip6, ... }:
-    ''"${hostname}.${realm}. AAAA ${ip6}"'';
-  ptrData = { hostname, realm, ip, ... }: ''"${ip} ${hostname}.${realm}"'';
-  ptr6Data = { hostname, realm, ip6, ... }: ''"${ip6} ${hostname}.${realm}"'';
+  localData = { hostName, domain, ipv4, ... }: ''"${hostName}.${domain}. A ${ipv4}"'';
+  local6Data = { hostName, domain, ipv6, ... }: ''"${hostName}.${domain}. AAAA ${ipv6}"'';
+  ptrData = { hostName, domain, ipv4, ... }: ''"${ipv4} ${hostName}.${domain}"'';
+  ptr6Data = { hostName, domain, ipv6, ... }: ''"${ipv6} ${hostName}.${domain}"'';
 
   cfg = config.services.v.dns;
 in {
@@ -37,7 +41,7 @@ in {
     };
 
     mode = mkOption {
-      type = enum [ "server" "laptop" ];
+      type = types.enum [ "server" "laptop" ];
       default = "laptop";
       description = ''
         Whether to configure the DNS in server mode (listen on all interfaces) or laptop mode (just on localhost)
@@ -69,8 +73,8 @@ in {
 
             local-zone =
               map (localdomain: ''"${localdomain}}." transparent'') domains;
-            local-data = (map localData ipv4Host) ++ (map local6Data ipv6Hosts);
-            local-data-ptr = (map ptrData ipv4Host) ++ (map ptr6Data ipv6Hosts);
+            local-data = (map localData ipv4Hosts) ++ (map local6Data ipv6Hosts);
+            local-data-ptr = (map ptrData ipv4Hosts) ++ (map ptr6Data ipv6Hosts);
 
             private-address = [
               "127.0.0.0/8"

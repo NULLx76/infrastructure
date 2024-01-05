@@ -55,7 +55,11 @@
 
   outputs = { self, nixpkgs, nixpkgs_stable, flake-utils-plus, nur, attic
     , deploy, home-manager, gnome-autounlock-keyring, lanzaboote, ... }@inputs:
-    let pkgs = self.pkgs.x86_64-linux.nixpkgs;
+    let
+      pkgs = self.pkgs.x86_64-linux.nixpkgs;
+      apply-local = pkgs.writeShellScriptBin "apply-local" ''
+        deploy ".#$(cat /etc/hostname)" -s
+      '';
     in flake-utils-plus.lib.mkFlake {
       # `self` and `inputs` arguments are required
       inherit self inputs;
@@ -76,13 +80,13 @@
           ./common
         ];
 
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit self inputs; };
       };
 
       # hosts
       hosts = {
-
-        "bastion.olympus" = {
+        # TODO: Figure out why this is reversed, and how/why it sets the FQDN
+        "olympus.bastion" = {
           modules = [ ./common/generic-vm.nix ./hosts/olympus/bastion ];
         };
 
@@ -99,14 +103,14 @@
       deploy = {
         user = "root";
         nodes = {
-          "bastion.olympus" = {
-            hostname = "olympus.0x76.dev";
+          "bastion-olympus" = {
+            hostname = "bastion.olympus";
             fastConnection = true;
             remoteBuild = true;
             profiles = {
               system = {
                 path = deploy.lib.x86_64-linux.activate.nixos
-                  self.nixosConfigurations."bastion.olympus";
+                  self.nixosConfigurations."olympus.bastion";
               };
             };
           };
@@ -121,14 +125,15 @@
         };
       };
 
+
       # Outputs
       outputsBuilder = channels: {
         devShells.default = channels.nixpkgs.mkShell {
           name = "devShell";
           VAULT_ADDR = "http://vault.olympus:8200/";
           packages = with pkgs; [
-            attic.packages.${pkgs.system}.attic
-            # apply-local
+            attic.packages.${system}.attic
+            apply-local
             deploy.packages.${system}.deploy-rs
             deadnix
             statix
@@ -149,7 +154,17 @@
 
       # Checks
       checks = builtins.mapAttrs
-        (system: deployLib: deployLib.deployChecks self.deploy) deploy.lib;
+        (system: deployLib: deployLib.deployChecks self.deploy) deploy.lib // {
+          x86_64-linux.mac = pkgs.stdenvNoCC.mkDerivation {
+            name = "mac check";
+            src = self;
+            dontBuild = true;
+            doCheck = true;
+            checkPhase = ''
+              echo "Hello World"
+            '';
+            installPhase = "mkdir $out";
+          };
+        };
     };
-
 }
