@@ -68,6 +68,8 @@
     MaxFileSec=7day
   '';
 
+  services.dbus.implementation = "broker";
+
   # Enable SSH
   services.openssh = {
     enable = true;

@@ -5,8 +5,8 @@
   # * https://github.com/Infinidoge/nix-minecraft
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs_stable.url = "nixpkgs/nixos-23.05";
+    nixpkgs.url = "nixpkgs/nixos-unstable-small";
+    # nixpkgs_stable.url = "nixpkgs/nixos-23.05";
 
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.4.0";
 
@@ -53,7 +53,7 @@
     essentials.url = "github:jdonszelmann/essentials";
   };
 
-  outputs = { self, nixpkgs, nixpkgs_stable, flake-utils-plus, nur, attic
+  outputs = { self, nixpkgs, flake-utils-plus, nur, attic
     , deploy, home-manager, gnome-autounlock-keyring, lanzaboote, ... }@inputs:
     let
       pkgs = self.pkgs.x86_64-linux.nixpkgs;
