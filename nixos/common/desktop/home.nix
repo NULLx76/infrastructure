@@ -21,7 +21,9 @@ in {
     helix
     inputs.attic.packages.${pkgs.system}.attic
     inputs.comma.packages.${pkgs.system}.default
-    inputs.webcord.packages.${pkgs.system}.default
+    # inputs.webcord.packages.${pkgs.system}.default
+    discord
+    dogdns
     jetbrains.clion
     jetbrains.rust-rover
     kdenlive
