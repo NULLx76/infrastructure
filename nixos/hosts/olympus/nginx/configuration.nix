@@ -106,7 +106,7 @@ in {
           forceSSL = true;
           locations = {
             "/".extraConfig = ''
-              return 307 https://element.chat.meowy.tech;
+              return 303 https://element.chat.meowy.tech;
             '';
             "/_matrix".proxyPass = "http://synapse.olympus:8008";
             "/_synapse/client".proxyPass = "http://synapse.olympus:8008";
@@ -139,6 +139,13 @@ in {
           };
         };
         "es.0x76.dev" = {
+          enableACME = true;
+          forceSSL = true;
+          locations."/".extraConfig = ''
+            return 303 https://bear.0x76.dev;
+          '';
+        };
+        "bear.0x76.dev" = {
           enableACME = true;
           forceSSL = true;
           root = inputs.essentials.packages.${pkgs.system}.default;
