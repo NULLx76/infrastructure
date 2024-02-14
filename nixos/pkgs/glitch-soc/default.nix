@@ -1,6 +1,15 @@
+/*
+Copied from nixpkgs upstream:
+https://github.com/NixOS/nixpkgs/blob/nixos-23.11/pkgs/servers/mastodon/default.nix
+
+Modifications for new yarn lockfiles stolen (with permission) from:
+https://git.catgirl.cloud/999eagle/dotfiles-nix/-/blob/main/overlay/mastodon/glitch/yarn.nix
+*/
+
 { lib, stdenv, nodejs-slim, bundlerEnv, nixosTests
 , yarn, callPackage, ruby, writeShellScript
 , fetchYarnDeps, prefetch-yarn-deps
+, yarn-berry, callPackage, imagemagick, ffmpeg, file, ruby, writeShellScript
 , brotli
 
   # Allow building a fork or custom version of Mastodon:
@@ -28,12 +37,13 @@ stdenv.mkDerivation rec {
     pname = "${pname}-modules";
     inherit src version;
 
-    yarnOfflineCache = fetchYarnDeps {
-      yarnLock = "${src}/yarn.lock";
+    # use the fixed yarn berry offline cache thingy
+    yarnOfflineCache = callPackage ./yarn.nix {
+      inherit src;
       hash = yarnHash;
     };
 
-    nativeBuildInputs = [ prefetch-yarn-deps nodejs-slim yarn mastodonGems mastodonGems.wrappedRuby brotli ];
+    nativeBuildInputs = [ nodejs-slim yarn-berry mastodonGems mastodonGems.wrappedRuby brotli ];
 
     RAILS_ENV = "production";
     NODE_ENV = "production";
@@ -45,9 +55,12 @@ stdenv.mkDerivation rec {
       # This option is needed for openssl-3 compatibility
       # Otherwise we encounter this upstream issue: https://github.com/mastodon/mastodon/issues/17924
       export NODE_OPTIONS=--openssl-legacy-provider
-      fixup-yarn-lock ~/yarn.lock
-      yarn config --offline set yarn-offline-mirror $yarnOfflineCache
-      yarn install --offline --frozen-lockfile --ignore-engines --ignore-scripts --no-progress
+
+      export YARN_ENABLE_TELEMETRY=0
+      mkdir -p ~/.yarn/berry
+      ln -sf $yarnOfflineCache ~/.yarn/berry/cache
+
+      yarn install --immutable --immutable-cache
 
       patchShebangs ~/bin
       patchShebangs ~/node_modules
@@ -57,7 +70,7 @@ stdenv.mkDerivation rec {
 
       OTP_SECRET=precompile_placeholder SECRET_KEY_BASE=precompile_placeholder \
         rails assets:precompile
-      yarn cache clean --offline
+      yarn cache clean
       rm -rf ~/node_modules/.cache
 
       # Create missing static gzip and brotli files

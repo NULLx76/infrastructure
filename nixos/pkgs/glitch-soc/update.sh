@@ -1,5 +1,4 @@
-#!/usr/bin/env nix-shell
-#! nix-shell -i bash -p bundix coreutils diffutils nix-prefetch-github gnused jq prefetch-yarn-deps
+#!/usr/bin/env -S nix shell nixpkgs#bundix nixpkgs#coreutils nixpkgs#diffutils nixpkgs#nix-prefetch-git nixpkgs#nix-prefetch-github nixpkgs#gnused nixpkgs#jq nixpkgs#prefetch-yarn-deps -c bash
 set -e
 
 OWNER=mastodon
@@ -51,11 +50,7 @@ if [[ -n "$POSITIONAL" ]]; then
     exit 1
 fi
 
-if [[ -z "$REVISION" ]]; then
-    REVISION="$(curl ${GITHUB_TOKEN:+" -u \":$GITHUB_TOKEN\""} -s "https://api.github.com/repos/$OWNER/$REPO/releases" | jq -r  'map(select(.prerelease == false)) | .[0].tag_name')"
-fi
-
-VERSION="$(echo "$REVISION" | cut -c2-)"
+VERSION="${REVISION:0:7}"
 
 rm -f gemset.nix source.nix
 cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
@@ -85,13 +80,14 @@ cat > source.nix << EOF
 { fetchFromGitHub, applyPatches, patches ? [] }:
 let
   version = "$VERSION";
+  revision = "$REVISION";
 in
 (
   applyPatches {
     src = fetchFromGitHub {
       owner = "$OWNER";
       repo = "$REPO";
-      rev = "v\${version}";
+      rev = "\${revision}";
       hash = "$HASH";
     };
     patches = patches ++ [$PATCHES];
@@ -106,7 +102,7 @@ echo "Creating gemset.nix"
 bundix --lockfile="$SOURCE_DIR/Gemfile.lock" --gemfile="$SOURCE_DIR/Gemfile"
 echo "" >> gemset.nix  # Create trailing newline to please EditorConfig checks
 
-echo "Creating yarn-hash.nix"
-YARN_HASH="$(prefetch-yarn-deps "$SOURCE_DIR/yarn.lock")"
-YARN_HASH="$(nix hash to-sri --type sha256 "$YARN_HASH")"
-sed -i "s/sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=/$YARN_HASH/g" source.nix
+# echo "Creating yarn-hash.nix"
+# YARN_HASH="$(prefetch-yarn-deps "$SOURCE_DIR/yarn.lock")"
+# YARN_HASH="$(nix hash to-sri --type sha256 "$YARN_HASH")"
+# sed -i "s/sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=/$YARN_HASH/g" source.nix
