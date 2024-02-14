@@ -32,6 +32,7 @@
         d5 = "/mnt/disk5";
         d6 = "/mnt/disk6";
         d7 = "/mnt/disk7";
+        # d8 = "/mnt/disk8";
       };
       contentFiles = [
         "/var/lib/snapraid/snapraid.content"

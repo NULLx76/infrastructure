@@ -41,6 +41,11 @@
       device = "/dev/disk/by-uuid/6c568887-9d2e-45ce-ab85-4c48cca2226a";
     };
 
+    # "/mnt/disk8" = {
+      # fsType = "ext4";
+      # device = "/dev/disk/by-partuuid/73d8eea4-c648-4c91-99dc-19940832ffe7";
+    # };
+
     "/mnt/parity1" = {
       fsType = "ext4";
       device = "/dev/disk/by-partuuid/7c9b88ed-b8f8-40c9-bbc3-b75d30e04e01";
