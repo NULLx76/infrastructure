@@ -8,17 +8,13 @@
     ./hardware-configuration.nix
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-z
     ./hardware.nix
+    ./uni.nix
   ];
 
   meta = {
     mac = "04:7b:cb:b6:2d:88";
     isLaptop = true;
   };
-
-  programs.wireshark.enable = true;
-  users.extraUsers.vivian.extraGroups = [ "wireshark" ];
-
-  virtualisation.lxc.enable = true;
 
   # Bootloader.
   boot = {

@@ -62,7 +62,7 @@
   };
 
   # Global Packages
-  environment.systemPackages = with pkgs; [ wireguard-tools sbctl podman-compose ];
+  environment.systemPackages = with pkgs; [ wireguard-tools sbctl ]; # ++ (if config.virtualisation.podman.enable then [ pkgs.podman-compose ] else []);
 
   # programs.virt-manager = {
   #   enable = true;
@@ -74,7 +74,7 @@
   security.rtkit.enable = true;
 
   virtualisation = {
-    podman.enable = true;
+    podman.enable = lib.mkDefault true;
     libvirtd = {
       enable = true;
       qemu.package = pkgs.qemu_kvm;
