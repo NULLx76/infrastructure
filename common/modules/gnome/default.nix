@@ -29,11 +29,11 @@ in {
       xserver = {
         enable = true;
         excludePackages = [ pkgs.xterm ];
-
         # Configure keymap in X11
-
-        layout = "us";
-        xkbVariant = "altgr-intl";
+        xkb = {
+          layout = "us";
+          variant = "altgr-intl";
+        };
 
         # Enable the GNOME Desktop Environment.
         displayManager.gdm.enable = true;

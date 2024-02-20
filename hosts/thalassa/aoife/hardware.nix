@@ -22,7 +22,7 @@
     xserver.videoDrivers = [ "amdgpu" ];
     xserver = {
       dpi = 280;
-      xkbOptions = "caps:swapescape";
+      xkb.options = "caps:swapescape";
     };
 
     # SSD Trim

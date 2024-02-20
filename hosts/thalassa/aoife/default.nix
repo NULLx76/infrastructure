@@ -15,6 +15,11 @@
     isLaptop = true;
   };
 
+  programs.wireshark.enable = true;
+  users.extraUsers.vivian.extraGroups = [ "wireshark" ];
+
+  virtualisation.lxc.enable = true;
+
   # Bootloader.
   boot = {
     bootspec.enable = true;
