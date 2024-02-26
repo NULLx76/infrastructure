@@ -7,7 +7,7 @@
       efi.canTouchEfiVariables = true;
       efi.efiSysMountPoint = "/boot/efi";
     };
-    kernel.sysctl = { "fs.inotify.max_user_watches" = 524288; };
+    kernel.sysctl = lib.mkDefault { "fs.inotify.max_user_watches" = 524288; };
     initrd = {
       systemd.enable = true;
       verbose = false;

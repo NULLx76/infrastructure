@@ -2,14 +2,20 @@
 # * Wireless IoT and Local Area Networks
 # * Network Security
 { pkgs, ... }: {
-  environment.systemPackages = with pkgs; [ docker-compose ];
+  environment.systemPackages = with pkgs; [
+    docker-compose
+    bridge-utils
+    nettools
+    wget
+  ];
 
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark;
-  users.extraUsers.vivian.extraGroups = [ "wireshark" "docker" ];
 
   virtualisation.lxc.enable = true;
   virtualisation.podman.enable = false;
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
+
+  users.extraUsers.vivian.extraGroups = [ "wireshark" "docker" "lxd" ];
 }

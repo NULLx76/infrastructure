@@ -16,6 +16,10 @@
     isLaptop = true;
   };
 
+  users.users.vivian.extraGroups = [ "adbusers" ];
+
+
+
   # Bootloader.
   boot = {
     bootspec.enable = true;

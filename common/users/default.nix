@@ -66,6 +66,4 @@
       setw -g mouse on
     '';
   };
-
-
 }
