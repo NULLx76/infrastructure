@@ -12,7 +12,9 @@
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark;
 
-  virtualisation.lxc.enable = true;
+  virtualisation.lxc.enable = false;
+  virtualisation.lxd.enable = false;
+
   virtualisation.podman.enable = false;
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "btrfs";

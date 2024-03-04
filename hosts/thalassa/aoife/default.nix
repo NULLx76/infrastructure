@@ -18,16 +18,12 @@
 
   users.users.vivian.extraGroups = [ "adbusers" ];
 
-
-
   # Bootloader.
   boot = {
     bootspec.enable = true;
     initrd.kernelModules = [ "amdgpu" ];
     resumeDevice = "/dev/nvme0n1p2";
     loader.systemd-boot.enable = lib.mkForce false;
-
-    kernelPackages = pkgs.linuxPackages_6_6;
 
     kernel.sysctl = {
       "perf_event_paranoid" = 1;

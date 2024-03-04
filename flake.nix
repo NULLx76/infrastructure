@@ -125,7 +125,6 @@
         };
       };
 
-
       # Outputs
       outputsBuilder = channels: {
         devShells.default = channels.nixpkgs.mkShell {
