@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, inputs, ... }: {
   imports = [ ./laura.nix ./vivian.nix ./jonathan.nix ];
   programs = {
 
@@ -14,6 +14,9 @@
         source "${pkgs.fzf}/share/fzf/key-bindings.zsh"
         source "${pkgs.fzf}/share/fzf/completion.zsh"
         eval "$(${pkgs.zoxide}/bin/zoxide init zsh)"
+
+        export TEMPDIRS="$HOME/tmp"
+        source "${inputs.t.packages.${pkgs.system}.default}/bin/t-rs.sh"
       '';
       # otherwise it'll override the grml prompt
       promptInit = "";

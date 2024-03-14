@@ -21,6 +21,5 @@ in {
   # * fc00:x
 
   containers = {
-
   };
 }

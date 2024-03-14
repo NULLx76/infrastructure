@@ -12,5 +12,7 @@
     libreoffice-fresh
     jetbrains.clion
     jetbrains.rust-rover
+    eduvpn-client
+    localsend
   ];
 }

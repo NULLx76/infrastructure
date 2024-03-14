@@ -65,6 +65,16 @@ in with lib; {
           action = "function() vim.cmd(':FloatermToggle myfloat') end";
           lua = true;
         }
+        {
+          mode = "n";
+          key = "<C-Tab>";
+          action = ":bn<CR>";
+        }
+        {
+          mode = "n";
+          key = "<S-C-Tab>";
+          action = ":bp<CR>";
+        }
       ];
 
       extraPlugins = with pkgs.vimPlugins; [
@@ -98,12 +108,10 @@ in with lib; {
           enable = true;
           sources = {
             formatting.nixpkgs_fmt.enable = true;
-            code_actions.shellcheck.enable = true;
             code_actions.statix.enable = true;
             diagnostics = {
               statix.enable = true;
               deadnix.enable = true;
-              shellcheck.enable = true;
             };
           };
         };
@@ -147,43 +155,43 @@ in with lib; {
 
         floaterm.enable = true;
 
-        nvim-cmp = {
-          enable = true;
-          autoEnableSources = true;
-          sources = [
-            { name = "nvim_lsp"; }
-            {
-              name = "luasnip";
-              option = { show_autosnippets = true; };
-            }
-            { name = "cmp-spell"; }
-            { name = "cmp-rg"; }
-            { name = "path"; }
-            { name = "buffer"; }
-          ];
-          snippet.expand = "luasnip";
-          mappingPresets = [ "insert" "cmdline" ];
-          mapping = {
-            "<CR>" = "cmp.mapping.confirm({ select = true })";
-            "<Tab>" = {
-              modes = [ "i" "s" ];
-              action = ''
-                function(fallback)
-                  local luasnip = require('luasnip')
-                  if cmp.visible() then
-                    cmp.select_next_item()
-                  elseif luasnip.expandable() then
-                    luasnip.expand()
-                  elseif luasnip.expand_or_jumpable() then
-                    luasnip.expand_or_jump()
-                  else
-                    fallback()
-                  end
-                end
-              '';
-            };
-          };
-        };
+        # cmp = {
+        #   enable = true;
+        #   autoEnableSources = true;
+        #   extraOptions.sources = [
+        #     { name = "nvim_lsp"; }
+        #     {
+        #       name = "luasnip";
+        #       option = { show_autosnippets = true; };
+        #     }
+        #     { name = "cmp-spell"; }
+        #     { name = "cmp-rg"; }
+        #     { name = "path"; }
+        #     { name = "buffer"; }
+        #   ];
+        #   extraOptions.snippet.expand = "luasnip";
+        #   # mappingPresets = [ "insert" "cmdline" ];
+        #   extraOptions.mapping = {
+        #     "<CR>" = "cmp.mapping.confirm({ select = true })";
+        #     "<Tab>" = {
+        #       modes = [ "i" "s" ];
+        #       action = ''
+        #         function(fallback)
+        #           local luasnip = require('luasnip')
+        #           if cmp.visible() then
+        #             cmp.select_next_item()
+        #           elseif luasnip.expandable() then
+        #             luasnip.expand()
+        #           elseif luasnip.expand_or_jumpable() then
+        #             luasnip.expand_or_jump()
+        #           else
+        #             fallback()
+        #           end
+        #         end
+        #       '';
+        #     };
+        #   };
+        # };
       };
     };
   };

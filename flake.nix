@@ -44,8 +44,11 @@
     };
 
     vault-unseal.url = "git+https://git.0x76.dev/v/vault-unseal.git";
-    gnome-autounlock-keyring.url =
-      "git+https://git.0x76.dev/v/gnome-autounlock-keyring.git";
+    vault-unseal.inputs.nixpkgs.follows = "nixpkgs";
+    gnome-autounlock-keyring.url = "git+https://git.0x76.dev/v/gnome-autounlock-keyring.git";
+    gnome-autounlock-keyring.inputs.nixpkgs.follows = "nixpkgs";
+    t.url = "github:jdonszelmann/t-rs";
+    t.inputs.nixpkgs.follows = "nixpkgs";
 
     attic.url = "github:zhaofengli/attic";
 
@@ -54,7 +57,7 @@
   };
 
   outputs = { self, nixpkgs, flake-utils-plus, nur, attic
-    , deploy, home-manager, gnome-autounlock-keyring, lanzaboote, ... }@inputs:
+    , deploy, home-manager, gnome-autounlock-keyring, lanzaboote, t, ... }@inputs:
     let
       pkgs = self.pkgs.x86_64-linux.nixpkgs;
       apply-local = pkgs.writeShellScriptBin "apply-local" ''
