@@ -83,7 +83,7 @@
           ./common
         ];
 
-        specialArgs = { inherit self inputs; };
+        specialArgs = { inherit self inputs home-manager; };
       };
 
       # hosts

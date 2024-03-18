@@ -1,7 +1,12 @@
 { pkgs, ... }: {
+  environment.systemPackages = with pkgs; [
+    pciutils
+    usbutils
+    lshw
+  ];
+
   hardware = {
     enableAllFirmware = true;
-
     bluetooth.enable = true;
 
     # OpenGL + Vulkan
@@ -18,13 +23,13 @@
     };
   };
   services = {
+    fwupd.enable = true;
 
     hardware.bolt.enable = true;
 
     fprintd.enable = true;
 
     # Video Driver
-    xserver.videoDrivers = [ "amdgpu" ];
     xserver = {
       dpi = 280;
       xkb.options = "caps:swapescape";

@@ -30,8 +30,7 @@ let
 
     exec Hyprland
   '';
-in
-{
+in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -46,6 +45,7 @@ in
     users.vivian = import ./home;
     extraSpecialArgs = { inherit inputs; };
   };
+
   security = {
 
     pam.services.swaylock = { };

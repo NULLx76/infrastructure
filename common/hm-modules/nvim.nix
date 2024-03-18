@@ -75,11 +75,25 @@ in with lib; {
           key = "<S-C-Tab>";
           action = ":bp<CR>";
         }
+        {
+          mode = "n";
+          key = "<S-Tab>";
+          action = "<<_";
+        }
+        {
+          mode = "v";
+          key = "<Tab>";
+          action = ">gv";
+        }
+        {
+          mode = "v";
+          key = "<S-Tab>";
+          action = "<gv";
+        }
       ];
 
       extraPlugins = with pkgs.vimPlugins; [
         FixCursorHold-nvim
-        luasnip
         plenary-nvim
         neotest
         neotest-plenary
@@ -104,18 +118,8 @@ in with lib; {
 
       plugins = {
         bufferline.enable = true;
-        none-ls = {
-          enable = true;
-          sources = {
-            formatting.nixpkgs_fmt.enable = true;
-            code_actions.statix.enable = true;
-            diagnostics = {
-              statix.enable = true;
-              deadnix.enable = true;
-            };
-          };
-        };
         nix.enable = true;
+        luasnip.enable = true;
         treesitter = {
           enable = true;
           nixGrammars = true;
@@ -138,11 +142,22 @@ in with lib; {
           enable = true;
           servers = {
             nil_ls.enable = true;
+            dockerls.enable = true;
             rust-analyzer = {
               installCargo = false;
               installRustc = false;
             };
             pyright.enable = true;
+            pylsp = {
+              enable = true;
+              settings.plugins = {
+                black = {
+                  enabled = true;
+                  cache_config = true;
+                };
+                pycodestyle = { maxLineLength = 100; };
+              };
+            };
             elixirls.enable = true;
             clangd.enable = true;
             yamlls.enable = true;
@@ -150,48 +165,37 @@ in with lib; {
         };
         trouble.enable = true;
         lspkind.enable = true;
-
         vimtex.enable = true;
-
         floaterm.enable = true;
 
-        # cmp = {
-        #   enable = true;
-        #   autoEnableSources = true;
-        #   extraOptions.sources = [
-        #     { name = "nvim_lsp"; }
-        #     {
-        #       name = "luasnip";
-        #       option = { show_autosnippets = true; };
-        #     }
-        #     { name = "cmp-spell"; }
-        #     { name = "cmp-rg"; }
-        #     { name = "path"; }
-        #     { name = "buffer"; }
-        #   ];
-        #   extraOptions.snippet.expand = "luasnip";
-        #   # mappingPresets = [ "insert" "cmdline" ];
-        #   extraOptions.mapping = {
-        #     "<CR>" = "cmp.mapping.confirm({ select = true })";
-        #     "<Tab>" = {
-        #       modes = [ "i" "s" ];
-        #       action = ''
-        #         function(fallback)
-        #           local luasnip = require('luasnip')
-        #           if cmp.visible() then
-        #             cmp.select_next_item()
-        #           elseif luasnip.expandable() then
-        #             luasnip.expand()
-        #           elseif luasnip.expand_or_jumpable() then
-        #             luasnip.expand_or_jump()
-        #           else
-        #             fallback()
-        #           end
-        #         end
-        #       '';
-        #     };
-        #   };
-        # };
+        cmp = {
+          enable = true;
+          autoEnableSources = true;
+          settings = {
+            snippet.expand =
+              "function(args) require('luasnip').lsp_expand(args.body) end";
+            mapping = {
+              "<S-Tab>" =
+                "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+              "<Tab>" =
+                "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+              "<CR>" = "cmp.mapping.confirm({ select = true })";
+              "<C-Space>" = "cmp.mapping.complete()";
+              "<C-e>" = "cmp.mapping.close()";
+            };
+            sources = [
+              { name = "nvim_lsp_signature_help"; }
+              { name = "path"; }
+              { name = "nvim_lsp"; }
+              { name = "luasnip"; }
+              {
+                name = "buffer";
+                # Words from other open buffers can also be suggested.
+                option.get_bufnrs.__raw = "vim.api.nvim_list_bufs";
+              }
+            ];
+          };
+        };
       };
     };
   };

@@ -21,5 +21,13 @@ in {
   # * fc00:x
 
   containers = {
+    dns = {
+      autoStart = true;
+      inherit hostAddress hostAddress6;
+      localAddress = "10.42.99.1";
+      localAddress6 = "fc00::2";
+
+      config = ./dns.nix;
+    };
   };
 }

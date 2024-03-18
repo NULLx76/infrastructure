@@ -36,9 +36,4 @@
   environment.systemPackages = with pkgs; [ vault ];
 
   networking.useNetworkd = true;
-
-  programs.gnupg.agent = {
-    enable = true;
-    pinentryFlavor = "curses";
-  };
 }

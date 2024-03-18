@@ -4,7 +4,7 @@ let
     inherit (pkgs.texlive) scheme-full;
     dnd-5e-latex-template = { pkgs = [ pkgs.v.dnd-5e-latex-template ]; };
   };
-  my-python-packages = ps: with ps; [ pandas requests numpy scapy pyshark cryptography ];
+  my-python-packages = ps: with ps; [ pandas requests numpy scapy pyshark cryptography flask ];
 in {
   home.packages = with pkgs; [
     (python3.withPackages my-python-packages)
