@@ -21,6 +21,7 @@ jobs:
       - env:
           VAULT_ADDR: ${{ secrets.VAULT_ADDR }}
           VAULT_TOKEN: ${{ secrets.VAULT_TOKEN }}
+          NIXPKGS_ALLOW_UNFREE: 1
         run: |
           git config user.name "Forgejo Actions Bot"
           git config user.email "<>"

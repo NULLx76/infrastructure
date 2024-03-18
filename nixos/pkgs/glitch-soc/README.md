@@ -1,5 +1,7 @@
 # Mastodon Glitch Edition
 
+<https://github.com/glitch-soc/mastodon>
+
 Mostly copied from [nixpkgs upstream](https://github.com/NixOS/nixpkgs/tree/master/pkgs/servers/mastodon).
 
 Modifications for the new yarn berry lockfiles in `default.nix`, `yarn.nix` and `yarn-typescript.patch` stolen (with permissions) from [catgirl.cloud](https://git.catgirl.cloud/999eagle/dotfiles-nix/-/tree/main/overlay/mastodon/glitch).
