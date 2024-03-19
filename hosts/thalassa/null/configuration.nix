@@ -106,7 +106,6 @@ in {
     kernel.sysctl = { "fs.inotify.max_user_watches" = 524288; };
   };
   services = {
-
     gnome.gnome-keyring.enable = true;
 
     udisks2.enable = true;

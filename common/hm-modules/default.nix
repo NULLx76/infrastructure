@@ -1,3 +1,3 @@
 { ... }: {
-  imports = [ ./catppuccin.nix ./nvim.nix ./riff.nix ./vscode.nix ./git.nix ./rust.nix ];
+  imports = [ ./catppuccin.nix ./nvim ./riff.nix ./vscode.nix ./git.nix ./rust.nix ];
 }

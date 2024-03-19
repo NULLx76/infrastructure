@@ -3,6 +3,7 @@ let cfg = config.programs.v.nvim;
 in with lib; {
   options.programs.v.nvim = { enable = mkEnableOption "nvim"; };
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [ fd ];
     programs.nixvim = {
       enable = true;
       package = pkgs.neovim-unwrapped;
@@ -13,20 +14,24 @@ in with lib; {
 
       options.number = true;
 
-      clipboard = { providers.wl-copy.enable = true; };
+      clipboard.providers.wl-copy.enable = true;
 
       keymaps = [
         {
           mode = "n";
           key = "<leader>ff";
-          action = "require('telescope.builtin').find_files";
-          lua = true;
+          action = ":Telescope file_browser<CR>";
         }
         {
           mode = "n";
           key = "<leader>fg";
           action = "require('telescope.builtin').live_grep";
           lua = true;
+        }
+        {
+          mode = "n";
+          key = "<leader>fb";
+          action = ":Telescope file_browser<CR>";
         }
         {
           mode = "n";
@@ -50,12 +55,6 @@ in with lib; {
         }
         {
           mode = "n";
-          key = "g=";
-          action = "vim.lsp.buf.format";
-          lua = true;
-        }
-        {
-          mode = "n";
           key = "t";
           action = ":FloatermToggle myfloat<CR>";
         }
@@ -75,6 +74,7 @@ in with lib; {
           key = "<S-C-Tab>";
           action = ":bp<CR>";
         }
+        # Change Indenting
         {
           mode = "n";
           key = "<S-Tab>";
@@ -90,14 +90,36 @@ in with lib; {
           key = "<S-Tab>";
           action = "<gv";
         }
+        # Neotest
+        {
+          mode = "n";
+          key = "<leader>nr";
+          lua = true;
+          action = "require('neotest').run.run";
+        }
+        {
+          mode = "n";
+          key = "<leader>no";
+          lua = true;
+          action = "require('neotest').output.open";
+        }
+        {
+          mode = "n";
+          key = "<leader>ns";
+          lua = true;
+          action = "require('neotest').run.stop";
+        }
+        {
+          mode = "n";
+          key = "<leader>nf";
+          lua = true;
+          action = "function() require('neotest').run.run(vim.fn.expand('%')) end";
+        }
       ];
 
       extraPlugins = with pkgs.vimPlugins; [
         FixCursorHold-nvim
-        plenary-nvim
-        neotest
-        neotest-plenary
-        neotest-rust
+        nvim-web-devicons
       ];
 
       colorschemes.catppuccin = {
@@ -105,21 +127,32 @@ in with lib; {
         flavour = "frappe";
       };
 
-      extraConfigLua = ''
-        require("neotest").setup({
-          adapters = {
-            require("neotest-plenary"),
-            require("neotest-rust") {
-              args = { "--no-capture" },
-            }
-          },
-        })
-      '';
+      extraConfigLua = "";
 
       plugins = {
         bufferline.enable = true;
         nix.enable = true;
         luasnip.enable = true;
+        typst-vim.enable = true;
+        fidget = {
+          enable = true;
+          progress = {
+            ignoreDoneAlready = true;
+            ignore = [ "ltex" ];
+          };
+          notification = {
+            overrideVimNotify = true;
+            # group_seperator = "";
+          };
+        };
+        neotest = {
+          enable = true;
+          adapters.plenary.enable = true;
+          adapters.rust = {
+            enable = true;
+            settings.args = [ "--no-capture" ];
+          };
+        };
         treesitter = {
           enable = true;
           nixGrammars = true;
@@ -134,12 +167,31 @@ in with lib; {
         };
         telescope = {
           enable = true;
+          extensions.file_browser = {
+            enable = true;
+            hijackNetrw = true;
+
+          };
           extensions.fzf-native.enable = true;
           extensions.fzf-native.fuzzy = true;
         };
         comment-nvim = { enable = true; };
         lsp = {
           enable = true;
+          keymaps = {
+            lspBuf = {
+              K = "hover";
+              gD = "references";
+              gd = "definition";
+              gi = "implementation";
+              gt = "type_definition";
+              "g=" = "format";
+            };
+            diagnostic = {
+              "<leader>j" = "goto_next";
+              "<leader>k" = "goto_prev";
+            };
+          };
           servers = {
             nil_ls.enable = true;
             dockerls.enable = true;
