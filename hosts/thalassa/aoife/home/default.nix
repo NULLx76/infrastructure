@@ -14,5 +14,6 @@
     jetbrains.rust-rover
     eduvpn-client
     localsend
+    obsidian
   ];
 }

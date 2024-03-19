@@ -12,11 +12,15 @@ in with lib; {
 
       globals.mapleader = " ";
 
-      options.number = true;
+      options = {
+        number = true;
+        conceallevel = 2;
+      };
 
       clipboard.providers.wl-copy.enable = true;
 
       keymaps = [
+        # Telescope
         {
           mode = "n";
           key = "<leader>ff";
@@ -31,8 +35,14 @@ in with lib; {
         {
           mode = "n";
           key = "<leader>fb";
-          action = ":Telescope file_browser<CR>";
+          action = ":Telescope buffers<CR>";
         }
+        {
+          mode = "n";
+          key = "<leader>fo";
+          action = ":Telescope oldfiles<CR>";
+        }
+        # Commenting
         {
           mode = "n";
           key = "<C-_>";
@@ -53,6 +63,7 @@ in with lib; {
           '';
           lua = true;
         }
+        # Float Term
         {
           mode = "n";
           key = "t";
@@ -64,14 +75,15 @@ in with lib; {
           action = "function() vim.cmd(':FloatermToggle myfloat') end";
           lua = true;
         }
+        # Switch buffers
         {
           mode = "n";
-          key = "<C-Tab>";
+          key = "<leader>s";
           action = ":bn<CR>";
         }
         {
           mode = "n";
-          key = "<S-C-Tab>";
+          key = "<leader>a";
           action = ":bp<CR>";
         }
         # Change Indenting
@@ -113,7 +125,8 @@ in with lib; {
           mode = "n";
           key = "<leader>nf";
           lua = true;
-          action = "function() require('neotest').run.run(vim.fn.expand('%')) end";
+          action =
+            "function() require('neotest').run.run(vim.fn.expand('%')) end";
         }
       ];
 
@@ -134,16 +147,51 @@ in with lib; {
         nix.enable = true;
         luasnip.enable = true;
         typst-vim.enable = true;
+        obsidian = {
+          enable = true;
+          settings = {
+            new_notes_location = "notes_subdir";
+            daily_notes = {
+              folder = "daily";
+            };
+            workspaces = [
+              {
+                name = "notes";
+                path = "~/src/notes";
+              }
+            ];
+            completion = {
+              min_chars = 2;
+              nvim_cmp = true;
+            };
+            picker.name = "telescope.nvim";
+            note_id_func = ''
+              function(title)
+                  -- Create note IDs in a Zettelkasten format with a timestamp and a suffix.
+                  -- In this case a note with the title 'My new note' will be given an ID that looks
+                  -- like '1657296016-my-new-note', and therefore the file name '1657296016-my-new-note.md'
+                  local suffix = ""
+                  if title ~= nil then
+                    -- If title is given, transform it into valid file name.
+                    suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+                  else
+                    -- If title is nil, just add 4 random uppercase letters to the suffix.
+                    for _ = 1, 4 do
+                      suffix = suffix .. string.char(math.random(65, 90))
+                    end
+                  end
+                  return tostring(os.time()) .. "-" .. suffix
+                end
+                '';
+          };
+        };
         fidget = {
           enable = true;
           progress = {
             ignoreDoneAlready = true;
             ignore = [ "ltex" ];
           };
-          notification = {
-            overrideVimNotify = true;
-            # group_seperator = "";
-          };
+          notification = { overrideVimNotify = true; };
         };
         neotest = {
           enable = true;
@@ -167,15 +215,17 @@ in with lib; {
         };
         telescope = {
           enable = true;
+          defaults.preview.ls_short = true;
           extensions.file_browser = {
             enable = true;
             hijackNetrw = true;
-
+            dirIcon = "";
           };
           extensions.fzf-native.enable = true;
           extensions.fzf-native.fuzzy = true;
+          extensions.frecency.enable = true;
         };
-        comment-nvim = { enable = true; };
+        comment-nvim.enable = true;
         lsp = {
           enable = true;
           keymaps = {
