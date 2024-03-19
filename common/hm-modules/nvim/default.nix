@@ -4,6 +4,9 @@ in with lib; {
   options.programs.v.nvim = { enable = mkEnableOption "nvim"; };
   config = mkIf cfg.enable {
     home.packages = with pkgs; [ fd ];
+    home.file.".config/nvim/lua/startup/themes/my_theme.lua" = {
+      source = ./dashboard.lua;
+    };
     programs.nixvim = {
       enable = true;
       package = pkgs.neovim-unwrapped;
@@ -24,6 +27,11 @@ in with lib; {
         {
           mode = "n";
           key = "<leader>ff";
+          action = ":Telescope find_files<CR>";
+        }
+        {
+          mode = "n";
+          key = "<leader>fs";
           action = ":Telescope file_browser<CR>";
         }
         {
@@ -41,6 +49,11 @@ in with lib; {
           mode = "n";
           key = "<leader>fo";
           action = ":Telescope oldfiles<CR>";
+        }
+        {
+          mode = "n";
+          key = "<leader>fr";
+          action = ":Telescope frecency<CR>";
         }
         # Commenting
         {
@@ -128,6 +141,12 @@ in with lib; {
           action =
             "function() require('neotest').run.run(vim.fn.expand('%')) end";
         }
+        # LSP
+        {
+          mode = "n";
+          key = "<M-CR>";
+          action = ":Lspsaga code_action<CR>";
+        }
       ];
 
       extraPlugins = with pkgs.vimPlugins; [
@@ -147,6 +166,11 @@ in with lib; {
         nix.enable = true;
         luasnip.enable = true;
         typst-vim.enable = true;
+        startup = {
+          enable = true;
+          theme = "my_theme";
+        };
+        none-ls.enable = false;
         obsidian = {
           enable = true;
           settings = {
@@ -158,6 +182,10 @@ in with lib; {
               {
                 name = "notes";
                 path = "~/src/notes";
+              }
+              {
+                name = "uni";
+                path = "~/cloud/Documents/CESE/notes";
               }
             ];
             completion = {
@@ -267,6 +295,10 @@ in with lib; {
         };
         trouble.enable = true;
         lspkind.enable = true;
+        lspsaga = {
+          enable = true;
+          lightbulb.virtualText = false;
+        };
         vimtex.enable = true;
         floaterm.enable = true;
 

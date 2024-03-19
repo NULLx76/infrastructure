@@ -15,5 +15,6 @@
     eduvpn-client
     localsend
     obsidian
+    typst
   ];
 }
