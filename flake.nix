@@ -139,16 +139,10 @@
             deploy.packages.${system}.deploy-rs
             deadnix
             statix
-            # nixfmt
-            # nixpkgs-fmt
             nixUnstable
-            # nil
             vault
             yamllint
             jq
-            # (vault-push-approle-envs self { })
-            # (vault-push-approles self { })
-            # fast-repl
             fup-repl
           ];
         };

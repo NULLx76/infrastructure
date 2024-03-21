@@ -1,12 +1,20 @@
-{ config, pkgs, lib, ... }:
-let cfg = config.programs.v.nvim;
-in with lib; {
-  options.programs.v.nvim = { enable = mkEnableOption "nvim"; };
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  cfg = config.programs.v.nvim;
+in
+with lib;
+{
+  options.programs.v.nvim = {
+    enable = mkEnableOption "nvim";
+  };
   config = mkIf cfg.enable {
     home.packages = with pkgs; [ fd ];
-    home.file.".config/nvim/lua/startup/themes/my_theme.lua" = {
-      source = ./dashboard.lua;
-    };
+    home.file.".config/nvim/lua".source = ./lua;
     programs.nixvim = {
       enable = true;
       package = pkgs.neovim-unwrapped;
@@ -55,16 +63,22 @@ in with lib; {
           key = "<leader>fr";
           action = ":Telescope frecency<CR>";
         }
+        {
+          mode = "n";
+          key = "<leader>ob";
+          action = "require('obsidian_picker').obsidian_picker";
+          lua = true;
+        }
         # Commenting
         {
           mode = "n";
-          key = "<C-_>";
+          key = "<C-/>";
           action = "require('Comment.api').toggle.linewise.current";
           lua = true;
         }
         {
           mode = "x";
-          key = "<C-_>";
+          key = "<C-/>";
           action = ''
             function()
               local esc = vim.api.nvim_replace_termcodes(
@@ -138,8 +152,7 @@ in with lib; {
           mode = "n";
           key = "<leader>nf";
           lua = true;
-          action =
-            "function() require('neotest').run.run(vim.fn.expand('%')) end";
+          action = "function() require('neotest').run.run(vim.fn.expand('%')) end";
         }
         # LSP
         {
@@ -162,6 +175,9 @@ in with lib; {
       extraConfigLua = "";
 
       plugins = {
+        image = {
+          enable = true;
+        };
         bufferline.enable = true;
         nix.enable = true;
         luasnip.enable = true;
@@ -170,7 +186,6 @@ in with lib; {
           enable = true;
           theme = "my_theme";
         };
-        none-ls.enable = false;
         obsidian = {
           enable = true;
           settings = {
@@ -210,7 +225,7 @@ in with lib; {
                   end
                   return tostring(os.time()) .. "-" .. suffix
                 end
-                '';
+            '';
           };
         };
         fidget = {
@@ -219,7 +234,9 @@ in with lib; {
             ignoreDoneAlready = true;
             ignore = [ "ltex" ];
           };
-          notification = { overrideVimNotify = true; };
+          notification = {
+            overrideVimNotify = true;
+          };
         };
         neotest = {
           enable = true;
@@ -252,8 +269,20 @@ in with lib; {
           extensions.fzf-native.enable = true;
           extensions.fzf-native.fuzzy = true;
           extensions.frecency.enable = true;
+          extraOptions = { };
         };
         comment-nvim.enable = true;
+        none-ls = {
+          enable = true;
+          sources = {
+            formatting = {
+              nixfmt = {
+                enable = true;
+                package = pkgs.nixfmt-rfc-style;
+              };
+            };
+          };
+        };
         lsp = {
           enable = true;
           keymaps = {
@@ -274,6 +303,7 @@ in with lib; {
             nil_ls.enable = true;
             dockerls.enable = true;
             rust-analyzer = {
+              enable = true;
               installCargo = false;
               installRustc = false;
             };
@@ -285,12 +315,15 @@ in with lib; {
                   enabled = true;
                   cache_config = true;
                 };
-                pycodestyle = { maxLineLength = 100; };
+                pycodestyle = {
+                  maxLineLength = 100;
+                };
               };
             };
             elixirls.enable = true;
             clangd.enable = true;
             yamlls.enable = true;
+            lua-ls.enable = true;
           };
         };
         trouble.enable = true;
@@ -306,13 +339,11 @@ in with lib; {
           enable = true;
           autoEnableSources = true;
           settings = {
-            snippet.expand =
-              "function(args) require('luasnip').lsp_expand(args.body) end";
+            cmdline.":".sources = [ { name = "path"; } ];
+            snippet.expand = "function(args) require('luasnip').lsp_expand(args.body) end";
             mapping = {
-              "<S-Tab>" =
-                "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
-              "<Tab>" =
-                "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
+              "<S-Tab>" = "cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'})";
+              "<Tab>" = "cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'})";
               "<CR>" = "cmp.mapping.confirm({ select = true })";
               "<C-Space>" = "cmp.mapping.complete()";
               "<C-e>" = "cmp.mapping.close()";

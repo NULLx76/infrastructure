@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 with lib.hm.gvariant;
 let
@@ -120,7 +120,7 @@ in {
   } // generate_custom_keybindings {
     "terminal" = {
       binding = "<Super>Return";
-      command = "kgx";
+      command = "${pkgs.kitty}/bin/kitty";
       name = "Open Terminal";
     };
     "firefox" = {

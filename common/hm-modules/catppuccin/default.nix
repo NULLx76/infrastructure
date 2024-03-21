@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }:
 with lib;
-let cfg = config.themes.v.catppuccin;
+let
+  cfg = config.themes.v.catppuccin;
 in {
   options.themes.v.catppuccin = { enable = mkEnableOption "catppuccin"; };
   config = let
@@ -12,6 +13,9 @@ in {
       size = 24;
       package = pkgs.bibata-cursors-translucent;
     };
+
+    programs.kitty.theme = "Catppuccin-Frappe";
+    programs.kitty.font.name = "DejaVuSansMono Nerd Font";
 
     gtk = {
       enable = true;

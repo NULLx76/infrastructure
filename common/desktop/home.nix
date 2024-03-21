@@ -30,7 +30,6 @@ in {
     mattermost-desktop
     mullvad-vpn
     neofetch
-    nixfmt
     nixpkgs-review
     plex-media-player
     plexamp
@@ -44,7 +43,7 @@ in {
 
   # Enable my own hm modules
   themes.v.catppuccin.enable = true;
-  programs = {
+programs = {
     v = {
       vscode.enable = true;
       nvim.enable = true;
@@ -77,8 +76,11 @@ in {
       enable = true;
       profiles.default = { isDefault = true; };
     };
+  kitty = {
+    enable = true;
+    shellIntegration.enableZshIntegration = true;
   };
-
+};
   # Syncthing
   services.syncthing.enable = true;
   xdg.userDirs = let home = config.home.homeDirectory;
