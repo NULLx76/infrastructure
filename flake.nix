@@ -133,6 +133,7 @@
         devShells.default = channels.nixpkgs.mkShell {
           name = "devShell";
           VAULT_ADDR = "http://vault.olympus:8200/";
+          FLAKE = "/home/vivian/src/infrastructure-new";
           packages = with pkgs; [
             attic.packages.${system}.attic
             apply-local
@@ -144,6 +145,7 @@
             yamllint
             jq
             fup-repl
+            nh
           ];
         };
       };

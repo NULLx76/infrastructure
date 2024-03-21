@@ -6,6 +6,15 @@
 }:
 let
   cfg = config.programs.v.nvim;
+  nvim-nio = pkgs.vimUtils.buildVimPlugin {
+    name = "nvim-nio";
+    src = pkgs.fetchFromGitHub {
+      owner = "nvim-neotest";
+      repo = "nvim-nio";
+      rev = "refs/tags/v1.8.0";
+      sha256 = "sha256-RFmH+683vrg4BELwtAQqjV8oGkvRgzcd6kd5r1s3Jp8=";
+    };
+  };
 in
 with lib;
 {
@@ -105,19 +114,29 @@ with lib;
         # Switch buffers
         {
           mode = "n";
+          key = "<leader>q";
+          action = ":bd<R>"; # Delete buffer
+        }
+        {
+          mode = "n";
           key = "<leader>s";
-          action = ":bn<CR>";
+          action = ":bn<CR>"; # Buffer next
         }
         {
           mode = "n";
           key = "<leader>a";
-          action = ":bp<CR>";
+          action = ":bp<CR>"; # Buffer previous
         }
         # Change Indenting
         {
           mode = "n";
           key = "<S-Tab>";
           action = "<<_";
+        }
+        {
+          mode = "n";
+          key = "<Tab>";
+          action = ">>_";
         }
         {
           mode = "v";
@@ -165,6 +184,7 @@ with lib;
       extraPlugins = with pkgs.vimPlugins; [
         FixCursorHold-nvim
         nvim-web-devicons
+        nvim-nio
       ];
 
       colorschemes.catppuccin = {
@@ -195,12 +215,12 @@ with lib;
             };
             workspaces = [
               {
-                name = "notes";
-                path = "~/src/notes";
-              }
-              {
                 name = "uni";
                 path = "~/cloud/Documents/CESE/notes";
+              }
+              {
+                name = "notes";
+                path = "~/src/notes";
               }
             ];
             completion = {
@@ -233,6 +253,7 @@ with lib;
           progress = {
             ignoreDoneAlready = true;
             ignore = [ "ltex" ];
+            display.doneTtl = 5;
           };
           notification = {
             overrideVimNotify = true;
@@ -240,10 +261,13 @@ with lib;
         };
         neotest = {
           enable = true;
-          adapters.plenary.enable = true;
-          adapters.rust = {
-            enable = true;
-            settings.args = [ "--no-capture" ];
+          adapters = {
+            plenary.enable = true;
+            python.enable = true;
+            rust = {
+              enable = true;
+              settings.args = [ "--no-capture" ];
+            };
           };
         };
         treesitter = {
@@ -334,7 +358,6 @@ with lib;
         };
         vimtex.enable = true;
         floaterm.enable = true;
-
         cmp = {
           enable = true;
           autoEnableSources = true;
