@@ -129,7 +129,6 @@ in
       gnome.nautilus
       grim # Screenshot tool
       inputs.comma.packages.${pkgs.system}.default
-      inputs.riff.packages.${pkgs.system}.riff
       inputs.webcord.packages.${pkgs.system}.default
       k9s
       kubectl

@@ -50,11 +50,6 @@ programs = {
       rust.enable = true;
     };
 
-    riff = {
-      enable = true;
-      direnv = true;
-    };
-
     firefox.enable = true;
 
     chromium = {

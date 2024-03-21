@@ -6,7 +6,6 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable-small";
-    # nixpkgs_stable.url = "nixpkgs/nixos-23.05";
 
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.4.0";
 
@@ -20,10 +19,6 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    riff.url = "github:DeterminateSystems/riff";
-
-    webcord.url = "github:fufexan/webcord-flake";
-
     comma.url = "github:nix-community/comma";
 
     mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
@@ -36,34 +31,47 @@
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote";
-
-      # Optional but recommended to limit the size of your system closure.
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    lanzaboote.url = "github:nix-community/lanzaboote";
+    lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
 
     vault-unseal.url = "git+https://git.0x76.dev/v/vault-unseal.git";
     vault-unseal.inputs.nixpkgs.follows = "nixpkgs";
+
     gnome-autounlock-keyring.url = "git+https://git.0x76.dev/v/gnome-autounlock-keyring.git";
     gnome-autounlock-keyring.inputs.nixpkgs.follows = "nixpkgs";
+
     t.url = "github:jdonszelmann/t-rs";
     t.inputs.nixpkgs.follows = "nixpkgs";
 
     attic.url = "github:zhaofengli/attic";
+    attic.inputs.nixpkgs.follows = "nixpkgs";
 
     # Website(s)
     essentials.url = "github:jdonszelmann/essentials";
+    essentials.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, flake-utils-plus, nur, attic
-    , deploy, home-manager, gnome-autounlock-keyring, lanzaboote, t, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils-plus,
+      nur,
+      attic,
+      deploy,
+      home-manager,
+      gnome-autounlock-keyring,
+      lanzaboote,
+      t,
+      ...
+    }@inputs:
     let
       pkgs = self.pkgs.x86_64-linux.nixpkgs;
       apply-local = pkgs.writeShellScriptBin "apply-local" ''
-        deploy ".#$(cat /etc/hostname)" -s
+        nh os switch --ask
       '';
-    in flake-utils-plus.lib.mkFlake {
+    in
+    flake-utils-plus.lib.mkFlake {
       # `self` and `inputs` arguments are required
       inherit self inputs;
 
@@ -71,8 +79,13 @@
       supportedSystems = [ "x86_64-linux" ];
 
       # Channels config
-      channelsConfig = { allowUnfree = true; };
-      sharedOverlays = [ (import ./pkgs) nur.overlay ];
+      channelsConfig = {
+        allowUnfree = true;
+      };
+      sharedOverlays = [
+        (import ./pkgs)
+        nur.overlay
+      ];
 
       # host defaults
       hostDefaults = {
@@ -83,14 +96,19 @@
           ./common
         ];
 
-        specialArgs = { inherit self inputs home-manager; };
+        specialArgs = {
+          inherit self inputs home-manager;
+        };
       };
 
       # hosts
       hosts = {
         # TODO: Figure out why this is reversed, and how/why it sets the FQDN
         "olympus.bastion" = {
-          modules = [ ./common/generic-vm.nix ./hosts/olympus/bastion ];
+          modules = [
+            ./common/generic-vm.nix
+            ./hosts/olympus/bastion
+          ];
         };
 
         aoife = {
@@ -112,8 +130,7 @@
             remoteBuild = true;
             profiles = {
               system = {
-                path = deploy.lib.x86_64-linux.activate.nixos
-                  self.nixosConfigurations."olympus.bastion";
+                path = deploy.lib.x86_64-linux.activate.nixos self.nixosConfigurations."olympus.bastion";
               };
             };
           };
@@ -122,8 +139,7 @@
             remoteBuild = true;
             fastConnection = true;
             hostname = "aoife";
-            profiles.system.path = deploy.lib.x86_64-linux.activate.nixos
-              self.nixosConfigurations.aoife;
+            profiles.system.path = deploy.lib.x86_64-linux.activate.nixos self.nixosConfigurations.aoife;
           };
         };
       };
@@ -151,18 +167,17 @@
       };
 
       # Checks
-      checks = builtins.mapAttrs
-        (system: deployLib: deployLib.deployChecks self.deploy) deploy.lib // {
-          x86_64-linux.mac = pkgs.stdenvNoCC.mkDerivation {
-            name = "mac check";
-            src = self;
-            dontBuild = true;
-            doCheck = true;
-            checkPhase = ''
-              echo "Hello World"
-            '';
-            installPhase = "mkdir $out";
-          };
+      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy.lib // {
+        x86_64-linux.mac = pkgs.stdenvNoCC.mkDerivation {
+          name = "mac check";
+          src = self;
+          dontBuild = true;
+          doCheck = true;
+          checkPhase = ''
+            echo "Hello World"
+          '';
+          installPhase = "mkdir $out";
         };
+      };
     };
 }
