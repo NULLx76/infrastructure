@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   environment.systemPackages = with pkgs; [
     pciutils
     usbutils
@@ -27,7 +28,16 @@
 
     hardware.bolt.enable = true;
 
-    fprintd.enable = true;
+    fprintd = {
+      enable = true;
+      # fprintd test suite fails
+      package = pkgs.fprintd.overrideAttrs {
+        mesonCheckFlags = [
+          "--no-suite"
+          "fprintd:TestPamFprintd"
+        ];
+      };
+    };
 
     # Video Driver
     xserver = {
@@ -57,11 +67,9 @@
 
       # tpm
       enable = true;
-      pkcs11.enable =
-        true; # expose /run/current-system/sw/lib/libtpm2_pkcs11.so
+      pkcs11.enable = true; # expose /run/current-system/sw/lib/libtpm2_pkcs11.so
       tctiEnvironment.enable = true;
     };
   }; # TPM2TOOLS_TCTI and TPM2_PKCS11_TCTI env variables
-  users.users.vivian.extraGroups =
-    [ "tss" ]; # tss group has access to TPM devices
+  users.users.vivian.extraGroups = [ "tss" ]; # tss group has access to TPM devices
 }

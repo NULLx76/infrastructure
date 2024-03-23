@@ -5,7 +5,7 @@
   # * https://github.com/Infinidoge/nix-minecraft
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable-small";
+    nixpkgs.url = "nixpkgs/master";
 
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.4.0";
 
