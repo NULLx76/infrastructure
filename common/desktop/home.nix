@@ -1,34 +1,47 @@
-{ pkgs, inputs, config, ... }:
+{
+  pkgs,
+  inputs,
+  config,
+  ...
+}:
 let
   tex = pkgs.texlive.combine {
     inherit (pkgs.texlive) scheme-full;
-    dnd-5e-latex-template = { pkgs = [ pkgs.v.dnd-5e-latex-template ]; };
+    dnd-5e-latex-template = {
+      pkgs = [ pkgs.v.dnd-5e-latex-template ];
+    };
   };
-  my-python-packages = ps: with ps; [ pandas requests numpy scapy pyshark cryptography flask ];
-in {
+  my-python-packages =
+    ps: with ps; [
+      pandas
+      requests
+      numpy
+      scapy
+      pyshark
+      cryptography
+      flask
+    ];
+in
+{
   home.packages = with pkgs; [
     (python3.withPackages my-python-packages)
     btop
     calibre
-    celluloid
+    celluloid # video player
     cinny-desktop
     element-desktop
     fusee-launcher
-    fractal-next
-    foliate
+    foliate # epub reader
     gcc
     gimp
-    helix
     inputs.attic.packages.${pkgs.system}.attic
     inputs.comma.packages.${pkgs.system}.default
-    # inputs.webcord.packages.${pkgs.system}.default
     discord
     jetbrains.clion
     jetbrains.rust-rover
     kdenlive
     libreoffice-fresh
     mattermost-desktop
-    mullvad-vpn
     neofetch
     nixpkgs-review
     plex-media-player
@@ -43,7 +56,7 @@ in {
 
   # Enable my own hm modules
   themes.v.catppuccin.enable = true;
-programs = {
+  programs = {
     v = {
       vscode.enable = true;
       nvim.enable = true;
@@ -64,31 +77,38 @@ programs = {
 
     zsh = {
       enable = true;
-      sessionVariables = { DIRENV_LOG_FORMAT = ""; };
+      sessionVariables = {
+        DIRENV_LOG_FORMAT = "";
+      };
     };
 
     thunderbird = {
       enable = true;
-      profiles.default = { isDefault = true; };
+      profiles.default = {
+        isDefault = true;
+      };
     };
-  kitty = {
-    enable = true;
-    shellIntegration.enableZshIntegration = true;
+    kitty = {
+      enable = true;
+      shellIntegration.enableZshIntegration = true;
+    };
   };
-};
   # Syncthing
   services.syncthing.enable = true;
-  xdg.userDirs = let home = config.home.homeDirectory;
-  in {
-    enable = true;
-    createDirectories = true;
-    desktop = "${home}/.desktop";
-    documents = "${home}/cloud/Documents";
-    download = "${home}/dl";
-    music = "${home}/cloud/Music";
-    pictures = "${home}/cloud/Pictures";
-    publicShare = "${home}/.publicShare";
-    templates = "${home}/.templates";
-    videos = "${home}/cloud/Videos";
-  };
+  xdg.userDirs =
+    let
+      home = config.home.homeDirectory;
+    in
+    {
+      enable = true;
+      createDirectories = true;
+      desktop = "${home}/.desktop";
+      documents = "${home}/cloud/Documents";
+      download = "${home}/dl";
+      music = "${home}/cloud/Music";
+      pictures = "${home}/cloud/Pictures";
+      publicShare = "${home}/.publicShare";
+      templates = "${home}/.templates";
+      videos = "${home}/cloud/Videos";
+    };
 }

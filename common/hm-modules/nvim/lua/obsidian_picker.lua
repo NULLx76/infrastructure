@@ -10,6 +10,10 @@ for key, _ in pairs(obsidian_commands) do
   table.insert(results, string.sub(key, 9))
 end
 
+Local = 100
+local Local = 3
+print(Local)
+
 local obsidian_picker = function(opts)
   opts = opts or require("telescope.themes").get_dropdown{}
   pickers.new(opts, {

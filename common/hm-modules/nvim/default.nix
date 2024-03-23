@@ -115,7 +115,7 @@ with lib;
         {
           mode = "n";
           key = "<leader>q";
-          action = ":bd<R>"; # Delete buffer
+          action = ":bd<CR>"; # Delete buffer
         }
         {
           mode = "n";
@@ -187,12 +187,12 @@ with lib;
         nvim-nio
       ];
 
+      extraConfigLua = "";
+
       colorschemes.catppuccin = {
         enable = true;
         flavour = "frappe";
       };
-
-      extraConfigLua = "";
 
       plugins = {
         image = {
@@ -220,7 +220,7 @@ with lib;
               }
               {
                 name = "notes";
-                path = "~/src/notes";
+                path = "~/cloud/Notes";
               }
             ];
             completion = {
@@ -278,10 +278,12 @@ with lib;
         surround.enable = true;
         fugitive.enable = true;
         gitgutter.enable = true;
+
         lualine = {
           enable = true;
           theme = "catppuccin";
         };
+
         telescope = {
           enable = true;
           defaults.preview.ls_short = true;
@@ -354,7 +356,14 @@ with lib;
         lspkind.enable = true;
         lspsaga = {
           enable = true;
-          lightbulb.virtualText = false;
+          lightbulb.enable = false;
+        };
+        nvim-lightbulb = {
+          enable = true;
+          settings = {
+            autocmd.enabled = true;
+            number.enabled = true;
+          };
         };
         vimtex.enable = true;
         floaterm.enable = true;
