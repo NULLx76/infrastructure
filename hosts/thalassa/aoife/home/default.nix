@@ -1,4 +1,9 @@
 { pkgs, ... }: {
+  imports = [
+    ./hyprland.nix
+  ];
+
+
   # Custom dconf settings
   dconf.settings."org/gnome/desktop/input-sources" = {
     xkb-options = [ "caps:swapescape" ];
@@ -17,4 +22,6 @@
     obsidian
     typst
   ];
+
+  ## Hyprland Config
 }
