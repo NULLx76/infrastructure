@@ -40,6 +40,12 @@ with lib;
       clipboard.providers.wl-copy.enable = true;
 
       keymaps = [
+        # General
+        {
+          mode = "n";
+          key = "<leader>";
+          action = ":noh<CR>";
+        }
         # Telescope
         {
           mode = "n";
@@ -185,9 +191,12 @@ with lib;
         FixCursorHold-nvim
         nvim-web-devicons
         nvim-nio
+        nvim-surround
       ];
 
-      extraConfigLua = "";
+      extraConfigLua = "
+        require('nvim-surround').setup()
+      ";
 
       colorschemes.catppuccin = {
         enable = true;
@@ -275,7 +284,7 @@ with lib;
           nixGrammars = true;
           disabledLanguages = [ "latex" ];
         };
-        surround.enable = true;
+        # surround.enable = true;
         fugitive.enable = true;
         gitgutter.enable = true;
 
@@ -326,7 +335,8 @@ with lib;
             };
           };
           servers = {
-            nil_ls.enable = true;
+            cssls.enable = true;
+            nil_ls.enable = true; #NixOS
             dockerls.enable = true;
             rust-analyzer = {
               enable = true;

@@ -20,6 +20,8 @@ let
       pyshark
       cryptography
       flask
+      ipwhois
+      pyasn
     ];
 in
 {

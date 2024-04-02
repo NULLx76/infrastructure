@@ -1,55 +1,138 @@
+$light-gray: #9699b7;
+
 * {
-  all: unset; //Unsets everything so you can style everything from scratch
+    all: unset; //Unsets everything so you can style everything from scratch
+    font-family: "JetBrainsMono"
 }
 
-//Global Styles
+tooltip {
+    background-color: $base;
+    border-radius: 5px
+}
+
+button {
+    transition: background-color 200ms, color 200ms;
+}
+
+.active {
+    color: $pink;
+    font-size: 1.4rem;
+}
+
+.inactive {
+    color: $base;
+    font-size: 1.4rem;
+}
+
+.inactive:hover {
+    color: $light-gray;
+}
+
 .bar {
-  background-color: #3a3a3a;
-  color: #b0b4bc;
-  padding: 10px;
+    background-color: $mantle;
 }
 
-// Styles on classes (see eww.yuck for more information)
-
-.sidestuff slider {
-  all: unset;
-  color: #ffd5cd;
+.clock {
+    font-weight: bold;
+    background-color: $base;
+    color: $text;
+    border-radius: 10px;
+    padding: 0.2rem;
+    margin: 0.5rem;
 }
 
-.metric scale trough highlight {
-  all: unset;
-  background-color: #D35D6E;
-  color: #000000;
-  border-radius: 10px;
-}
-.metric scale trough {
-  all: unset;
-  background-color: #4e4e4e;
-  border-radius: 50px;
-  min-height: 3px;
-  min-width: 50px;
-  margin-left: 10px;
-  margin-right: 20px;
-}
-.metric scale trough highlight {
-  all: unset;
-  background-color: #D35D6E;
-  color: #000000;
-  border-radius: 10px;
-}
-.metric scale trough {
-  all: unset;
-  background-color: #4e4e4e;
-  border-radius: 50px;
-  min-height: 3px;
-  min-width: 50px;
-  margin-left: 10px;
-  margin-right: 20px;
-}
-.label-ram {
-  font-size: large;
-}
-.workspaces button:hover {
-  color: #D35D6E;
+.date {
+    font-size: 1.5rem;
+    color: $text;
 }
 
+
+.battery {
+    font-family: monospace;
+    font-size: 1.5rem;
+    color: $teal;
+}
+
+.volume,
+.dnd,
+.wifi {
+    font-family: monospace;
+    font-size: 1.5rem;
+    color: $mauve;
+    padding: 0 5px;
+}
+
+
+// battery menu
+.batterywindow {
+    background-color: $mantle;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: normal;
+    color: $text;
+
+    progressbar {
+        border-radius: 5px;
+    }
+
+    progressbar progress {
+        background-color: $green;
+    }
+
+    progressbar trough {
+        background-color: $base;
+    }
+
+    .batterymenu {
+        padding: 10px;
+    }
+
+}
+
+// Calendar
+.cal {
+    background-color: $mantle;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: normal;
+
+    .cal-in {
+        padding: 0px 10px 0px 10px;
+        color: $text;
+
+        .cal {
+            &.highlight {
+                padding: 20px;
+            }
+
+            padding: 5px 5px 5px 5px;
+            margin-left: 10px;
+        }
+    }
+}
+
+calender {
+    color: $text;
+}
+
+calendar:selected {
+    color: $mauve;
+}
+
+calendar.header {
+    color: $overlay0;
+    font-weight: bold;
+}
+
+calendar.button {
+    color: $base;
+}
+
+calendar.highlight {
+    color: $overlay0;
+    font-weight: bold;
+}
+
+calendar:indeterminate {
+    color: $text;
+}

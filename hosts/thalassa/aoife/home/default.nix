@@ -21,6 +21,7 @@
     localsend
     obsidian
     typst
+    prismlauncher
   ];
 
   ## Hyprland Config

@@ -1,4 +1,10 @@
-{ pkgs, lib, inputs, ... }: {
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
+{
   # Bootloader.
   boot = {
     kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
@@ -14,29 +20,34 @@
     };
   };
 
-  programs.nix-ld.enable = true;
+  # programs.nix-ld.enable = true;
 
   hardware.keyboard.qmk.enable = true;
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
     users.vivian = import ./home.nix;
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = {
+      inherit inputs;
+    };
   };
+
+  hardware.pulseaudio.enable = false;
   services = {
 
     # Enable my config for the gnome desktop environment
-    v.gnome.enable = true;
+    v.gnome.enable = lib.mkDefault true;
 
     # Enable CUPS to print documents.
     printing.enable = true;
     pipewire = {
       enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
+      audio.enable = true;
+      # alsa.enable = true;
+      # alsa.support32Bit = true;
       pulse.enable = true;
       # If you want to use JACK applications, uncomment this
-      #jack.enable = true;
+      jack.enable = true;
 
       # use the example session manager (no others are packaged yet so this is enabled by default,
       # no need to redefine it in your config for now)
@@ -62,15 +73,12 @@
   };
 
   # Global Packages
-  environment.systemPackages = with pkgs; [ wireguard-tools sbctl ]; # ++ (if config.virtualisation.podman.enable then [ pkgs.podman-compose ] else []);
+  environment.systemPackages = with pkgs; [
+    wireguard-tools
+    sbctl
+  ]; # ++ (if config.virtualisation.podman.enable then [ pkgs.podman-compose ] else []);
 
-  # programs.virt-manager = {
-  #   enable = true;
-  # };
 
-  # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
 
   virtualisation = {
@@ -88,22 +96,27 @@
     noto-fonts-emoji
     dejavu_fonts
     (nerdfonts.override {
-      fonts =
-        [ "DejaVuSansMono" "Ubuntu" "DroidSansMono" "NerdFontsSymbolsOnly" ];
+      fonts = [
+        "DejaVuSansMono"
+        "Ubuntu"
+        "DroidSansMono"
+        "NerdFontsSymbolsOnly"
+      ];
     })
   ];
   programs = {
     steam = {
-
       enable = true;
       # Open ports in the firewall for Steam Remote Play
       remotePlay.openFirewall = true;
       package = pkgs.steam.override {
-        extraPkgs = pkgs: with pkgs; [ gamescope mangohud ];
+        extraPkgs =
+          pkgs: with pkgs; [
+            gamescope
+            mangohud
+          ];
       };
     };
-
-    gamemode.enable = true;
 
     adb.enable = true;
   };

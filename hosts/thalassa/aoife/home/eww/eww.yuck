@@ -1,75 +1,164 @@
 (defwidget bar []
-  (centerbox :orientation "h"
-    (workspaces)
-    (music)
-    (sidestuff)))
+  (centerbox
+    :orientation "v"
+    (box
+      :valign "start"
+      :hexpand false
+      :vexpand false
+      :orientation "v"
+      :space-evenly false
+    )
+    
+    (workspaces
+      :halign "center"
+      :vexpand true
+      :hexpand false
+      :orientation "v"
+    )
+    
+    (box :valign "end" :hexpand false :vexpand true :orientation "v" :space-evenly false
+      (wifi)
+      (do-not-disturb)
+      (volume)
+      (battery)
+      (time)
+    )
+  )
+)
 
-(defwidget sidestuff []
-  (box :class "sidestuff" :orientation "h" :space-evenly false :halign "end"
-    (metric :label "🔊"
-            :value volume
-            :onchange "amixer -D pulse sset Master {}%")
-    (metric :label ""
-            :value {EWW_RAM.used_mem_perc}
-            :onchange "")
-    (metric :label "💾"
-            :value {round((1 - (EWW_DISK["/"].free / EWW_DISK["/"].total)) * 100, 0)}
-            :onchange "")
-    time))
+;; ━━━ BATTERY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+(defwidget battery []
+  (eventbox :onclick "eww open batterywindow --toggle"
+    (label
+      :text `${
+      EWW_BATTERY.BAT0.status == "Charging" ? "" :
+      EWW_BATTERY.BAT0.capacity < 10 ? "" :
+      EWW_BATTERY.BAT0.capacity < 20 ? "" :
+      EWW_BATTERY.BAT0.capacity < 30 ? "" :
+      EWW_BATTERY.BAT0.capacity < 40 ? "" :
+      EWW_BATTERY.BAT0.capacity < 50 ? "" :
+      EWW_BATTERY.BAT0.capacity < 60 ? "" :
+      EWW_BATTERY.BAT0.capacity < 70 ? "" :
+      EWW_BATTERY.BAT0.capacity < 80 ? "" :
+      EWW_BATTERY.BAT0.capacity < 90 ? "" : ""
+      }`
+      :class "battery"
+    ))
+)
 
+(defwidget batterymenu []
+  (box :orientation "v"
+    :class "batterymenu"
+    (label :text "${EWW_BATTERY.BAT0.status}: ${EWW_BATTERY.BAT0.capacity}%")
+    (progress :value "${EWW_BATTERY.BAT0.capacity}" :orientation "h") ; TODO: change class (and color) on low juice
+  )
+)
+
+(defwindow batterywindow
+  :monitor 0
+  :geometry (geometry
+    :x "53px"
+    :y "30px"
+    :anchor "bottom left"
+  )
+  (batterymenu)
+)
+
+; ━━━ do-not-disturb ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+(defvar dnd "")
+(defwidget do-not-disturb []
+  (eventbox
+    :orientation "h"
+    :halign "center"
+    :space-evenly false
+    :onclick "nohup ./scripts/do-not-disturb.sh &"
+    (label
+      :text {dnd}
+      :class "dnd"
+    )
+  )
+)
+
+;; ━━━ WIFI ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+(defpoll wifi :interval "30s" "./scripts/wifi.sh")
+
+(defwidget wifi []
+  (box
+    :orientation "h"
+    :halign "center"
+    :space-evenly false
+    (label
+      :text {wifi.icon}
+      :tooltip {wifi.status}
+      :class "wifi"
+    )
+  )
+)
+
+;; ━━━ VOLUME ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+(defpoll volume :interval "1s" "./scripts/volume.sh")
+(defwidget volume []
+  (eventbox
+    :orientation "h"
+    :halign "center"
+    :space-evenly false
+    :onclick "pamixer -t"
+    (label
+      :text {volume.icon}
+      :tooltip "${volume.percent}%"
+      :class "volume"
+    )
+  )
+)
+
+;; ━━━ TIME ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+(defpoll hour :interval "10s" "date +%H")
+(defpoll minute :interval "10s" "date +%M")
+(defpoll dateVar :interval "600s" "date '+%A %d.%m.%y'")
+
+(defwidget time []
+  (eventbox
+    :cursor "hand"
+    :hexpand false
+    :vexpand false
+    :tooltip "${dateVar}"
+    :onclick "eww open calendar --toggle &"
+    (box :orientation "v" :hexpand false :vexpand false :space-evenly false :class "clock"
+      (label :class "date" :text "${hour}")
+      
+      (label :class "date" :text "${minute}")
+    )
+  )
+)
+
+;; Calendar
+(defpoll calendar_day :interval "20h" "date '+%d'")
+(defpoll calendar_year :interval "20h" "date '+%Y'")
+(defwidget cal []
+  (box :class "cal" :orientation "v"
+    (box :class "cal-in"
+      (calendar :class "cal"
+        :day calendar_day
+      :year calendar_year))))
+
+(defwindow calendar
+  :monitor 0
+  :geometry (geometry :x "53px"
+    :y "5px"
+    :anchor "bottom left"
+    :width "270px"
+  :height "60px")
+  (cal))
+
+(deflisten workspaces_listen "./scripts/workspaces.sh")
 (defwidget workspaces []
-  (box :class "workspaces"
-       :orientation "h"
-       :space-evenly true
-       :halign "start"
-       :spacing 10
-    (button :onclick "wmctrl -s 0" 1)
-    (button :onclick "wmctrl -s 1" 2)
-    (button :onclick "wmctrl -s 2" 3)
-    (button :onclick "wmctrl -s 3" 4)
-    (button :onclick "wmctrl -s 4" 5)
-    (button :onclick "wmctrl -s 5" 6)
-    (button :onclick "wmctrl -s 6" 7)
-    (button :onclick "wmctrl -s 7" 8)
-    (button :onclick "wmctrl -s 8" 9)))
-
-(defwidget music []
-  (box :class "music"
-       :orientation "h"
-       :space-evenly false
-       :halign "center"
-    {music != "" ? "🎵${music}" : ""}))
-
-
-(defwidget metric [label value onchange]
-  (box :orientation "h"
-       :class "metric"
-       :space-evenly false
-    (box :class "label" label)
-    (scale :min 0
-           :max 101
-           :active {onchange != ""}
-           :value value
-           :onchange onchange)))
-
-
-
-(deflisten music :initial ""
-  "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true")
-
-(defpoll volume :interval "1s"
-  "scripts/getvol")
-
-(defpoll time :interval "10s"
-  "date '+%H:%M %b %d, %Y'")
+  (literal :content workspaces_listen))
 
 (defwindow bar
   :monitor 0
-  :windowtype "dock"
-  :geometry (geometry :x "0%"
-                      :y "0%"
-                      :width "90%"
-                      :height "10px"
-                      :anchor "top center")
-  :reserve (struts :side "top" :distance "4%")
+  :exclusive false
+  :geometry (geometry :height "1080px" :x "-4px" :y "0px"
+    :width "52px"
+  :anchor "top left")
+  :stacking "fg"
   (bar))

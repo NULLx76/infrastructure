@@ -1,5 +1,32 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
+
+  systemd.user.services.mako = {
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "dbus";
+      BusName = "org.freedesktop.Notifications";
+
+      ExecCondition = ''
+        ${pkgs.bash}/bin/bash -c '[ -n "$WAYLAND_DISPLAY" ]'
+      '';
+
+      ExecStart = ''
+        ${pkgs.mako}/bin/mako
+      '';
+
+      ExecReload = ''
+        ${pkgs.mako}/bin/makoctl reload
+      '';
+
+      Restart = "on-failure";
+      RestartSec = 1;
+      TimeoutStopSec = 10;
+    };
+  };
+
   programs = {
     wofi = {
       enable = true;
@@ -7,12 +34,14 @@
 
     eww = {
       enable = true;
-      package = pkgs.eww-wayland;
       configDir = ./eww;
     };
 
+    mako.enable = true;
+
     waybar = {
       enable = true;
+      style = ./waybar.css;
       settings = {
         mainBar = {
           layer = "top";
@@ -20,7 +49,57 @@
           height = 30;
           modules-left = [ "hyprland/workspaces" ];
           modules-center = [ "clock" ];
-          modules-right = [ "wireplumber" "power-profiles-daemon" "network" "battery" ];
+          modules-right = [
+            "wireplumber"
+            "power-profiles-daemon"
+            "network"
+            "battery"
+          ];
+
+          wireplumber = {
+            format = "󰕾 {volume}%";
+            format-muted = "󰖁";
+          };
+
+          network = {
+            format-wifi = "󰖩 {essid} ({signalStrength}%)";
+            format-ethernet = "󰈀 {ifname}: {ipaddr}/{cidr}";
+            format-disconnected = "󰌙 ";
+            tooltip-format = "{ifname}: {ipaddr}";
+          };
+
+          power-profiles-daemon = {
+            format = "{icon}";
+            format-icons = {
+              performance = "󰓅";
+              balanced = "󰾅";
+              power-saver = "󰾆";
+            };
+          };
+
+          battery = {
+            states = {
+              warning = 30;
+              critical = 15;
+            };
+
+            format = "󱐋 {capacity}%";
+            format-discharging = "{icon}  {capacity}%";
+
+            format-icons = [
+              "󰂎"
+              "󰁺"
+              "󰁻"
+              "󰁼"
+              "󰁽"
+              "󰁾"
+              "󰁿"
+              "󰂀"
+              "󰂁"
+              "󰂂"
+              "󰁹"
+            ];
+          };
         };
       };
       systemd = {
@@ -30,134 +109,164 @@
     };
   };
 
-  wayland.windowManager.hyprland = {
-    enable = true;
-    systemd.enable = true;
+  wayland.windowManager.hyprland =
+    let
+      toggle_mirror = pkgs.writeScriptBin "toggle_mirror.sh" ''
+        #!/usr/bin/env bash
+        if [ $(hyprctl monitors all -j | ${pkgs.jq}/bin/jq '.[1].activeWorkspace.id') = '-1' ]; then
+        	hyprctl keyword monitor ",preferred,auto,1"
+        else
+        	hyprctl keyword monitor ",preferred,auto,1,mirror,eDP-1"
+        fi
+      '';
+    in
+    {
+      enable = true;
+      systemd.enable = true;
 
-    settings = {
-      monitor = ",preferred,auto,auto";
-      input = {
-        kb_options = "caps:escape";
-        touchpad.natural_scroll = true;
-      };
-      general = {
-        gaps_in = 5;
-        gaps_out = 20;
-        border_size = 2;
-        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-        "col.inactive_border" = "rgba(595959aa)";
-        layout = "dwindle";
-        # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
-        allow_tearing = false;
-      };
-      decoration = {
-        rounding = 10;
+      settings =
+        let
+          inherit (builtins) genList concatLists toString;
+          wpctl = "${pkgs.wireplumber}/bin/wpctl";
+          brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
+          menu = "${config.programs.wofi.package}/bin/wofi --show run,drun";
+          terminal = "${config.programs.kitty.package}/bin/kitty";
+          fileManager = "${pkgs.gnome.nautilus}/bin/nautilus";
+        in
+        {
+          "$mod" = "SUPER";
+          exec-once = [
+            "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+            "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+          ];
+          monitor = [
+            "eDP-1, 3840x2400@60,0x0,2"
+            ",highres,auto,1"
+          ];
+          input = {
+            touchpad.natural_scroll = true;
+          };
+          general = {
+            gaps_in = 5;
+            gaps_out = 20;
+            border_size = 2;
+            "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+            "col.inactive_border" = "rgba(595959aa)";
+            layout = "dwindle";
+            # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
+            allow_tearing = false;
+          };
+          decoration = {
+            rounding = 10;
 
-        blur = {
-          enabled = true;
-          size = 3;
-          passes = 1;
+            blur = {
+              enabled = true;
+              size = 3;
+              passes = 1;
+            };
+
+            drop_shadow = "yes";
+            shadow_range = 4;
+            shadow_render_power = 3;
+            "col.shadow" = "rgba(1a1a1aee)";
+          };
+          animations = {
+            enabled = "yes";
+
+            bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
+
+            animation = [
+              "windows, 1, 7, myBezier"
+              "windowsOut, 1, 7, default, popin 80%"
+              "border, 1, 10, default"
+              "borderangle, 1, 8, default"
+              "fade, 1, 7, default"
+              "workspaces, 1, 6, default"
+            ];
+          };
+          dwindle = {
+            preserve_split = "yes";
+            pseudotile = "yes";
+          };
+          gestures.workspace_swipe = true;
+
+          misc = {
+            force_default_wallpaper = 1;
+            disable_splash_rendering = true;
+          };
+
+          windowrulev2 = [
+            "suppressevent maximize, class:.* # You'll probably like this."
+            "workspace 1 silent, class:^(Element)$"
+            "workspace 1 silent, class:^(discord)$"
+            "workspace 2 silent, class:^(firefox)$"
+            "float,class:^(firefox)$,title:^(Picture-in-Picture)$"
+          ];
+
+          # l -> works when screen is locked
+          # e -> repeats when held
+          bindel = [
+            ",XF86AudioRaiseVolume,exec,${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+            ",XF86AudioLowerVolume,exec,${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+            ",XF86MonBrightnessUp,exec,${brightnessctl} -q s +5%"
+            ",XF86MonBrightnessDown,exec,${brightnessctl} -q s 5%-"
+          ];
+
+          bindl = [ ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle" ];
+
+          bind =
+            [
+              "$mod, RETURN, exec, ${terminal}"
+              "$mod, Q, killactive,"
+              "$mod SHIFT, escape, exit,"
+              "$mod, E, exec, ${fileManager}"
+              "$mod, V, togglefloating,"
+              "$mod, D, exec, ${menu}"
+              "$mod, P, pseudo, # dwindle"
+              "$mod, J, togglesplit, # dwindle"
+              "SUPER,m,fullscreen"
+
+              # Move focus with arrow keys
+              "$mod, left, movefocus, l"
+              "$mod, right, movefocus, r"
+              "$mod, up, movefocus, u"
+              "$mod, down, movefocus, d"
+
+              # Scratch workspace
+              "$mod, S, togglespecialworkspace, magic"
+              "$mod SHIFT, S, movetoworkspace, special:magic"
+
+              # PrintScreen
+              ",Print,exec, grimblast copysave area /home/vivian/cloud/Pictures/Screenshots/$(date --iso=seconds).png"
+            ]
+            ++ (
+              # workspaces
+              # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
+              concatLists (
+                genList (
+                  x:
+                  let
+                    ws =
+                      let
+                        c = (x + 1) / 10;
+                      in
+                      toString (x + 1 - (c * 10));
+                  in
+                  [
+                    "$mod, ${ws}, workspace, ${toString (x + 1)}"
+                    "$mod SHIFT, ${ws}, movetoworkspacesilent, ${toString (x + 1)}"
+                  ]
+                ) 10
+              )
+
+            );
+
+          # Bind mouse
+          bindm = [
+            # Move/resize windows with mod + LMB/RMB and dragging
+            "$mod, mouse:272, movewindow"
+            "$mod, mouse:273, resizewindow"
+          ];
         };
-
-        drop_shadow = "yes";
-        shadow_range = 4;
-        shadow_render_power = 3;
-        "col.shadow" = "rgba(1a1a1aee)";
-      };
-      animations = {
-        enabled = "yes";
-
-        bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
-
-        animation = [
-          "windows, 1, 7, myBezier"
-          "windowsOut, 1, 7, default, popin 80%"
-          "border, 1, 10, default"
-          "borderangle, 1, 8, default"
-          "fade, 1, 7, default"
-          "workspaces, 1, 6, default"
-        ];
-      };
-      dwindle = {
-        preserve_split = "yes";
-        pseudotile = "yes";
-      };
-      gestures.workspace_swipe = true;
     };
-    extraConfig = ''
-      $terminal = kitty
-      $fileManager = dolphin
-      $menu = wofi --show drun
-      misc {
-          # See https://wiki.hyprland.org/Configuring/Variables/ for more
-          force_default_wallpaper = 2 # Set to 0 or 1 to disable the anime mascot wallpapers
-          disable_splash_rendering = true
-      }
-
-      # Window Rules
-      windowrulev2 = suppressevent maximize, class:.* # You'll probably like this.
-      windowrulev2 = workspace 1 silent, class:^(Element)$
-      windowrulev2 = workspace 1 silent, class:^(discord)$
-      windowrulev2 = workspace 2 silent, class:^(firefox)$
-      windowrulev2 = float,class:^(firefox)$,title:^(Picture-in-Picture)$
-
-      # See https://wiki.hyprland.org/Configuring/Keywords/ for more
-      $mainMod = SUPER
-
-      # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
-      bind = $mainMod, RETURN, exec, $terminal
-      bind = $mainMod, Q, killactive,
-      bind = $mainMod SHIFT, escape, exit,
-      bind = $mainMod, E, exec, $fileManager
-      bind = $mainMod, V, togglefloating,
-      bind = $mainMod, D, exec, $menu
-      bind = $mainMod, P, pseudo, # dwindle
-      bind = $mainMod, J, togglesplit, # dwindle
-
-      # Fullscreen
-      bind=SUPER,m,fullscreen
-
-      # Move focus with mainMod + arrow keys
-      bind = $mainMod, left, movefocus, l
-      bind = $mainMod, right, movefocus, r
-      bind = $mainMod, up, movefocus, u
-      bind = $mainMod, down, movefocus, d
-
-      # Switch workspaces with mainMod + [0-9]
-      bind = $mainMod, 1, workspace, 1
-      bind = $mainMod, 2, workspace, 2
-      bind = $mainMod, 3, workspace, 3
-      bind = $mainMod, 4, workspace, 4
-      bind = $mainMod, 5, workspace, 5
-      bind = $mainMod, 6, workspace, 6
-      bind = $mainMod, 7, workspace, 7
-      bind = $mainMod, 8, workspace, 8
-      bind = $mainMod, 9, workspace, 9
-      bind = $mainMod, 0, workspace, 10
-
-      # Move active window to a workspace with mainMod + SHIFT + [0-9]
-      bind = $mainMod SHIFT, 1, movetoworkspace, 1
-      bind = $mainMod SHIFT, 2, movetoworkspace, 2
-      bind = $mainMod SHIFT, 3, movetoworkspace, 3
-      bind = $mainMod SHIFT, 4, movetoworkspace, 4
-      bind = $mainMod SHIFT, 5, movetoworkspace, 5
-      bind = $mainMod SHIFT, 6, movetoworkspace, 6
-      bind = $mainMod SHIFT, 7, movetoworkspace, 7
-      bind = $mainMod SHIFT, 8, movetoworkspace, 8
-      bind = $mainMod SHIFT, 9, movetoworkspace, 9
-      bind = $mainMod SHIFT, 0, movetoworkspace, 10
-
-      # Example special workspace (scratchpad)
-      bind = $mainMod, S, togglespecialworkspace, magic
-      bind = $mainMod SHIFT, S, movetoworkspace, special:magic
-
-      # Scroll through existing workspaces with mainMod + scroll
-      bind = $mainMod, mouse_down, workspace, e+1
-      bind = $mainMod, mouse_up, workspace, e-1
-
-      # Move/resize windows with mainMod + LMB/RMB and dragging
-      bindm = $mainMod, mouse:272, movewindow
-      bindm = $mainMod, mouse:273, resizewindow
-    '';
-  };
 }

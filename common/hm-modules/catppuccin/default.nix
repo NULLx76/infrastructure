@@ -7,6 +7,12 @@
 with lib;
 let
   cfg = config.themes.v.catppuccin;
+  mako = pkgs.fetchFromGitHub {
+    owner = "catppuccin";
+    repo = "mako";
+    rev = "9dd088aa5f4529a3dd4d9760415e340664cb86df";
+    sha256 = "sha256-nUzWkQVsIH4rrCFSP87mXAka6P+Td2ifNbTuP7NM/SQ=";
+  };
 in
 {
   options.themes.v.catppuccin = {
@@ -23,8 +29,6 @@ in
       theme = "Catppuccin-Frappe";
       font.name = "DejaVuSansMono Nerd Font";
     };
-
-    # home.sessionVariables.GTK_USE_PORTAL = "1";
 
     gtk = {
       enable = true;
@@ -45,23 +49,27 @@ in
       };
     };
 
-    xdg.configFile = {
-      "gtk-4.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
-      "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
-      "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
-    };
-
     qt = {
       enable = true;
       platformTheme = "qtct";
-      style = {
-        name = "Catppuccin-Frappe-Pink";
-        package = pkgs.catppuccin-kde.override {
-          flavour = [ "frappe" ];
-          accents = [ "pink" ];
-        };
-      };
+      style.name = "kvantum";
     };
+
+    xdg.configFile = {
+      "Kvantum/kvantum.kvconfig".text = ''
+        [General]
+        theme=Catppuccin-Frappe-Pink
+      '';
+    };
+
+    home.packages = with pkgs; [
+      (catppuccin-kvantum.override {
+        accent = "Pink";
+        variant = "Frappe";
+      })
+    ];
+
+    programs.mako.extraConfig = builtins.readFile "${mako}/src/frappe";
 
     programs.vscode = {
       userSettings."workbench.colorTheme" = "Catppuccin Frappé";

@@ -5,7 +5,7 @@
   # * https://github.com/Infinidoge/nix-minecraft
 
   inputs = {
-    nixpkgs.url = "nixpkgs/master";
+    nixpkgs.url = "nixpkgs/nixos-unstable-small";
 
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.4.0";
 
@@ -49,6 +49,11 @@
     # Website(s)
     essentials.url = "github:jdonszelmann/essentials";
     essentials.inputs.nixpkgs.follows = "nixpkgs";
+
+    nixos-cosmic = {
+      url = "github:lilyinstarlight/nixos-cosmic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -63,6 +68,7 @@
       gnome-autounlock-keyring,
       lanzaboote,
       t,
+      nixos-cosmic,
       ...
     }@inputs:
     let
@@ -91,6 +97,14 @@
       hostDefaults = {
         system = "x86_64-linux";
         modules = [
+          ({ pkgs, self, ...}: {
+            system.replaceRuntimeDependencies = [
+              ({
+                original = pkgs.xz;
+                replacement = pkgs.fixed-xz;
+              })
+            ];
+          })
           home-manager.nixosModules.home-manager
           gnome-autounlock-keyring.nixosModules.default
           ./common
@@ -114,6 +128,7 @@
         aoife = {
           modules = [
             lanzaboote.nixosModules.lanzaboote
+            nixos-cosmic.nixosModules.default
             ./common/desktop
             ./hosts/thalassa/aoife
           ];

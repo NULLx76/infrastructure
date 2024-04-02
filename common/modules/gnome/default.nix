@@ -1,7 +1,14 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 with lib;
-let cfg = config.services.v.gnome;
-in {
+let
+  cfg = config.services.v.gnome;
+in
+{
   options.services.v.gnome = {
     enable = mkEnableOption "v.gnome";
     hm = mkOption {
@@ -36,7 +43,7 @@ in {
         };
 
         # Enable the GNOME Desktop Environment.
-        displayManager.gdm.enable = true;
+        displayManager.gdm.enable = lib.mkDefault true;
         desktopManager.gnome.enable = true;
       };
       udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
@@ -49,7 +56,11 @@ in {
     # Add Home-manager dconf stuff
     home-manager.sharedModules = mkIf cfg.hm [ ./hm.nix ];
     environment.gnome.excludePackages =
-      (with pkgs; [ gnome-photos gnome-tour gnome-connections ])
+      (with pkgs; [
+        gnome-photos
+        gnome-tour
+        gnome-connections
+      ])
       ++ (with pkgs.gnome; [
         atomix # puzzle game
         epiphany # web browser
