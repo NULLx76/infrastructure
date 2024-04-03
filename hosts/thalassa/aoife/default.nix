@@ -44,9 +44,10 @@
   home-manager.users.vivian = import ./home;
 
   programs.hyprland.enable = true;
+  services.gnome.gnome-keyring.enable = true;
   services.gnome-autounlock-keyring = {
     enable = true;
-    # target = "hyprland-session.target";
+    target = "hyprland-session.target";
   };
 
   services.interception-tools = {
@@ -59,9 +60,6 @@
             EV_KEY: [KEY_CAPSLOCK, KEY_ESC]
     '';
   };
-
-  # services.desktopManager.cosmic.enable = true;
-  # services.displayManager.cosmic-greeter.enable = true;
 
   # Enable Ozone rendering for Chromium and Electron apps.
   environment.sessionVariables.NIXOS_OZONE_WL = "1";

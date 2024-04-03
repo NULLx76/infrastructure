@@ -6,9 +6,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable-small";
-
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.4.0";
-
     nur.url = "github:nix-community/NUR";
     colmena.url = "github:zhaofengli/colmena";
     deploy.url = "github:serokell/deploy-rs";
@@ -18,8 +16,6 @@
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
-    comma.url = "github:nix-community/comma";
 
     mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     mailserver.inputs.nixpkgs.follows = "nixpkgs";
@@ -46,14 +42,8 @@
     attic.url = "github:zhaofengli/attic";
     attic.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Website(s)
     essentials.url = "github:jdonszelmann/essentials";
     essentials.inputs.nixpkgs.follows = "nixpkgs";
-
-    nixos-cosmic = {
-      url = "github:lilyinstarlight/nixos-cosmic";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -68,7 +58,6 @@
       gnome-autounlock-keyring,
       lanzaboote,
       t,
-      nixos-cosmic,
       ...
     }@inputs:
     let
@@ -97,14 +86,6 @@
       hostDefaults = {
         system = "x86_64-linux";
         modules = [
-          ({ pkgs, self, ...}: {
-            system.replaceRuntimeDependencies = [
-              ({
-                original = pkgs.xz;
-                replacement = pkgs.fixed-xz;
-              })
-            ];
-          })
           home-manager.nixosModules.home-manager
           gnome-autounlock-keyring.nixosModules.default
           ./common
@@ -128,7 +109,6 @@
         aoife = {
           modules = [
             lanzaboote.nixosModules.lanzaboote
-            nixos-cosmic.nixosModules.default
             ./common/desktop
             ./hosts/thalassa/aoife
           ];

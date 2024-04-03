@@ -3,7 +3,7 @@
 
   systemd.user.services.mako = {
     Install = {
-      WantedBy = [ "graphical-session.target" ];
+      WantedBy = [ "hyprland-session.target" ];
     };
     Service = {
       Type = "dbus";
@@ -59,6 +59,7 @@
           wireplumber = {
             format = "󰕾 {volume}%";
             format-muted = "󰖁";
+            on-click = "wpctl set-mute @DEFAULT_SINK@ toggle";
           };
 
           network = {
@@ -112,12 +113,19 @@
   wayland.windowManager.hyprland =
     let
       toggle_mirror = pkgs.writeScriptBin "toggle_mirror.sh" ''
-        #!/usr/bin/env bash
+        #!${pkgs.stdenv.shell}
         if [ $(hyprctl monitors all -j | ${pkgs.jq}/bin/jq '.[1].activeWorkspace.id') = '-1' ]; then
         	hyprctl keyword monitor ",preferred,auto,1"
         else
         	hyprctl keyword monitor ",preferred,auto,1,mirror,eDP-1"
         fi
+      '';
+      startup = pkgs.writeScriptBin "startup.sh" ''
+        #!${pkgs.stdenv.shell}
+
+        firefox &
+        discord &
+        element-desktop &
       '';
     in
     {
@@ -136,8 +144,7 @@
         {
           "$mod" = "SUPER";
           exec-once = [
-            "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
-            "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+            "${startup}/bin/startup.sh"
           ];
           monitor = [
             "eDP-1, 3840x2400@60,0x0,2"
@@ -148,13 +155,24 @@
           };
           general = {
             gaps_in = 5;
-            gaps_out = 20;
+            gaps_out = 10;
             border_size = 2;
             "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
             "col.inactive_border" = "rgba(595959aa)";
             layout = "dwindle";
             # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
             allow_tearing = false;
+          };
+          group = {
+            "col.border_active" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+            "col.border_inactive" = "rgba(595959aa)";
+
+            groupbar = {
+              font_size = 16;
+              "col.active" = "rgba(babbf1aa)";
+              "col.inactive" = "rgba(414559aa)";
+              text_color = "rgba(232634ff)";
+            };
           };
           decoration = {
             rounding = 10;
@@ -191,8 +209,10 @@
           gestures.workspace_swipe = true;
 
           misc = {
-            force_default_wallpaper = 1;
+            force_default_wallpaper = 2;
             disable_splash_rendering = true;
+            # disable_hyprland_logo = true;
+            disable_autoreload = true;
           };
 
           windowrulev2 = [
@@ -201,6 +221,7 @@
             "workspace 1 silent, class:^(discord)$"
             "workspace 2 silent, class:^(firefox)$"
             "float,class:^(firefox)$,title:^(Picture-in-Picture)$"
+            "group set always,onworkspace:1 "
           ];
 
           # l -> works when screen is locked
@@ -224,7 +245,7 @@
               "$mod, D, exec, ${menu}"
               "$mod, P, pseudo, # dwindle"
               "$mod, J, togglesplit, # dwindle"
-              "SUPER,m,fullscreen"
+              "$mod,m,fullscreen"
 
               # Move focus with arrow keys
               "$mod, left, movefocus, l"
@@ -235,9 +256,14 @@
               # Scratch workspace
               "$mod, S, togglespecialworkspace, magic"
               "$mod SHIFT, S, movetoworkspace, special:magic"
+              # Groups aka Tabs
+              "$mod,g,togglegroup"
+              "$mod,tab,changegroupactive"
 
               # PrintScreen
-              ",Print,exec, grimblast copysave area /home/vivian/cloud/Pictures/Screenshots/$(date --iso=seconds).png"
+              ",Print,exec,${pkgs.grimblast}/bin/grimblast copysave area /home/vivian/cloud/Pictures/Screenshots/$(date --iso=seconds).png"
+              # Toggle Mirror for external displays on/off
+              ",XF86Display,exec,${toggle_mirror}/bin/toggle_mirror.sh"
             ]
             ++ (
               # workspaces

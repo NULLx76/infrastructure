@@ -56,7 +56,7 @@ window#waybar.hidden {
 
 #workspaces button {
   color: @text;
-  background: @background3;
+  /* background: @background3; */
   /* margin: 7px 5px 10px 5px; */
 }
 
