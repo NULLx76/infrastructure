@@ -1,5 +1,17 @@
-{ pkgs, config, ... }:
 {
+  pkgs,
+  config,
+  inputs,
+  ...
+}:
+let
+  terminal = "${config.programs.kitty.package}/bin/kitty -1";
+in
+{
+
+  home.packages = with pkgs; [
+    v.hyprland-workspaces
+  ];
 
   systemd.user.services.mako = {
     Install = {
@@ -27,15 +39,23 @@
     };
   };
 
+  xdg.configFile."hypr/hyprpaper.conf".text =
+    let
+      wallpaper = "/home/vivian/cloud/Pictures/Wallpapers-Laptop/wallpaper-nix-pink.png";
+    in
+    ''
+
+    '';
+
   programs = {
     wofi = {
       enable = true;
     };
 
-    eww = {
-      enable = true;
-      configDir = ./eww;
-    };
+    # eww = {
+      # enable = true;
+      # configDir = ./eww;
+    # };
 
     mako.enable = true;
 
@@ -59,15 +79,24 @@
           wireplumber = {
             format = "󰕾 {volume}%";
             format-muted = "󰖁";
-            on-click = "wpctl set-mute @DEFAULT_SINK@ toggle";
+            on-click = "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_SINK@ toggle";
           };
 
-          network = {
-            format-wifi = "󰖩 {essid} ({signalStrength}%)";
-            format-ethernet = "󰈀 {ifname}: {ipaddr}/{cidr}";
-            format-disconnected = "󰌙 ";
-            tooltip-format = "{ifname}: {ipaddr}";
-          };
+          network =
+            let
+              nmtui = pkgs.writeScriptBin "nmtui.sh" ''
+                #!${pkgs.stdenv.shell}
+                unset COLORTERM
+                TERM=xterm-old ${pkgs.networkmanager}/bin/nmtui
+              '';
+            in
+            {
+              format-wifi = "󰖩 {essid} ({signalStrength}%)";
+              format-ethernet = "󰈀 {ifname}: {ipaddr}/{cidr}";
+              format-disconnected = "󰌙 ";
+              tooltip-format = "{ifname}: {ipaddr}";
+              on-click = "touch ~/a && ${terminal} --execute ${nmtui}/bin/nmtui.sh";
+            };
 
           power-profiles-daemon = {
             format = "{icon}";
@@ -122,11 +151,25 @@
       '';
       startup = pkgs.writeScriptBin "startup.sh" ''
         #!${pkgs.stdenv.shell}
-
         firefox &
         discord &
-        element-desktop &
+
+        # start keyring, then unlock it, then start Element
+        gnome-keyring-daemon -r -d && ${
+          inputs.gnome-autounlock-keyring.packages.${pkgs.system}.default
+        }/bin/gnome-autounlock-keyring unlock && element-desktop &
       '';
+      hyprpaper-conf =
+        let
+          wallpaper = ../../../../assets/wallpaper-nix-pink.png;
+        in
+        pkgs.writeText "hyprpaper.conf" ''
+          preload = ${wallpaper}
+          wallpaper = eDP-1,${wallpaper}
+
+          splash = false
+          ipc = off
+        '';
     in
     {
       enable = true;
@@ -138,12 +181,12 @@
           wpctl = "${pkgs.wireplumber}/bin/wpctl";
           brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
           menu = "${config.programs.wofi.package}/bin/wofi --show run,drun";
-          terminal = "${config.programs.kitty.package}/bin/kitty";
           fileManager = "${pkgs.gnome.nautilus}/bin/nautilus";
         in
         {
           "$mod" = "SUPER";
           exec-once = [
+            "${pkgs.hyprpaper}/bin/hyprpaper -c ${hyprpaper-conf}"
             "${startup}/bin/startup.sh"
           ];
           monitor = [
@@ -157,21 +200,21 @@
             gaps_in = 5;
             gaps_out = 10;
             border_size = 2;
-            "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-            "col.inactive_border" = "rgba(595959aa)";
+            "col.active_border" = "rgba(8caaeeee) rgba(a6d189ee) 45deg";
+            "col.inactive_border" = "rgba(303446aa)";
             layout = "dwindle";
             # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
             allow_tearing = false;
           };
           group = {
-            "col.border_active" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-            "col.border_inactive" = "rgba(595959aa)";
+            "col.border_active" = "rgba(babbf1ee) rgba(f4b8e4ee) 45deg";
+            "col.border_inactive" = "rgba(232634aa)";
 
             groupbar = {
               font_size = 16;
               "col.active" = "rgba(babbf1aa)";
               "col.inactive" = "rgba(414559aa)";
-              text_color = "rgba(232634ff)";
+              text_color = "rgba(81c8beee)";
             };
           };
           decoration = {
@@ -211,7 +254,7 @@
           misc = {
             force_default_wallpaper = 2;
             disable_splash_rendering = true;
-            # disable_hyprland_logo = true;
+            disable_hyprland_logo = true;
             disable_autoreload = true;
           };
 
@@ -219,9 +262,9 @@
             "suppressevent maximize, class:.* # You'll probably like this."
             "workspace 1 silent, class:^(Element)$"
             "workspace 1 silent, class:^(discord)$"
+            "group, class:^(Element|discord)$,workspace:1"
             "workspace 2 silent, class:^(firefox)$"
             "float,class:^(firefox)$,title:^(Picture-in-Picture)$"
-            "group set always,onworkspace:1 "
           ];
 
           # l -> works when screen is locked

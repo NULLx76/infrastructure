@@ -1,5 +1,5 @@
 # nix-build -E 'with import <nixpkgs> {}; callPackage ./default.nix {}'
-_final: prev: {
+final: prev: {
   v = {
     glitch-soc = prev.callPackage ./glitch-soc { };
 
@@ -22,6 +22,7 @@ _final: prev: {
         prev.callPackage ./vscode-extensions/platformio.nix { };
     };
 
+    hyprland-workspaces = prev.callPackage ./hyprland-workspaces { };
   };
 
   plex-plexpass = prev.callPackage ./plex-pass { };

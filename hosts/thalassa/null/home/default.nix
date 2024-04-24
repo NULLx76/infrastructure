@@ -1,15 +1,25 @@
-{ config, pkgs, inputs, texlive, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  texlive,
+  ...
+}:
 let
   tex = pkgs.texlive.combine {
     inherit (pkgs.texlive) scheme-full;
-    dnd-5e-latex-template = { pkgs = [ pkgs.v.dnd-5e-latex-template ]; };
+    dnd-5e-latex-template = {
+      pkgs = [ pkgs.v.dnd-5e-latex-template ];
+    };
   };
 in
 {
   programs = {
     home-manager.enable = true;
 
-    foot = { enable = true; };
+    foot = {
+      enable = true;
+    };
 
     nix-index.enable = true;
 
@@ -64,18 +74,142 @@ in
           "latex.outDir" = "%TMPDIR%/%RELATIVE_DOC%";
         };
         "workbench.colorTheme" = "Catppuccin Frappé";
-        "editor.fontFamily" =
-          "'DejaVuSansMono Nerd Font', 'monospace', monospace";
+        "editor.fontFamily" = "'DejaVuSansMono Nerd Font', 'monospace', monospace";
         "keyboard.dispatch" = "keyCode";
         "rust-analyzer.server.path" = "${pkgs.rust-analyzer}/bin/rust-analyzer";
         "terminal.integrated.defaultProfile.linux" = "zsh";
         "nix.enableLanguageServer" = true; # Enable LSP.
-        "nix.serverPath" =
-          "${pkgs.nil}/bin/nil"; # The path to the LSP server executable.
-        "[nix]" = { "editor.defaultFormatter" = "brettm12345.nixfmt-vscode"; };
+        "nix.serverPath" = "${pkgs.nil}/bin/nil"; # The path to the LSP server executable.
+        "[nix]" = {
+          "editor.defaultFormatter" = "brettm12345.nixfmt-vscode";
+        };
+        "latex-workshop.latex.tools" = [
+          {
+            "name" = "latexmk";
+            "command" = "latexmk";
+            "args" = [
+              "-shell-escape"
+              "-synctex=1"
+              "-interaction=nonstopmode"
+              "-file-line-error"
+              "-pdf"
+              "-outdir=%OUTDIR%"
+              "%DOC%"
+            ];
+            "env" = { };
+          }
+          {
+            "name" = "lualatexmk";
+            "command" = "latexmk";
+            "args" = [
+              "-synctex=1"
+              "-interaction=nonstopmode"
+              "-file-line-error"
+              "-lualatex"
+              "-outdir=%OUTDIR%"
+              "%DOC%"
+            ];
+            "env" = { };
+          }
+          {
+            "name" = "xelatexmk";
+            "command" = "latexmk";
+            "args" = [
+              "-synctex=1"
+              "-interaction=nonstopmode"
+              "-file-line-error"
+              "-xelatex"
+              "-outdir=%OUTDIR%"
+              "%DOC%"
+            ];
+            "env" = { };
+          }
+          {
+            "name" = "latexmk_rconly";
+            "command" = "latexmk";
+            "args" = [ "%DOC%" ];
+            "env" = { };
+          }
+          {
+            "name" = "pdflatex";
+            "command" = "pdflatex";
+            "args" = [
+              "-synctex=1"
+              "-interaction=nonstopmode"
+              "-file-line-error"
+              "%DOC%"
+            ];
+            "env" = { };
+          }
+          {
+            "name" = "bibtex";
+            "command" = "bibtex";
+            "args" = [ "%DOCFILE%" ];
+            "env" = { };
+          }
+          {
+            "name" = "rnw2tex";
+            "command" = "Rscript";
+            "args" = [
+              "-e"
+              "knitr==opts_knit$set(concordance = TRUE); knitr==knit('%DOCFILE_EXT%')"
+            ];
+            "env" = { };
+          }
+          {
+            "name" = "jnw2tex";
+            "command" = "julia";
+            "args" = [
+              "-e"
+              "using Weave; weave(\"%DOC_EXT%\"; doctype=\"tex\")"
+            ];
+            "env" = { };
+          }
+          {
+            "name" = "jnw2texminted";
+            "command" = "julia";
+            "args" = [
+              "-e"
+              "using Weave; weave(\"%DOC_EXT%\"; doctype=\"texminted\")"
+            ];
+            "env" = { };
+          }
+          {
+            "name" = "pnw2tex";
+            "command" = "pweave";
+            "args" = [
+              "-f"
+              "tex"
+              "%DOC_EXT%"
+            ];
+            "env" = { };
+          }
+          {
+            "name" = "pnw2texminted";
+            "command" = "pweave";
+            "args" = [
+              "-f"
+              "texminted"
+              "%DOC_EXT%"
+            ];
+            "env" = { };
+          }
+          {
+            "name" = "tectonic";
+            "command" = "tectonic";
+            "args" = [
+              "--synctex"
+              "--keep-logs"
+              "%DOC%.tex"
+            ];
+            "env" = { };
+          }
+        ];
       };
-      extensions = with pkgs.vscode-extensions;
-        with pkgs.v.vscode-extensions; [
+      extensions =
+        with pkgs.vscode-extensions;
+        with pkgs.v.vscode-extensions;
+        [
           # astro-build.astro-vscode
           brettm12345.nixfmt-vscode
           catppuccin.catppuccin-vsc
@@ -99,12 +233,16 @@ in
 
     direnv = {
       enable = true;
-      nix-direnv = { enable = true; };
+      nix-direnv = {
+        enable = true;
+      };
     };
 
     zsh = {
       enable = true;
-      sessionVariables = { DIRENV_LOG_FORMAT = ""; };
+      sessionVariables = {
+        DIRENV_LOG_FORMAT = "";
+      };
     };
   };
   home = {
@@ -128,7 +266,7 @@ in
       gnome.gnome-font-viewer
       gnome.nautilus
       grim # Screenshot tool
-      inputs.comma.packages.${pkgs.system}.default
+      # inputs.comma.packages.${pkgs.system}.default
       inputs.webcord.packages.${pkgs.system}.default
       k9s
       kubectl
@@ -158,13 +296,20 @@ in
     ];
   };
 
-  imports = [ ./hyprland.nix ./neovim.nix ./eww ./theme.nix ];
+  imports = [
+    ./hyprland.nix
+    ./neovim.nix
+    ./eww
+    ./theme.nix
+  ];
 
   xdg.mimeApps = {
     enable = true;
     defaultApplications =
-      let browser = [ "firefox.desktop" ];
-      in {
+      let
+        browser = [ "firefox.desktop" ];
+      in
+      {
         "image/*" = "org.gnome.eog.desktop";
         "text/html" = browser;
         "x-scheme-handler/http" = browser;
@@ -188,8 +333,10 @@ in
   };
 
   xdg.userDirs =
-    let home = config.home.homeDirectory;
-    in {
+    let
+      home = config.home.homeDirectory;
+    in
+    {
       enable = true;
       createDirectories = true;
       desktop = "${home}/.desktop";

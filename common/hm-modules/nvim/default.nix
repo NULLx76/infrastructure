@@ -296,7 +296,7 @@ with lib;
         telescope = {
           enable = true;
           defaults.preview.ls_short = true;
-          extensions.file_browser = {
+          extensions.file-browser = {
             enable = true;
             hijackNetrw = true;
             dirIcon = "";

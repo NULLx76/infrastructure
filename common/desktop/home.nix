@@ -22,6 +22,7 @@ let
       flask
       ipwhois
       pyasn
+      z3-solver
     ];
 in
 {
@@ -37,9 +38,8 @@ in
     gcc
     gimp
     inputs.attic.packages.${pkgs.system}.attic
-    inputs.comma.packages.${pkgs.system}.default
+    comma
     discord
-    jetbrains.clion
     jetbrains.rust-rover
     kdenlive
     libreoffice-fresh
@@ -54,6 +54,7 @@ in
     tex
     unzip
     yt-dlp
+    # z3
   ];
 
   # Enable my own hm modules

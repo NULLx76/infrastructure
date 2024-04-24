@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   imports = [
+    ./starship.nix
     ./hyprland.nix
   ];
 
@@ -15,7 +16,6 @@
 
   home.packages = with pkgs; [
     libreoffice-fresh
-    jetbrains.clion
     jetbrains.rust-rover
     eduvpn-client
     localsend
@@ -23,6 +23,4 @@
     typst
     prismlauncher
   ];
-
-  ## Hyprland Config
 }

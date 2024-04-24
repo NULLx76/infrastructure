@@ -6,12 +6,19 @@
 }:
 with lib;
 let
+  inherit (builtins) fromTOML readFile;
   cfg = config.themes.v.catppuccin;
   mako = pkgs.fetchFromGitHub {
     owner = "catppuccin";
     repo = "mako";
     rev = "9dd088aa5f4529a3dd4d9760415e340664cb86df";
     sha256 = "sha256-nUzWkQVsIH4rrCFSP87mXAka6P+Td2ifNbTuP7NM/SQ=";
+  };
+  starship = pkgs.fetchFromGitHub {
+    owner = "catppuccin";
+    repo = "starship";
+    rev = "5629d2356f62a9f2f8efad3ff37476c19969bd4f";
+    sha256 = "sha256-nsRuxQFKbQkyEI4TXgvAjcroVdG+heKX5Pauq/4Ota0=";
   };
 in
 {
@@ -69,7 +76,11 @@ in
       })
     ];
 
-    programs.mako.extraConfig = builtins.readFile "${mako}/src/frappe";
+    programs.mako.extraConfig = readFile "${mako}/src/frappe";
+
+    programs.starship.settings = {
+      palette = "catppuccin_frappe";
+    } //fromTOML (readFile "${starship}/palettes/frappe.toml");
 
     programs.vscode = {
       userSettings."workbench.colorTheme" = "Catppuccin Frappé";

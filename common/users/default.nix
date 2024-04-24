@@ -1,5 +1,16 @@
-{ config, pkgs, lib, inputs, ... }: {
-  imports = [ ./laura.nix ./vivian.nix ./jonathan.nix ];
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
+{
+  imports = [
+    ./laura.nix
+    ./vivian.nix
+    ./jonathan.nix
+  ];
   programs = {
 
     # Setup ZSH to use grml config
@@ -11,15 +22,16 @@
       interactiveShellInit = ''
         source "${pkgs.grml-zsh-config}/etc/zsh/zshrc"
         export FZF_DEFAULT_COMMAND="${pkgs.ripgrep}/bin/rg --files --follow"
-        source "${pkgs.fzf}/share/fzf/key-bindings.zsh"
-        source "${pkgs.fzf}/share/fzf/completion.zsh"
+        export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+        export FZF_CTRL_R_COMMAND="$FZF_DEFAULT_COMMAND"
         eval "$(${pkgs.zoxide}/bin/zoxide init zsh)"
+        eval "$(${pkgs.fzf}/bin/fzf --zsh)"
 
         export TEMPDIRS="$HOME/tmp"
         source "${inputs.t.packages.${pkgs.system}.default}/bin/t-rs.sh"
       '';
       # otherwise it'll override the grml prompt
-      promptInit = "";
+      # promptInit = lib.mkDefault "";
     };
 
     # Install Neovim and set it as alias for vi(m)
@@ -39,8 +51,7 @@
   # Configure the root account
   users.extraUsers.root = {
     # Allow my SSH keys for logging in as root.
-    openssh.authorizedKeys.keys =
-      config.users.extraUsers.vivian.openssh.authorizedKeys.keys;
+    openssh.authorizedKeys.keys = config.users.extraUsers.vivian.openssh.authorizedKeys.keys;
     # Also use zsh for root
     shell = pkgs.zsh;
   };
@@ -57,6 +68,9 @@
     ripgrep
     rsync
     zoxide
+
+    # Terminfo
+    pkgs.kitty.terminfo
   ];
 
   programs.tmux = {

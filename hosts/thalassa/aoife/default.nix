@@ -23,6 +23,8 @@
 
   users.users.vivian.extraGroups = [ "adbusers" ];
 
+  security.pki.certificateFiles = [ ./domain.crt ];
+
   # Bootloader.
   boot = {
     bootspec.enable = true;
@@ -43,12 +45,20 @@
 
   home-manager.users.vivian = import ./home;
 
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+
+    # Add any missing dynamic libraries for unpackaged programs
+
+    # here, NOT in environment.systemPackages
+  ];
+
   programs.hyprland.enable = true;
   services.gnome.gnome-keyring.enable = true;
-  services.gnome-autounlock-keyring = {
-    enable = true;
-    target = "hyprland-session.target";
-  };
+  # services.gnome-autounlock-keyring = {
+  # enable = true;
+  # target = "hyprland-session.target";
+  # };
 
   services.interception-tools = {
     enable = true;

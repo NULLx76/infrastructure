@@ -28,14 +28,15 @@ in
 
         [build]
         rustc-wrapper = "${pkgs.sccache}/bin/sccache"
-
-        [target.'cfg(not(target_arch = "mips"))']
-        linker = "${pkgs.clang}/bin/clang"
-        rustflags = ["-C", "link-arg=-fuse-ld=${pkgs.mold}/bin/mold"]
-
         [profile.rust-analyzer]
         inherits = "dev"
       '';
+
+        # [target.'cfg(not(target_arch = "mips"))']
+        # linker = "${pkgs.clang}/bin/clang"
+        # rustflags = ["-C", "link-arg=-fuse-ld=${pkgs.mold}/bin/mold"]
+
+
 
       sessionPath = [ "$HOME/.cargo/bin" ];
     };
